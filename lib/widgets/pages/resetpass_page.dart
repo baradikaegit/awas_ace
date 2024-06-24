@@ -127,7 +127,38 @@ class _ResetPasswordState extends State<ResetPassword> {
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                           ),
-                                          fixedSize: const Size(130, 50),
+                                          fixedSize: Size(
+                                            ResponsiveValue<double>(context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                          name: TABLET,
+                                                          value: 150,
+                                                          landscapeValue: 150),
+                                                      const Condition
+                                                              .largerThan(
+                                                          name: TABLET,
+                                                          value: 150,
+                                                          landscapeValue: 150,
+                                                          breakpoint: 800),
+                                                    ],
+                                                    defaultValue: 130)
+                                                .value,
+                                            ResponsiveValue<double>(context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                          name: TABLET,
+                                                          value: 50,
+                                                          landscapeValue: 50),
+                                                      const Condition
+                                                              .largerThan(
+                                                          name: TABLET,
+                                                          value: 50,
+                                                          landscapeValue: 50,
+                                                          breakpoint: 800),
+                                                    ],
+                                                    defaultValue: 50)
+                                                .value,
+                                          ),
                                           elevation: 0,
                                           backgroundColor:
                                               const Color(0xFF9E9E9E),
@@ -172,7 +203,38 @@ class _ResetPasswordState extends State<ResetPassword> {
                                             borderRadius:
                                                 BorderRadius.circular(8),
                                           ),
-                                          fixedSize: const Size(135, 50),
+                                          fixedSize: Size(
+                                            ResponsiveValue<double>(context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                          name: TABLET,
+                                                          value: 155,
+                                                          landscapeValue: 155),
+                                                      const Condition
+                                                              .largerThan(
+                                                          name: TABLET,
+                                                          value: 155,
+                                                          landscapeValue: 155,
+                                                          breakpoint: 800),
+                                                    ],
+                                                    defaultValue: 130)
+                                                .value,
+                                            ResponsiveValue<double>(context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                          name: TABLET,
+                                                          value: 50,
+                                                          landscapeValue: 50),
+                                                      const Condition
+                                                              .largerThan(
+                                                          name: TABLET,
+                                                          value: 50,
+                                                          landscapeValue: 50,
+                                                          breakpoint: 800),
+                                                    ],
+                                                    defaultValue: 50)
+                                                .value,
+                                          ),
                                           elevation: 0,
                                           backgroundColor:
                                               const Color(0xFF9E9E9E),
