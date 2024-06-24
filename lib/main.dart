@@ -1,9 +1,25 @@
+import 'dart:io';
+
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:awas_ace/widgets/main_page.dart';
+import 'package:awas_ace/widgets/pages/home_page.dart';
+import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
+}
+
 void main() {
-  runApp(const MyApp());
+  HttpOverrides.global = MyHttpOverrides();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -30,7 +46,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: const MainPage(),
+      home: AnimatedSplashScreen(
+        splash: Image.asset('assets/images/logo_splash.png'),
+        splashIconSize: double.infinity,
+        duration: 3000,
+        splashTransition: SplashTransition.scaleTransition,
+        backgroundColor: const Color(0xFFFFFFFF),
+        nextScreen: const MainPage(),
+      ),
+      routes: {ResetPassword.routeName: (context) => const ResetPassword()},
+      //const MainPage(),
     );
   }
 }

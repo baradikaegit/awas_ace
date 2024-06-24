@@ -1,4 +1,5 @@
 import 'package:awas_ace/widgets/pages/home_page.dart';
+import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootstrap/flutter_bootstrap.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -29,39 +30,40 @@ class _MainPageState extends State<MainPage> {
     double height = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                Container(
-                  height: height * 0.3,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage("assets/images/ace_ast_s.jpg"),
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  Container(
+                    height: height * 0.3,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.fill,
+                        image: AssetImage("assets/images/ace_ast_s.jpg"),
+                      ),
                     ),
                   ),
-                ),
-                Container(
-                  height: height * .10,
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20),
-                      topRight: Radius.circular(20),
+                  Container(
+                    height: height * .10,
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20),
+                        topRight: Radius.circular(20),
+                      ),
                     ),
-                  ),
-                  child: ResponsiveRowColumnItem(
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(25, 30, 20, 0),
-                      child: Text(
-                        "Hallo, Selamat Datang.",
-                        style: TextStyle(
+                    child: ResponsiveRowColumnItem(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(25, 30, 20, 0),
+                        child: Text(
+                          "Hallo, Selamat Datang.",
+                          style: TextStyle(
                             fontSize: ResponsiveValue<double>(
                               context,
                               conditionalValues: [
@@ -77,227 +79,258 @@ class _MainPageState extends State<MainPage> {
                               ],
                               defaultValue: 12,
                             ).value,
-                            fontWeight: FontWeight.bold),
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            Form(
-              autovalidateMode: AutovalidateMode.onUserInteraction,
-              key: formkey,
-              child: BootstrapContainer(
-                fluid: true,
-                padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
-                children: <Widget>[
-                  BootstrapRow(
-                    children: <BootstrapCol>[
-                      BootstrapCol(
-                        sizes: 'col-md-6 col-12',
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          child: TextFormField(
-                            controller: userNameCtr,
-                            autocorrect: false,
-                            textInputAction: TextInputAction.next,
-                            decoration: const InputDecoration(
-                              hintText: 'Username',
-                              labelText: 'Username',
-                              enabledBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.grey),
+                ],
+              ),
+              Form(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                key: formkey,
+                child: BootstrapContainer(
+                  fluid: true,
+                  padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  children: <Widget>[
+                    BootstrapRow(
+                      children: <BootstrapCol>[
+                        BootstrapCol(
+                          sizes: 'col-md-6 col-12',
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                            child: TextFormField(
+                              controller: userNameCtr,
+                              autocorrect: false,
+                              textInputAction: TextInputAction.next,
+                              decoration: const InputDecoration(
+                                hintText: 'Username',
+                                labelText: 'Username',
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.grey),
+                                ),
+                              ),
+                              validator: MultiValidator(
+                                [
+                                  RequiredValidator(
+                                      errorText:
+                                          "* Username tidak boleh kosong.")
+                                ],
                               ),
                             ),
-                            validator: MultiValidator(
-                              [
-                                RequiredValidator(
-                                    errorText: "* Username tidak boleh kosong.")
+                          ),
+                        ),
+                        BootstrapCol(
+                          sizes: 'col-md-6 col-12',
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                            child: ValueListenableBuilder(
+                              valueListenable: _obsecurePassword,
+                              builder: (context, value, child) {
+                                return TextFormField(
+                                  controller: passCtr,
+                                  autocorrect: false,
+                                  textInputAction: TextInputAction.done,
+                                  obscureText: _obsecurePassword.value,
+                                  obscuringCharacter: "•",
+                                  decoration: InputDecoration(
+                                    hintText: 'Password',
+                                    enabledBorder: const OutlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.grey),
+                                    ),
+                                    labelText: 'Password',
+                                    suffixIcon: InkWell(
+                                      onTap: () {
+                                        _obsecurePassword.value =
+                                            !_obsecurePassword.value;
+                                      },
+                                      child: Icon(
+                                        _obsecurePassword.value
+                                            ? Icons.visibility_off_outlined
+                                            : Icons.visibility,
+                                      ),
+                                    ),
+                                  ),
+                                  validator: MultiValidator(
+                                    [
+                                      RequiredValidator(
+                                        errorText:
+                                            "* Password tidak boleh kosong",
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 40),
+                    BootstrapRow(
+                      children: <BootstrapCol>[
+                        BootstrapCol(
+                          sizes: 'col-md-8',
+                          offsets: 'offset-sm-2',
+                          child: OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              fixedSize: const Size(200, 60),
+                              elevation: 0,
+                              backgroundColor: const Color(0xFF9E9E9E),
+                            ).copyWith(
+                              overlayColor:
+                                  MaterialStateProperty.resolveWith<Color?>(
+                                (Set<MaterialState> states) {
+                                  if (states.contains(MaterialState.pressed)) {
+                                    return const Color.fromARGB(
+                                        255, 1, 209, 29);
+                                  }
+                                  return null;
+                                },
+                              ),
+                            ),
+                            onPressed: () {
+                              if (formkey.currentState!.validate()) {
+                                login(context);
+                              }
+                            },
+                            child: const Stack(
+                              children: <Widget>[
+                                Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Icon(
+                                    Icons.lock,
+                                    color: Color.fromARGB(255, 255, 255, 255),
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    "LOGIN",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
                           ),
                         ),
-                      ),
-                      BootstrapCol(
-                        sizes: 'col-md-6 col-12',
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          child: ValueListenableBuilder(
-                            valueListenable: _obsecurePassword,
-                            builder: (context, value, child) {
-                              return TextFormField(
-                                controller: passCtr,
-                                autocorrect: false,
-                                textInputAction: TextInputAction.done,
-                                obscureText: _obsecurePassword.value,
-                                obscuringCharacter: "*",
-                                decoration: InputDecoration(
-                                  hintText: 'Password',
-                                  enabledBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                  labelText: 'Password',
-                                  suffixIcon: InkWell(
-                                    onTap: () {
-                                      _obsecurePassword.value =
-                                          !_obsecurePassword.value;
-                                    },
-                                    child: Icon(
-                                      _obsecurePassword.value
-                                          ? Icons.visibility_off_outlined
-                                          : Icons.visibility,
-                                    ),
-                                  ),
-                                ),
-                                validator: MultiValidator(
-                                  [
-                                    RequiredValidator(
-                                      errorText:
-                                          "* Password tidak boleh kosong",
+                      ],
+                    ),
+                    const SizedBox(height: 90),
+                    BootstrapRow(
+                      children: <BootstrapCol>[
+                        BootstrapCol(
+                          sizes: 'col-3',
+                          offsets: 'offset-md-3',
+                          child: CircleAvatar(
+                            backgroundColor:
+                                const Color.fromARGB(22, 255, 255, 255),
+                            radius: 30,
+                            child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color.fromARGB(22, 230, 230, 230),
+                                      blurRadius: 20.0,
+                                      offset: Offset(0, 0),
+                                      spreadRadius: 0.8,
                                     ),
                                   ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 80),
-                  BootstrapRow(
-                    children: <BootstrapCol>[
-                      BootstrapCol(
-                        sizes: 'col-12',
-                        child: Container(
-                            alignment: Alignment.centerRight,
-                            child: const Text('Reset Password')),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 40),
-                  BootstrapRow(
-                    children: <BootstrapCol>[
-                      BootstrapCol(
-                        sizes: 'col-md-8',
-                        offsets: 'offset-sm-2',
-                        child: OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            fixedSize: const Size(200, 60),
-                            elevation: 0,
-                            backgroundColor: const Color(0xFF9E9E9E),
-                          ).copyWith(
-                            overlayColor:
-                                MaterialStateProperty.resolveWith<Color?>(
-                              (Set<MaterialState> states) {
-                                if (states.contains(MaterialState.pressed)) {
-                                  return const Color.fromARGB(197, 16, 0, 165);
-                                }
-                                return null;
-                              },
-                            ),
-                          ),
-                          onPressed: () {
-                            if (formkey.currentState!.validate()) {
-                              login(context);
-                            }
-                          },
-                          child: const Stack(
-                            children: <Widget>[
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Icon(
-                                  Icons.lock,
-                                  color: Color.fromARGB(255, 255, 255, 255),
+                                  border: Border.all(
+                                    color:
+                                        const Color.fromARGB(255, 1, 209, 29),
+                                    width: 2,
+                                  ),
+                                  borderRadius: BorderRadius.circular(50)),
+                              padding: const EdgeInsets.all(5.0),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    ResetPassword.routeName,
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/images/rp.png',
+                                  fit: BoxFit.fill,
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.center,
-                                child: Text(
-                                  "LOGIN",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
+                            ),
+                          ),
+                        ),
+                        BootstrapCol(
+                          sizes: 'col-3',
+                          child: CircleAvatar(
+                            backgroundColor:
+                                const Color.fromARGB(22, 255, 255, 255),
+                            radius: 30,
+                            child: Container(
+                              clipBehavior: Clip.antiAlias,
+                              decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Color.fromARGB(22, 230, 230, 230),
+                                      blurRadius: 20.0,
+                                      offset: Offset(0, 0),
+                                      spreadRadius: 0.8,
+                                    ),
+                                  ],
+                                  border: Border.all(
+                                      color:
+                                          const Color.fromARGB(255, 1, 209, 29),
+                                      width: 2),
+                                  borderRadius: BorderRadius.circular(50)),
+                              padding: const EdgeInsets.all(5.0),
+                              child: InkWell(
+                                onTap: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(15)),
+                                      title: const Text("Info"),
+                                      content: const Text(
+                                        "Untuk kritik, saran dan pengaduan silahkan kirim email ke ace-helpdesk@astridogroup.com dengan detail informasi yang jelas. Untuk reset password klik icon gembok.",
+                                      ),
+                                      actions: [
+                                        OutlinedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          style: OutlinedButton.styleFrom(
+                                            side: BorderSide.none,
+                                          ),
+                                          child: const Text("Ok"),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/images/cs.png',
+                                  fit: BoxFit.fill,
                                 ),
                               ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 90),
-                  BootstrapRow(
-                    children: <BootstrapCol>[
-                      BootstrapCol(
-                        sizes: 'col-3',
-                        offsets: 'offset-md-3',
-                        child: CircleAvatar(
-                          backgroundColor:
-                              const Color.fromARGB(22, 255, 255, 255),
-                          radius: 30,
-                          child: Container(
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color.fromARGB(22, 230, 230, 230),
-                                    blurRadius: 20.0,
-                                    offset: Offset(0, 0),
-                                    spreadRadius: 0.8,
-                                  ),
-                                ],
-                                border: Border.all(
-                                  color: const Color.fromARGB(255, 8, 4, 255),
-                                  width: 2,
-                                ),
-                                borderRadius: BorderRadius.circular(50)),
-                            padding: const EdgeInsets.all(5.0),
-                            child: Image.asset(
-                              'assets/images/rp.png',
-                              fit: BoxFit.fill,
                             ),
                           ),
                         ),
-                      ),
-                      BootstrapCol(
-                        sizes: 'col-3',
-                        child: CircleAvatar(
-                          backgroundColor:
-                              const Color.fromARGB(22, 255, 255, 255),
-                          radius: 30,
-                          child: Container(
-                            clipBehavior: Clip.antiAlias,
-                            decoration: BoxDecoration(
-                                boxShadow: const [
-                                  BoxShadow(
-                                    color: Color.fromARGB(22, 230, 230, 230),
-                                    blurRadius: 20.0,
-                                    offset: Offset(0, 0),
-                                    spreadRadius: 0.8,
-                                  ),
-                                ],
-                                border: Border.all(
-                                    color: const Color.fromARGB(255, 8, 4, 255),
-                                    width: 2),
-                                borderRadius: BorderRadius.circular(50)),
-                            padding: const EdgeInsets.all(5.0),
-                            child: Image.asset(
-                              'assets/images/cs.png',
-                              fit: BoxFit.fill,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
