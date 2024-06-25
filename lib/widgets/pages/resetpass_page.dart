@@ -169,7 +169,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                                               if (states.contains(
                                                   MaterialState.pressed)) {
                                                 return const Color.fromARGB(
-                                                    255, 1, 209, 29);
+                                                  255,
+                                                  1,
+                                                  209,
+                                                  29,
+                                                );
                                               }
                                               return null;
                                             },
@@ -245,7 +249,11 @@ class _ResetPasswordState extends State<ResetPassword> {
                                               if (states.contains(
                                                   MaterialState.pressed)) {
                                                 return const Color.fromARGB(
-                                                    255, 1, 209, 29);
+                                                  255,
+                                                  1,
+                                                  209,
+                                                  29,
+                                                );
                                               }
                                               return null;
                                             },
