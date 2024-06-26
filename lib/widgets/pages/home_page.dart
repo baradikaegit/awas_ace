@@ -50,6 +50,7 @@ class _HomePageState extends State<HomePage> {
           29,
         ),
         title: const Text('HOME'),
+        elevation: 0,
       ),
       body: _getWidget(),
       bottomNavigationBar: FlashyTabBar(
@@ -187,11 +188,26 @@ class _HomeScreenState extends State<HomeScreen> {
         WillPopScope(
           onWillPop: showExitPopup,
           child: Scaffold(
-            body: ListView(
-              padding: const EdgeInsets.only(top: 15.0),
-              children: [
-                _buildComplexMarquee(),
-              ].map(_wrapWithStuff).toList(),
+            backgroundColor: const Color.fromARGB(
+              255,
+              1,
+              209,
+              29,
+            ),
+            body: Container(
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(25),
+                  topRight: Radius.circular(25),
+                ),
+              ),
+              child: ListView(
+                padding: const EdgeInsets.only(top: 10.0),
+                children: [
+                  _buildComplexMarquee(),
+                ].map(_wrapWithStuff).toList(),
+              ),
             ),
             floatingActionButton: FloatingActionButton(
               hoverColor: Colors.blue,
