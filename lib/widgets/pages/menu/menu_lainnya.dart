@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
 
 class LainnyaPage extends StatefulWidget {
   const LainnyaPage({super.key});
@@ -21,69 +20,122 @@ class _LainnyaPageState extends State<LainnyaPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
-              height: 500,
-              child: SfFunnelChart(
-                title: ChartTitle(
-                  text: "Car sales",
-                ),
-                series: FunnelSeries<SalesData, String>(
-                  neckHeight: '0%',
-                  neckWidth: '20%',
-                  gapRatio: 0.1,
-                  //label nama legend
-                  name: "Cars",
-                  dataSource: getColumnData(),
-                  xValueMapper: (SalesData sales, _) => sales.x,
-                  yValueMapper: (SalesData sales, _) => sales.y,
-                  textFieldMapper: (SalesData sales, _) => sales.textField,
-
-                  // selectionBehavior: SelectionBehavior(enable: true),
-                  // onPointTap: (pointInteractionDetails) {
-                  //   Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //       builder: (context) => DetailPage(),
-                  //     ),
-                  //   );
-                  // },
-
-                  // untuk menampilkan label pada grafik
-                  dataLabelSettings: const DataLabelSettings(
-                    showZeroValue: true,
-                    isVisible: true,
-                    labelAlignment: ChartDataLabelAlignment.middle,
-                    overflowMode: OverflowMode.trim,
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  CircleAvatar(
+                                    backgroundColor: const Color.fromARGB(
+                                      255,
+                                      255,
+                                      255,
+                                      255,
+                                    ),
+                                    radius: ResponsiveValue<double>(
+                                      context,
+                                      conditionalValues: [
+                                        const Condition.equals(
+                                          name: TABLET,
+                                          value: 45,
+                                          landscapeValue: 65,
+                                        ),
+                                        const Condition.largerThan(
+                                          name: TABLET,
+                                          value: 45,
+                                          landscapeValue: 65,
+                                          breakpoint: 800,
+                                        ),
+                                        const Condition.equals(
+                                          name: DESKTOP,
+                                          value: 85,
+                                          landscapeValue: 85,
+                                        ),
+                                        const Condition.largerThan(
+                                          name: DESKTOP,
+                                          value: 85,
+                                          landscapeValue: 85,
+                                          breakpoint: 1920,
+                                        ),
+                                      ],
+                                      defaultValue: 35,
+                                    ).value,
+                                    child: Container(
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Color.fromARGB(
+                                              74,
+                                              49,
+                                              49,
+                                              49,
+                                            ),
+                                            blurRadius: 5.0,
+                                            offset: Offset(0, 0),
+                                            spreadRadius: 2.1,
+                                          ),
+                                        ],
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: const Color.fromARGB(
+                                          242,
+                                          255,
+                                          255,
+                                          255,
+                                        ),
+                                      ),
+                                      padding: const EdgeInsets.all(0.0),
+                                      child: Image.asset(
+                                        'assets/images/menu/${imageSurvey[index]}',
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 10, 5, 0),
+                                    child: Center(
+                                      child: Text(
+                                        menuRolesSurvey[index],
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: ResponsiveValue<double>(
+                                            context,
+                                            conditionalValues: [
+                                              const Condition.equals(
+                                                name: TABLET,
+                                                value: 10.5,
+                                                landscapeValue: 14.5,
+                                              ),
+                                              const Condition.largerThan(
+                                                name: TABLET,
+                                                value: 10.5,
+                                                landscapeValue: 14.5,
+                                              ),
+                                            ],
+                                            defaultValue: 10.0,
+                                          ).value,
+                                          overflow: TextOverflow.ellipsis,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        maxLines: 2,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                   ),
                 ),
-                legend: Legend(
-                  isVisible: true,
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
   }
-}
-
-class SalesData {
-  String x;
-  double y;
-  String textField;
-
-  SalesData(this.x, this.y, this.textField);
-}
-
-// isi dari grafik
-dynamic getColumnData() {
-  List<SalesData> columnData = <SalesData>[
-    SalesData("Toyota", 654, "0/654"),
-    SalesData("Daihatsu", 575, "0/575"),
-    SalesData("Isuzu", 446, "0/446"),
-    SalesData("Honda", 341, "0/341"),
-    SalesData("Mitsubishi", 296, "0/296"),
-  ];
-  return columnData;
 }
