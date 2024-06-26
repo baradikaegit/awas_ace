@@ -339,16 +339,15 @@ class _MainPageState extends State<MainPage> {
   void login(context) async {
     if (passCtr.text == "123456" && userNameCtr.text == "user") {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(milliseconds: 1000),
+        const SnackBar(
+          duration: Duration(milliseconds: 1000),
           behavior: SnackBarBehavior.floating,
           margin: EdgeInsets.only(
-            bottom: MediaQuery.of(context).size.height - 180,
-            left: 15,
-            right: 15,
+            left: 5,
+            right: 5,
           ),
-          backgroundColor: const Color(0xFF3936AB),
-          content: const Text("Sucess..."),
+          backgroundColor: Color(0xFF3936AB),
+          content: Text("Sucess..."),
         ),
       );
 
