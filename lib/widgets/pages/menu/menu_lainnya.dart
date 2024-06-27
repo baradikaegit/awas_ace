@@ -55,12 +55,12 @@ class _widgetBodyState extends State<widgetBody> {
     'Survey PSP Area SA',
   ];
   List imageSurvey = [
-    'call.png',
-    'call.png',
-    'call.png',
-    'call.png',
-    'call.png',
-    'call.png'
+    'pspspk.png',
+    'psppredec.png',
+    'pspsales.png',
+    'pspcrc.png',
+    'pspmra.png',
+    'pspsa.png'
   ];
   List linkPageSurvey = ['/', '/', '/', '/', '/', '/'];
 
@@ -94,7 +94,7 @@ class _widgetBodyState extends State<widgetBody> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "SVC Service Pelanggan",
+                          "SVC Kendaraan Pelanggan",
                           style: TextStyle(
                             fontSize: ResponsiveValue(
                               context,
@@ -139,7 +139,7 @@ class _widgetBodyState extends State<widgetBody> {
                           ],
                           defaultValue: 4,
                         ).value,
-                        childAspectRatio: 4 / 5,
+                        childAspectRatio: 5 / 5,
                       ),
                       shrinkWrap: true,
                       itemCount: menuRolesSVC.length,
@@ -169,28 +169,28 @@ class _widgetBodyState extends State<widgetBody> {
                                       conditionalValues: [
                                         const Condition.equals(
                                           name: TABLET,
-                                          value: 45,
-                                          landscapeValue: 65,
+                                          value: 35,
+                                          landscapeValue: 55,
                                         ),
                                         const Condition.largerThan(
                                           name: TABLET,
-                                          value: 45,
-                                          landscapeValue: 65,
+                                          value: 35,
+                                          landscapeValue: 55,
                                           breakpoint: 800,
                                         ),
                                         const Condition.equals(
                                           name: DESKTOP,
-                                          value: 85,
-                                          landscapeValue: 85,
+                                          value: 75,
+                                          landscapeValue: 75,
                                         ),
                                         const Condition.largerThan(
                                           name: DESKTOP,
-                                          value: 85,
-                                          landscapeValue: 85,
+                                          value: 75,
+                                          landscapeValue: 75,
                                           breakpoint: 1920,
                                         ),
                                       ],
-                                      defaultValue: 35,
+                                      defaultValue: 25,
                                     ).value,
                                     child: Container(
                                       clipBehavior: Clip.antiAlias,
@@ -338,7 +338,7 @@ class _widgetBodyState extends State<widgetBody> {
                                 ],
                                 defaultValue: 4,
                               ).value,
-                              childAspectRatio: 4 / 5,
+                              childAspectRatio: 5 / 5,
                             ),
                             shrinkWrap: true,
                             itemCount: menuRolesSurvey.length,
@@ -368,28 +368,28 @@ class _widgetBodyState extends State<widgetBody> {
                                             conditionalValues: [
                                               const Condition.equals(
                                                 name: TABLET,
-                                                value: 45,
-                                                landscapeValue: 65,
+                                                value: 35,
+                                                landscapeValue: 55,
                                               ),
                                               const Condition.largerThan(
                                                 name: TABLET,
-                                                value: 45,
-                                                landscapeValue: 65,
+                                                value: 35,
+                                                landscapeValue: 55,
                                                 breakpoint: 800,
                                               ),
                                               const Condition.equals(
                                                 name: DESKTOP,
-                                                value: 85,
-                                                landscapeValue: 85,
+                                                value: 75,
+                                                landscapeValue: 75,
                                               ),
                                               const Condition.largerThan(
                                                 name: DESKTOP,
-                                                value: 85,
-                                                landscapeValue: 85,
+                                                value: 75,
+                                                landscapeValue: 75,
                                                 breakpoint: 1920,
                                               ),
                                             ],
-                                            defaultValue: 35,
+                                            defaultValue: 25,
                                           ).value,
                                           child: Container(
                                             clipBehavior: Clip.antiAlias,

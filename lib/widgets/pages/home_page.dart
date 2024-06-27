@@ -1,4 +1,7 @@
 import 'package:awas_ace/widgets/main_page.dart';
+import 'package:awas_ace/widgets/pages/menu/menu_reminder.dart';
+import 'package:awas_ace/widgets/pages/menu/menu_report.dart';
+import 'package:awas_ace/widgets/pages/menu/menu_setting.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -30,90 +33,150 @@ class _HomePageState extends State<HomePage> {
 
   Widget _getWidget() {
     if (currentIndex == 1) {
-      return const HistoryScreen();
+      return const ReportPage();
     } else if (currentIndex == 2) {
-      return const FolderScreen();
+      return const ReminderPage();
     } else if (currentIndex == 3) {
-      return const GalleryScreen();
+      return const SettingPage();
     }
     return const HomeScreen();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(
-          255,
-          1,
-          209,
-          29,
+    Future<bool> showExitPopup() async {
+      return await showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) => AlertDialog(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15)),
+              title: const Text("Info"),
+              content: const Text(
+                "Apakah anda yakin ingin keluar?",
+              ),
+              actions: [
+                OutlinedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                  },
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide.none,
+                  ),
+                  child: const Text("Batal"),
+                ),
+                OutlinedButton(
+                  onPressed: () {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => const MainPage(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  style: OutlinedButton.styleFrom(
+                    side: BorderSide.none,
+                  ),
+                  child: const Text("Ok"),
+                ),
+              ],
+            ),
+          ) ??
+          false;
+    }
+
+    return WillPopScope(
+      onWillPop: showExitPopup,
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: const Color.fromARGB(
+            255,
+            1,
+            209,
+            29,
+          ),
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              CircleAvatar(
+                backgroundColor: const Color.fromARGB(255, 1, 209, 29),
+                child: Image.asset(
+                  'assets/images/user.png',
+                  fit: BoxFit.cover,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 10),
+                child: Text('USER'),
+              ),
+            ],
+          ),
+          elevation: 0,
         ),
-        title: const Text('HOME'),
-        elevation: 0,
-      ),
-      body: _getWidget(),
-      bottomNavigationBar: FlashyTabBar(
-        backgroundColor: const Color.fromARGB(
-          255,
-          1,
-          209,
-          29,
+        body: _getWidget(),
+        bottomNavigationBar: FlashyTabBar(
+          backgroundColor: const Color.fromARGB(
+            255,
+            1,
+            209,
+            29,
+          ),
+          iconSize: 30,
+          items: [
+            FlashyTabBarItem(
+              icon: const Icon(
+                Icons.dashboard_customize,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Home',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(
+                Icons.bar_chart,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Report',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(
+                Icons.notifications,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Reminder',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            FlashyTabBarItem(
+              icon: const Icon(
+                Icons.settings,
+                color: Colors.white,
+              ),
+              title: const Text(
+                'Settings',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+          selectedIndex: currentIndex!,
+          showElevation: true,
+          onItemSelected: (index) => changePage(index),
         ),
-        iconSize: 30,
-        items: [
-          FlashyTabBarItem(
-            icon: const Icon(
-              Icons.dashboard_customize,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Home',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          FlashyTabBarItem(
-            icon: const Icon(
-              Icons.bar_chart,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Report',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          FlashyTabBarItem(
-            icon: const Icon(
-              Icons.notifications,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Reminder',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-          FlashyTabBarItem(
-            icon: const Icon(
-              Icons.settings,
-              color: Colors.white,
-            ),
-            title: const Text(
-              'Settings',
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
-          ),
-        ],
-        selectedIndex: currentIndex!,
-        showElevation: true,
-        onItemSelected: (index) => changePage(index),
       ),
     );
   }
@@ -143,38 +206,35 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        WillPopScope(
-          onWillPop: showExitPopup,
-          child: Scaffold(
-            backgroundColor: const Color.fromARGB(
-              255,
-              1,
-              209,
-              29,
-            ),
-            body: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
-              ),
-              child: ListView(
-                padding: const EdgeInsets.only(top: 10.0),
-                children: [
-                  _buildComplexMarquee(),
-                ].map(_wrapWithStuff).toList(),
+        Scaffold(
+          backgroundColor: const Color.fromARGB(
+            255,
+            1,
+            209,
+            29,
+          ),
+          body: Container(
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
             ),
-            floatingActionButton: FloatingActionButton(
-              hoverColor: Colors.blue,
-              backgroundColor: const Color.fromARGB(255, 1, 209, 29),
-              tooltip: 'Prospect Pelanggan',
-              onPressed: () {},
-              child: const Icon(
-                Icons.add_business,
-              ),
+            child: ListView(
+              padding: const EdgeInsets.only(top: 10.0),
+              children: [
+                _buildComplexMarquee(),
+              ].map(_wrapWithStuff).toList(),
+            ),
+          ),
+          floatingActionButton: FloatingActionButton(
+            hoverColor: Colors.blue,
+            backgroundColor: const Color.fromARGB(255, 1, 209, 29),
+            tooltip: 'Prospect Pelanggan',
+            onPressed: () {},
+            child: const Icon(
+              Icons.add_business,
             ),
           ),
         ),
@@ -358,7 +418,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                   defaultValue: 4,
                 ).value,
-                childAspectRatio: 4 / 5,
+                childAspectRatio: ResponsiveValue<double>(
+                  context,
+                  conditionalValues: [
+                    const Condition.equals(
+                      name: TABLET,
+                      value: 5 / 5,
+                      landscapeValue: 5 / 5,
+                    ),
+                    const Condition.largerThan(
+                      name: TABLET,
+                      value: 5 / 5,
+                      landscapeValue: 5 / 5,
+                      breakpoint: 800,
+                    ),
+                  ],
+                  defaultValue: 5 / 5,
+                ).value,
               ),
               shrinkWrap: true,
               itemCount: menuRoles.length,
@@ -384,28 +460,28 @@ class _HomeScreenState extends State<HomeScreen> {
                               conditionalValues: [
                                 const Condition.equals(
                                   name: TABLET,
-                                  value: 45,
-                                  landscapeValue: 65,
+                                  value: 35,
+                                  landscapeValue: 55,
                                 ),
                                 const Condition.largerThan(
                                   name: TABLET,
-                                  value: 45,
-                                  landscapeValue: 65,
+                                  value: 35,
+                                  landscapeValue: 55,
                                   breakpoint: 800,
                                 ),
                                 const Condition.equals(
                                   name: DESKTOP,
-                                  value: 85,
-                                  landscapeValue: 85,
+                                  value: 75,
+                                  landscapeValue: 75,
                                 ),
                                 const Condition.largerThan(
                                   name: DESKTOP,
-                                  value: 85,
-                                  landscapeValue: 85,
+                                  value: 75,
+                                  landscapeValue: 75,
                                   breakpoint: 1920,
                                 ),
                               ],
-                              defaultValue: 35,
+                              defaultValue: 25,
                             ).value,
                             child: Container(
                               clipBehavior: Clip.antiAlias,
