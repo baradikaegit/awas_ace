@@ -141,48 +141,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Future<bool> showExitPopup() async {
-      return await showDialog(
-            barrierDismissible: false,
-            context: context,
-            builder: (context) => AlertDialog(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15)),
-              title: const Text("Info"),
-              content: const Text(
-                "Apakah anda yakin ingin keluar?",
-              ),
-              actions: [
-                OutlinedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                  },
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide.none,
-                  ),
-                  child: const Text("Batal"),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (BuildContext context) => const MainPage(),
-                      ),
-                      (route) => false,
-                    );
-                  },
-                  style: OutlinedButton.styleFrom(
-                    side: BorderSide.none,
-                  ),
-                  child: const Text("Ok"),
-                ),
-              ],
-            ),
-          ) ??
-          false;
-    }
-
     return Stack(
       children: [
         WillPopScope(
@@ -537,68 +495,4 @@ dynamic getColumnData() {
     SalesData("Mitsubishi", 296, "0/296"),
   ];
   return columnData;
-}
-
-class HistoryScreen extends StatelessWidget {
-  const HistoryScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      color: Colors.deepPurple[100],
-      child: const Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.access_time,
-            size: 50,
-          ),
-          Text('History Screen')
-        ],
-      ),
-    );
-  }
-}
-
-class GalleryScreen extends StatelessWidget {
-  const GalleryScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.center,
-        color: Colors.green[200],
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.image,
-              size: 50,
-            ),
-            Text('Image Screen')
-          ],
-        ));
-  }
-}
-
-class FolderScreen extends StatelessWidget {
-  const FolderScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        alignment: Alignment.center,
-        color: Colors.orange,
-        child: const Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              Icons.folder_open,
-              size: 50,
-            ),
-            Text('Folders Screen')
-          ],
-        ));
-  }
 }
