@@ -13,7 +13,7 @@ class _SettingPageState extends State<SettingPage> {
   List menuRoles = [
     'Profile',
     'Team Saya',
-    'Rule Of The Game',
+    'Rules Of The Game',
     'Change Password',
     'LogOut',
   ];
@@ -24,7 +24,7 @@ class _SettingPageState extends State<SettingPage> {
     'padlock.png',
     'logout.png'
   ];
-  List linkPage = ['/', '/', '/', '/', '/'];
+  List linkPage = ['/', '/', '/rulesOftheGamePage', '/', '/'];
 
   @override
   Widget build(BuildContext context) {

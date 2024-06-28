@@ -5,6 +5,7 @@ import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
+import 'package:awas_ace/widgets/pages/rotg_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
       routes: {
         ResetPassword.routeName: (context) => const ResetPassword(),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
+        RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
       },
       home: const HomePage(),
     );
