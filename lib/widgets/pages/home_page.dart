@@ -2,6 +2,7 @@ import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_reminder.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_report.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_setting.dart';
+import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
@@ -92,15 +93,15 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(
             255,
-            1,
-            209,
-            29,
+            9,
+            155,
+            28,
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundColor: const Color.fromARGB(255, 1, 209, 29),
+                backgroundColor: const Color.fromARGB(255, 9, 155, 28),
                 child: Image.asset(
                   'assets/images/user.png',
                   fit: BoxFit.cover,
@@ -118,9 +119,9 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: FlashyTabBar(
           backgroundColor: const Color.fromARGB(
             255,
-            1,
-            209,
-            29,
+            9,
+            155,
+            28,
           ),
           iconSize: 30,
           items: [
@@ -198,7 +199,7 @@ class _HomeScreenState extends State<HomeScreen> {
     'Lainnya',
   ];
 
-  List image = ['call.png', 'prospect.png', 'Spk.png', 'do.png', 'lainnya.png'];
+  List image = ['call.png', 'prospek.png', 'Spk.png', 'do.png', 'lainnya.png'];
 
   List linkPage = ['/', '/', '/', '/', '/lainnyaPage'];
 
@@ -207,12 +208,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: const Color.fromARGB(
-            255,
-            1,
-            209,
-            29,
-          ),
+          backgroundColor: const Color.fromARGB(255, 9, 155, 28),
           body: Container(
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -232,7 +228,14 @@ class _HomeScreenState extends State<HomeScreen> {
             hoverColor: Colors.blue,
             backgroundColor: const Color.fromARGB(255, 1, 209, 29),
             tooltip: 'Prospect Pelanggan',
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const ProspectPage(),
+                ),
+              );
+            },
             child: const Icon(
               Icons.add_business,
             ),
@@ -433,7 +436,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       breakpoint: 800,
                     ),
                   ],
-                  defaultValue: 5 / 5,
+                  defaultValue: 5 / 6,
                 ).value,
               ),
               shrinkWrap: true,
@@ -454,7 +457,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           CircleAvatar(
                             backgroundColor:
-                                const Color.fromARGB(255, 255, 255, 255),
+                                const Color.fromARGB(0, 255, 255, 255),
                             radius: ResponsiveValue<double>(
                               context,
                               conditionalValues: [
@@ -481,14 +484,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                   breakpoint: 1920,
                                 ),
                               ],
-                              defaultValue: 25,
+                              defaultValue: 30,
                             ).value,
                             child: Container(
                               clipBehavior: Clip.antiAlias,
                               decoration: BoxDecoration(
                                 boxShadow: const [
                                   BoxShadow(
-                                    color: Color.fromARGB(74, 49, 49, 49),
+                                    color: Color.fromARGB(0, 49, 49, 49),
                                     blurRadius: 5.0,
                                     offset: Offset(0, 0),
                                     spreadRadius: 2.1,
@@ -499,7 +502,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   width: 2,
                                 ),
                                 borderRadius: BorderRadius.circular(10),
-                                color: const Color.fromARGB(242, 255, 255, 255),
+                                color: const Color.fromARGB(0, 255, 255, 255),
                               ),
                               padding: const EdgeInsets.all(0.0),
                               child: Image.asset(

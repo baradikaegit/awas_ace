@@ -4,6 +4,7 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
+import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/rotg_page.dart';
 import 'package:flutter/material.dart';
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
       routes: {
         ResetPassword.routeName: (context) => const ResetPassword(),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
+        ProspectPage.routeName: (context) => const ProspectPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
       },
       home: const HomePage(),

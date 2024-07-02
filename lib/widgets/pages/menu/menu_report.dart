@@ -25,10 +25,10 @@ class _ReportPageState extends State<ReportPage> {
     'Total Stock By Model',
   ];
   List imageSales = [
-    'funneling.png',
-    'validspk.png',
+    'funneling_1.png',
+    'prospek.png',
     'boccai.png',
-    'bp.png',
+    'prospek.png',
     'areamapping.png',
     'volumemaker.png',
     'profitmaker.png',
@@ -63,10 +63,10 @@ class _ReportPageState extends State<ReportPage> {
     'Boooking Show',
   ];
   List imageASGR = [
-    'funneling.png',
-    'sagrvsvalidity.png',
+    'funneling_1.png',
+    'prospek.png',
     'boccai.png',
-    'ratiogr.png',
+    'prospek.png',
     'svc.png',
     'bookingshow.png'
   ];
@@ -80,10 +80,10 @@ class _ReportPageState extends State<ReportPage> {
     'Daihatsu GR Contributon to UE BP',
   ];
   List imageBP = [
-    'funneling.png',
-    'psppredec.png',
+    'funneling_1.png',
+    'prospek.png',
     'boccai.png',
-    'ratiogr.png',
+    'prospek.png',
     'contributor.png',
   ];
   List linkPageBP = ['/', '/', '/', '/', '/'];
@@ -105,9 +105,9 @@ class _ReportPageState extends State<ReportPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(
         255,
-        1,
-        209,
-        29,
+        9,
+        155,
+        28,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -175,7 +175,7 @@ class _ReportPageState extends State<ReportPage> {
                           ],
                           defaultValue: 4,
                         ).value,
-                        childAspectRatio: 5 / 5,
+                        childAspectRatio: 5 / 6,
                       ),
                       shrinkWrap: true,
                       itemCount: menuRolesSales.length,
@@ -194,12 +194,8 @@ class _ReportPageState extends State<ReportPage> {
                                     height: 10,
                                   ),
                                   CircleAvatar(
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
+                                    backgroundColor:
+                                        const Color.fromARGB(0, 255, 255, 255),
                                     radius: ResponsiveValue<double>(
                                       context,
                                       conditionalValues: [
@@ -226,19 +222,15 @@ class _ReportPageState extends State<ReportPage> {
                                           breakpoint: 1920,
                                         ),
                                       ],
-                                      defaultValue: 25,
+                                      defaultValue: 30,
                                     ).value,
                                     child: Container(
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
                                         boxShadow: const [
                                           BoxShadow(
-                                            color: Color.fromARGB(
-                                              74,
-                                              49,
-                                              49,
-                                              49,
-                                            ),
+                                            color:
+                                                Color.fromARGB(0, 49, 49, 49),
                                             blurRadius: 5.0,
                                             offset: Offset(0, 0),
                                             spreadRadius: 2.1,
@@ -250,11 +242,7 @@ class _ReportPageState extends State<ReportPage> {
                                         ),
                                         borderRadius: BorderRadius.circular(10),
                                         color: const Color.fromARGB(
-                                          242,
-                                          255,
-                                          255,
-                                          255,
-                                        ),
+                                            0, 255, 255, 255),
                                       ),
                                       padding: const EdgeInsets.all(0.0),
                                       child: Image.asset(
@@ -374,7 +362,7 @@ class _ReportPageState extends State<ReportPage> {
                                 ],
                                 defaultValue: 4,
                               ).value,
-                              childAspectRatio: 5 / 5,
+                              childAspectRatio: 5 / 6,
                             ),
                             shrinkWrap: true,
                             itemCount: menuRolesASGR.length,
@@ -394,11 +382,7 @@ class _ReportPageState extends State<ReportPage> {
                                         ),
                                         CircleAvatar(
                                           backgroundColor: const Color.fromARGB(
-                                            255,
-                                            255,
-                                            255,
-                                            255,
-                                          ),
+                                              0, 255, 255, 255),
                                           radius: ResponsiveValue<double>(
                                             context,
                                             conditionalValues: [
@@ -425,7 +409,7 @@ class _ReportPageState extends State<ReportPage> {
                                                 breakpoint: 1920,
                                               ),
                                             ],
-                                            defaultValue: 25,
+                                            defaultValue: 30,
                                           ).value,
                                           child: Container(
                                             clipBehavior: Clip.antiAlias,
@@ -433,7 +417,7 @@ class _ReportPageState extends State<ReportPage> {
                                               boxShadow: const [
                                                 BoxShadow(
                                                   color: Color.fromARGB(
-                                                    74,
+                                                    0,
                                                     49,
                                                     49,
                                                     49,
@@ -578,7 +562,7 @@ class _ReportPageState extends State<ReportPage> {
                                 ],
                                 defaultValue: 4,
                               ).value,
-                              childAspectRatio: 5 / 5,
+                              childAspectRatio: 5 / 6,
                             ),
                             shrinkWrap: true,
                             itemCount: menuRolesBP.length,
@@ -598,11 +582,7 @@ class _ReportPageState extends State<ReportPage> {
                                         ),
                                         CircleAvatar(
                                           backgroundColor: const Color.fromARGB(
-                                            255,
-                                            255,
-                                            255,
-                                            255,
-                                          ),
+                                              0, 255, 255, 255),
                                           radius: ResponsiveValue<double>(
                                             context,
                                             conditionalValues: [
@@ -629,7 +609,7 @@ class _ReportPageState extends State<ReportPage> {
                                                 breakpoint: 1920,
                                               ),
                                             ],
-                                            defaultValue: 25,
+                                            defaultValue: 30,
                                           ).value,
                                           child: Container(
                                             clipBehavior: Clip.antiAlias,
@@ -637,7 +617,7 @@ class _ReportPageState extends State<ReportPage> {
                                               boxShadow: const [
                                                 BoxShadow(
                                                   color: Color.fromARGB(
-                                                    74,
+                                                    0,
                                                     49,
                                                     49,
                                                     49,
@@ -654,11 +634,7 @@ class _ReportPageState extends State<ReportPage> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               color: const Color.fromARGB(
-                                                242,
-                                                255,
-                                                255,
-                                                255,
-                                              ),
+                                                  0, 255, 255, 255),
                                             ),
                                             padding: const EdgeInsets.all(0.0),
                                             child: Image.asset(
@@ -669,7 +645,11 @@ class _ReportPageState extends State<ReportPage> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              5, 10, 5, 0),
+                                            5,
+                                            10,
+                                            5,
+                                            0,
+                                          ),
                                           child: Center(
                                             child: Text(
                                               menuRolesBP[index],
@@ -782,7 +762,7 @@ class _ReportPageState extends State<ReportPage> {
                                 ],
                                 defaultValue: 4,
                               ).value,
-                              childAspectRatio: 5 / 5,
+                              childAspectRatio: 5 / 6,
                             ),
                             shrinkWrap: true,
                             itemCount: menuRolesGeneral.length,
@@ -802,7 +782,7 @@ class _ReportPageState extends State<ReportPage> {
                                         ),
                                         CircleAvatar(
                                           backgroundColor: const Color.fromARGB(
-                                            255,
+                                            0,
                                             255,
                                             255,
                                             255,
@@ -833,7 +813,7 @@ class _ReportPageState extends State<ReportPage> {
                                                 breakpoint: 1920,
                                               ),
                                             ],
-                                            defaultValue: 25,
+                                            defaultValue: 30,
                                           ).value,
                                           child: Container(
                                             clipBehavior: Clip.antiAlias,
@@ -841,7 +821,7 @@ class _ReportPageState extends State<ReportPage> {
                                               boxShadow: const [
                                                 BoxShadow(
                                                   color: Color.fromARGB(
-                                                    74,
+                                                    0,
                                                     49,
                                                     49,
                                                     49,
@@ -858,7 +838,7 @@ class _ReportPageState extends State<ReportPage> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               color: const Color.fromARGB(
-                                                242,
+                                                0,
                                                 255,
                                                 255,
                                                 255,
@@ -873,7 +853,11 @@ class _ReportPageState extends State<ReportPage> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              5, 10, 5, 0),
+                                            5,
+                                            10,
+                                            5,
+                                            0,
+                                          ),
                                           child: Center(
                                             child: Text(
                                               menuRolesGeneral[index],

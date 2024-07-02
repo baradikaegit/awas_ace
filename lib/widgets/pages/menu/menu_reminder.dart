@@ -23,9 +23,9 @@ class _ReminderPageState extends State<ReminderPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(
         255,
-        1,
-        209,
-        29,
+        9,
+        155,
+        28,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -93,7 +93,7 @@ class _ReminderPageState extends State<ReminderPage> {
                           ],
                           defaultValue: 4,
                         ).value,
-                        childAspectRatio: 5 / 5,
+                        childAspectRatio: 5 / 6,
                       ),
                       shrinkWrap: true,
                       itemCount: menuRoles.length,
@@ -144,7 +144,7 @@ class _ReminderPageState extends State<ReminderPage> {
                                           breakpoint: 1920,
                                         ),
                                       ],
-                                      defaultValue: 25,
+                                      defaultValue: 30,
                                     ).value,
                                     child: Container(
                                       clipBehavior: Clip.antiAlias,
@@ -152,7 +152,7 @@ class _ReminderPageState extends State<ReminderPage> {
                                         boxShadow: const [
                                           BoxShadow(
                                             color: Color.fromARGB(
-                                              74,
+                                              0,
                                               49,
                                               49,
                                               49,
@@ -168,7 +168,7 @@ class _ReminderPageState extends State<ReminderPage> {
                                         ),
                                         borderRadius: BorderRadius.circular(10),
                                         color: const Color.fromARGB(
-                                          242,
+                                          0,
                                           255,
                                           255,
                                           255,

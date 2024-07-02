@@ -31,9 +31,9 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(
         255,
-        1,
-        209,
-        29,
+        9,
+        155,
+        28,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -101,7 +101,7 @@ class _SettingPageState extends State<SettingPage> {
                           ],
                           defaultValue: 4,
                         ).value,
-                        childAspectRatio: 5 / 5,
+                        childAspectRatio: 5 / 6,
                       ),
                       shrinkWrap: true,
                       itemCount: menuRoles.length,
@@ -120,12 +120,8 @@ class _SettingPageState extends State<SettingPage> {
                                     height: 10,
                                   ),
                                   CircleAvatar(
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
+                                    backgroundColor:
+                                        const Color.fromARGB(0, 255, 255, 255),
                                     radius: ResponsiveValue<double>(
                                       context,
                                       conditionalValues: [
@@ -152,7 +148,7 @@ class _SettingPageState extends State<SettingPage> {
                                           breakpoint: 1920,
                                         ),
                                       ],
-                                      defaultValue: 25,
+                                      defaultValue: 30,
                                     ).value,
                                     child: Container(
                                       clipBehavior: Clip.antiAlias,
@@ -160,7 +156,7 @@ class _SettingPageState extends State<SettingPage> {
                                         boxShadow: const [
                                           BoxShadow(
                                             color: Color.fromARGB(
-                                              74,
+                                              0,
                                               49,
                                               49,
                                               49,
@@ -176,7 +172,7 @@ class _SettingPageState extends State<SettingPage> {
                                         ),
                                         borderRadius: BorderRadius.circular(10),
                                         color: const Color.fromARGB(
-                                          242,
+                                          0,
                                           255,
                                           255,
                                           255,

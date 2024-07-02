@@ -21,9 +21,9 @@ class _LainnyaPageState extends State<LainnyaPage> {
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(
           255,
-          1,
-          209,
-          29,
+          9,
+          155,
+          28,
         ),
         title: title,
         elevation: 0,
@@ -55,12 +55,12 @@ class _widgetBodyState extends State<widgetBody> {
     'Survey PSP Area SA',
   ];
   List imageSurvey = [
-    'pspspk.png',
-    'psppredec.png',
-    'pspsales.png',
-    'pspcrc.png',
-    'pspmra.png',
-    'pspsa.png'
+    'surveypsp.png',
+    'surveypsp.png',
+    'surveypsparea.png',
+    'surveypsparea.png',
+    'surveypsparea.png',
+    'surveypsparea.png'
   ];
   List linkPageSurvey = ['/', '/', '/', '/', '/', '/'];
 
@@ -69,9 +69,9 @@ class _widgetBodyState extends State<widgetBody> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(
         255,
-        1,
-        209,
-        29,
+        9,
+        155,
+        28,
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -139,7 +139,7 @@ class _widgetBodyState extends State<widgetBody> {
                           ],
                           defaultValue: 4,
                         ).value,
-                        childAspectRatio: 5 / 5,
+                        childAspectRatio: 5 / 6,
                       ),
                       shrinkWrap: true,
                       itemCount: menuRolesSVC.length,
@@ -158,12 +158,8 @@ class _widgetBodyState extends State<widgetBody> {
                                     height: 10,
                                   ),
                                   CircleAvatar(
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
+                                    backgroundColor:
+                                        const Color.fromARGB(0, 255, 255, 255),
                                     radius: ResponsiveValue<double>(
                                       context,
                                       conditionalValues: [
@@ -190,19 +186,15 @@ class _widgetBodyState extends State<widgetBody> {
                                           breakpoint: 1920,
                                         ),
                                       ],
-                                      defaultValue: 25,
+                                      defaultValue: 30,
                                     ).value,
                                     child: Container(
                                       clipBehavior: Clip.antiAlias,
                                       decoration: BoxDecoration(
                                         boxShadow: const [
                                           BoxShadow(
-                                            color: Color.fromARGB(
-                                              74,
-                                              49,
-                                              49,
-                                              49,
-                                            ),
+                                            color:
+                                                Color.fromARGB(0, 49, 49, 49),
                                             blurRadius: 5.0,
                                             offset: Offset(0, 0),
                                             spreadRadius: 2.1,
@@ -214,7 +206,7 @@ class _widgetBodyState extends State<widgetBody> {
                                         ),
                                         borderRadius: BorderRadius.circular(10),
                                         color: const Color.fromARGB(
-                                          242,
+                                          0,
                                           255,
                                           255,
                                           255,
@@ -338,7 +330,7 @@ class _widgetBodyState extends State<widgetBody> {
                                 ],
                                 defaultValue: 4,
                               ).value,
-                              childAspectRatio: 5 / 5,
+                              childAspectRatio: 5 / 6,
                             ),
                             shrinkWrap: true,
                             itemCount: menuRolesSurvey.length,
@@ -358,7 +350,7 @@ class _widgetBodyState extends State<widgetBody> {
                                         ),
                                         CircleAvatar(
                                           backgroundColor: const Color.fromARGB(
-                                            255,
+                                            0,
                                             255,
                                             255,
                                             255,
@@ -389,7 +381,7 @@ class _widgetBodyState extends State<widgetBody> {
                                                 breakpoint: 1920,
                                               ),
                                             ],
-                                            defaultValue: 25,
+                                            defaultValue: 30,
                                           ).value,
                                           child: Container(
                                             clipBehavior: Clip.antiAlias,
@@ -397,7 +389,7 @@ class _widgetBodyState extends State<widgetBody> {
                                               boxShadow: const [
                                                 BoxShadow(
                                                   color: Color.fromARGB(
-                                                    74,
+                                                    0,
                                                     49,
                                                     49,
                                                     49,
@@ -414,7 +406,7 @@ class _widgetBodyState extends State<widgetBody> {
                                               borderRadius:
                                                   BorderRadius.circular(10),
                                               color: const Color.fromARGB(
-                                                242,
+                                                0,
                                                 255,
                                                 255,
                                                 255,
