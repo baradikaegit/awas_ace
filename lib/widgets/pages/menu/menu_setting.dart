@@ -31,9 +31,9 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(
         255,
-        9,
-        155,
-        28,
+        3,
+        116,
+        18,
       ),
       body: Container(
         decoration: const BoxDecoration(

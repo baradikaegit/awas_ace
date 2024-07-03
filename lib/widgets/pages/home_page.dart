@@ -93,15 +93,20 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           backgroundColor: const Color.fromARGB(
             255,
-            9,
-            155,
-            28,
+            3,
+            116,
+            18,
           ),
           title: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               CircleAvatar(
-                backgroundColor: const Color.fromARGB(255, 9, 155, 28),
+                backgroundColor: const Color.fromARGB(
+                  255,
+                  3,
+                  116,
+                  18,
+                ),
                 child: Image.asset(
                   'assets/images/user.png',
                   fit: BoxFit.cover,
@@ -119,9 +124,9 @@ class _HomePageState extends State<HomePage> {
         bottomNavigationBar: FlashyTabBar(
           backgroundColor: const Color.fromARGB(
             255,
-            9,
-            155,
-            28,
+            3,
+            116,
+            18,
           ),
           iconSize: 30,
           items: [
@@ -208,7 +213,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: const Color.fromARGB(255, 9, 155, 28),
+          backgroundColor: const Color.fromARGB(
+            255,
+            3,
+            116,
+            18,
+          ),
           body: Container(
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -226,7 +236,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           floatingActionButton: FloatingActionButton(
             hoverColor: Colors.blue,
-            backgroundColor: const Color.fromARGB(255, 1, 209, 29),
+            backgroundColor: const Color.fromARGB(
+              255,
+              3,
+              116,
+              18,
+            ),
             tooltip: 'Prospect Pelanggan',
             onPressed: () {
               Navigator.push(
