@@ -20,7 +20,6 @@ class _ProspectPageState extends State<ProspectPage>
   @override
   void initState() {
     tglcontact.text = "";
-    super.initState();
     _tabController = TabController(vsync: this, length: 4);
     _tabController.addListener(_handleTabSelection);
   }
@@ -1340,9 +1339,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ),
                                                     width: 2,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -1350,10 +1346,6 @@ class _ProspectPageState extends State<ProspectPage>
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                                BootstrapRow(
-                                  children: <BootstrapCol>[
                                     BootstrapCol(
                                       sizes: 'col-md-6 col-12',
                                       child: Column(
@@ -1761,10 +1753,6 @@ class _ProspectPageState extends State<ProspectPage>
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                                BootstrapRow(
-                                  children: <BootstrapCol>[
                                     BootstrapCol(
                                       sizes: 'col-md-6 col-12',
                                       child: Column(
@@ -1875,22 +1863,11 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                       255,
                                                     ),
-                                                  ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
+                                                          ),
+                                                        ),
                                                     ),
                                                     width: 2,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -2037,10 +2014,6 @@ class _ProspectPageState extends State<ProspectPage>
                                         ],
                                       ),
                                     ),
-                                  ],
-                                ),
-                                BootstrapRow(
-                                  children: <BootstrapCol>[
                                     BootstrapCol(
                                       sizes: 'col-md-6 col-12',
                                       child: Column(
