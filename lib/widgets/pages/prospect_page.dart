@@ -2858,7 +2858,6 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  print(value);
                                                   kisaranHargaKendaraan =
                                                       value!;
                                                 });
@@ -3854,22 +3853,11 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                       255,
                                                     ),
-                                                  ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
+                                                          ),
+                                                        ),
                                                     ),
                                                     width: 2,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -4087,15 +4075,6 @@ class _ProspectPageState extends State<ProspectPage>
                                               decoration: InputDecoration(
                                                 hintText: 'Tipe Customer',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Tipe Customer',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -4106,21 +4085,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
