@@ -27,6 +27,23 @@ class _ProspectPageState extends State<ProspectPage>
     with TickerProviderStateMixin {
   TextEditingController tglcontact = TextEditingController();
   final TextEditingController kodePos = TextEditingController();
+  TextEditingController jabatanController = TextEditingController();
+  TextEditingController hKendaraanController = TextEditingController();
+  TextEditingController modelController = TextEditingController();
+  TextEditingController tahunController = TextEditingController();
+  TextEditingController bahanBakarController = TextEditingController();
+  TextEditingController transmisiController = TextEditingController();
+  TextEditingController alternativeModelController = TextEditingController();
+  TextEditingController alternativeTahunController = TextEditingController();
+  TextEditingController alternativeBahanBakarController =
+      TextEditingController();
+  TextEditingController alternativeTransmisiController =
+      TextEditingController();
+  TextEditingController cashLeasingController = TextEditingController();
+  TextEditingController dPController = TextEditingController();
+  TextEditingController tenorController = TextEditingController();
+  TextEditingController tipeCustS4Controller = TextEditingController();
+
   late TabController _tabController;
 
   String idProv = '';
@@ -51,9 +68,26 @@ class _ProspectPageState extends State<ProspectPage>
   String jkValue = '';
   int jkId = 0;
   String tipeCustVal = '';
-  String jabatan = '';
-  String kisaranHargaKendaraan = '';
-  String tipePelanggan = '';
+  String jabatanVal = '';
+  String kisaranHargaKendaraanVal = '';
+  int idHargaKendaraanVal = 0;
+  String tipePelangganVal = '';
+  String kendaraanVal = '';
+  String tahunVal = '';
+  String bahanBakarVal = '';
+  String transmisiVal = '';
+  String altKendaraanVal = '';
+  String altTahunVal = '';
+  String altBahanBakarVal = '';
+  String altTransmisiVal = '';
+  String cashLeasingVal = '';
+  String dPVal = '';
+  String tenorVal = '';
+  String tipeCustS4Val = '';
+  int? idTipeCustS4Val;
+  int? idTc;
+
+  bool check = false;
 
   final List _dataFromApi = [];
   //final List<Map<String, dynamic>> _dataFromApi = [];
@@ -66,6 +100,68 @@ class _ProspectPageState extends State<ProspectPage>
   List<ModelSelect> tipeCustOptions = [
     ModelSelect('Retail', 1),
     ModelSelect('Fleet', 2)
+  ];
+
+  List<ModelSelect> jabatanOptions = [
+    ModelSelect('Karyawan Swasta', 1),
+    ModelSelect('PNS', 2),
+    ModelSelect('Karyawan BUMN', 3),
+    ModelSelect('Wiraswasta / Bisnis / Usaha', 4),
+    ModelSelect('Pelajar / Mahasiswa', 5),
+    ModelSelect('Profesional (Dokter, Polisi, Pengacara, Militer)', 6),
+    ModelSelect('Bapak / Ibu Rumah Tangga', 7),
+    ModelSelect('Lainnya', 8),
+  ];
+
+  List<ModelSelect> hargaKendaranOptions = [
+    ModelSelect('130 jt s/d 250jt', 1),
+    ModelSelect('251 jt s/d 400jt', 2),
+    ModelSelect('401 jt s/d 600jt', 3),
+    ModelSelect('> 600 jt', 4),
+  ];
+
+  List<ModelSelect> kendaraanOptions = [
+    ModelSelect('AGYA', 1),
+    ModelSelect('AVANZA', 2),
+    ModelSelect('RUSH', 3),
+    ModelSelect('VELOZ', 4),
+    ModelSelect('INNOVA', 4),
+  ];
+
+  List<ModelSelect> bahanBakarOptions = [
+    ModelSelect('Bensin', 1),
+    ModelSelect('Diesel', 2)
+  ];
+
+  List<ModelSelect> transmisiOptions = [
+    ModelSelect('Automatic', 1),
+    ModelSelect('Manual', 2)
+  ];
+
+  List<ModelSelect> cashLeasingOptions = [
+    ModelSelect('Cash', 1),
+    ModelSelect('Leasing', 2)
+  ];
+
+  List<ModelSelect> dPOptions = [
+    ModelSelect('20%', 1),
+    ModelSelect('25%', 2),
+    ModelSelect('>= 30%', 3),
+  ];
+
+  List<ModelSelect> tenorOptions = [
+    ModelSelect('1 Tahun', 1),
+    ModelSelect('2 Tahun', 2),
+    ModelSelect('3 Tahun', 3),
+    ModelSelect('4 Tahun', 4),
+    ModelSelect('5 Tahun', 5),
+    ModelSelect('6 Tahun', 6),
+    ModelSelect('7 Tahun', 7),
+  ];
+
+  List<ModelSelect> tipeCustS4Options = [
+    ModelSelect('Perorangan', 1),
+    ModelSelect('Perusahaan', 2),
   ];
 
   void fetchDataFromApi(String idKab, String idKec) async {
@@ -221,6 +317,13 @@ class _ProspectPageState extends State<ProspectPage>
   @override
   Widget build(BuildContext context) {
     GlobalKey<FormState> formkey = GlobalKey<FormState>();
+
+    if (idTipeCustS4Val != null) {
+      tipeCustS4Controller =
+          TextEditingController(text: idTipeCustS4Val.toString());
+    } else {
+      tipeCustS4Controller = TextEditingController(text: '1');
+    }
 
     var textStyleColorWhite = TextStyle(
       color: const Color.fromARGB(
@@ -1643,15 +1746,25 @@ class _ProspectPageState extends State<ProspectPage>
                                               padding:
                                                   const EdgeInsets.fromLTRB(
                                                       20, 0, 25, 0),
-                                              decoration: const BoxDecoration(
-                                                color: Color.fromARGB(
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
                                                   255,
-                                                  148,
-                                                  148,
-                                                  148,
+                                                  1,
+                                                  53,
+                                                  131,
                                                 ),
-                                                borderRadius: BorderRadius.all(
+                                                borderRadius:
+                                                    const BorderRadius.all(
                                                   Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    255,
+                                                    255,
+                                                  ),
+                                                  width: 2,
                                                 ),
                                               ),
                                               child: ConstrainedBox(
@@ -2532,15 +2645,25 @@ class _ProspectPageState extends State<ProspectPage>
                                               padding:
                                                   const EdgeInsets.fromLTRB(
                                                       20, 0, 25, 0),
-                                              decoration: const BoxDecoration(
-                                                color: Color.fromARGB(
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
                                                   255,
-                                                  148,
-                                                  148,
-                                                  148,
+                                                  1,
+                                                  53,
+                                                  131,
                                                 ),
-                                                borderRadius: BorderRadius.all(
+                                                borderRadius:
+                                                    const BorderRadius.all(
                                                   Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    255,
+                                                    255,
+                                                  ),
+                                                  width: 2,
                                                 ),
                                               ),
                                               child: ConstrainedBox(
@@ -2640,7 +2763,7 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: DropdownSearch<String>(
+                                            child: DropdownSearch<ModelSelect>(
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
@@ -2675,16 +2798,10 @@ class _ProspectPageState extends State<ProspectPage>
                                                   ),
                                                 ),
                                               ),
-                                              items: const [
-                                                "Karyawan Swasta",
-                                                "PNS",
-                                                "Karyawan BUMN",
-                                                "Wiraswasta / Bisnis / Usaha",
-                                                "Pelajar / Mahasiswa",
-                                                "Profesional (Dokter, Polisi, Pengacara, Militer)",
-                                                "Bapak / Ibu Rumah Tangga",
-                                                "Lainnya",
-                                              ],
+                                              items: jabatanOptions,
+                                              itemAsString:
+                                                  (ModelSelect jabatanOpt) =>
+                                                      jabatanOpt.value,
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -2729,19 +2846,45 @@ class _ProspectPageState extends State<ProspectPage>
                                                   ),
                                                 ),
                                               ),
-                                              onChanged: (value) {
+                                              onChanged: (ModelSelect? value) {
                                                 setState(() {
                                                   //print(value);
-                                                  jabatan = value!;
+                                                  jabatanVal = value!.value;
+                                                  jabatanController.text =
+                                                      jabatanVal;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
-                                                jabatan != ''
-                                                    ? jabatan
+                                                jabatanVal != ''
+                                                    ? jabatanVal
                                                     : "Belum memilih Jabatan",
                                                 style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: jabatanController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Jabatan',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -2770,7 +2913,7 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: DropdownSearch<String>(
+                                            child: DropdownSearch<ModelSelect>(
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
@@ -2805,12 +2948,13 @@ class _ProspectPageState extends State<ProspectPage>
                                                   ),
                                                 ),
                                               ),
-                                              items: const [
-                                                '130 jt s/d 250jt',
-                                                '251 jt s/d 400jt',
-                                                '401 jt s/d 600jt',
-                                                '> 600 jt'
-                                              ],
+                                              items: hargaKendaranOptions,
+                                              // selectOptions
+                                              //     .map(
+                                              //         (e) => e.value.toString())
+                                              //     .toList(),
+                                              itemAsString: (ModelSelect u) =>
+                                                  u.value,
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -2856,19 +3000,46 @@ class _ProspectPageState extends State<ProspectPage>
                                                   ),
                                                 ),
                                               ),
-                                              onChanged: (value) {
+                                              onChanged: (ModelSelect? value) {
                                                 setState(() {
-                                                  kisaranHargaKendaraan =
-                                                      value!;
+                                                  kisaranHargaKendaraanVal =
+                                                      value!.value.toString();
+                                                  hKendaraanController.text =
+                                                      kisaranHargaKendaraanVal;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
-                                                kisaranHargaKendaraan != ''
-                                                    ? kisaranHargaKendaraan
+                                                kisaranHargaKendaraanVal != ''
+                                                    ? kisaranHargaKendaraanVal
                                                     : "Belum memilih Kisaran Harga Kendaraan",
                                                 style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: hKendaraanController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText:
+                                                    'Kisaran Harga Kendaraan',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -2979,15 +3150,15 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  print(value);
-                                                  tipePelanggan = value!;
+                                                  // print(value);
+                                                  tipePelangganVal = value!;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
-                                                tipePelanggan != ''
-                                                    ? tipePelanggan
+                                                tipePelangganVal != ''
+                                                    ? tipePelangganVal
                                                     : "Belum memilih Tipe Pelanggan",
                                                 style: textStyleColorWhite,
                                               ),
@@ -3128,22 +3299,118 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: DropdownSearch<ModelSelect>(
+                                              popupProps:
+                                                  const PopupProps.dialog(
+                                                // showSelectedItems: true,
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search...",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              items: kendaraanOptions,
+                                              itemAsString:
+                                                  (ModelSelect kendaraanOpt) =>
+                                                      kendaraanOpt.value,
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Model',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (ModelSelect? value) {
+                                                setState(() {
+                                                  //print(value);
+                                                  kendaraanVal = value!.value;
+                                                  modelController.text =
+                                                      kendaraanVal;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                kendaraanVal != ''
+                                                    ? kendaraanVal
+                                                    : "Belum memilih Model",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
+                                              controller: modelController,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
                                               autocorrect: false,
-                                              textInputAction:
-                                                  TextInputAction.next,
                                               decoration: InputDecoration(
                                                 hintText: 'Model',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Model',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3154,21 +3421,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -3194,7 +3446,120 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: DropdownSearch<String>(
+                                              popupProps:
+                                                  const PopupProps.dialog(
+                                                // showSelectedItems: true,
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search...",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              items: [
+                                                DateFormat('yyyy').format(
+                                                    DateTime.utc(
+                                                        DateTime.now().year +
+                                                            1)),
+                                                DateFormat('yyyy')
+                                                    .format(DateTime.now()),
+                                                DateFormat('yyyy').format(
+                                                    DateTime.utc(
+                                                        DateTime.now().year -
+                                                            1))
+                                              ],
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Tahun',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  tahunVal = value!;
+                                                  tahunController.text =
+                                                      tahunVal;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                tahunVal != ''
+                                                    ? tahunVal
+                                                    : "Belum memilih Tahun",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              controller: tahunController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -3220,21 +3585,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -3264,23 +3614,121 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: Container(
+                                              height: 55,
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 25, 0),
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  202,
+                                                  109,
+                                                  2,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    255,
+                                                    255,
+                                                  ),
+                                                  width: 2,
+                                                ),
+                                              ),
+                                              child: ConstrainedBox(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                  minWidth: double.infinity,
+                                                ),
+                                                child: Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showModalBottomSheet(
+                                                              shape:
+                                                                  const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                ),
+                                                              ),
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return ListView
+                                                                    .separated(
+                                                                        itemCount: bahanBakarOptions
+                                                                            .length,
+                                                                        separatorBuilder: (context,
+                                                                            int
+                                                                                int) {
+                                                                          return const Divider();
+                                                                        },
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                indexSelect) {
+                                                                          return GestureDetector(
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
+                                                                                child: Text(bahanBakarOptions[indexSelect].value.toUpperCase()),
+                                                                              ),
+                                                                              onTap: () {
+                                                                                setState(() {
+                                                                                  bahanBakarVal = bahanBakarOptions[indexSelect].value.toUpperCase();
+                                                                                  bahanBakarController.text = bahanBakarVal;
+                                                                                });
+                                                                                Navigator.of(context).pop();
+                                                                              });
+                                                                        });
+                                                              });
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  80,
+                                                                  15,
+                                                                  80,
+                                                                  15),
+                                                          child: Text(
+                                                            bahanBakarVal != ''
+                                                                ? bahanBakarVal
+                                                                : "CHOOSE",
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
-                                              //controller: userNameCtr,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              controller: bahanBakarController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
                                                 hintText: 'Bahan Bakar',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Bahan Bakar',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3331,22 +3779,121 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: TextFormField(
-                                              autocorrect: false,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                hintText: 'Transmisi',
-                                                hintStyle: textStyleColorWhite,
-                                                labelText: 'Transmisi',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
+                                            child: Container(
+                                              height: 55,
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 25, 0),
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  202,
+                                                  109,
+                                                  2,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
                                                     255,
                                                     255,
                                                     255,
                                                     255,
                                                   ),
+                                                  width: 2,
                                                 ),
+                                              ),
+                                              child: ConstrainedBox(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                  minWidth: double.infinity,
+                                                ),
+                                                child: Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showModalBottomSheet(
+                                                              shape:
+                                                                  const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                ),
+                                                              ),
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return ListView
+                                                                    .separated(
+                                                                        itemCount: transmisiOptions
+                                                                            .length,
+                                                                        separatorBuilder: (context,
+                                                                            int
+                                                                                int) {
+                                                                          return const Divider();
+                                                                        },
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                indexSelect) {
+                                                                          return GestureDetector(
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
+                                                                                child: Text(transmisiOptions[indexSelect].value.toUpperCase()),
+                                                                              ),
+                                                                              onTap: () {
+                                                                                setState(() {
+                                                                                  transmisiVal = transmisiOptions[indexSelect].value.toUpperCase();
+                                                                                  transmisiController.text = transmisiVal;
+                                                                                });
+                                                                                Navigator.of(context).pop();
+                                                                              });
+                                                                        });
+                                                              });
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  80,
+                                                                  15,
+                                                                  80,
+                                                                  15),
+                                                          child: Text(
+                                                            transmisiVal != ''
+                                                                ? transmisiVal
+                                                                : "CHOOSE",
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: transmisiController,
+                                              autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Transmisi',
+                                                hintStyle: textStyleColorWhite,
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3357,21 +3904,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -3444,23 +3976,121 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: DropdownSearch<ModelSelect>(
+                                              popupProps:
+                                                  const PopupProps.dialog(
+                                                // showSelectedItems: true,
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search...",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              items: kendaraanOptions,
+                                              itemAsString:
+                                                  (ModelSelect kendaraanOpt) =>
+                                                      kendaraanOpt.value,
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Model',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (ModelSelect? value) {
+                                                setState(() {
+                                                  //print(value);
+                                                  altKendaraanVal =
+                                                      value!.value;
+                                                  alternativeModelController
+                                                      .text = altKendaraanVal;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                altKendaraanVal != ''
+                                                    ? altKendaraanVal
+                                                    : "Belum memilih Model",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
-                                              //controller: userNameCtr,
+                                              controller:
+                                                  alternativeModelController,
                                               autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
                                                 hintText: 'Model',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Model',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3471,21 +4101,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -3511,22 +4126,127 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: DropdownSearch<String>(
+                                              popupProps:
+                                                  const PopupProps.dialog(
+                                                // showSelectedItems: true,
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search...",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              items: [
+                                                DateFormat('yyyy').format(
+                                                    DateTime.utc(
+                                                        DateTime.now().year +
+                                                            1)),
+                                                DateFormat('yyyy')
+                                                    .format(DateTime.now()),
+                                                DateFormat('yyyy').format(
+                                                    DateTime.utc(
+                                                        DateTime.now().year -
+                                                            1))
+                                              ],
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Tahun',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  altTahunVal = value!;
+                                                  alternativeTahunController
+                                                      .text = altTahunVal;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                altTahunVal != ''
+                                                    ? altTahunVal
+                                                    : "Belum memilih Tahun",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
+                                              controller:
+                                                  alternativeTahunController,
                                               autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
                                                 hintText: 'Tahun',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Tahun',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3537,21 +4257,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -3581,23 +4286,123 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: TextFormField(
-                                              //controller: userNameCtr,
-                                              autocorrect: false,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                hintText: 'Bahan Bakar',
-                                                hintStyle: textStyleColorWhite,
-                                                labelText: 'Bahan Bakar',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
+                                            child: Container(
+                                              height: 55,
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 25, 0),
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  202,
+                                                  109,
+                                                  2,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
                                                     255,
                                                     255,
                                                     255,
                                                     255,
                                                   ),
+                                                  width: 2,
                                                 ),
+                                              ),
+                                              child: ConstrainedBox(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                  minWidth: double.infinity,
+                                                ),
+                                                child: Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showModalBottomSheet(
+                                                              shape:
+                                                                  const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                ),
+                                                              ),
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return ListView
+                                                                    .separated(
+                                                                        itemCount: bahanBakarOptions
+                                                                            .length,
+                                                                        separatorBuilder: (context,
+                                                                            int
+                                                                                int) {
+                                                                          return const Divider();
+                                                                        },
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                indexSelect) {
+                                                                          return GestureDetector(
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
+                                                                                child: Text(bahanBakarOptions[indexSelect].value.toUpperCase()),
+                                                                              ),
+                                                                              onTap: () {
+                                                                                setState(() {
+                                                                                  altBahanBakarVal = bahanBakarOptions[indexSelect].value.toUpperCase();
+                                                                                  alternativeBahanBakarController.text = altBahanBakarVal;
+                                                                                });
+                                                                                Navigator.of(context).pop();
+                                                                              });
+                                                                        });
+                                                              });
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  80,
+                                                                  15,
+                                                                  80,
+                                                                  15),
+                                                          child: Text(
+                                                            altBahanBakarVal !=
+                                                                    ''
+                                                                ? altBahanBakarVal
+                                                                : "CHOOSE",
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller:
+                                                  alternativeBahanBakarController,
+                                              autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Bahan Bakar',
+                                                hintStyle: textStyleColorWhite,
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3608,21 +4413,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -3648,22 +4438,123 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: TextFormField(
-                                              autocorrect: false,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                hintText: 'Transmisi',
-                                                hintStyle: textStyleColorWhite,
-                                                labelText: 'Transmisi',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
+                                            child: Container(
+                                              height: 55,
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 25, 0),
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  202,
+                                                  109,
+                                                  2,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
                                                     255,
                                                     255,
                                                     255,
                                                     255,
                                                   ),
+                                                  width: 2,
                                                 ),
+                                              ),
+                                              child: ConstrainedBox(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                  minWidth: double.infinity,
+                                                ),
+                                                child: Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showModalBottomSheet(
+                                                              shape:
+                                                                  const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                ),
+                                                              ),
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return ListView
+                                                                    .separated(
+                                                                        itemCount: transmisiOptions
+                                                                            .length,
+                                                                        separatorBuilder: (context,
+                                                                            int
+                                                                                int) {
+                                                                          return const Divider();
+                                                                        },
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                indexSelect) {
+                                                                          return GestureDetector(
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
+                                                                                child: Text(transmisiOptions[indexSelect].value.toUpperCase()),
+                                                                              ),
+                                                                              onTap: () {
+                                                                                setState(() {
+                                                                                  altTransmisiVal = transmisiOptions[indexSelect].value.toUpperCase();
+                                                                                  alternativeTransmisiController.text = altTransmisiVal;
+                                                                                });
+                                                                                Navigator.of(context).pop();
+                                                                              });
+                                                                        });
+                                                              });
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  80,
+                                                                  15,
+                                                                  80,
+                                                                  15),
+                                                          child: Text(
+                                                            altTransmisiVal !=
+                                                                    ''
+                                                                ? altTransmisiVal
+                                                                : "CHOOSE",
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller:
+                                                  alternativeTransmisiController,
+                                              autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Transmisi',
+                                                hintStyle: textStyleColorWhite,
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3674,21 +4565,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -3828,22 +4704,121 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: TextFormField(
-                                              autocorrect: false,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                hintText: 'Cash/Leasing',
-                                                hintStyle: textStyleColorWhite,
-                                                labelText: 'Cash/Leasing',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
+                                            child: Container(
+                                              height: 55,
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 25, 0),
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  146,
+                                                  2,
+                                                  2,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
                                                     255,
                                                     255,
                                                     255,
                                                     255,
                                                   ),
+                                                  width: 2,
                                                 ),
+                                              ),
+                                              child: ConstrainedBox(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                  minWidth: double.infinity,
+                                                ),
+                                                child: Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showModalBottomSheet(
+                                                              shape:
+                                                                  const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                ),
+                                                              ),
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return ListView
+                                                                    .separated(
+                                                                        itemCount: cashLeasingOptions
+                                                                            .length,
+                                                                        separatorBuilder: (context,
+                                                                            int
+                                                                                int) {
+                                                                          return const Divider();
+                                                                        },
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                indexSelect) {
+                                                                          return GestureDetector(
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
+                                                                                child: Text(cashLeasingOptions[indexSelect].value.toUpperCase()),
+                                                                              ),
+                                                                              onTap: () {
+                                                                                setState(() {
+                                                                                  cashLeasingVal = cashLeasingOptions[indexSelect].value.toUpperCase();
+                                                                                  cashLeasingController.text = cashLeasingVal;
+                                                                                });
+                                                                                Navigator.of(context).pop();
+                                                                              });
+                                                                        });
+                                                              });
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  80,
+                                                                  15,
+                                                                  80,
+                                                                  15),
+                                                          child: Text(
+                                                            cashLeasingVal != ''
+                                                                ? cashLeasingVal
+                                                                : "CHOOSE",
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: cashLeasingController,
+                                              autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Cash/Leasing',
+                                                hintStyle: textStyleColorWhite,
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3853,10 +4828,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                       255,
                                                     ),
-                                                          ),
-                                                        ),
-                                                    ),
-                                                    width: 2,
                                                   ),
                                                 ),
                                               ),
@@ -3883,22 +4854,118 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: DropdownSearch<ModelSelect>(
+                                              popupProps:
+                                                  const PopupProps.dialog(
+                                                // showSelectedItems: true,
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search...",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              items: dPOptions,
+                                              itemAsString:
+                                                  (ModelSelect dPOpt) =>
+                                                      dPOpt.value,
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Down Payment',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (ModelSelect? value) {
+                                                setState(() {
+                                                  //print(value);
+                                                  dPVal = value!.value;
+                                                  dPController.text = dPVal;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                dPVal != ''
+                                                    ? dPVal
+                                                    : "Belum memilih Down Payment",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
+                                              controller: dPController,
                                               autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
                                                 hintText: 'Down Payment',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Down Payment',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3909,21 +4976,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -3953,23 +5005,119 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: DropdownSearch<ModelSelect>(
+                                              popupProps:
+                                                  const PopupProps.dialog(
+                                                // showSelectedItems: true,
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search...",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              items: tenorOptions,
+                                              itemAsString:
+                                                  (ModelSelect tenorOpt) =>
+                                                      tenorOpt.value,
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Down Payment',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (ModelSelect? value) {
+                                                setState(() {
+                                                  //print(value);
+                                                  tenorVal = value!.value;
+                                                  tenorController.text =
+                                                      tenorVal;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                tenorVal != ''
+                                                    ? tenorVal
+                                                    : "Belum memilih Tenor",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
-                                              //controller: userNameCtr,
+                                              controller: tenorController,
                                               autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
                                                 hintText: 'Tenor',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Tenor',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -3980,21 +5128,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -4067,9 +5200,119 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: Container(
+                                              height: 55,
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      20, 0, 25, 0),
+                                              decoration: BoxDecoration(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  146,
+                                                  2,
+                                                  2,
+                                                ),
+                                                borderRadius:
+                                                    const BorderRadius.all(
+                                                  Radius.circular(10),
+                                                ),
+                                                border: Border.all(
+                                                  color: const Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    255,
+                                                    255,
+                                                  ),
+                                                  width: 2,
+                                                ),
+                                              ),
+                                              child: ConstrainedBox(
+                                                constraints:
+                                                    const BoxConstraints(
+                                                  minWidth: double.infinity,
+                                                ),
+                                                child: Center(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    children: <Widget>[
+                                                      InkWell(
+                                                        onTap: () {
+                                                          showModalBottomSheet(
+                                                              shape:
+                                                                  const RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .vertical(
+                                                                  top: Radius
+                                                                      .circular(
+                                                                          20.0),
+                                                                ),
+                                                              ),
+                                                              context: context,
+                                                              builder:
+                                                                  (context) {
+                                                                return ListView
+                                                                    .separated(
+                                                                        itemCount: tipeCustS4Options
+                                                                            .length,
+                                                                        separatorBuilder: (context,
+                                                                            int
+                                                                                int) {
+                                                                          return const Divider();
+                                                                        },
+                                                                        itemBuilder:
+                                                                            (context,
+                                                                                indexSelect) {
+                                                                          return GestureDetector(
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
+                                                                                child: Text(tipeCustS4Options[indexSelect].value.toUpperCase()),
+                                                                              ),
+                                                                              onTap: () {
+                                                                                setState(() {
+                                                                                  tipeCustS4Val = tipeCustS4Options[indexSelect].value.toUpperCase();
+                                                                                  idTipeCustS4Val = tipeCustS4Options[indexSelect].id;
+                                                                                  // tipeCustS4Controller.text = tipeCustS4Val;
+                                                                                  print(idTipeCustS4Val);
+                                                                                });
+
+                                                                                Navigator.of(context).pop();
+                                                                              });
+                                                                        });
+                                                              });
+                                                        },
+                                                        child: Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .fromLTRB(
+                                                                  80,
+                                                                  15,
+                                                                  80,
+                                                                  15),
+                                                          child: Text(
+                                                            tipeCustS4Val != ''
+                                                                ? tipeCustS4Val
+                                                                : "PERORANGAN",
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
-                                              //controller: userNameCtr,
+                                              controller: tipeCustS4Controller,
                                               autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
@@ -4096,6 +5339,162 @@ class _ProspectPageState extends State<ProspectPage>
                                 ),
                                 BootstrapRow(
                                   children: <BootstrapCol>[
+                                    BootstrapCol(
+                                      sizes: 'col-md-6 col-12',
+                                      child: idTipeCustS4Val == null ||
+                                              idTipeCustS4Val == 1
+                                          ? Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'KTP Suami Istri + Kartu Keluarga / Surat Nikah + NPWP Debitur',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'PLN/PBB/AJB/Sertifikat Kepemilikan Rumah An. Debitur',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Fixed Line',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : Column(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        value: check,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Text(
+                                                        'KTP Pengurus + Pemegang Saham',
+                                                        style:
+                                                            textStyleColorWhite,
+                                                        maxLines: 2,
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                    ),
                                     BootstrapCol(
                                       sizes: 'col-md-6 col-12',
                                       child: Column(
