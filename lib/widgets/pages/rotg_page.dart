@@ -10,7 +10,10 @@ class RulesOftheGamePage extends StatefulWidget {
 }
 
 class _RulesOftheGamePageState extends State<RulesOftheGamePage> {
-  Widget titleBar = const Text("Rules Of The Game");
+  Widget titleBar = const Text(
+    "Rules Of The Game",
+    style: TextStyle(color: Colors.white),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +23,7 @@ class _RulesOftheGamePageState extends State<RulesOftheGamePage> {
         centerTitle: true,
         title: titleBar,
         elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: const BodyWidget(),
     );
@@ -38,6 +42,8 @@ class _BodyWidgetState extends State<BodyWidget> {
   Widget build(BuildContext context) {
     var textStyleWhiteBU = TextStyle(
       decoration: TextDecoration.underline,
+      decorationColor: Colors.white,
+      decorationThickness: 2.0,
       color: Colors.white,
       fontSize: ResponsiveValue<double>(
         context,

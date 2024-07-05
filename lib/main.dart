@@ -49,21 +49,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      // home: AnimatedSplashScreen(
-      //   splash: Image.asset('assets/images/logo_splash.png'),
-      //   splashIconSize: double.infinity,
-      //   duration: 3000,
-      //   splashTransition: SplashTransition.scaleTransition,
-      //   backgroundColor: const Color(0xFFFFFFFF),
-      //   nextScreen: const MainPage(),
-      // ),
+      home: AnimatedSplashScreen(
+        splash: Image.asset('assets/images/logo_splash.png'),
+        splashIconSize: double.infinity,
+        duration: 3000,
+        splashTransition: SplashTransition.scaleTransition,
+        backgroundColor: const Color(0xFFFFFFFF),
+        nextScreen: const MainPage(),
+      ),
       routes: {
         ResetPassword.routeName: (context) => const ResetPassword(),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
       },
-      home: const HomePage(),
+      //home: const HomePage(),
     );
   }
 }

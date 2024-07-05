@@ -349,7 +349,11 @@ class _ProspectPageState extends State<ProspectPage>
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: const Text("Entry Prospect Sales"),
+          title: const Text(
+            "Entry Prospect Sales",
+            style: TextStyle(color: Colors.white),
+          ),
+          iconTheme: const IconThemeData(color: Colors.white),
           bottom: PreferredSize(
             preferredSize: _tabBar.preferredSize,
             child: Material(
@@ -635,7 +639,11 @@ class _ProspectPageState extends State<ProspectPage>
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
                                               popupProps: PopupProps.dialog(
-                                                // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
@@ -643,6 +651,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   title: Text(item.text),
                                                 ),
                                               ),
+
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -761,6 +770,11 @@ class _ProspectPageState extends State<ProspectPage>
                                             child: DropdownSearch<Wilayah>(
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
@@ -888,6 +902,11 @@ class _ProspectPageState extends State<ProspectPage>
                                             child: DropdownSearch<Wilayah>(
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
@@ -1011,6 +1030,11 @@ class _ProspectPageState extends State<ProspectPage>
                                             child: DropdownSearch<Wilayah>(
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
@@ -1824,11 +1848,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  80,
-                                                                  15,
-                                                                  80,
-                                                                  15),
+                                                                  .fromLTRB(
+                                                                  80, 5, 80, 5),
                                                           child: Text(
                                                             jkValue != ''
                                                                 ? jkValue
@@ -1939,6 +1960,11 @@ class _ProspectPageState extends State<ProspectPage>
                                             child: DropdownSearch<Wilayah>(
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
@@ -2065,6 +2091,11 @@ class _ProspectPageState extends State<ProspectPage>
                                             child: DropdownSearch<Wilayah>(
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
@@ -2187,6 +2218,11 @@ class _ProspectPageState extends State<ProspectPage>
                                             child: DropdownSearch<Wilayah>(
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
@@ -2313,6 +2349,11 @@ class _ProspectPageState extends State<ProspectPage>
                                             child: DropdownSearch<Wilayah>(
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
@@ -2722,11 +2763,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  80,
-                                                                  15,
-                                                                  80,
-                                                                  15),
+                                                                  .fromLTRB(
+                                                                  80, 5, 80, 5),
                                                           child: Text(
                                                             tipeCustVal != ''
                                                                 ? tipeCustVal
@@ -2767,6 +2805,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -2917,6 +2960,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -3068,6 +3116,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -3303,6 +3356,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -3450,6 +3508,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -3697,11 +3760,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  80,
-                                                                  15,
-                                                                  80,
-                                                                  15),
+                                                                  .fromLTRB(
+                                                                  80, 5, 80, 5),
                                                           child: Text(
                                                             bahanBakarVal != ''
                                                                 ? bahanBakarVal
@@ -3862,11 +3922,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  80,
-                                                                  15,
-                                                                  80,
-                                                                  15),
+                                                                  .fromLTRB(
+                                                                  80, 5, 80, 5),
                                                           child: Text(
                                                             transmisiVal != ''
                                                                 ? transmisiVal
@@ -3980,6 +4037,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -4130,6 +4192,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -4369,11 +4436,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  80,
-                                                                  15,
-                                                                  80,
-                                                                  15),
+                                                                  .fromLTRB(
+                                                                  80, 5, 80, 5),
                                                           child: Text(
                                                             altBahanBakarVal !=
                                                                     ''
@@ -4521,11 +4585,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  80,
-                                                                  15,
-                                                                  80,
-                                                                  15),
+                                                                  .fromLTRB(
+                                                                  80, 5, 80, 5),
                                                           child: Text(
                                                             altTransmisiVal !=
                                                                     ''
@@ -4787,11 +4848,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  80,
-                                                                  15,
-                                                                  80,
-                                                                  15),
+                                                                  .fromLTRB(
+                                                                  80, 5, 80, 5),
                                                           child: Text(
                                                             cashLeasingVal != ''
                                                                 ? cashLeasingVal
@@ -4858,6 +4916,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -5009,6 +5072,11 @@ class _ProspectPageState extends State<ProspectPage>
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
                                                 showSearchBox: true,
                                                 searchFieldProps:
                                                     TextFieldProps(
@@ -5286,11 +5354,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                         child: Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  80,
-                                                                  15,
-                                                                  80,
-                                                                  15),
+                                                                  .fromLTRB(
+                                                                  80, 5, 80, 5),
                                                           child: Text(
                                                             tipeCustS4Val != ''
                                                                 ? tipeCustS4Val
@@ -5590,7 +5655,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                                   200,
                                                             ),
                                                             const Condition
-                                                                    .largerThan(
+                                                                .largerThan(
                                                                 name: TABLET,
                                                                 value: 200,
                                                                 landscapeValue:
@@ -5608,7 +5673,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                           value: 55,
                                                           landscapeValue: 55),
                                                       const Condition
-                                                              .largerThan(
+                                                          .largerThan(
                                                           name: TABLET,
                                                           value: 55,
                                                           landscapeValue: 55,

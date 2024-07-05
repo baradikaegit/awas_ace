@@ -13,7 +13,10 @@ class LainnyaPage extends StatefulWidget {
 }
 
 class _LainnyaPageState extends State<LainnyaPage> {
-  Widget title = const Text("Menu Lainnya");
+  Widget title = const Text(
+    "Menu Lainnya",
+    style: TextStyle(color: Colors.white),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,7 @@ class _LainnyaPageState extends State<LainnyaPage> {
         title: title,
         elevation: 0,
         centerTitle: true,
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: const widgetBody(),
     );

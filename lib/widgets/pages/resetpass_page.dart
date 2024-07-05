@@ -13,7 +13,10 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  Widget titleBar = const Text("Reset Password");
+  Widget titleBar = const Text(
+    "Reset Password",
+    style: TextStyle(color: Colors.white),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +42,7 @@ class _ResetPasswordState extends State<ResetPassword> {
             backgroundColor: Colors.grey,
             centerTitle: true,
             title: titleBar,
+            iconTheme: const IconThemeData(color: Colors.white),
           ),
           body: Container(
             width: double.infinity,
@@ -132,13 +136,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                                                     conditionalValues: [
                                                       const Condition.equals(
                                                           name: TABLET,
-                                                          value: 150,
-                                                          landscapeValue: 150),
+                                                          value: 170,
+                                                          landscapeValue: 170),
                                                       const Condition
-                                                              .largerThan(
+                                                          .largerThan(
                                                           name: TABLET,
-                                                          value: 150,
-                                                          landscapeValue: 150,
+                                                          value: 170,
+                                                          landscapeValue: 170,
                                                           breakpoint: 800),
                                                     ],
                                                     defaultValue: 130)
@@ -150,7 +154,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                                           value: 50,
                                                           landscapeValue: 50),
                                                       const Condition
-                                                              .largerThan(
+                                                          .largerThan(
                                                           name: TABLET,
                                                           value: 50,
                                                           landscapeValue: 50,
@@ -212,13 +216,13 @@ class _ResetPasswordState extends State<ResetPassword> {
                                                     conditionalValues: [
                                                       const Condition.equals(
                                                           name: TABLET,
-                                                          value: 155,
-                                                          landscapeValue: 155),
+                                                          value: 180,
+                                                          landscapeValue: 180),
                                                       const Condition
-                                                              .largerThan(
+                                                          .largerThan(
                                                           name: TABLET,
-                                                          value: 155,
-                                                          landscapeValue: 155,
+                                                          value: 180,
+                                                          landscapeValue: 180,
                                                           breakpoint: 800),
                                                     ],
                                                     defaultValue: 130)
@@ -230,7 +234,7 @@ class _ResetPasswordState extends State<ResetPassword> {
                                                           value: 50,
                                                           landscapeValue: 50),
                                                       const Condition
-                                                              .largerThan(
+                                                          .largerThan(
                                                           name: TABLET,
                                                           value: 50,
                                                           landscapeValue: 50,
