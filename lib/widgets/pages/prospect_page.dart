@@ -5530,6 +5530,126 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Rekening Koran 3 Bulan Terakhir',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Slip Gaji / Surat Ket Penghasilan (Karyawan)',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Siup, Npwp & Tdp (Pengusaha)',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
                                               ],
                                             )
                                           : Column(
@@ -5541,18 +5661,235 @@ class _ProspectPageState extends State<ProspectPage>
                                                   child: Row(
                                                     children: <Widget>[
                                                       Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
                                                         value: check,
-                                                        onChanged: (value) {
+                                                        onChanged:
+                                                            (bool? value) {
                                                           setState(() {
                                                             check = value!;
                                                           });
                                                         },
                                                       ),
-                                                      Text(
-                                                        'KTP Pengurus + Pemegang Saham',
-                                                        style:
-                                                            textStyleColorWhite,
-                                                        maxLines: 2,
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Ktp Pengurus + Pemegang Saham',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'SIUP, TDP, BPWP',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Surat Pengesahan Menteri Kehakiman',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Surat Keterangan Domisili Perusahaan',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Rekening Koran 3 Bulan Terakhir',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: check,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            check = value!;
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Akta Pendirian Dan Perubahannya',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
