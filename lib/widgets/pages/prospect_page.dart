@@ -237,18 +237,45 @@ class _ProspectPageState extends State<ProspectPage>
         tabs: [
           Tab(
             icon: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
                 Icon(
                   Icons.sticky_note_2_outlined,
                   color:
                       _tabController.index == 0 ? Colors.white : Colors.amber,
+                  size: ResponsiveValue<double>(
+                    context,
+                    conditionalValues: [
+                      const Condition.equals(
+                          name: TABLET, value: 24.0, landscapeValue: 24.0),
+                      const Condition.largerThan(
+                          name: TABLET,
+                          value: 24.0,
+                          landscapeValue: 24.0,
+                          breakpoint: 800),
+                    ],
+                    defaultValue: 20.0,
+                  ).value,
                 ),
                 Text(
                   " STEP 1",
                   style: TextStyle(
                     color:
                         _tabController.index == 0 ? Colors.white : Colors.amber,
+                    fontSize: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.equals(
+                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                        const Condition.largerThan(
+                            name: TABLET,
+                            value: 14.0,
+                            landscapeValue: 14.0,
+                            breakpoint: 800),
+                      ],
+                      defaultValue: 12.0,
+                    ).value,
                   ),
                 ),
               ],
@@ -262,12 +289,38 @@ class _ProspectPageState extends State<ProspectPage>
                   Icons.person_add_alt_outlined,
                   color:
                       _tabController.index == 1 ? Colors.white : Colors.amber,
+                  size: ResponsiveValue<double>(
+                    context,
+                    conditionalValues: [
+                      const Condition.equals(
+                          name: TABLET, value: 24.0, landscapeValue: 24.0),
+                      const Condition.largerThan(
+                          name: TABLET,
+                          value: 24.0,
+                          landscapeValue: 24.0,
+                          breakpoint: 800),
+                    ],
+                    defaultValue: 20.0,
+                  ).value,
                 ),
                 Text(
                   " STEP 2",
                   style: TextStyle(
                     color:
                         _tabController.index == 1 ? Colors.white : Colors.amber,
+                    fontSize: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.equals(
+                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                        const Condition.largerThan(
+                            name: TABLET,
+                            value: 14.0,
+                            landscapeValue: 14.0,
+                            breakpoint: 800),
+                      ],
+                      defaultValue: 12.0,
+                    ).value,
                   ),
                 ),
               ],
@@ -281,12 +334,38 @@ class _ProspectPageState extends State<ProspectPage>
                   Icons.directions_car,
                   color:
                       _tabController.index == 2 ? Colors.white : Colors.amber,
+                  size: ResponsiveValue<double>(
+                    context,
+                    conditionalValues: [
+                      const Condition.equals(
+                          name: TABLET, value: 24.0, landscapeValue: 24.0),
+                      const Condition.largerThan(
+                          name: TABLET,
+                          value: 24.0,
+                          landscapeValue: 24.0,
+                          breakpoint: 800),
+                    ],
+                    defaultValue: 20.0,
+                  ).value,
                 ),
                 Text(
                   "STEP 3",
                   style: TextStyle(
                     color:
                         _tabController.index == 2 ? Colors.white : Colors.amber,
+                    fontSize: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.equals(
+                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                        const Condition.largerThan(
+                            name: TABLET,
+                            value: 14.0,
+                            landscapeValue: 14.0,
+                            breakpoint: 800),
+                      ],
+                      defaultValue: 12.0,
+                    ).value,
                   ),
                 ),
               ],
@@ -300,12 +379,38 @@ class _ProspectPageState extends State<ProspectPage>
                   Icons.handshake_outlined,
                   color:
                       _tabController.index == 3 ? Colors.white : Colors.amber,
+                  size: ResponsiveValue<double>(
+                    context,
+                    conditionalValues: [
+                      const Condition.equals(
+                          name: TABLET, value: 24.0, landscapeValue: 24.0),
+                      const Condition.largerThan(
+                          name: TABLET,
+                          value: 24.0,
+                          landscapeValue: 24.0,
+                          breakpoint: 800),
+                    ],
+                    defaultValue: 20.0,
+                  ).value,
                 ),
                 Text(
                   "STEP 4",
                   style: TextStyle(
                     color:
                         _tabController.index == 3 ? Colors.white : Colors.amber,
+                    fontSize: ResponsiveValue<double>(
+                      context,
+                      conditionalValues: [
+                        const Condition.equals(
+                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                        const Condition.largerThan(
+                            name: TABLET,
+                            value: 14.0,
+                            landscapeValue: 14.0,
+                            breakpoint: 800),
+                      ],
+                      defaultValue: 12.0,
+                    ).value,
                   ),
                 ),
               ],

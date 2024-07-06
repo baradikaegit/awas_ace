@@ -24,7 +24,7 @@ class _SettingPageState extends State<SettingPage> {
     'padlock.png',
     'logout.png'
   ];
-  List linkPage = ['/', '/', '/rulesOftheGamePage', '/', '/'];
+  List linkPage = ['/', '/', '/rulesOftheGamePage', '/changePassPage', '/'];
 
   @override
   Widget build(BuildContext context) {
