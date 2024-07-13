@@ -40,12 +40,12 @@ class _ReportPageState extends State<ReportPage> {
   ];
   List linkPageSales = [
     '/funnelingPage',
-    '/',
-    '/',
-    '/',
-    '/',
-    '/',
-    '/',
+    '/prospekVtoSpkPage',
+    '/bocCaiSBEPage',
+    '/prospekUeBPPage',
+    '/monitAreaMappingPage',
+    '/monitAreaVolumeMakerPage',
+    '/monitProfitMakerPage',
     '/',
     '/',
     '/',

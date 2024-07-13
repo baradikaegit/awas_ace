@@ -8,7 +8,13 @@ import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/rotg_page.dart';
+import 'package:awas_ace/widgets/pages/sales/boccaisbe.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringareamapping.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringprofitmaker.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker.dart';
+import 'package:awas_ace/widgets/pages/sales/prospekuebp.dart';
+import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -64,6 +70,15 @@ class MyApp extends StatelessWidget {
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),
         FunnelingPage.routeName: (context) => const FunnelingPage(),
+        ProspekVtoSpkPage.routeName: (context) => const ProspekVtoSpkPage(),
+        ProspekUeBPPage.routeName: (context) => const ProspekUeBPPage(),
+        MonitAreaMappingPage.routeName: (context) =>
+            const MonitAreaMappingPage(),
+        MonitAreaVolumeMakerPage.routeName: (context) =>
+            const MonitAreaVolumeMakerPage(),
+        MonitProfitMakerPage.routeName: (context) =>
+            const MonitProfitMakerPage(),
+        BocCaiSBEPage.routeName: (context) => const BocCaiSBEPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
       },
