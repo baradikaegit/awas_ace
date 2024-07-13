@@ -39,7 +39,7 @@ class _ReportPageState extends State<ReportPage> {
     'stockbymodel.png',
   ];
   List linkPageSales = [
-    '/',
+    '/funnelingPage',
     '/',
     '/',
     '/',

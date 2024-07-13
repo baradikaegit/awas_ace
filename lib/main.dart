@@ -8,6 +8,7 @@ import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/rotg_page.dart';
+import 'package:awas_ace/widgets/pages/sales/funneling.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -50,22 +51,23 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
       ),
-      home: AnimatedSplashScreen(
-        splash: Image.asset('assets/images/logo_splash.png'),
-        splashIconSize: double.infinity,
-        duration: 3000,
-        splashTransition: SplashTransition.scaleTransition,
-        backgroundColor: const Color(0xFFFFFFFF),
-        nextScreen: const MainPage(),
-      ),
+      // home: AnimatedSplashScreen(
+      //   splash: Image.asset('assets/images/logo_splash.png'),
+      //   splashIconSize: double.infinity,
+      //   duration: 3000,
+      //   splashTransition: SplashTransition.scaleTransition,
+      //   backgroundColor: const Color(0xFFFFFFFF),
+      //   nextScreen: const MainPage(),
+      // ),
       routes: {
         ResetPassword.routeName: (context) => const ResetPassword(),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),
+        FunnelingPage.routeName: (context) => const FunnelingPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
       },
-      //home: const HomePage(),
+      home: const HomePage(),
     );
   }
 }

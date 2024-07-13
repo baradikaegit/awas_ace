@@ -30,6 +30,7 @@ environment:
 dependencies:
   animated_splash_screen: ^1.3.0
   cupertino_icons: ^1.0.2
+  data_table_2: ^2.5.15
   dropdown_search: ^5.0.6
   flashy_tab_bar2: ^0.0.10
   flutter:
@@ -98,4 +99,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-  
