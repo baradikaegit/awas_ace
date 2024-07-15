@@ -28,9 +28,9 @@ class _BocCaiSBEPageState extends State<BocCaiSBEPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 17.0, landscapeValue: 17.0),
+              name: TABLET, value: 14.0, landscapeValue: 14.0),
           const Condition.largerThan(
-              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+              name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
         defaultValue: 12.5,
       ).value,
@@ -47,9 +47,9 @@ class _BocCaiSBEPageState extends State<BocCaiSBEPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 17.0, landscapeValue: 17.0),
+              name: TABLET, value: 14.0, landscapeValue: 14.0),
           const Condition.largerThan(
-              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+              name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
         defaultValue: 12.5,
       ).value,
@@ -132,12 +132,12 @@ class _BocCaiSBEPageState extends State<BocCaiSBEPage> {
                                       conditionalValues: [
                                         const Condition.equals(
                                             name: TABLET,
-                                            value: 17.0,
-                                            landscapeValue: 17.0),
+                                            value: 12.5,
+                                            landscapeValue: 12.5),
                                         const Condition.largerThan(
                                             name: TABLET,
-                                            value: 17.0,
-                                            landscapeValue: 17.0,
+                                            value: 12.5,
+                                            landscapeValue: 12.5,
                                             breakpoint: 800),
                                       ],
                                       defaultValue: 11.5,
@@ -161,12 +161,12 @@ class _BocCaiSBEPageState extends State<BocCaiSBEPage> {
                                       conditionalValues: [
                                         const Condition.equals(
                                             name: TABLET,
-                                            value: 17.0,
-                                            landscapeValue: 17.0),
+                                            value: 12.5,
+                                            landscapeValue: 12.5),
                                         const Condition.largerThan(
                                             name: TABLET,
-                                            value: 17.0,
-                                            landscapeValue: 17.0,
+                                            value: 12.5,
+                                            landscapeValue: 12.5,
                                             breakpoint: 800),
                                       ],
                                       defaultValue: 11.5,
@@ -193,7 +193,21 @@ class _BocCaiSBEPageState extends State<BocCaiSBEPage> {
                                 ),
                               ),
                             ),
-                            columnSpacing: 10,
+                            columnSpacing: ResponsiveValue<double>(context,
+                                    conditionalValues: [
+                                      const Condition.equals(
+                                          name: TABLET,
+                                          value: 5,
+                                          landscapeValue: 5),
+                                      const Condition.largerThan(
+                                        name: TABLET,
+                                        value: 5,
+                                        landscapeValue: 5,
+                                        breakpoint: 800,
+                                      )
+                                    ],
+                                    defaultValue: 10)
+                                .value,
                             horizontalMargin: 5,
                             minWidth: 350,
                             headingRowHeight: 40.0,
