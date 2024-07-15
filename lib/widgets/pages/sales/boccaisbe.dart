@@ -1,6 +1,8 @@
 import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class BocCaiSBEPage extends StatefulWidget {
   const BocCaiSBEPage({super.key});
@@ -55,6 +57,8 @@ class _BocCaiSBEPageState extends State<BocCaiSBEPage> {
       ).value,
       fontWeight: FontWeight.bold,
     );
+
+    var contacted = 50;
 
     return Stack(
       children: [
@@ -177,6 +181,439 @@ class _BocCaiSBEPageState extends State<BocCaiSBEPage> {
                             ],
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 200,
+                        width: 220,
+                        child: SfRadialGauge(
+                          // title: const GaugeTitle(
+                          //   alignment: GaugeAlignment.center,
+                          //   text: 'Speedometer',
+                          //   textStyle: TextStyle(
+                          //     fontSize: 20.0,
+                          //     fontWeight: FontWeight.bold,
+                          //     decoration: TextDecoration.underline,
+                          //   ),
+                          // ),
+                          enableLoadingAnimation: true,
+                          animationDuration: 4500,
+                          axes: <RadialAxis>[
+                            RadialAxis(
+                              axisLineStyle: const AxisLineStyle(
+                                thicknessUnit: GaugeSizeUnit.factor,
+                                thickness: 0.08,
+                              ),
+                              majorTickStyle: MajorTickStyle(
+                                length: 8,
+                                thickness: 2,
+                                color:
+                                    contacted == 50 ? Colors.red : Colors.blue,
+                              ),
+                              minorTickStyle: const MinorTickStyle(
+                                length: 4,
+                                thickness: 2,
+                                color: Colors.white,
+                              ),
+                              axisLabelStyle: const GaugeTextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 12,
+                              ),
+                              //onLabelCreated: labelCreated,
+                              // labelFormat: "DATA",
+                              //axisLabelStyle: GaugeTextStyle(),
+                              labelsPosition: ElementsPosition.inside,
+                              useRangeColorForAxis: true,
+                              minimum: 0,
+                              maximum: 100,
+                              interval: 25.0,
+                              labelOffset: 15,
+                              showLastLabel: true,
+
+                              ranges: <GaugeRange>[
+                                GaugeRange(
+                                  startWidth: 6,
+                                  endWidth: 6,
+                                  startValue: 0,
+                                  endValue: 20,
+                                  color: const Color.fromARGB(255, 0, 211, 165),
+                                ),
+                                GaugeRange(
+                                  startWidth: 6,
+                                  endWidth: 6,
+                                  startValue: 20,
+                                  endValue: 40,
+                                  color: const Color.fromARGB(255, 0, 148, 116),
+                                ),
+                                GaugeRange(
+                                  startWidth: 6,
+                                  endWidth: 6,
+                                  startValue: 40,
+                                  endValue: 60,
+                                  color:
+                                      const Color.fromARGB(255, 245, 206, 101),
+                                ),
+                                GaugeRange(
+                                  startWidth: 6,
+                                  endWidth: 6,
+                                  startValue: 60,
+                                  endValue: 80,
+                                  color: const Color.fromARGB(255, 247, 182, 3),
+                                ),
+                                GaugeRange(
+                                  startWidth: 6,
+                                  endWidth: 6,
+                                  startValue: 80,
+                                  endValue: 100,
+                                  color: Colors.red,
+                                ),
+                              ],
+                              pointers: <GaugePointer>[
+                                NeedlePointer(
+                                  value: 50,
+                                  needleLength: 0.95,
+                                  enableAnimation: true,
+                                  animationType: AnimationType.ease,
+                                  needleStartWidth: 0.3,
+                                  needleEndWidth: 6,
+                                  needleColor: contacted == 50
+                                      ? const Color.fromARGB(255, 245, 206, 101)
+                                      : Colors.red,
+                                  knobStyle: KnobStyle(
+                                    knobRadius: 0.1,
+                                    color: contacted == 50
+                                        ? const Color.fromARGB(
+                                            255, 245, 206, 101)
+                                        : Colors.red,
+                                  ),
+                                )
+                              ],
+                              annotations: <GaugeAnnotation>[
+                                GaugeAnnotation(
+                                  widget: Column(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      RichText(
+                                        textAlign: TextAlign.center,
+                                        text: const TextSpan(
+                                          text: 'Contacted \n',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 14,
+                                          ),
+                                          children: [
+                                            WidgetSpan(
+                                              child: Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0, 80, 0, 0),
+                                              ),
+                                            ),
+                                            TextSpan(
+                                              text: '50%',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.normal,
+                                                fontSize: 12,
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  positionFactor: 0.4,
+                                  angle: 90,
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SizedBox(
+                            height: 200,
+                            width: 220,
+                            child: SfRadialGauge(
+                              enableLoadingAnimation: true,
+                              animationDuration: 4500,
+                              axes: <RadialAxis>[
+                                RadialAxis(
+                                  axisLineStyle: const AxisLineStyle(
+                                    thicknessUnit: GaugeSizeUnit.factor,
+                                    thickness: 0.08,
+                                  ),
+                                  majorTickStyle: const MajorTickStyle(
+                                    length: 8,
+                                    thickness: 2,
+                                    color: Colors.white,
+                                  ),
+                                  minorTickStyle: const MinorTickStyle(
+                                    length: 4,
+                                    thickness: 2,
+                                    color: Colors.white,
+                                  ),
+                                  axisLabelStyle: const GaugeTextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                  labelsPosition: ElementsPosition.inside,
+                                  useRangeColorForAxis: true,
+                                  minimum: 0,
+                                  maximum: 100,
+                                  interval: 25.0,
+                                  labelOffset: 15,
+                                  showLastLabel: true,
+                                  ranges: <GaugeRange>[
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 0,
+                                      endValue: 20,
+                                      color: const Color.fromARGB(
+                                          255, 0, 211, 165),
+                                    ),
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 20,
+                                      endValue: 40,
+                                      color: const Color.fromARGB(
+                                          255, 0, 148, 116),
+                                    ),
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 40,
+                                      endValue: 60,
+                                      color: const Color.fromARGB(
+                                          255, 245, 206, 101),
+                                    ),
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 60,
+                                      endValue: 80,
+                                      color: const Color.fromARGB(
+                                          255, 247, 182, 3),
+                                    ),
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 80,
+                                      endValue: 100,
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                  pointers: const <GaugePointer>[
+                                    NeedlePointer(
+                                      value: 70,
+                                      needleLength: 0.95,
+                                      enableAnimation: true,
+                                      animationType: AnimationType.ease,
+                                      needleStartWidth: 0.3,
+                                      needleEndWidth: 6,
+                                      needleColor: 75 == 75
+                                          ? Color.fromARGB(255, 247, 182, 3)
+                                          : Colors.red,
+                                      knobStyle: KnobStyle(
+                                        knobRadius: 0.1,
+                                        color: 75 == 75
+                                            ? Color.fromARGB(255, 247, 182, 3)
+                                            : Colors.red,
+                                      ),
+                                    )
+                                  ],
+                                  annotations: <GaugeAnnotation>[
+                                    GaugeAnnotation(
+                                      widget: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          RichText(
+                                            textAlign: TextAlign.center,
+                                            text: const TextSpan(
+                                              text: 'BOC \n',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            0, 80, 0, 0),
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: '70%',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 12,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      positionFactor: 0.4,
+                                      angle: 90,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 200,
+                            width: 220,
+                            child: SfRadialGauge(
+                              enableLoadingAnimation: true,
+                              animationDuration: 4500,
+                              axes: <RadialAxis>[
+                                RadialAxis(
+                                  axisLineStyle: const AxisLineStyle(
+                                    thicknessUnit: GaugeSizeUnit.factor,
+                                    thickness: 0.08,
+                                  ),
+                                  majorTickStyle: const MajorTickStyle(
+                                    length: 8,
+                                    thickness: 2,
+                                    color: Colors.white,
+                                  ),
+                                  minorTickStyle: const MinorTickStyle(
+                                    length: 4,
+                                    thickness: 2,
+                                    color: Colors.white,
+                                  ),
+                                  axisLabelStyle: const GaugeTextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 12,
+                                  ),
+                                  //onLabelCreated: labelCreated,
+                                  // labelFormat: "DATA",
+                                  //axisLabelStyle: GaugeTextStyle(),
+                                  labelsPosition: ElementsPosition.inside,
+                                  useRangeColorForAxis: true,
+                                  minimum: 0,
+                                  maximum: 100,
+                                  interval: 25.0,
+                                  labelOffset: 15,
+                                  showLastLabel: true,
+                                  ranges: <GaugeRange>[
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 0,
+                                      endValue: 20,
+                                      color: const Color.fromARGB(
+                                          255, 0, 211, 165),
+                                    ),
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 20,
+                                      endValue: 40,
+                                      color: const Color.fromARGB(
+                                          255, 0, 148, 116),
+                                    ),
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 40,
+                                      endValue: 60,
+                                      color: const Color.fromARGB(
+                                          255, 245, 206, 101),
+                                    ),
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 60,
+                                      endValue: 80,
+                                      color: const Color.fromARGB(
+                                          255, 247, 182, 3),
+                                    ),
+                                    GaugeRange(
+                                      startWidth: 6,
+                                      endWidth: 6,
+                                      startValue: 80,
+                                      endValue: 100,
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                  pointers: const <GaugePointer>[
+                                    NeedlePointer(
+                                      value: 0,
+                                      needleLength: 0.95,
+                                      enableAnimation: true,
+                                      animationType: AnimationType.ease,
+                                      needleStartWidth: 0.3,
+                                      needleEndWidth: 6,
+                                      needleColor: 0 == 0
+                                          ? Color.fromARGB(255, 0, 211, 165)
+                                          : Colors.red,
+                                      knobStyle: KnobStyle(
+                                        knobRadius: 0.1,
+                                        color: 0 == 0
+                                            ? Color.fromARGB(255, 0, 211, 165)
+                                            : Colors.red,
+                                      ),
+                                    )
+                                  ],
+                                  annotations: <GaugeAnnotation>[
+                                    GaugeAnnotation(
+                                      widget: Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          RichText(
+                                            textAlign: TextAlign.center,
+                                            text: const TextSpan(
+                                              text: 'CAI \n',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 14,
+                                              ),
+                                              children: [
+                                                WidgetSpan(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.fromLTRB(
+                                                            0, 80, 0, 0),
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text: '0%',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                    fontSize: 12,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      positionFactor: 0.4,
+                                      angle: 90,
+                                    )
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                       Expanded(
                         child: Padding(
