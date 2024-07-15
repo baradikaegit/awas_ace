@@ -182,31 +182,6 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
                         child: Container(
-                          constraints: const BoxConstraints(
-                            minHeight: 230,
-                            minWidth: double.infinity,
-                          ),
-                          decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color.fromARGB(69, 70, 70, 70),
-                                blurRadius: 5.0,
-                                offset: Offset(0, 0),
-                                spreadRadius: 2.1,
-                              ),
-                            ],
-                            border: Border.all(
-                              color: Colors.transparent,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(15.0),
-                            color: const Color.fromARGB(
-                              255,
-                              33,
-                              44,
-                              81,
-                            ),
-                          ),
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                             child: Column(

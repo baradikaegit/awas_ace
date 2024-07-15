@@ -221,15 +221,13 @@ class _MonitAreaMappingPageState extends State<MonitAreaMappingPage> {
                                           labelAlignment:
                                               ChartDataLabelAlignment.middle,
                                           overflowMode: OverflowMode.trim,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                      textStyle:
+                                          TextStyle(color: Colors.white)),
                                 ),
                               ],
                             ),
                           ),
-                        ),
+                        ],
                       ),
                       Expanded(
                         child: Padding(
