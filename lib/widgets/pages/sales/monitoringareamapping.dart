@@ -159,68 +159,50 @@ class _MonitAreaMappingPageState extends State<MonitAreaMappingPage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                        child: Container(
-                          constraints: const BoxConstraints(
-                            minHeight: 230,
-                            minWidth: double.infinity,
-                          ),
-                          decoration: BoxDecoration(
-                            boxShadow: const [
-                              BoxShadow(
-                                color: Color.fromARGB(69, 70, 70, 70),
-                                blurRadius: 5.0,
-                                offset: Offset(0, 0),
-                                spreadRadius: 2.1,
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 400,
+                            width: double.infinity,
+                            child: SfCircularChart(
+                              tooltipBehavior: TooltipBehavior(
+                                enable: true,
                               ),
-                            ],
-                            border: Border.all(
-                              color: Colors.transparent,
-                              width: 2,
-                            ),
-                            borderRadius: BorderRadius.circular(15.0),
-                            color: const Color.fromARGB(
-                              255,
-                              33,
-                              44,
-                              81,
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 230,
-                                  child: SfCircularChart(
-                                    series: <CircularSeries>[
-                                      DoughnutSeries<SalesData, String>(
-                                        dataSource: getColumnData(),
-                                        xValueMapper: (SalesData sales, _) =>
-                                            sales.x,
-                                        yValueMapper: (SalesData sales, _) =>
-                                            sales.y,
+                              annotations: [
+                                CircularChartAnnotation(
+                                  widget: const Text(
+                                    "ASTRIDO",
+                                    style: TextStyle(
+                                      fontSize: 25.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              series: <CircularSeries>[
+                                DoughnutSeries<SalesData, String>(
+                                  dataSource: getColumnData(),
+                                  xValueMapper: (SalesData sales, _) => sales.x,
+                                  yValueMapper: (SalesData sales, _) => sales.y,
+                                  pointColorMapper: (SalesData sales, _) =>
+                                      sales.color,
 
-                                        selectionBehavior:
-                                            SelectionBehavior(enable: true),
-                                        onPointTap: (pointInteractionDetails) {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) => DetailPage(),
-                                          //   ),
-                                          // );
-                                        },
+                                  innerRadius: '60%',
+                                  radius: '90%',
+                                  explode: true,
 
-                                        // untuk menampilkan label pada grafik
-                                        dataLabelSettings:
-                                            const DataLabelSettings(
-                                          showZeroValue: true,
-                                          isVisible: true,
-                                          labelAlignment:
-                                              ChartDataLabelAlignment.middle,
-                                          overflowMode: OverflowMode.trim,
+                                  explodeGesture: ActivationMode.singleTap,
+                                  explodeOffset: '5',
+                                  // explodeIndex: 1,
+
+                                  // untuk menampilkan label pada grafik
+                                  dataLabelSettings: const DataLabelSettings(
+                                      showZeroValue: true,
+                                      isVisible: true,
+                                      labelAlignment:
+                                          ChartDataLabelAlignment.middle,
+                                      overflowMode: OverflowMode.trim,
                                       textStyle:
                                           TextStyle(color: Colors.white)),
                                 ),
@@ -324,15 +306,26 @@ class _MonitAreaMappingPageState extends State<MonitAreaMappingPage> {
 class SalesData {
   String x;
   double y;
-
-  SalesData(this.x, this.y);
+  Color color;
+  SalesData(this.x, this.y, this.color);
 }
 
 // isi dari grafik
 dynamic getColumnData() {
   List<SalesData> columnData = <SalesData>[
-    SalesData("Toyota", 654),
-    SalesData("Daihatsu", 575),
+    SalesData("Toyota", 100, Colors.blue.shade700),
+    SalesData("Daihatsu", 200, Colors.greenAccent.shade700),
+    SalesData("Isuzu", 100, Colors.amber),
+    SalesData(
+      "Honda",
+      200,
+      const Color.fromARGB(
+        255,
+        251,
+        71,
+        0,
+      ),
+    ),
   ];
   return columnData;
 }

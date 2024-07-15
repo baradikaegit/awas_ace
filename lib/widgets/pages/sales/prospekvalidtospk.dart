@@ -179,56 +179,61 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(15, 15, 15, 15),
-                        child: Container(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            child: Column(
-                              children: [
-                                SizedBox(
-                                  height: 230,
-                                  child: SfCircularChart(
-                                    series: <CircularSeries>[
-                                      DoughnutSeries<SalesData, String>(
-                                        dataSource: getColumnData(),
-                                        xValueMapper: (SalesData sales, _) =>
-                                            sales.x,
-                                        yValueMapper: (SalesData sales, _) =>
-                                            sales.y,
-
-                                        selectionBehavior:
-                                            SelectionBehavior(enable: true),
-                                        onPointTap: (pointInteractionDetails) {
-                                          // Navigator.push(
-                                          //   context,
-                                          //   MaterialPageRoute(
-                                          //     builder: (context) => DetailPage(),
-                                          //   ),
-                                          // );
-                                        },
-
-                                        // untuk menampilkan label pada grafik
-                                        dataLabelSettings:
-                                            const DataLabelSettings(
-                                          showZeroValue: true,
-                                          isVisible: true,
-                                          labelAlignment:
-                                              ChartDataLabelAlignment.middle,
-                                          overflowMode: OverflowMode.trim,
-                                        ),
-                                      ),
-                                    ],
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 400,
+                            width: double.infinity,
+                            child: SfCircularChart(
+                              tooltipBehavior: TooltipBehavior(
+                                enable: true,
+                              ),
+                              annotations: [
+                                CircularChartAnnotation(
+                                  widget: const Text(
+                                    "ASTRIDO",
+                                    style: TextStyle(
+                                      fontSize: 25.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
+                                ),
+                              ],
+                              series: <CircularSeries>[
+                                DoughnutSeries<SalesData, String>(
+                                  dataSource: getColumnData(),
+                                  xValueMapper: (SalesData sales, _) => sales.x,
+                                  yValueMapper: (SalesData sales, _) => sales.y,
+                                  pointColorMapper: (SalesData sales, _) =>
+                                      sales.color,
+
+                                  innerRadius: '60%',
+                                  radius: '90%',
+                                  explode: true,
+
+                                  explodeGesture: ActivationMode.singleTap,
+                                  explodeOffset: '5',
+                                  // explodeIndex: 1,
+
+                                  // untuk menampilkan label pada grafik
+                                  dataLabelSettings: const DataLabelSettings(
+                                      showZeroValue: true,
+                                      isVisible: true,
+                                      labelAlignment:
+                                          ChartDataLabelAlignment.middle,
+                                      overflowMode: OverflowMode.trim,
+                                      textStyle:
+                                          TextStyle(color: Colors.white)),
                                 ),
                               ],
                             ),
                           ),
-                        ),
+                        ],
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 25, 10, 0),
+                          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: DataTable2(
                             border: const TableBorder(
                               bottom: BorderSide(
@@ -367,17 +372,26 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
 class SalesData {
   String x;
   double y;
-
-  SalesData(this.x, this.y);
+  Color color;
+  SalesData(this.x, this.y, this.color);
 }
 
 // isi dari grafik
 dynamic getColumnData() {
   List<SalesData> columnData = <SalesData>[
-    SalesData("Toyota", 654),
-    SalesData("Daihatsu", 575),
-    SalesData("Isuzu", 446),
-    SalesData("Honda", 341),
+    SalesData("Toyota", 100, Colors.blue.shade700),
+    SalesData("Daihatsu", 200, Colors.greenAccent.shade700),
+    SalesData("Isuzu", 100, Colors.amber),
+    SalesData(
+      "Honda",
+      200,
+      const Color.fromARGB(
+        255,
+        251,
+        71,
+        0,
+      ),
+    ),
   ];
   return columnData;
 }
