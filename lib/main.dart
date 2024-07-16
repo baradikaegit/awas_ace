@@ -9,6 +9,7 @@ import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/rotg_page.dart';
 import 'package:awas_ace/widgets/pages/sales/boccaisbe.dart';
+import 'package:awas_ace/widgets/pages/sales/dotogatepass.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling.dart';
 import 'package:awas_ace/widgets/pages/sales/monitoringareamapping.dart';
 import 'package:awas_ace/widgets/pages/sales/monitoringprofitmaker.dart';
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
             const MonitAreaVolumeMakerPage(),
         MonitProfitMakerPage.routeName: (context) =>
             const MonitProfitMakerPage(),
+        DOtoGatePassPage.routeName: (context) => const DOtoGatePassPage(),
         BocCaiSBEPage.routeName: (context) => const BocCaiSBEPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),

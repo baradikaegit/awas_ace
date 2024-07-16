@@ -46,7 +46,7 @@ class _ReportPageState extends State<ReportPage> {
     '/monitAreaMappingPage',
     '/monitAreaVolumeMakerPage',
     '/monitProfitMakerPage',
-    '/',
+    '/dOtoGatePassPage',
     '/',
     '/',
     '/',
