@@ -162,7 +162,9 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage> {
                         ),
                       ),
                       SingleChildScrollView(
-                        child: Stack(
+                        scrollDirection: Axis.vertical,
+                        child: Column(
+                          verticalDirection: VerticalDirection.down,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -277,61 +279,112 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage> {
                                 ),
                               ],
                             ),
+                            SizedBox(
+                              height: 300,
+                              width: double.infinity,
+                              child: SfCircularChart(
+                                tooltipBehavior: TooltipBehavior(
+                                  enable: true,
+                                ),
+                                annotations: [
+                                  CircularChartAnnotation(
+                                    widget: const Text(
+                                      "ASTRIDO",
+                                      style: TextStyle(
+                                        fontSize: 25.0,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                                series: <CircularSeries>[
+                                  DoughnutSeries<SalesData, String>(
+                                    dataSource: getColumnData(),
+                                    xValueMapper: (SalesData sales, _) =>
+                                        sales.x,
+                                    yValueMapper: (SalesData sales, _) =>
+                                        sales.y,
+                                    pointColorMapper: (SalesData sales, _) =>
+                                        sales.color,
+
+                                    innerRadius: '60%',
+                                    radius: '90%',
+                                    explode: true,
+
+                                    explodeGesture: ActivationMode.singleTap,
+                                    explodeOffset: '5',
+                                    // explodeIndex: 1,
+
+                                    // untuk menampilkan label pada grafik
+                                    dataLabelSettings: const DataLabelSettings(
+                                        showZeroValue: true,
+                                        isVisible: true,
+                                        labelAlignment:
+                                            ChartDataLabelAlignment.middle,
+                                        overflowMode: OverflowMode.trim,
+                                        textStyle:
+                                            TextStyle(color: Colors.white)),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 400,
-                            width: double.infinity,
-                            child: SfCircularChart(
-                              tooltipBehavior: TooltipBehavior(
-                                enable: true,
-                              ),
-                              annotations: [
-                                CircularChartAnnotation(
-                                  widget: const Text(
-                                    "ASTRIDO",
-                                    style: TextStyle(
-                                      fontSize: 25.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              series: <CircularSeries>[
-                                DoughnutSeries<SalesData, String>(
-                                  dataSource: getColumnData(),
-                                  xValueMapper: (SalesData sales, _) => sales.x,
-                                  yValueMapper: (SalesData sales, _) => sales.y,
-                                  pointColorMapper: (SalesData sales, _) =>
-                                      sales.color,
 
-                                  innerRadius: '60%',
-                                  radius: '90%',
-                                  explode: true,
+                      // Column(
+                      //   children: [
+                      //     SizedBox(
+                      //       height: 400,
+                      //       width: double.infinity,
+                      //       child: SfCircularChart(
+                      //         tooltipBehavior: TooltipBehavior(
+                      //           enable: true,
+                      //         ),
+                      //         annotations: [
+                      //           CircularChartAnnotation(
+                      //             widget: const Text(
+                      //               "ASTRIDO",
+                      //               style: TextStyle(
+                      //                 fontSize: 25.0,
+                      //                 color: Colors.white,
+                      //                 fontWeight: FontWeight.bold,
+                      //               ),
+                      //             ),
+                      //           ),
+                      //         ],
+                      //         series: <CircularSeries>[
+                      //           DoughnutSeries<SalesData, String>(
+                      //             dataSource: getColumnData(),
+                      //             xValueMapper: (SalesData sales, _) => sales.x,
+                      //             yValueMapper: (SalesData sales, _) => sales.y,
+                      //             pointColorMapper: (SalesData sales, _) =>
+                      //                 sales.color,
 
-                                  explodeGesture: ActivationMode.singleTap,
-                                  explodeOffset: '5',
-                                  // explodeIndex: 1,
+                      //             innerRadius: '60%',
+                      //             radius: '90%',
+                      //             explode: true,
 
-                                  // untuk menampilkan label pada grafik
-                                  dataLabelSettings: const DataLabelSettings(
-                                      showZeroValue: true,
-                                      isVisible: true,
-                                      labelAlignment:
-                                          ChartDataLabelAlignment.middle,
-                                      overflowMode: OverflowMode.trim,
-                                      textStyle:
-                                          TextStyle(color: Colors.white)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+                      //             explodeGesture: ActivationMode.singleTap,
+                      //             explodeOffset: '5',
+                      //             // explodeIndex: 1,
+
+                      //             // untuk menampilkan label pada grafik
+                      //             dataLabelSettings: const DataLabelSettings(
+                      //                 showZeroValue: true,
+                      //                 isVisible: true,
+                      //                 labelAlignment:
+                      //                     ChartDataLabelAlignment.middle,
+                      //                 overflowMode: OverflowMode.trim,
+                      //                 textStyle:
+                      //                     TextStyle(color: Colors.white)),
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                       Expanded(
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 25, 10, 0),
