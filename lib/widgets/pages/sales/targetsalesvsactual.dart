@@ -277,69 +277,60 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage> {
                                 ),
                               ],
                             ),
-                            Column(
-                              children: [
-                                SizedBox(
-                                  height: 400,
-                                  width: double.infinity,
-                                  child: SfCircularChart(
-                                    tooltipBehavior: TooltipBehavior(
-                                      enable: true,
-                                    ),
-                                    annotations: [
-                                      CircularChartAnnotation(
-                                        widget: const Text(
-                                          "ASTRIDO",
-                                          style: TextStyle(
-                                            fontSize: 25.0,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                    series: <CircularSeries>[
-                                      DoughnutSeries<SalesData, String>(
-                                        dataSource: getColumnData(),
-                                        xValueMapper: (SalesData sales, _) =>
-                                            sales.x,
-                                        yValueMapper: (SalesData sales, _) =>
-                                            sales.y,
-                                        pointColorMapper:
-                                            (SalesData sales, _) => sales.color,
-
-                                        innerRadius: '60%',
-                                        radius: '90%',
-                                        explode: true,
-
-                                        explodeGesture:
-                                            ActivationMode.singleTap,
-                                        explodeOffset: '5',
-                                        // explodeIndex: 1,
-
-                                        // untuk menampilkan label pada grafik
-                                        dataLabelSettings:
-                                            const DataLabelSettings(
-                                                showZeroValue: true,
-                                                isVisible: true,
-                                                labelAlignment:
-                                                    ChartDataLabelAlignment
-                                                        .middle,
-                                                overflowMode: OverflowMode.trim,
-                                                textStyle: TextStyle(
-                                                    color: Colors.white)),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Expanded(child: Text("data")),
                           ],
                         ),
                       ),
                       Column(
-                        children: [],
+                        children: [
+                          SizedBox(
+                            height: 400,
+                            width: double.infinity,
+                            child: SfCircularChart(
+                              tooltipBehavior: TooltipBehavior(
+                                enable: true,
+                              ),
+                              annotations: [
+                                CircularChartAnnotation(
+                                  widget: const Text(
+                                    "ASTRIDO",
+                                    style: TextStyle(
+                                      fontSize: 25.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                              series: <CircularSeries>[
+                                DoughnutSeries<SalesData, String>(
+                                  dataSource: getColumnData(),
+                                  xValueMapper: (SalesData sales, _) => sales.x,
+                                  yValueMapper: (SalesData sales, _) => sales.y,
+                                  pointColorMapper: (SalesData sales, _) =>
+                                      sales.color,
+
+                                  innerRadius: '60%',
+                                  radius: '90%',
+                                  explode: true,
+
+                                  explodeGesture: ActivationMode.singleTap,
+                                  explodeOffset: '5',
+                                  // explodeIndex: 1,
+
+                                  // untuk menampilkan label pada grafik
+                                  dataLabelSettings: const DataLabelSettings(
+                                      showZeroValue: true,
+                                      isVisible: true,
+                                      labelAlignment:
+                                          ChartDataLabelAlignment.middle,
+                                      overflowMode: OverflowMode.trim,
+                                      textStyle:
+                                          TextStyle(color: Colors.white)),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                       Expanded(
                         child: Padding(
