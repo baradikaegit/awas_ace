@@ -1,9 +1,18 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_bootstrap/flutter_bootstrap.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -18,6 +27,23 @@ class _MainPageState extends State<MainPage> {
 
   var userNameCtr = TextEditingController();
   var passCtr = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    checkLogin();
+  }
+
+  void checkLogin() async {
+    //periksa cek login, jika user siap login (login otomatis) atau belum siap login (login kembali)
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? val = pref.getString("login"); //token
+    if (val != null) {
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => const HomePage()),
+          (route) => false);
+    }
+  }
 
   @override
   void dispose() {
@@ -346,31 +372,115 @@ class _MainPageState extends State<MainPage> {
   }
 
   void login(context) async {
-    if (passCtr.text == "123456" && userNameCtr.text == "user") {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          duration: Duration(milliseconds: 1000),
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(
-            left: 5,
-            right: 5,
-          ),
-          backgroundColor: Color(0xFF3936AB),
-          content: Text("Sucess..."),
-        ),
-      );
+    if (passCtr.text.isNotEmpty && userNameCtr.text.isNotEmpty) {
+      var url = urlApi();
+      var urlLogin = "${url}Auth/Login";
 
-      Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => const HomePage()),
-          (route) => false);
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Color(0xFF3936AB),
-          content: Text("Invalid User"),
-        ),
-      );
+      final Map<String, String> headers = {
+        HttpHeaders.acceptHeader: "application/json",
+        HttpHeaders.contentTypeHeader: "application/json",
+        // HttpHeaders.authorizationHeader: "Bearer $token",
+      };
+
+      try {
+        var response = await http.post(
+          Uri.parse(urlLogin),
+          headers: headers,
+          body: jsonEncode(
+              {"UserName": userNameCtr.text, "Password": passCtr.text}),
+        );
+
+        final prefs = await SharedPreferences.getInstance();
+
+        if (response.statusCode == 200) {
+          showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return const Column(
+                children: [loadingAnimation()],
+              );
+            },
+          );
+
+          Future.delayed(
+            const Duration(seconds: 2),
+            () async {
+              Navigator.pop(context); //pop dialog close
+
+              final body = jsonDecode(response.body);
+              final success = body['success'].toString();
+
+              if (success == 'true') {
+                //print("Login Token : " + body['token']);
+
+                //body data login
+                String prefId = body['data']['id'].toString();
+                String prefUserName = body['data']['username'];
+                String prefName = body['data']['name'];
+                String prefEmail = body['data']['email'];
+                String prefPhoneNumber = body['data']['phoneNumber'];
+                String prefBranchCode = body['data']['branchCode'];
+                String prefRoles = body['data']['roles'];
+
+                await prefs.setString("id", prefId);
+                await prefs.setString("Username", prefUserName.toUpperCase());
+                await prefs.setString("Name", prefName);
+                await prefs.setString("Email", prefEmail);
+                await prefs.setString("PhoneNumber", prefPhoneNumber);
+                await prefs.setString("BranchCode", prefBranchCode);
+                await prefs.setString("Roles", prefRoles);
+                //body data login
+
+                pageRoute(body['token'], body['message']);
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    behavior: SnackBarBehavior.floating,
+                    backgroundColor: Colors.red,
+                    content: Text("Message : ${body['message']}"),
+                  ),
+                );
+              }
+            },
+          );
+        }
+      } catch (e) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+            content: Text("Terjadi kesalahan : $e"),
+          ),
+        );
+      }
     }
+  }
+
+  void pageRoute(String token, String message) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    await pref.setString("login", token);
+    await pref.setString("message", message);
+
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const HomePage()),
+        (route) => false);
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        duration: Duration(milliseconds: 1000),
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(
+          left: 5,
+          right: 5,
+        ),
+        backgroundColor: Color.fromARGB(
+          255,
+          1,
+          209,
+          29,
+        ),
+        content: Text("Sucess..."),
+      ),
+    );
   }
 }

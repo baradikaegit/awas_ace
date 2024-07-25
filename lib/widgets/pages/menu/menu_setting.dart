@@ -1,6 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:awas_ace/widgets/main_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
@@ -112,8 +116,10 @@ class _SettingPageState extends State<SettingPage> {
                           columnCount: 2,
                           child: FlipAnimation(
                             child: InkWell(
-                              onTap: () =>
-                                  Navigator.pushNamed(context, linkPage[index]),
+                              onTap: () => menuRoles[index] == 'LogOut'
+                                  ? myAlertDialog(context)
+                                  : Navigator.pushNamed(
+                                      context, linkPage[index]),
                               child: Column(
                                 children: <Widget>[
                                   const SizedBox(
@@ -230,6 +236,49 @@ class _SettingPageState extends State<SettingPage> {
             )
           ],
         ),
+      ),
+    );
+  }
+
+  Future<dynamic> myAlertDialog(BuildContext context) {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => AlertDialog(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+        title: const Text("Info"),
+        content: const Text(
+          "Apakah anda yakin ingin keluar?",
+        ),
+        actions: [
+          OutlinedButton(
+            onPressed: () {
+              Navigator.of(context).pop(false);
+            },
+            style: OutlinedButton.styleFrom(
+              side: BorderSide.none,
+            ),
+            child: const Text("Batal"),
+          ),
+          OutlinedButton(
+            onPressed: () async {
+              SharedPreferences pref = await SharedPreferences.getInstance();
+              await pref.clear();
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (BuildContext context) => const MainPage(),
+                ),
+                (route) => false,
+              );
+            },
+            style: OutlinedButton.styleFrom(
+              side: BorderSide.none,
+            ),
+            child: const Text("Ok"),
+          ),
+        ],
       ),
     );
   }

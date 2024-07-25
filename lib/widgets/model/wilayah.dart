@@ -5,21 +5,21 @@ Wilayah wilayahFromJson(String str) => Wilayah.fromJson(json.decode(str));
 String wilayahToJson(Wilayah data) => json.encode(data.toJson());
 
 class Wilayah {
-  String id;
+  int no;
   String text;
 
   Wilayah({
-    required this.id,
+    required this.no,
     required this.text,
   });
 
   factory Wilayah.fromJson(Map<String, dynamic> json) => Wilayah(
-        id: json["id"],
+        no: json["no"],
         text: json["text"],
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "no": no,
         "text": text,
       };
   @override

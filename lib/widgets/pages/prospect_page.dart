@@ -1,5 +1,15 @@
-import 'dart:convert';
+// ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/main_page.dart';
+import 'package:awas_ace/widgets/model/custtypemodel.dart';
+import 'package:awas_ace/widgets/model/kisaranhargamodel.dart';
+import 'package:awas_ace/widgets/model/sumberdatamodel.dart';
+import 'package:awas_ace/widgets/model/tipepelangganmodel.dart';
+import 'package:awas_ace/widgets/model/vgroupmodel.dart';
 import 'package:awas_ace/widgets/model/wilayah.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootstrap/flutter_bootstrap.dart';
@@ -7,6 +17,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart ' as http;
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProspectPage extends StatefulWidget {
   const ProspectPage({super.key});
@@ -25,10 +36,37 @@ class ModelSelect {
 
 class _ProspectPageState extends State<ProspectPage>
     with TickerProviderStateMixin {
-  TextEditingController tglcontact = TextEditingController();
-  final TextEditingController kodePos = TextEditingController();
+  //STEP 1
+  TextEditingController tglContactController = TextEditingController();
+  TextEditingController lokasiBertemuController = TextEditingController();
+  final TextEditingController idKodePosController = TextEditingController();
+  final TextEditingController kodePosController = TextEditingController();
+  final TextEditingController idAreaController = TextEditingController();
+  final TextEditingController areaController = TextEditingController();
+  final TextEditingController sumberDataController = TextEditingController();
+  final TextEditingController rencanaPembelianController =
+      TextEditingController();
+  final TextEditingController prospectStatusController =
+      TextEditingController();
+
+  //STEP 2
+  TextEditingController nameContactContactController = TextEditingController();
+  TextEditingController noHP1ContactController = TextEditingController();
+  TextEditingController noHP2ContactController = TextEditingController();
+  final TextEditingController jKController = TextEditingController();
+  TextEditingController alamatController = TextEditingController();
+  final TextEditingController idKodePosS2Controller = TextEditingController();
+  final TextEditingController kodePosS2Controller = TextEditingController();
+  final TextEditingController idAreaS2Controller = TextEditingController();
+  final TextEditingController areaS2Controller = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  final TextEditingController idCustTypeS2Controller = TextEditingController();
+  final TextEditingController custTypeS2Controller = TextEditingController();
   TextEditingController jabatanController = TextEditingController();
-  TextEditingController hKendaraanController = TextEditingController();
+  final TextEditingController hKendaraanController = TextEditingController();
+  final TextEditingController tipePelangganController = TextEditingController();
+
+  //STEP 3
   TextEditingController modelController = TextEditingController();
   TextEditingController tahunController = TextEditingController();
   TextEditingController bahanBakarController = TextEditingController();
@@ -46,25 +84,41 @@ class _ProspectPageState extends State<ProspectPage>
 
   late TabController _tabController;
 
-  String idProv = '';
+  //STEP 1
   String nameProv = '';
   String nameKab = '';
   String nameKec = '';
   String nameKel = '';
   String idKodePos = '';
+  String kodePos = '';
+  String idArea = '';
+  String area = '';
+  String iDSumberData = '';
+  String sumberData = '';
+  String iDRencanaPembelian = '';
+  String rencanaPembelian = '';
 
+  //STEP 2
+  String jkValue = '';
+  int jkId = 0;
   String nameProvS2 = '';
   String nameKabS2 = '';
   String nameKecS2 = '';
   String nameKelS2 = '';
-
-  String jkValue = '';
-  int jkId = 0;
-  String tipeCustVal = '';
+  String idKodePosS2 = '';
+  String kodePosS2 = '';
+  String idAreaS2 = '';
+  String areaS2 = '';
+  String idTipeCustS2 = '';
+  String tipeCustS2 = '';
+  int? valTipeCutS2;
   String jabatanVal = '';
-  String kisaranHargaKendaraanVal = '';
-  int idHargaKendaraanVal = 0;
-  String tipePelangganVal = '';
+  String hargaKendaraan = '';
+  String idHargaKendaraan = '';
+  String idTipePelanggan = '';
+  String tipePelanggan = '';
+
+  //STEP 3
   String kendaraanVal = '';
   String tahunVal = '';
   String bahanBakarVal = '';
@@ -83,11 +137,19 @@ class _ProspectPageState extends State<ProspectPage>
   bool check = false;
 
   final List _dataFromApi = [];
-  //final List<Map<String, dynamic>> _dataFromApi = [];
+  final List _dataFromApiArea = [];
 
-  List<ModelSelect> selectOptions = [
+  List<ModelSelect> rencanaPembelianOptions = [
+    ModelSelect('1 Minggu Kedepan', 1),
+    ModelSelect('2 Minggu Kedepan', 2),
+    ModelSelect('3 Minggu Kedepan', 3),
+    ModelSelect('1 Bulan Kedepan', 4),
+    ModelSelect('Lebih Dari 1 Bulan Kedepan', 5)
+  ];
+
+  List<ModelSelect> jKOptions = [
     ModelSelect('Laki - Laki', 1),
-    ModelSelect('Perempuan', 2)
+    ModelSelect('Perempuan', 0)
   ];
 
   List<ModelSelect> tipeCustOptions = [
@@ -111,14 +173,6 @@ class _ProspectPageState extends State<ProspectPage>
     ModelSelect('251 jt s/d 400jt', 2),
     ModelSelect('401 jt s/d 600jt', 3),
     ModelSelect('> 600 jt', 4),
-  ];
-
-  List<ModelSelect> kendaraanOptions = [
-    ModelSelect('AGYA', 1),
-    ModelSelect('AVANZA', 2),
-    ModelSelect('RUSH', 3),
-    ModelSelect('VELOZ', 4),
-    ModelSelect('INNOVA', 4),
   ];
 
   List<ModelSelect> bahanBakarOptions = [
@@ -157,18 +211,26 @@ class _ProspectPageState extends State<ProspectPage>
     ModelSelect('Perusahaan', 2),
   ];
 
-  void fetchDataFromApi(String idKab, String idKec) async {
+  void fetchDataKodePos(
+      String nameProv, String nameKab, String nameKec, String nameKel) async {
     var url = Uri.parse(
-      'https://alamat.thecloudalert.com/api/kodepos/get/?d_kabkota_id=$idKab&d_kecamatan_id=$idKec',
+      "${urlApi()}Wilayah/GetWilayahKodePos/$nameProv/$nameKab/$nameKec/$nameKel",
     );
 
     //print(url);
     try {
-      var response = await http.get(url);
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString("login");
+
+      var response = await http.get(url, headers: {
+        HttpHeaders.acceptHeader: "application/json",
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token",
+      });
 
       if (response.statusCode == 200) {
         List data =
-            (jsonDecode(response.body) as Map<String, dynamic>)["result"];
+            (jsonDecode(response.body) as Map<String, dynamic>)["listWilayah"];
 
         for (var element in data) {
           _dataFromApi.add(element);
@@ -176,23 +238,226 @@ class _ProspectPageState extends State<ProspectPage>
 
         setState(() {
           for (int a = 0; a < _dataFromApi.length; a++) {
-            idKodePos = _dataFromApi[a]["text"];
-            kodePos.text = idKodePos;
-            print("KodePos : $idKodePos");
+            idKodePos = _dataFromApi[a]["iD"];
+            kodePos = _dataFromApi[a]["text"];
+            idKodePosController.text = idKodePos;
+            kodePosController.text = kodePos;
+
+            fetchDataFromApi(idKodePos);
+            // print("KodePos : $idKodePos");
           }
         });
       } else {
-        print('Gagal mengambil data: ${response.statusCode}');
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.clear();
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const MainPage()),
+            (route) => false);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+            content: Text("Gagal mengambil data: Silahkan Login Kembali"),
+          ),
+        );
       }
     } catch (error) {
-      print('Error: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+          content: Text("Terjadi Kesalahan: $error"),
+        ),
+      );
+    }
+  }
+
+  void fetchDataFromApi(String idKodePos) async {
+    var url = Uri.parse(
+      "${urlApi()}Wilayah/GetWilayahArea/$idKodePos",
+    );
+
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString("login");
+
+      var responseArea = await http.get(url, headers: {
+        HttpHeaders.acceptHeader: "application/json",
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token",
+      });
+
+      if (responseArea.statusCode == 200) {
+        List dataArea = (jsonDecode(responseArea.body)
+            as Map<String, dynamic>)["listWilayah"];
+
+        for (var e in dataArea) {
+          _dataFromApiArea.add(e);
+        }
+
+        setState(() {
+          for (int areaObj = 0; areaObj < _dataFromApiArea.length; areaObj++) {
+            idArea = _dataFromApiArea[areaObj]["ring"];
+            area = _dataFromApiArea[areaObj]["ringKet"];
+
+            idAreaController.text = idArea;
+            areaController.text = area;
+          }
+        });
+      } else {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.clear();
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const MainPage()),
+            (route) => false);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+            content: Text("Gagal mengambil data: Silahkan Login Kembali"),
+          ),
+        );
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+          content: Text("Terjadi Kesalahan: $error"),
+        ),
+      );
+    }
+  }
+
+  void fetchDataKodePosS2(String nameProvS2, String nameKabS2, String nameKecS2,
+      String nameKelS2) async {
+    var url = Uri.parse(
+      "${urlApi()}Wilayah/GetWilayahKodePos/$nameProvS2/$nameKabS2/$nameKecS2/$nameKelS2",
+    );
+
+    //print(url);
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString("login");
+
+      var response = await http.get(url, headers: {
+        HttpHeaders.acceptHeader: "application/json",
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token",
+      });
+
+      if (response.statusCode == 200) {
+        List data =
+            (jsonDecode(response.body) as Map<String, dynamic>)["listWilayah"];
+
+        for (var element in data) {
+          _dataFromApi.add(element);
+        }
+
+        setState(() {
+          for (int a = 0; a < _dataFromApi.length; a++) {
+            idKodePosS2 = _dataFromApi[a]["iD"];
+            kodePosS2 = _dataFromApi[a]["text"];
+            idKodePosS2Controller.text = idKodePosS2;
+            kodePosS2Controller.text = kodePosS2;
+
+            fetchDataFromApiS2(idKodePosS2);
+          }
+        });
+      } else {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.clear();
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const MainPage()),
+            (route) => false);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+            content: Text("Gagal mengambil data: Silahkan Login Kembali"),
+          ),
+        );
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+          content: Text("Terjadi Kesalahan: $error"),
+        ),
+      );
+    }
+  }
+
+  void fetchDataFromApiS2(String idKodePosS2) async {
+    var url = Uri.parse(
+      "${urlApi()}Wilayah/GetWilayahArea/$idKodePosS2",
+    );
+
+    try {
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      String? token = pref.getString("login");
+
+      var responseArea = await http.get(url, headers: {
+        HttpHeaders.acceptHeader: "application/json",
+        HttpHeaders.contentTypeHeader: "application/json",
+        HttpHeaders.authorizationHeader: "Bearer $token",
+      });
+
+      if (responseArea.statusCode == 200) {
+        List dataArea = (jsonDecode(responseArea.body)
+            as Map<String, dynamic>)["listWilayah"];
+
+        for (var e in dataArea) {
+          _dataFromApiArea.add(e);
+        }
+
+        setState(() {
+          for (int areaObj = 0; areaObj < _dataFromApiArea.length; areaObj++) {
+            idAreaS2 = _dataFromApiArea[areaObj]["ring"];
+            areaS2 = _dataFromApiArea[areaObj]["ringKet"];
+
+            idAreaS2Controller.text = idAreaS2;
+            areaS2Controller.text = areaS2;
+          }
+        });
+      } else {
+        SharedPreferences pref = await SharedPreferences.getInstance();
+        await pref.clear();
+
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => const MainPage()),
+            (route) => false);
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+            content: Text("Gagal mengambil data: Silahkan Login Kembali"),
+          ),
+        );
+      }
+    } catch (error) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+          content: Text("Terjadi Kesalahan: $error"),
+        ),
+      );
     }
   }
 
   @override
   void initState() {
     super.initState();
-    tglcontact.text = "";
+    tglContactController.text = "";
     _tabController = TabController(vsync: this, length: 4);
     _tabController.addListener(_handleTabSelection);
     //fetchDataFromApi(idKab, idKec);
@@ -575,7 +840,7 @@ class _ProspectPageState extends State<ProspectPage>
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
-                                              controller: tglcontact,
+                                              controller: tglContactController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -631,12 +896,13 @@ class _ProspectPageState extends State<ProspectPage>
                                                       DateFormat('yyyy-MM-dd')
                                                           .format(pickedDate);
                                                   setState(() {
-                                                    tglcontact.text =
+                                                    tglContactController.text =
                                                         formatDate;
                                                   });
                                                 } else {
                                                   //print("Tanggal tidak dipilih");
-                                                  tglcontact.text = "";
+                                                  tglContactController.text =
+                                                      "";
                                                 }
                                               },
                                             ),
@@ -667,6 +933,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                 color: Colors.white,
                                               ),
                                               autocorrect: false,
+                                              controller:
+                                                  lokasiBertemuController,
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
@@ -746,10 +1014,11 @@ class _ProspectPageState extends State<ProspectPage>
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
-                                                  title: Text(item.text),
+                                                  title: Text(
+                                                    item.text.toUpperCase(),
+                                                  ),
                                                 ),
                                               ),
-
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -796,16 +1065,23 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  idProv = value!.id;
-                                                  nameProv = value.text;
-                                                  print("idProvinsi : $idProv");
+                                                  nameProv = value!.text;
+                                                  nameKab = '';
+                                                  nameKec = '';
+                                                  nameKel = '';
+                                                  kodePosController.clear();
+                                                  idKodePosController.clear();
+                                                  idAreaController.clear();
+                                                  areaController.clear();
+                                                  // print(
+                                                  //     "idProvinsi : $nameProv");
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 nameProv != ''
-                                                    ? nameProv
+                                                    ? nameProv.toUpperCase()
                                                     : "Belum memilih provinsi",
                                                 style: textStyleColorWhite,
                                               ),
@@ -813,8 +1089,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (String filter) async {
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    //"https://api.binderbyte.com/wilayah/provinsi?api_key=$apiKey",
-                                                    "https://alamat.thecloudalert.com/api/provinsi/get/",
+                                                    "${urlApi()}Wilayah/GetWilayahProvinsi",
                                                   ),
                                                 );
                                                 if (response.statusCode !=
@@ -823,8 +1098,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                 }
                                                 List allWilayah =
                                                     (jsonDecode(response.body)
-                                                        as Map<String,
-                                                            dynamic>)["result"];
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listWilayah"];
                                                 List<Wilayah> allModelWilayah =
                                                     [];
 
@@ -832,7 +1108,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                     in allWilayah) {
                                                   allModelWilayah.add(
                                                     Wilayah(
-                                                      id: element["id"],
+                                                      no: element["no"],
                                                       text: element["text"],
                                                     ),
                                                   );
@@ -874,7 +1150,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
-                                                  title: Text(item.text),
+                                                  title: Text(
+                                                      item.text.toUpperCase()),
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
@@ -923,18 +1200,14 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  idKab = value!.id;
-                                                  nameKab = value.text;
-                                                  fetchDataFromApi(
-                                                      idKab, idKec);
-                                                  print("Kota : $idKab");
+                                                  nameKab = value!.text;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 nameKab != ''
-                                                    ? nameKab
+                                                    ? nameKab.toUpperCase()
                                                     : "Belum memilih kota",
                                                 style: textStyleColorWhite,
                                               ),
@@ -942,7 +1215,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (String filter) async {
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    "https://alamat.thecloudalert.com/api/kabkota/get/?d_provinsi_id=$idProv",
+                                                    "${urlApi()}Wilayah/GetWilayahKota/$nameProv",
                                                   ),
                                                 );
                                                 if (response.statusCode !=
@@ -951,8 +1224,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                 }
                                                 List allWilayah =
                                                     (jsonDecode(response.body)
-                                                        as Map<String,
-                                                            dynamic>)["result"];
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listWilayah"];
                                                 List<Wilayah> allModelWilayah =
                                                     [];
 
@@ -960,7 +1234,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                     in allWilayah) {
                                                   allModelWilayah.add(
                                                     Wilayah(
-                                                      id: element["id"],
+                                                      no: element["no"],
                                                       text: element["text"],
                                                     ),
                                                   );
@@ -1006,7 +1280,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
-                                                  title: Text(item.text),
+                                                  title: Text(
+                                                      item.text.toUpperCase()),
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
@@ -1055,18 +1330,14 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  idKec = value!.id;
-                                                  nameKec = value.text;
-                                                  fetchDataFromApi(
-                                                      idKab, idKec);
-                                                  print("Kecamatan : $idKec");
+                                                  nameKec = value!.text;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 nameKec != ''
-                                                    ? nameKec
+                                                    ? nameKec.toUpperCase()
                                                     : "Belum memilih kecamatan",
                                                 style: textStyleColorWhite,
                                               ),
@@ -1074,7 +1345,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (String filter) async {
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    "https://alamat.thecloudalert.com/api/kecamatan/get/?d_kabkota_id=$idKab",
+                                                    "${urlApi()}Wilayah/GetWilayahKecamatan/$nameProv/$nameKab",
                                                   ),
                                                 );
                                                 if (response.statusCode !=
@@ -1083,8 +1354,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                 }
                                                 List allWilayah =
                                                     (jsonDecode(response.body)
-                                                        as Map<String,
-                                                            dynamic>)["result"];
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listWilayah"];
                                                 List<Wilayah> allModelWilayah =
                                                     [];
 
@@ -1092,7 +1364,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                     in allWilayah) {
                                                   allModelWilayah.add(
                                                     Wilayah(
-                                                      id: element["id"],
+                                                      no: element["no"],
                                                       text: element["text"],
                                                     ),
                                                   );
@@ -1134,7 +1406,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
-                                                  title: Text(item.text),
+                                                  title: Text(
+                                                      item.text.toUpperCase()),
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
@@ -1183,15 +1456,22 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  idKel = value!.id;
-                                                  nameKel = value.text;
+                                                  nameKel = value!.text;
+                                                  fetchDataKodePos(
+                                                      nameProv,
+                                                      nameKab,
+                                                      nameKec,
+                                                      nameKel);
+
+                                                  print(
+                                                      "$nameProv, $nameKab, $nameKec, $nameKel");
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 nameKel != ''
-                                                    ? nameKel
+                                                    ? nameKel.toUpperCase()
                                                     : "Belum memilih kelurahan",
                                                 style: textStyleColorWhite,
                                               ),
@@ -1199,7 +1479,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (String filter) async {
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                      "https://alamat.thecloudalert.com/api/kelurahan/get/?d_kecamatan_id=$idKec"),
+                                                    "${urlApi()}Wilayah/GetWilayahKelurahan/$nameProv/$nameKab/$nameKec",
+                                                  ),
                                                 );
                                                 if (response.statusCode !=
                                                     200) {
@@ -1207,8 +1488,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                 }
                                                 List allWilayah =
                                                     (jsonDecode(response.body)
-                                                        as Map<String,
-                                                            dynamic>)["result"];
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listWilayah"];
                                                 List<Wilayah> allModelWilayah =
                                                     [];
 
@@ -1216,7 +1498,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                     in allWilayah) {
                                                   allModelWilayah.add(
                                                     Wilayah(
-                                                      id: element["id"],
+                                                      no: element["no"],
                                                       text: element["text"],
                                                     ),
                                                   );
@@ -1251,7 +1533,7 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
-                                              controller: kodePos,
+                                              controller: kodePosController,
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
@@ -1300,46 +1582,16 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                             ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                    BootstrapCol(
-                                      sizes: 'col-md-6 col-12',
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 15),
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "Sumber Data :",
-                                                style: textStyleColorWhite,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 20),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
+                                              controller: idKodePosController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
-                                                hintText: 'Sumber Data',
+                                                hintText: 'Kode Pos',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Sumber Data',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -1350,95 +1602,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                BootstrapRow(
-                                  children: <BootstrapCol>[
-                                    BootstrapCol(
-                                      sizes: 'col-md-6 col-12',
-                                      child: Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 15),
-                                            child: Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "Rencana Pembelian :",
-                                                style: textStyleColorWhite,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 20),
-                                            child: TextFormField(
-                                              style: const TextStyle(
-                                                color: Colors.white,
-                                              ),
-                                              //controller: userNameCtr,
-                                              autocorrect: false,
-                                              textInputAction:
-                                                  TextInputAction.next,
-                                              decoration: InputDecoration(
-                                                hintText: 'Rencana Pembelian',
-                                                hintStyle: textStyleColorWhite,
-                                                labelText: 'Rencana Pembelian',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
-                                                enabledBorder:
-                                                    const OutlineInputBorder(
-                                                  borderSide: BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                  ),
-                                                ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -1469,6 +1632,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 color: Colors.white,
                                               ),
                                               autocorrect: false,
+                                              controller: areaController,
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
@@ -1508,6 +1672,384 @@ class _ProspectPageState extends State<ProspectPage>
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           10.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: idAreaController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Area',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                BootstrapRow(
+                                  children: <BootstrapCol>[
+                                    BootstrapCol(
+                                      sizes: 'col-md-6 col-12',
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 15),
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "Sumber Data :",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 20),
+                                            child: DropdownSearch<SumberData>(
+                                              popupProps: PopupProps.dialog(
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                    vertical: BorderSide.none,
+                                                  ),
+                                                ),
+                                                showSearchBox: true,
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                    item.name.toUpperCase(),
+                                                  ),
+                                                ),
+                                              ),
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Sumber Data',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  iDSumberData = value!.iD;
+                                                  sumberData = value.name;
+                                                  sumberDataController.text =
+                                                      iDSumberData;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                sumberData != ''
+                                                    ? sumberData.toUpperCase()
+                                                    : "Belum memilih sumber data",
+                                                style: textStyleColorWhite,
+                                              ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetSumberData",
+                                                  ),
+                                                );
+
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allSumberData =
+                                                    (jsonDecode(response.body)
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listSumberData"];
+                                                List<SumberData>
+                                                    allModelSumberData = [];
+
+                                                for (var element
+                                                    in allSumberData) {
+                                                  allModelSumberData.add(
+                                                    SumberData(
+                                                      iD: element["iD"],
+                                                      name: element["name"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelSumberData;
+                                              },
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: sumberDataController,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                              autocorrect: false,
+                                              decoration: InputDecoration(
+                                                hintText: 'Sumber Data',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    BootstrapCol(
+                                      sizes: 'col-md-6 col-12',
+                                      child: Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 15),
+                                            child: Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Text(
+                                                "Rencana Pembelian :",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 20),
+                                            child: DropdownSearch<ModelSelect>(
+                                              popupProps:
+                                                  const PopupProps.dialog(
+                                                dialogProps: DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search...",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide: BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              items: rencanaPembelianOptions,
+                                              itemAsString: (ModelSelect
+                                                      rencanaPembelianOptions) =>
+                                                  rencanaPembelianOptions.value,
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText:
+                                                      'Rencana Pembelian',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (ModelSelect? value) {
+                                                setState(() {
+                                                  iDRencanaPembelian =
+                                                      value!.id.toString();
+                                                  rencanaPembelian =
+                                                      value.value;
+                                                  rencanaPembelianController
+                                                          .text =
+                                                      iDRencanaPembelian;
+
+                                                  if (iDRencanaPembelian ==
+                                                          '4' ||
+                                                      iDRencanaPembelian ==
+                                                          '5') {
+                                                    prospectStatusController
+                                                        .text = '1';
+                                                  } else if (iDRencanaPembelian ==
+                                                      '3') {
+                                                    prospectStatusController
+                                                        .text = '2';
+                                                  } else {
+                                                    prospectStatusController
+                                                        .text = '3';
+                                                  }
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                rencanaPembelian != ''
+                                                    ? rencanaPembelian
+                                                    : "Belum memilih rencana pembelian",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller:
+                                                  rencanaPembelianController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Rencana Pembelian',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller:
+                                                  prospectStatusController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Prospect Status',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -1652,6 +2194,8 @@ class _ProspectPageState extends State<ProspectPage>
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
+                                              controller:
+                                                  nameContactContactController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -1721,6 +2265,8 @@ class _ProspectPageState extends State<ProspectPage>
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
+                                              controller:
+                                                  noHP1ContactController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -1794,7 +2340,8 @@ class _ProspectPageState extends State<ProspectPage>
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
-                                              //controller: userNameCtr,
+                                              controller:
+                                                  noHP2ContactController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -1915,7 +2462,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                                   (context) {
                                                                 return ListView
                                                                     .separated(
-                                                                        itemCount: selectOptions
+                                                                        itemCount: jKOptions
                                                                             .length,
                                                                         separatorBuilder: (context,
                                                                             int
@@ -1928,12 +2475,13 @@ class _ProspectPageState extends State<ProspectPage>
                                                                           return GestureDetector(
                                                                               child: Padding(
                                                                                 padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
-                                                                                child: Text(selectOptions[indexSelect].value.toUpperCase()),
+                                                                                child: Text(jKOptions[indexSelect].value.toUpperCase()),
                                                                               ),
                                                                               onTap: () {
                                                                                 setState(() {
-                                                                                  jkValue = selectOptions[indexSelect].value.toUpperCase();
-                                                                                  jkId = selectOptions[indexSelect].id;
+                                                                                  jkValue = jKOptions[indexSelect].value.toUpperCase();
+                                                                                  jkId = jKOptions[indexSelect].id;
+                                                                                  jKController.text = jkId.toString();
                                                                                 });
                                                                                 Navigator.of(context).pop();
                                                                               });
@@ -1955,6 +2503,30 @@ class _ProspectPageState extends State<ProspectPage>
                                                         ),
                                                       ),
                                                     ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: jKController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Jabatan',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -1986,7 +2558,10 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
-                                              //controller: userNameCtr,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                              controller: alamatController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -2064,7 +2639,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
-                                                  title: Text(item.text),
+                                                  title: Text(
+                                                      item.text.toUpperCase()),
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
@@ -2113,17 +2689,22 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  idProvS2 = value!.id;
-                                                  nameProvS2 = value.text;
-                                                  print(
-                                                      "idProvinsi : $idProvS2");
+                                                  nameProvS2 = value!.text;
+                                                  nameKabS2 = '';
+                                                  nameKecS2 = '';
+                                                  nameKelS2 = '';
+                                                  idKodePosS2Controller.clear();
+                                                  kodePosS2Controller.clear();
+
+                                                  // print(
+                                                  //     "idProvinsi : $nameProvS2");
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 nameProvS2 != ''
-                                                    ? nameProvS2
+                                                    ? nameProvS2.toUpperCase()
                                                     : "Belum memilih provinsi",
                                                 style: textStyleColorWhite,
                                               ),
@@ -2131,7 +2712,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (String filter) async {
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    "https://alamat.thecloudalert.com/api/provinsi/get/",
+                                                    "${urlApi()}Wilayah/GetWilayahProvinsi",
                                                   ),
                                                 );
                                                 if (response.statusCode !=
@@ -2140,8 +2721,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                 }
                                                 List allWilayah =
                                                     (jsonDecode(response.body)
-                                                        as Map<String,
-                                                            dynamic>)["result"];
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listWilayah"];
                                                 List<Wilayah> allModelWilayah =
                                                     [];
 
@@ -2149,7 +2731,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                     in allWilayah) {
                                                   allModelWilayah.add(
                                                     Wilayah(
-                                                      id: element["id"],
+                                                      no: element["no"],
                                                       text: element["text"],
                                                     ),
                                                   );
@@ -2195,7 +2777,8 @@ class _ProspectPageState extends State<ProspectPage>
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
-                                                  title: Text(item.text),
+                                                  title: Text(
+                                                      item.text.toUpperCase()),
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
@@ -2244,17 +2827,14 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  idKabS2 = value!.id;
-                                                  nameKabS2 = value.text;
-
-                                                  print("Kota : $idKabS2");
+                                                  nameKabS2 = value!.text;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 nameKabS2 != ''
-                                                    ? nameKabS2
+                                                    ? nameKabS2.toUpperCase()
                                                     : "Belum memilih kota",
                                                 style: textStyleColorWhite,
                                               ),
@@ -2262,7 +2842,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (String filter) async {
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    "https://alamat.thecloudalert.com/api/kabkota/get/?d_provinsi_id=$idProvS2",
+                                                    "${urlApi()}Wilayah/GetWilayahKota/$nameProvS2",
                                                   ),
                                                 );
                                                 if (response.statusCode !=
@@ -2271,8 +2851,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                 }
                                                 List allWilayah =
                                                     (jsonDecode(response.body)
-                                                        as Map<String,
-                                                            dynamic>)["result"];
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listWilayah"];
                                                 List<Wilayah> allModelWilayah =
                                                     [];
 
@@ -2280,7 +2861,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                     in allWilayah) {
                                                   allModelWilayah.add(
                                                     Wilayah(
-                                                      id: element["id"],
+                                                      no: element["no"],
                                                       text: element["text"],
                                                     ),
                                                   );
@@ -2371,17 +2952,14 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  idKecS2 = value!.id;
-                                                  nameKecS2 = value.text;
-
-                                                  print("Kecamatan : $idKecS2");
+                                                  nameKecS2 = value!.text;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 nameKecS2 != ''
-                                                    ? nameKecS2
+                                                    ? nameKecS2.toUpperCase()
                                                     : "Belum memilih kecamatan",
                                                 style: textStyleColorWhite,
                                               ),
@@ -2389,7 +2967,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (String filter) async {
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    "https://alamat.thecloudalert.com/api/kecamatan/get/?d_kabkota_id=$idKabS2",
+                                                    "${urlApi()}Wilayah/GetWilayahKecamatan/$nameProvS2/$nameKabS2",
                                                   ),
                                                 );
                                                 if (response.statusCode !=
@@ -2398,8 +2976,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                 }
                                                 List allWilayah =
                                                     (jsonDecode(response.body)
-                                                        as Map<String,
-                                                            dynamic>)["result"];
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listWilayah"];
                                                 List<Wilayah> allModelWilayah =
                                                     [];
 
@@ -2407,7 +2986,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                     in allWilayah) {
                                                   allModelWilayah.add(
                                                     Wilayah(
-                                                      id: element["id"],
+                                                      no: element["no"],
                                                       text: element["text"],
                                                     ),
                                                   );
@@ -2502,17 +3081,20 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  idKelS2 = value!.id;
-                                                  nameKelS2 = value.text;
-
-                                                  print("kelurahan : $idKelS2");
+                                                  nameKelS2 = value!.text;
+                                                  fetchDataKodePosS2(
+                                                    nameProvS2,
+                                                    nameKabS2,
+                                                    nameKecS2,
+                                                    nameKelS2,
+                                                  );
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 nameKelS2 != ''
-                                                    ? nameKelS2
+                                                    ? nameKelS2.toUpperCase()
                                                     : "Belum memilih kelurahan",
                                                 style: textStyleColorWhite,
                                               ),
@@ -2520,7 +3102,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (String filter) async {
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    "https://alamat.thecloudalert.com/api/kelurahan/get/?d_kecamatan_id=$idKecS2",
+                                                    "${urlApi()}Wilayah/GetWilayahKelurahan/$nameProvS2/$nameKabS2/$nameKecS2",
                                                   ),
                                                 );
                                                 if (response.statusCode !=
@@ -2529,8 +3111,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                 }
                                                 List allWilayah =
                                                     (jsonDecode(response.body)
-                                                        as Map<String,
-                                                            dynamic>)["result"];
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listWilayah"];
                                                 List<Wilayah> allModelWilayah =
                                                     [];
 
@@ -2538,7 +3121,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                     in allWilayah) {
                                                   allModelWilayah.add(
                                                     Wilayah(
-                                                      id: element["id"],
+                                                      no: element["no"],
                                                       text: element["text"],
                                                     ),
                                                   );
@@ -2569,7 +3152,10 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
-                                              //controller: userNameCtr,
+                                              controller: kodePosS2Controller,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -2614,6 +3200,30 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                             ),
                                           ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: idKodePosS2Controller,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Kode Pos',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -2640,6 +3250,10 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                              controller: areaS2Controller,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -2684,6 +3298,30 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                             ),
                                           ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: idAreaS2Controller,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Area',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -2706,7 +3344,10 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
-                                              //controller: userNameCtr,
+                                              style: const TextStyle(
+                                                color: Colors.white,
+                                              ),
+                                              controller: emailController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -2776,100 +3417,142 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: Container(
-                                              height: 55,
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      20, 0, 25, 0),
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  1,
-                                                  53,
-                                                  131,
+                                            child: DropdownSearch<CustType>(
+                                              popupProps: PopupProps.dialog(
+                                                // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
                                                 ),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                  width: 2,
+                                                showSearchBox: true,
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                      item.name.toUpperCase()),
                                                 ),
                                               ),
-                                              child: ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(
-                                                  minWidth: double.infinity,
-                                                ),
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      InkWell(
-                                                        onTap: () {
-                                                          showModalBottomSheet(
-                                                              shape:
-                                                                  const RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .vertical(
-                                                                  top: Radius
-                                                                      .circular(
-                                                                          20.0),
-                                                                ),
-                                                              ),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return ListView
-                                                                    .separated(
-                                                                        itemCount: tipeCustOptions
-                                                                            .length,
-                                                                        separatorBuilder: (context,
-                                                                            int
-                                                                                int) {
-                                                                          return const Divider();
-                                                                        },
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                indexSelect) {
-                                                                          return GestureDetector(
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
-                                                                                child: Text(tipeCustOptions[indexSelect].value.toUpperCase()),
-                                                                              ),
-                                                                              onTap: () {
-                                                                                setState(() {
-                                                                                  tipeCustVal = tipeCustOptions[indexSelect].value.toUpperCase();
-                                                                                });
-                                                                                Navigator.of(context).pop();
-                                                                              });
-                                                                        });
-                                                              });
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  80, 5, 80, 5),
-                                                          child: Text(
-                                                            tipeCustVal != ''
-                                                                ? tipeCustVal
-                                                                : "CHOOSE",
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Tipe Customer',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
                                                       ),
-                                                    ],
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  idTipeCustS2 =
+                                                      value!.iD.toString();
+                                                  tipeCustS2 = value.name;
+                                                  valTipeCutS2 = value.val;
+
+                                                  idCustTypeS2Controller.text =
+                                                      idTipeCustS2;
+                                                  custTypeS2Controller.text =
+                                                      tipeCustS2;
+                                                  // print(
+                                                  //     "idProvinsi : $nameProvS2");
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                tipeCustS2 != ''
+                                                    ? tipeCustS2.toUpperCase()
+                                                    : "Belum memilih tipe customer",
+                                                style: textStyleColorWhite,
+                                              ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetCustType",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allCustType =
+                                                    (jsonDecode(response.body)
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listCustType"];
+                                                List<CustType>
+                                                    allModelCustType = [];
+
+                                                for (var element
+                                                    in allCustType) {
+                                                  allModelCustType.add(
+                                                    CustType(
+                                                      iD: element["iD"],
+                                                      name: element["name"],
+                                                      val: element["val"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelCustType;
+                                              },
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller:
+                                                  idCustTypeS2Controller,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Tipe Customer',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -3051,53 +3734,21 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: DropdownSearch<ModelSelect>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
+                                            child: DropdownSearch<KisaranHarga>(
+                                              popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
-                                                dialogProps: DialogProps(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
-                                                searchFieldProps:
-                                                    TextFieldProps(
-                                                  decoration: InputDecoration(
-                                                    hintText: "Search...",
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                        width: 2,
-                                                      ),
-                                                    ),
-                                                  ),
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(item.name),
                                                 ),
                                               ),
-                                              items: hargaKendaranOptions,
-                                              // selectOptions
-                                              //     .map(
-                                              //         (e) => e.value.toString())
-                                              //     .toList(),
-                                              itemAsString: (ModelSelect u) =>
-                                                  u.value,
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -3143,22 +3794,54 @@ class _ProspectPageState extends State<ProspectPage>
                                                   ),
                                                 ),
                                               ),
-                                              onChanged: (ModelSelect? value) {
+                                              onChanged: (value) {
                                                 setState(() {
-                                                  kisaranHargaKendaraanVal =
-                                                      value!.value.toString();
+                                                  idHargaKendaraan =
+                                                      value!.iD.toString();
+                                                  hargaKendaraan = value.name;
+
                                                   hKendaraanController.text =
-                                                      kisaranHargaKendaraanVal;
+                                                      idHargaKendaraan;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
-                                                kisaranHargaKendaraanVal != ''
-                                                    ? kisaranHargaKendaraanVal
-                                                    : "Belum memilih Kisaran Harga Kendaraan",
+                                                hargaKendaraan != ''
+                                                    ? hargaKendaraan
+                                                    : "Belum memilih kisaran harga kendaraan",
                                                 style: textStyleColorWhite,
                                               ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetKisaranHarga",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allKisaranHarga =
+                                                    (jsonDecode(response.body)
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listKisaranHarga"];
+                                                List<KisaranHarga>
+                                                    allModelKisaranHarga = [];
+
+                                                for (var element
+                                                    in allKisaranHarga) {
+                                                  allModelKisaranHarga.add(
+                                                    KisaranHarga(
+                                                      iD: element["iD"],
+                                                      name: element["name"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelKisaranHarga;
+                                              },
                                             ),
                                           ),
                                           Visibility(
@@ -3207,51 +3890,23 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: DropdownSearch<String>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
+                                            child:
+                                                DropdownSearch<TipePelanggan>(
+                                              popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
-                                                dialogProps: DialogProps(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
-                                                searchFieldProps:
-                                                    TextFieldProps(
-                                                  decoration: InputDecoration(
-                                                    hintText: "Search...",
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                        width: 2,
-                                                      ),
-                                                    ),
-                                                  ),
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                      item.name.toUpperCase()),
                                                 ),
                                               ),
-                                              items: const [
-                                                'First Buyer',
-                                                'Replacement',
-                                                'Additional',
-                                              ],
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -3298,17 +3953,75 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  // print(value);
-                                                  tipePelangganVal = value!;
+                                                  idTipePelanggan = value!.iD;
+                                                  tipePelanggan = value.name;
+
+                                                  tipePelangganController.text =
+                                                      idTipePelanggan;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
-                                                tipePelangganVal != ''
-                                                    ? tipePelangganVal
-                                                    : "Belum memilih Tipe Pelanggan",
+                                                tipePelanggan != ''
+                                                    ? tipePelanggan
+                                                    : "Belum memilih tipe pelanggan",
                                                 style: textStyleColorWhite,
+                                              ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetTipePelanggan",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allTipePelanggan =
+                                                    (jsonDecode(response.body)
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listTipePelanggan"];
+                                                List<TipePelanggan>
+                                                    allModelTipePelanggan = [];
+
+                                                for (var element
+                                                    in allTipePelanggan) {
+                                                  allModelTipePelanggan.add(
+                                                    TipePelanggan(
+                                                      iD: element["iD"],
+                                                      name: element["name"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelTipePelanggan;
+                                              },
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller:
+                                                  tipePelangganController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'Tipe Pelanggan',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -3447,50 +4160,22 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: DropdownSearch<ModelSelect>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
-                                                // showSelectedItems: true,
-                                                dialogProps: DialogProps(
+                                            child: DropdownSearch<Vgroup>(
+                                              popupProps: PopupProps.dialog(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
-                                                searchFieldProps:
-                                                    TextFieldProps(
-                                                  decoration: InputDecoration(
-                                                    hintText: "Search...",
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                        width: 2,
-                                                      ),
-                                                    ),
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                    item.vgroup.toUpperCase(),
                                                   ),
                                                 ),
                                               ),
-                                              items: kendaraanOptions,
-                                              itemAsString:
-                                                  (ModelSelect kendaraanOpt) =>
-                                                      kendaraanOpt.value,
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -3535,10 +4220,9 @@ class _ProspectPageState extends State<ProspectPage>
                                                   ),
                                                 ),
                                               ),
-                                              onChanged: (ModelSelect? value) {
+                                              onChanged: (value) {
                                                 setState(() {
-                                                  //print(value);
-                                                  kendaraanVal = value!.value;
+                                                  kendaraanVal = value!.vgroup;
                                                   modelController.text =
                                                       kendaraanVal;
                                                 });
@@ -3547,10 +4231,37 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (context, selectedItem) =>
                                                       Text(
                                                 kendaraanVal != ''
-                                                    ? kendaraanVal
-                                                    : "Belum memilih Model",
+                                                    ? kendaraanVal.toUpperCase()
+                                                    : "Belum memilih model",
                                                 style: textStyleColorWhite,
                                               ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetVgroup",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allVgroup = (jsonDecode(
+                                                        response.body)
+                                                    as Map<String,
+                                                        dynamic>)["listVgroup"];
+                                                List<Vgroup> allModelVgroup =
+                                                    [];
+
+                                                for (var element in allVgroup) {
+                                                  allModelVgroup.add(
+                                                    Vgroup(
+                                                      vgroup: element["vgroup"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelVgroup;
+                                              },
                                             ),
                                           ),
                                           Visibility(
@@ -4128,50 +4839,22 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: DropdownSearch<ModelSelect>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
-                                                // showSelectedItems: true,
-                                                dialogProps: DialogProps(
+                                            child: DropdownSearch<Vgroup>(
+                                              popupProps: PopupProps.dialog(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
-                                                searchFieldProps:
-                                                    TextFieldProps(
-                                                  decoration: InputDecoration(
-                                                    hintText: "Search...",
-                                                    enabledBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                        width: 2,
-                                                      ),
-                                                    ),
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                    item.vgroup.toUpperCase(),
                                                   ),
                                                 ),
                                               ),
-                                              items: kendaraanOptions,
-                                              itemAsString:
-                                                  (ModelSelect kendaraanOpt) =>
-                                                      kendaraanOpt.value,
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -4216,11 +4899,10 @@ class _ProspectPageState extends State<ProspectPage>
                                                   ),
                                                 ),
                                               ),
-                                              onChanged: (ModelSelect? value) {
+                                              onChanged: (value) {
                                                 setState(() {
-                                                  //print(value);
                                                   altKendaraanVal =
-                                                      value!.value;
+                                                      value!.vgroup;
                                                   alternativeModelController
                                                       .text = altKendaraanVal;
                                                 });
@@ -4230,9 +4912,37 @@ class _ProspectPageState extends State<ProspectPage>
                                                       Text(
                                                 altKendaraanVal != ''
                                                     ? altKendaraanVal
-                                                    : "Belum memilih Model",
+                                                        .toUpperCase()
+                                                    : "Belum memilih model",
                                                 style: textStyleColorWhite,
                                               ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetVgroup",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allVgroup = (jsonDecode(
+                                                        response.body)
+                                                    as Map<String,
+                                                        dynamic>)["listVgroup"];
+                                                List<Vgroup> allModelVgroup =
+                                                    [];
+
+                                                for (var element in allVgroup) {
+                                                  allModelVgroup.add(
+                                                    Vgroup(
+                                                      vgroup: element["vgroup"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelVgroup;
+                                              },
                                             ),
                                           ),
                                           Visibility(
@@ -5363,121 +6073,27 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: Container(
-                                              height: 55,
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      20, 0, 25, 0),
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  146,
-                                                  2,
-                                                  2,
-                                                ),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              child: ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(
-                                                  minWidth: double.infinity,
-                                                ),
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      InkWell(
-                                                        onTap: () {
-                                                          showModalBottomSheet(
-                                                              shape:
-                                                                  const RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .vertical(
-                                                                  top: Radius
-                                                                      .circular(
-                                                                          20.0),
-                                                                ),
-                                                              ),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return ListView
-                                                                    .separated(
-                                                                        itemCount: tipeCustS4Options
-                                                                            .length,
-                                                                        separatorBuilder: (context,
-                                                                            int
-                                                                                int) {
-                                                                          return const Divider();
-                                                                        },
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                indexSelect) {
-                                                                          return GestureDetector(
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
-                                                                                child: Text(tipeCustS4Options[indexSelect].value.toUpperCase()),
-                                                                              ),
-                                                                              onTap: () {
-                                                                                setState(() {
-                                                                                  tipeCustS4Val = tipeCustS4Options[indexSelect].value.toUpperCase();
-                                                                                  idTipeCustS4Val = tipeCustS4Options[indexSelect].id;
-                                                                                  // tipeCustS4Controller.text = tipeCustS4Val;
-                                                                                  print(idTipeCustS4Val);
-                                                                                });
-
-                                                                                Navigator.of(context).pop();
-                                                                              });
-                                                                        });
-                                                              });
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  80, 5, 80, 5),
-                                                          child: Text(
-                                                            tipeCustS4Val != ''
-                                                                ? tipeCustS4Val
-                                                                : "PERORANGAN",
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Visibility(
-                                            visible: false,
                                             child: TextFormField(
-                                              controller: tipeCustS4Controller,
-                                              autocorrect: false,
                                               style: const TextStyle(
-                                                  color: Colors.white),
+                                                color: Colors.white,
+                                              ),
+                                              controller: custTypeS2Controller,
+                                              autocorrect: false,
+                                              readOnly: true,
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
                                                 hintText: 'Tipe Customer',
                                                 hintStyle: textStyleColorWhite,
+                                                labelText: 'Tipe Customer',
+                                                labelStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    255,
+                                                    255,
+                                                  ),
+                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -5488,6 +6104,21 @@ class _ProspectPageState extends State<ProspectPage>
                                                       255,
                                                     ),
                                                   ),
+                                                ),
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  borderSide: const BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                    width: 2,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
                                                 ),
                                               ),
                                             ),
@@ -5501,8 +6132,8 @@ class _ProspectPageState extends State<ProspectPage>
                                   children: <BootstrapCol>[
                                     BootstrapCol(
                                       sizes: 'col-md-6 col-12',
-                                      child: idTipeCustS4Val == null ||
-                                              idTipeCustS4Val == 1
+                                      child: valTipeCutS2 == null ||
+                                              valTipeCutS2 == 1
                                           ? Column(
                                               children: [
                                                 Padding(

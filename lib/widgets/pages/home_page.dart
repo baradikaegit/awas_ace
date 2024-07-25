@@ -5,6 +5,7 @@ import 'package:awas_ace/widgets/pages/menu/menu_setting.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
@@ -70,13 +71,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   OutlinedButton(
                     onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                        context,
-                        MaterialPageRoute(
-                          builder: (BuildContext context) => const MainPage(),
-                        ),
-                        (route) => false,
-                      );
+                      SystemNavigator.pop();
                     },
                     style: OutlinedButton.styleFrom(
                       side: BorderSide.none,
