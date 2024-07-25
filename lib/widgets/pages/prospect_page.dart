@@ -9,6 +9,7 @@ import 'package:awas_ace/widgets/model/custtypemodel.dart';
 import 'package:awas_ace/widgets/model/kisaranhargamodel.dart';
 import 'package:awas_ace/widgets/model/sumberdatamodel.dart';
 import 'package:awas_ace/widgets/model/tipepelangganmodel.dart';
+import 'package:awas_ace/widgets/model/vfueltransmisimodel.dart';
 import 'package:awas_ace/widgets/model/vgroupmodel.dart';
 import 'package:awas_ace/widgets/model/wilayah.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,9 @@ class _ProspectPageState extends State<ProspectPage>
     with TickerProviderStateMixin {
   //STEP 1
   TextEditingController tglContactController = TextEditingController();
+  final TextEditingController branchBusinessIDController =
+      TextEditingController();
+  final TextEditingController salesmanIDController = TextEditingController();
   TextEditingController lokasiBertemuController = TextEditingController();
   final TextEditingController idKodePosController = TextEditingController();
   final TextEditingController kodePosController = TextEditingController();
@@ -67,20 +71,35 @@ class _ProspectPageState extends State<ProspectPage>
   final TextEditingController tipePelangganController = TextEditingController();
 
   //STEP 3
-  TextEditingController modelController = TextEditingController();
+  TextEditingController vGroupController = TextEditingController();
   TextEditingController tahunController = TextEditingController();
-  TextEditingController bahanBakarController = TextEditingController();
-  TextEditingController transmisiController = TextEditingController();
-  TextEditingController alternativeModelController = TextEditingController();
-  TextEditingController alternativeTahunController = TextEditingController();
-  TextEditingController alternativeBahanBakarController =
-      TextEditingController();
-  TextEditingController alternativeTransmisiController =
-      TextEditingController();
+  TextEditingController vFuelController = TextEditingController();
+  TextEditingController vTransmisiController = TextEditingController();
+  TextEditingController vGroup2Controller = TextEditingController();
+  TextEditingController tahun2Controller = TextEditingController();
+  TextEditingController vFuel2Controller = TextEditingController();
+  TextEditingController vTransmisi2Controller = TextEditingController();
+
+  //STEP 4
   TextEditingController cashLeasingController = TextEditingController();
   TextEditingController dPController = TextEditingController();
   TextEditingController tenorController = TextEditingController();
-  TextEditingController tipeCustS4Controller = TextEditingController();
+  final TextEditingController q1Controller = TextEditingController();
+  final TextEditingController q2Controller = TextEditingController();
+  final TextEditingController q3Controller = TextEditingController();
+  final TextEditingController q4Controller = TextEditingController();
+  final TextEditingController q5Controller = TextEditingController();
+  final TextEditingController q6Controller = TextEditingController();
+  final TextEditingController q7Controller = TextEditingController();
+  final TextEditingController q8Controller = TextEditingController();
+  final TextEditingController q9Controller = TextEditingController();
+  final TextEditingController q10Controller = TextEditingController();
+  final TextEditingController q11Controller = TextEditingController();
+  final TextEditingController q12Controller = TextEditingController();
+  final TextEditingController statusController = TextEditingController();
+  final TextEditingController alasanLostProspectController =
+      TextEditingController();
+  TextEditingController keteranganController = TextEditingController();
 
   late TabController _tabController;
 
@@ -119,22 +138,41 @@ class _ProspectPageState extends State<ProspectPage>
   String tipePelanggan = '';
 
   //STEP 3
-  String kendaraanVal = '';
+  String idVGroup = '';
+  String vGroup = '';
   String tahunVal = '';
-  String bahanBakarVal = '';
-  String transmisiVal = '';
-  String altKendaraanVal = '';
-  String altTahunVal = '';
-  String altBahanBakarVal = '';
-  String altTransmisiVal = '';
+  String idVfuel = '';
+  String vFuel = '';
+  String idVtransmisi = '';
+  String vTransmisi = '';
+  String idVGroup2 = '';
+  String vGroup2 = '';
+  String tahunVal2 = '';
+  String idVfuel2 = '';
+  String vFuel2 = '';
+  String idVtransmisi2 = '';
+  String vTransmisi2 = '';
+
+  //STEP 4
   String cashLeasingVal = '';
   String dPVal = '';
   String tenorVal = '';
-  String tipeCustS4Val = '';
-  int? idTipeCustS4Val;
-  int? idTc;
-
-  bool check = false;
+  bool checkQ1 = false;
+  bool checkQ2 = false;
+  bool checkQ3 = false;
+  bool checkQ4 = false;
+  bool checkQ5 = false;
+  bool checkQ6 = false;
+  bool checkQ7 = false;
+  bool checkQ8 = false;
+  bool checkQ9 = false;
+  bool checkQ10 = false;
+  bool checkQ11 = false;
+  bool checkQ12 = false;
+  int? idStatus;
+  String status = '';
+  int? idAlasanLp;
+  String alasanLp = '';
 
   final List _dataFromApi = [];
   final List _dataFromApiArea = [];
@@ -152,11 +190,6 @@ class _ProspectPageState extends State<ProspectPage>
     ModelSelect('Perempuan', 0)
   ];
 
-  List<ModelSelect> tipeCustOptions = [
-    ModelSelect('Retail', 1),
-    ModelSelect('Fleet', 2)
-  ];
-
   List<ModelSelect> jabatanOptions = [
     ModelSelect('Karyawan Swasta', 1),
     ModelSelect('PNS', 2),
@@ -166,23 +199,6 @@ class _ProspectPageState extends State<ProspectPage>
     ModelSelect('Profesional (Dokter, Polisi, Pengacara, Militer)', 6),
     ModelSelect('Bapak / Ibu Rumah Tangga', 7),
     ModelSelect('Lainnya', 8),
-  ];
-
-  List<ModelSelect> hargaKendaranOptions = [
-    ModelSelect('130 jt s/d 250jt', 1),
-    ModelSelect('251 jt s/d 400jt', 2),
-    ModelSelect('401 jt s/d 600jt', 3),
-    ModelSelect('> 600 jt', 4),
-  ];
-
-  List<ModelSelect> bahanBakarOptions = [
-    ModelSelect('Bensin', 1),
-    ModelSelect('Diesel', 2)
-  ];
-
-  List<ModelSelect> transmisiOptions = [
-    ModelSelect('Automatic', 1),
-    ModelSelect('Manual', 2)
   ];
 
   List<ModelSelect> cashLeasingOptions = [
@@ -206,9 +222,17 @@ class _ProspectPageState extends State<ProspectPage>
     ModelSelect('7 Tahun', 7),
   ];
 
-  List<ModelSelect> tipeCustS4Options = [
-    ModelSelect('Perorangan', 1),
-    ModelSelect('Perusahaan', 2),
+  List<ModelSelect> statusOptions = [
+    ModelSelect('Prospect', 1),
+    ModelSelect('Lost Prospect', 2),
+  ];
+
+  List<ModelSelect> alasanLpOptions = [
+    ModelSelect('Discount', 1),
+    ModelSelect('Stock Tidak Tersedia', 2),
+    ModelSelect('Beli Brand Lain', 3),
+    ModelSelect('Leasing', 4),
+    ModelSelect('Force Major', 5),
   ];
 
   void fetchDataKodePos(
@@ -454,17 +478,41 @@ class _ProspectPageState extends State<ProspectPage>
     }
   }
 
+  String dateNow = DateFormat('yyyy/MM/dd').format(DateTime.now());
+  String? userName;
+  String? sid;
+  String? branchID;
+
   @override
   void initState() {
     super.initState();
-    tglContactController.text = "";
+    tglContactController.text = dateNow;
+    q1Controller.text = '0';
+    q2Controller.text = '0';
+    q3Controller.text = '0';
+    q4Controller.text = '0';
+    q5Controller.text = '0';
+    q6Controller.text = '0';
+    alasanLostProspectController.text = '0';
     _tabController = TabController(vsync: this, length: 4);
     _tabController.addListener(_handleTabSelection);
-    //fetchDataFromApi(idKab, idKec);
+    loadSharedPreference();
   }
 
   void _handleTabSelection() {
     setState(() {});
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('Username');
+      sid = prefs.getString('SID');
+      branchID = prefs.getString('BranchID');
+
+      branchBusinessIDController.text = branchID!.toUpperCase();
+      salesmanIDController.text = sid!.toUpperCase();
+    });
   }
 
   TabBar get _tabBar => TabBar(
@@ -681,13 +729,6 @@ class _ProspectPageState extends State<ProspectPage>
   Widget build(BuildContext context) {
     GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-    if (idTipeCustS4Val != null) {
-      tipeCustS4Controller =
-          TextEditingController(text: idTipeCustS4Val.toString());
-    } else {
-      tipeCustS4Controller = TextEditingController(text: '1');
-    }
-
     var textStyleColorWhite = TextStyle(
       color: const Color.fromARGB(
         255,
@@ -895,16 +936,67 @@ class _ProspectPageState extends State<ProspectPage>
                                                   String formatDate =
                                                       DateFormat('yyyy-MM-dd')
                                                           .format(pickedDate);
+
                                                   setState(() {
                                                     tglContactController.text =
                                                         formatDate;
                                                   });
                                                 } else {
                                                   //print("Tanggal tidak dipilih");
+
                                                   tglContactController.text =
-                                                      "";
+                                                      dateNow;
                                                 }
                                               },
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller:
+                                                  branchBusinessIDController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'BranchBusinessID',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
+                                            child: TextFormField(
+                                              controller: salesmanIDController,
+                                              autocorrect: false,
+                                              textInputAction:
+                                                  TextInputAction.next,
+                                              decoration: InputDecoration(
+                                                hintText: 'SalesmanID',
+                                                hintStyle: textStyleColorWhite,
+                                                enabledBorder:
+                                                    const OutlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -1011,6 +1103,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -1147,6 +1277,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -1277,6 +1445,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -1403,6 +1609,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -1533,6 +1777,7 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
+                                              readOnly: true,
                                               controller: kodePosController,
                                               style: const TextStyle(
                                                 color: Colors.white,
@@ -1628,6 +1873,7 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
+                                              readOnly: true,
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
@@ -1733,6 +1979,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                   ),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -1881,9 +2165,8 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<ModelSelect>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
-                                                dialogProps: DialogProps(
+                                              popupProps: PopupProps.dialog(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
@@ -1892,29 +2175,38 @@ class _ProspectPageState extends State<ProspectPage>
                                                 searchFieldProps:
                                                     TextFieldProps(
                                                   decoration: InputDecoration(
-                                                    hintText: "Search...",
+                                                    hintText: "Search..",
                                                     enabledBorder:
                                                         OutlineInputBorder(
-                                                      borderSide: BorderSide(
+                                                      borderSide:
+                                                          const BorderSide(
                                                         color: Color.fromARGB(
                                                           255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
                                                         width: 2,
                                                       ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
                                                     ),
                                                   ),
                                                 ),
@@ -1922,7 +2214,8 @@ class _ProspectPageState extends State<ProspectPage>
                                               items: rencanaPembelianOptions,
                                               itemAsString: (ModelSelect
                                                       rencanaPembelianOptions) =>
-                                                  rencanaPembelianOptions.value,
+                                                  rencanaPembelianOptions.value
+                                                      .toUpperCase(),
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -1999,6 +2292,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                       Text(
                                                 rencanaPembelian != ''
                                                     ? rencanaPembelian
+                                                        .toUpperCase()
                                                     : "Belum memilih rencana pembelian",
                                                 style: textStyleColorWhite,
                                               ),
@@ -2636,6 +2930,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -2774,6 +3106,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -2900,6 +3270,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -3029,6 +3437,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -3152,6 +3598,7 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
+                                              readOnly: true,
                                               controller: kodePosS2Controller,
                                               style: const TextStyle(
                                                 color: Colors.white,
@@ -3250,6 +3697,7 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: TextFormField(
+                                              readOnly: true,
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
@@ -3426,6 +3874,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -3622,7 +4108,8 @@ class _ProspectPageState extends State<ProspectPage>
                                               items: jabatanOptions,
                                               itemAsString:
                                                   (ModelSelect jabatanOpt) =>
-                                                      jabatanOpt.value,
+                                                      jabatanOpt.value
+                                                          .toUpperCase(),
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -3679,7 +4166,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (context, selectedItem) =>
                                                       Text(
                                                 jabatanVal != ''
-                                                    ? jabatanVal
+                                                    ? jabatanVal.toUpperCase()
                                                     : "Belum memilih Jabatan",
                                                 style: textStyleColorWhite,
                                               ),
@@ -3743,6 +4230,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -3900,6 +4425,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          1,
+                                                          53,
+                                                          131,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -4168,6 +4731,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          202,
+                                                          109,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -4222,16 +4823,17 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  kendaraanVal = value!.vgroup;
-                                                  modelController.text =
-                                                      kendaraanVal;
+                                                  idVGroup = value!.iD;
+                                                  vGroup = value.vgroup;
+                                                  vGroupController.text =
+                                                      idVGroup;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
-                                                kendaraanVal != ''
-                                                    ? kendaraanVal.toUpperCase()
+                                                vGroup != ''
+                                                    ? vGroup.toUpperCase()
                                                     : "Belum memilih model",
                                                 style: textStyleColorWhite,
                                               ),
@@ -4256,6 +4858,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 for (var element in allVgroup) {
                                                   allModelVgroup.add(
                                                     Vgroup(
+                                                      iD: element["iD"],
                                                       vgroup: element["vgroup"],
                                                     ),
                                                   );
@@ -4267,7 +4870,7 @@ class _ProspectPageState extends State<ProspectPage>
                                           Visibility(
                                             visible: false,
                                             child: TextFormField(
-                                              controller: modelController,
+                                              controller: vGroupController,
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
@@ -4311,10 +4914,9 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<String>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
+                                              popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
-                                                dialogProps: DialogProps(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
@@ -4323,29 +4925,38 @@ class _ProspectPageState extends State<ProspectPage>
                                                 searchFieldProps:
                                                     TextFieldProps(
                                                   decoration: InputDecoration(
-                                                    hintText: "Search...",
+                                                    hintText: "Search..",
                                                     enabledBorder:
                                                         OutlineInputBorder(
-                                                      borderSide: BorderSide(
+                                                      borderSide:
+                                                          const BorderSide(
                                                         color: Color.fromARGB(
                                                           255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
                                                         width: 2,
                                                       ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          202,
+                                                          109,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
                                                     ),
                                                   ),
                                                 ),
@@ -4483,104 +5094,151 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: Container(
-                                              height: 55,
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      20, 0, 25, 0),
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  202,
-                                                  109,
-                                                  2,
+                                            child:
+                                                DropdownSearch<VfuelTransmisi>(
+                                              popupProps: PopupProps.dialog(
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
                                                 ),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              child: ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(
-                                                  minWidth: double.infinity,
-                                                ),
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      InkWell(
-                                                        onTap: () {
-                                                          showModalBottomSheet(
-                                                              shape:
-                                                                  const RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .vertical(
-                                                                  top: Radius
-                                                                      .circular(
-                                                                          20.0),
-                                                                ),
-                                                              ),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return ListView
-                                                                    .separated(
-                                                                        itemCount: bahanBakarOptions
-                                                                            .length,
-                                                                        separatorBuilder: (context,
-                                                                            int
-                                                                                int) {
-                                                                          return const Divider();
-                                                                        },
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                indexSelect) {
-                                                                          return GestureDetector(
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
-                                                                                child: Text(bahanBakarOptions[indexSelect].value.toUpperCase()),
-                                                                              ),
-                                                                              onTap: () {
-                                                                                setState(() {
-                                                                                  bahanBakarVal = bahanBakarOptions[indexSelect].value.toUpperCase();
-                                                                                  bahanBakarController.text = bahanBakarVal;
-                                                                                });
-                                                                                Navigator.of(context).pop();
-                                                                              });
-                                                                        });
-                                                              });
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  80, 5, 80, 5),
-                                                          child: Text(
-                                                            bahanBakarVal != ''
-                                                                ? bahanBakarVal
-                                                                : "CHOOSE",
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
+                                                        width: 2,
                                                       ),
-                                                    ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          202,
+                                                          109,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                    item.name.toUpperCase(),
                                                   ),
                                                 ),
                                               ),
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Bahan Bakar',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  idVfuel = value!.iD;
+                                                  vFuel = value.name;
+                                                  vFuelController.text =
+                                                      idVfuel;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                vFuel != ''
+                                                    ? vFuel.toUpperCase()
+                                                    : "Belum memilih bahan bakar",
+                                                style: textStyleColorWhite,
+                                              ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetVfuel",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allVfuelTransmisi =
+                                                    (jsonDecode(response.body)
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listVgroup"];
+                                                List<VfuelTransmisi>
+                                                    allModelVfuelTransmisi = [];
+
+                                                for (var element
+                                                    in allVfuelTransmisi) {
+                                                  allModelVfuelTransmisi.add(
+                                                    VfuelTransmisi(
+                                                      iD: element["iD"],
+                                                      name: element["name"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelVfuelTransmisi;
+                                              },
                                             ),
                                           ),
                                           Visibility(
@@ -4588,7 +5246,7 @@ class _ProspectPageState extends State<ProspectPage>
                                             child: TextFormField(
                                               style: const TextStyle(
                                                   color: Colors.white),
-                                              controller: bahanBakarController,
+                                              controller: vFuelController,
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -4645,110 +5303,157 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: Container(
-                                              height: 55,
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      20, 0, 25, 0),
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  202,
-                                                  109,
-                                                  2,
+                                            child:
+                                                DropdownSearch<VfuelTransmisi>(
+                                              popupProps: PopupProps.dialog(
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
                                                 ),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              child: ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(
-                                                  minWidth: double.infinity,
-                                                ),
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      InkWell(
-                                                        onTap: () {
-                                                          showModalBottomSheet(
-                                                              shape:
-                                                                  const RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .vertical(
-                                                                  top: Radius
-                                                                      .circular(
-                                                                          20.0),
-                                                                ),
-                                                              ),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return ListView
-                                                                    .separated(
-                                                                        itemCount: transmisiOptions
-                                                                            .length,
-                                                                        separatorBuilder: (context,
-                                                                            int
-                                                                                int) {
-                                                                          return const Divider();
-                                                                        },
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                indexSelect) {
-                                                                          return GestureDetector(
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
-                                                                                child: Text(transmisiOptions[indexSelect].value.toUpperCase()),
-                                                                              ),
-                                                                              onTap: () {
-                                                                                setState(() {
-                                                                                  transmisiVal = transmisiOptions[indexSelect].value.toUpperCase();
-                                                                                  transmisiController.text = transmisiVal;
-                                                                                });
-                                                                                Navigator.of(context).pop();
-                                                                              });
-                                                                        });
-                                                              });
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  80, 5, 80, 5),
-                                                          child: Text(
-                                                            transmisiVal != ''
-                                                                ? transmisiVal
-                                                                : "CHOOSE",
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
+                                                        width: 2,
                                                       ),
-                                                    ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          202,
+                                                          109,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                    item.name.toUpperCase(),
                                                   ),
                                                 ),
                                               ),
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Transmisi',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  idVtransmisi = value!.iD;
+                                                  vTransmisi = value.name;
+                                                  vTransmisiController.text =
+                                                      idVtransmisi;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                vTransmisi != ''
+                                                    ? vTransmisi.toUpperCase()
+                                                    : "Belum memilih transmisi",
+                                                style: textStyleColorWhite,
+                                              ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetVtransmisi",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allVfuelTransmisi =
+                                                    (jsonDecode(response.body)
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listVgroup"];
+                                                List<VfuelTransmisi>
+                                                    allModelVfuelTransmisi = [];
+
+                                                for (var element
+                                                    in allVfuelTransmisi) {
+                                                  allModelVfuelTransmisi.add(
+                                                    VfuelTransmisi(
+                                                      iD: element["iD"],
+                                                      name: element["name"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelVfuelTransmisi;
+                                              },
                                             ),
                                           ),
                                           Visibility(
                                             visible: false,
                                             child: TextFormField(
-                                              controller: transmisiController,
+                                              controller: vTransmisiController,
                                               autocorrect: false,
                                               style: const TextStyle(
                                                   color: Colors.white),
@@ -4847,6 +5552,44 @@ class _ProspectPageState extends State<ProspectPage>
                                                           BorderSide.none),
                                                 ),
                                                 showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          202,
+                                                          109,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
@@ -4901,18 +5644,17 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  altKendaraanVal =
-                                                      value!.vgroup;
-                                                  alternativeModelController
-                                                      .text = altKendaraanVal;
+                                                  idVGroup2 = value!.iD;
+                                                  vGroup2 = value.vgroup;
+                                                  vGroup2Controller.text =
+                                                      idVGroup2;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
-                                                altKendaraanVal != ''
-                                                    ? altKendaraanVal
-                                                        .toUpperCase()
+                                                vGroup2 != ''
+                                                    ? vGroup2.toUpperCase()
                                                     : "Belum memilih model",
                                                 style: textStyleColorWhite,
                                               ),
@@ -4937,6 +5679,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 for (var element in allVgroup) {
                                                   allModelVgroup.add(
                                                     Vgroup(
+                                                      iD: element["iD"],
                                                       vgroup: element["vgroup"],
                                                     ),
                                                   );
@@ -4948,8 +5691,7 @@ class _ProspectPageState extends State<ProspectPage>
                                           Visibility(
                                             visible: false,
                                             child: TextFormField(
-                                              controller:
-                                                  alternativeModelController,
+                                              controller: vGroup2Controller,
                                               autocorrect: false,
                                               style: const TextStyle(
                                                   color: Colors.white),
@@ -4994,10 +5736,9 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<String>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
+                                              popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
-                                                dialogProps: DialogProps(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
@@ -5006,29 +5747,38 @@ class _ProspectPageState extends State<ProspectPage>
                                                 searchFieldProps:
                                                     TextFieldProps(
                                                   decoration: InputDecoration(
-                                                    hintText: "Search...",
+                                                    hintText: "Search..",
                                                     enabledBorder:
                                                         OutlineInputBorder(
-                                                      borderSide: BorderSide(
+                                                      borderSide:
+                                                          const BorderSide(
                                                         color: Color.fromARGB(
                                                           255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
                                                         width: 2,
                                                       ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          202,
+                                                          109,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
                                                     ),
                                                   ),
                                                 ),
@@ -5091,16 +5841,16 @@ class _ProspectPageState extends State<ProspectPage>
                                               ),
                                               onChanged: (value) {
                                                 setState(() {
-                                                  altTahunVal = value!;
-                                                  alternativeTahunController
-                                                      .text = altTahunVal;
+                                                  tahunVal2 = value!;
+                                                  tahun2Controller.text =
+                                                      tahunVal2;
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
-                                                altTahunVal != ''
-                                                    ? altTahunVal
+                                                tahunVal2 != ''
+                                                    ? tahunVal2
                                                     : "Belum memilih Tahun",
                                                 style: textStyleColorWhite,
                                               ),
@@ -5109,8 +5859,7 @@ class _ProspectPageState extends State<ProspectPage>
                                           Visibility(
                                             visible: false,
                                             child: TextFormField(
-                                              controller:
-                                                  alternativeTahunController,
+                                              controller: tahun2Controller,
                                               autocorrect: false,
                                               style: const TextStyle(
                                                   color: Colors.white),
@@ -5158,112 +5907,158 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: Container(
-                                              height: 55,
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      20, 0, 25, 0),
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  202,
-                                                  109,
-                                                  2,
+                                            child:
+                                                DropdownSearch<VfuelTransmisi>(
+                                              popupProps: PopupProps.dialog(
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
                                                 ),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              child: ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(
-                                                  minWidth: double.infinity,
-                                                ),
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      InkWell(
-                                                        onTap: () {
-                                                          showModalBottomSheet(
-                                                              shape:
-                                                                  const RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .vertical(
-                                                                  top: Radius
-                                                                      .circular(
-                                                                          20.0),
-                                                                ),
-                                                              ),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return ListView
-                                                                    .separated(
-                                                                        itemCount: bahanBakarOptions
-                                                                            .length,
-                                                                        separatorBuilder: (context,
-                                                                            int
-                                                                                int) {
-                                                                          return const Divider();
-                                                                        },
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                indexSelect) {
-                                                                          return GestureDetector(
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
-                                                                                child: Text(bahanBakarOptions[indexSelect].value.toUpperCase()),
-                                                                              ),
-                                                                              onTap: () {
-                                                                                setState(() {
-                                                                                  altBahanBakarVal = bahanBakarOptions[indexSelect].value.toUpperCase();
-                                                                                  alternativeBahanBakarController.text = altBahanBakarVal;
-                                                                                });
-                                                                                Navigator.of(context).pop();
-                                                                              });
-                                                                        });
-                                                              });
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  80, 5, 80, 5),
-                                                          child: Text(
-                                                            altBahanBakarVal !=
-                                                                    ''
-                                                                ? altBahanBakarVal
-                                                                : "CHOOSE",
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
+                                                        width: 2,
                                                       ),
-                                                    ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          202,
+                                                          109,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                    item.name.toUpperCase(),
                                                   ),
                                                 ),
                                               ),
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Bahan Bakar',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  idVfuel2 = value!.iD;
+                                                  vFuel2 = value.name;
+                                                  vFuel2Controller.text =
+                                                      idVfuel2;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                vFuel2 != ''
+                                                    ? vFuel2.toUpperCase()
+                                                    : "Belum memilih bahan bakar",
+                                                style: textStyleColorWhite,
+                                              ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetVfuel",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allVfuelTransmisi2 =
+                                                    (jsonDecode(response.body)
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listVgroup"];
+                                                List<VfuelTransmisi>
+                                                    allModelVfuelTransmisi2 =
+                                                    [];
+
+                                                for (var element
+                                                    in allVfuelTransmisi2) {
+                                                  allModelVfuelTransmisi2.add(
+                                                    VfuelTransmisi(
+                                                      iD: element["iD"],
+                                                      name: element["name"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelVfuelTransmisi2;
+                                              },
                                             ),
                                           ),
                                           Visibility(
                                             visible: false,
                                             child: TextFormField(
-                                              controller:
-                                                  alternativeBahanBakarController,
+                                              controller: vFuel2Controller,
                                               autocorrect: false,
                                               style: const TextStyle(
                                                   color: Colors.white),
@@ -5307,112 +6102,158 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
-                                            child: Container(
-                                              height: 55,
-                                              padding:
-                                                  const EdgeInsets.fromLTRB(
-                                                      20, 0, 25, 0),
-                                              decoration: BoxDecoration(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  202,
-                                                  109,
-                                                  2,
+                                            child:
+                                                DropdownSearch<VfuelTransmisi>(
+                                              popupProps: PopupProps.dialog(
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
                                                 ),
-                                                borderRadius:
-                                                    const BorderRadius.all(
-                                                  Radius.circular(10),
-                                                ),
-                                                border: Border.all(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                  width: 2,
-                                                ),
-                                              ),
-                                              child: ConstrainedBox(
-                                                constraints:
-                                                    const BoxConstraints(
-                                                  minWidth: double.infinity,
-                                                ),
-                                                child: Center(
-                                                  child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: <Widget>[
-                                                      InkWell(
-                                                        onTap: () {
-                                                          showModalBottomSheet(
-                                                              shape:
-                                                                  const RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .vertical(
-                                                                  top: Radius
-                                                                      .circular(
-                                                                          20.0),
-                                                                ),
-                                                              ),
-                                                              context: context,
-                                                              builder:
-                                                                  (context) {
-                                                                return ListView
-                                                                    .separated(
-                                                                        itemCount: transmisiOptions
-                                                                            .length,
-                                                                        separatorBuilder: (context,
-                                                                            int
-                                                                                int) {
-                                                                          return const Divider();
-                                                                        },
-                                                                        itemBuilder:
-                                                                            (context,
-                                                                                indexSelect) {
-                                                                          return GestureDetector(
-                                                                              child: Padding(
-                                                                                padding: const EdgeInsets.fromLTRB(15, 20, 0, 5),
-                                                                                child: Text(transmisiOptions[indexSelect].value.toUpperCase()),
-                                                                              ),
-                                                                              onTap: () {
-                                                                                setState(() {
-                                                                                  altTransmisiVal = transmisiOptions[indexSelect].value.toUpperCase();
-                                                                                  alternativeTransmisiController.text = altTransmisiVal;
-                                                                                });
-                                                                                Navigator.of(context).pop();
-                                                                              });
-                                                                        });
-                                                              });
-                                                        },
-                                                        child: Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                                  80, 5, 80, 5),
-                                                          child: Text(
-                                                            altTransmisiVal !=
-                                                                    ''
-                                                                ? altTransmisiVal
-                                                                : "CHOOSE",
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
+                                                        width: 2,
                                                       ),
-                                                    ],
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          202,
+                                                          109,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                                itemBuilder: (context, item,
+                                                        isSelected) =>
+                                                    ListTile(
+                                                  title: Text(
+                                                    item.name.toUpperCase(),
                                                   ),
                                                 ),
                                               ),
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Transmisi',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  idVtransmisi2 = value!.iD;
+                                                  vTransmisi2 = value.name;
+                                                  vTransmisi2Controller.text =
+                                                      idVtransmisi2;
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                vTransmisi2 != ''
+                                                    ? vTransmisi2.toUpperCase()
+                                                    : "Belum memilih transmisi",
+                                                style: textStyleColorWhite,
+                                              ),
+                                              asyncItems:
+                                                  (String filter) async {
+                                                var response = await http.get(
+                                                  Uri.parse(
+                                                    "${urlApi()}Wilayah/GetVtransmisi",
+                                                  ),
+                                                );
+                                                if (response.statusCode !=
+                                                    200) {
+                                                  return [];
+                                                }
+                                                List allVfuelTransmisi2 =
+                                                    (jsonDecode(response.body)
+                                                            as Map<String,
+                                                                dynamic>)[
+                                                        "listVgroup"];
+                                                List<VfuelTransmisi>
+                                                    allModelVfuelTransmisi2 =
+                                                    [];
+
+                                                for (var element
+                                                    in allVfuelTransmisi2) {
+                                                  allModelVfuelTransmisi2.add(
+                                                    VfuelTransmisi(
+                                                      iD: element["iD"],
+                                                      name: element["name"],
+                                                    ),
+                                                  );
+                                                }
+                                                return allModelVfuelTransmisi2;
+                                              },
                                             ),
                                           ),
                                           Visibility(
                                             visible: false,
                                             child: TextFormField(
-                                              controller:
-                                                  alternativeTransmisiController,
+                                              controller: vTransmisi2Controller,
                                               autocorrect: false,
                                               style: const TextStyle(
                                                   color: Colors.white),
@@ -5718,10 +6559,9 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<ModelSelect>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
+                                              popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
-                                                dialogProps: DialogProps(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
@@ -5730,29 +6570,38 @@ class _ProspectPageState extends State<ProspectPage>
                                                 searchFieldProps:
                                                     TextFieldProps(
                                                   decoration: InputDecoration(
-                                                    hintText: "Search...",
+                                                    hintText: "Search..",
                                                     enabledBorder:
                                                         OutlineInputBorder(
-                                                      borderSide: BorderSide(
+                                                      borderSide:
+                                                          const BorderSide(
                                                         color: Color.fromARGB(
                                                           255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
                                                         width: 2,
                                                       ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
                                                     ),
                                                   ),
                                                 ),
@@ -5874,10 +6723,9 @@ class _ProspectPageState extends State<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<ModelSelect>(
-                                              popupProps:
-                                                  const PopupProps.dialog(
+                                              popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
-                                                dialogProps: DialogProps(
+                                                dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
                                                           BorderSide.none),
@@ -5886,29 +6734,38 @@ class _ProspectPageState extends State<ProspectPage>
                                                 searchFieldProps:
                                                     TextFieldProps(
                                                   decoration: InputDecoration(
-                                                    hintText: "Search...",
+                                                    hintText: "Search..",
                                                     enabledBorder:
                                                         OutlineInputBorder(
-                                                      borderSide: BorderSide(
+                                                      borderSide:
+                                                          const BorderSide(
                                                         color: Color.fromARGB(
                                                           255,
-                                                          1,
-                                                          53,
-                                                          131,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    focusedBorder:
-                                                        OutlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color: Color.fromARGB(
-                                                          255,
-                                                          1,
-                                                          53,
-                                                          131,
+                                                          134,
+                                                          134,
+                                                          134,
                                                         ),
                                                         width: 2,
                                                       ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
                                                     ),
                                                   ),
                                                 ),
@@ -5916,7 +6773,8 @@ class _ProspectPageState extends State<ProspectPage>
                                               items: tenorOptions,
                                               itemAsString:
                                                   (ModelSelect tenorOpt) =>
-                                                      tenorOpt.value,
+                                                      tenorOpt.value
+                                                          .toUpperCase(),
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
@@ -5973,7 +6831,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                   (context, selectedItem) =>
                                                       Text(
                                                 tenorVal != ''
-                                                    ? tenorVal
+                                                    ? tenorVal.toUpperCase()
                                                     : "Belum memilih Tenor",
                                                 style: textStyleColorWhite,
                                               ),
@@ -6155,11 +7013,19 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ1,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ1 = value!;
+                                                            if (checkQ1 ==
+                                                                true) {
+                                                              q1Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q1Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6176,6 +7042,33 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q1Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q1',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
@@ -6195,11 +7088,19 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ2,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ2 = value!;
+                                                            if (checkQ2 ==
+                                                                true) {
+                                                              q2Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q2Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6216,6 +7117,33 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q2Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q2',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
@@ -6235,11 +7163,19 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ3,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ3 = value!;
+                                                            if (checkQ3 ==
+                                                                true) {
+                                                              q3Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q3Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6256,6 +7192,33 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q3Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q3',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
@@ -6275,11 +7238,19 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ4,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ4 = value!;
+                                                            if (checkQ4 ==
+                                                                true) {
+                                                              q4Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q4Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6296,44 +7267,31 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 0, 0, 15),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Checkbox(
-                                                        activeColor:
-                                                            Colors.white,
-                                                        checkColor: const Color
-                                                            .fromARGB(
-                                                          255,
-                                                          146,
-                                                          2,
-                                                          2,
-                                                        ),
-                                                        side: const BorderSide(
-                                                            color:
-                                                                Colors.white),
-                                                        value: check,
-                                                        onChanged:
-                                                            (bool? value) {
-                                                          setState(() {
-                                                            check = value!;
-                                                          });
-                                                        },
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          'Slip Gaji / Surat Ket Penghasilan (Karyawan)',
-                                                          style:
-                                                              textStyleColorWhite,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q4Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q4',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 ),
                                                 Padding(
@@ -6355,11 +7313,94 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ5,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ5 = value!;
+                                                            if (checkQ5 ==
+                                                                true) {
+                                                              q5Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q5Controller
+                                                                  .text = '0';
+                                                            }
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Slip Gaji / Surat Ket Penghasilan (Karyawan)',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q5Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q5',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: checkQ6,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            checkQ6 = value!;
+                                                            if (checkQ6 ==
+                                                                true) {
+                                                              q6Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q6Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6374,6 +7415,33 @@ class _ProspectPageState extends State<ProspectPage>
                                                         ),
                                                       ),
                                                     ],
+                                                  ),
+                                                ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q6Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q6',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -6399,11 +7467,19 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ7,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ7 = value!;
+                                                            if (checkQ7 ==
+                                                                true) {
+                                                              q7Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q7Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6420,6 +7496,33 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q7Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q7',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
@@ -6439,11 +7542,19 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ8,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ8 = value!;
+                                                            if (checkQ8 ==
+                                                                true) {
+                                                              q8Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q8Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6460,6 +7571,33 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q8Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q8',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
@@ -6479,11 +7617,19 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ9,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ9 = value!;
+                                                            if (checkQ9 ==
+                                                                true) {
+                                                              q9Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q9Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6500,6 +7646,33 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q9Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText: 'Perorangan Q9',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
@@ -6519,11 +7692,19 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ10,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ10 = value!;
+                                                            if (checkQ10 ==
+                                                                true) {
+                                                              q10Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q10Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6540,44 +7721,32 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ],
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                          0, 0, 0, 15),
-                                                  child: Row(
-                                                    children: <Widget>[
-                                                      Checkbox(
-                                                        activeColor:
-                                                            Colors.white,
-                                                        checkColor: const Color
-                                                            .fromARGB(
-                                                          255,
-                                                          146,
-                                                          2,
-                                                          2,
-                                                        ),
-                                                        side: const BorderSide(
-                                                            color:
-                                                                Colors.white),
-                                                        value: check,
-                                                        onChanged:
-                                                            (bool? value) {
-                                                          setState(() {
-                                                            check = value!;
-                                                          });
-                                                        },
-                                                      ),
-                                                      Expanded(
-                                                        child: Text(
-                                                          'Rekening Koran 3 Bulan Terakhir',
-                                                          style:
-                                                              textStyleColorWhite,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis,
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q10Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          'Perorangan Q10',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ],
+                                                    ),
                                                   ),
                                                 ),
                                                 Padding(
@@ -6599,11 +7768,95 @@ class _ProspectPageState extends State<ProspectPage>
                                                         side: const BorderSide(
                                                             color:
                                                                 Colors.white),
-                                                        value: check,
+                                                        value: checkQ11,
                                                         onChanged:
                                                             (bool? value) {
                                                           setState(() {
-                                                            check = value!;
+                                                            checkQ11 = value!;
+                                                            if (checkQ11 ==
+                                                                true) {
+                                                              q11Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q11Controller
+                                                                  .text = '0';
+                                                            }
+                                                          });
+                                                        },
+                                                      ),
+                                                      Expanded(
+                                                        child: Text(
+                                                          'Rekening Koran 3 Bulan Terakhir',
+                                                          style:
+                                                              textStyleColorWhite,
+                                                          maxLines: 2,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q11Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          'Perorangan Q11',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 15),
+                                                  child: Row(
+                                                    children: <Widget>[
+                                                      Checkbox(
+                                                        activeColor:
+                                                            Colors.white,
+                                                        checkColor: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        side: const BorderSide(
+                                                            color:
+                                                                Colors.white),
+                                                        value: checkQ12,
+                                                        onChanged:
+                                                            (bool? value) {
+                                                          setState(() {
+                                                            checkQ12 = value!;
+                                                            if (checkQ12 ==
+                                                                true) {
+                                                              q12Controller
+                                                                  .text = '1';
+                                                            } else {
+                                                              q12Controller
+                                                                  .text = '0';
+                                                            }
                                                           });
                                                         },
                                                       ),
@@ -6618,6 +7871,34 @@ class _ProspectPageState extends State<ProspectPage>
                                                         ),
                                                       ),
                                                     ],
+                                                  ),
+                                                ),
+                                                Visibility(
+                                                  visible: false,
+                                                  child: TextFormField(
+                                                    controller: q12Controller,
+                                                    autocorrect: false,
+                                                    style: const TextStyle(
+                                                        color: Colors.white),
+                                                    textInputAction:
+                                                        TextInputAction.next,
+                                                    decoration: InputDecoration(
+                                                      hintText:
+                                                          'Perorangan Q12',
+                                                      hintStyle:
+                                                          textStyleColorWhite,
+                                                      enabledBorder:
+                                                          const OutlineInputBorder(
+                                                        borderSide: BorderSide(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                               ],
@@ -6641,23 +7922,134 @@ class _ProspectPageState extends State<ProspectPage>
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
+                                            child: DropdownSearch<ModelSelect>(
+                                              popupProps: PopupProps.dialog(
+                                                // showSelectedItems: true,
+                                                dialogProps: const DialogProps(
+                                                  shape: Border.symmetric(
+                                                      vertical:
+                                                          BorderSide.none),
+                                                ),
+                                                showSearchBox: true,
+                                                searchFieldProps:
+                                                    TextFieldProps(
+                                                  decoration: InputDecoration(
+                                                    hintText: "Search..",
+                                                    enabledBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          134,
+                                                          134,
+                                                          134,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          146,
+                                                          2,
+                                                          2,
+                                                        ),
+                                                        width: 2,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              items: statusOptions,
+                                              itemAsString:
+                                                  (ModelSelect statusOpt) =>
+                                                      statusOpt.value
+                                                          .toUpperCase(),
+                                              dropdownDecoratorProps:
+                                                  DropDownDecoratorProps(
+                                                dropdownSearchDecoration:
+                                                    InputDecoration(
+                                                  hintStyle:
+                                                      textStyleColorWhite,
+                                                  labelText: 'Status',
+                                                  labelStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      255,
+                                                      255,
+                                                    ),
+                                                  ),
+                                                  enabledBorder:
+                                                      const OutlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  focusedBorder:
+                                                      OutlineInputBorder(
+                                                    borderSide:
+                                                        const BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      width: 2,
+                                                    ),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0),
+                                                  ),
+                                                ),
+                                              ),
+                                              onChanged: (ModelSelect? value) {
+                                                setState(() {
+                                                  //print(value);
+                                                  idStatus = value!.id;
+                                                  status = value.value;
+                                                  statusController.text =
+                                                      idStatus.toString();
+                                                });
+                                              },
+                                              dropdownBuilder:
+                                                  (context, selectedItem) =>
+                                                      Text(
+                                                status != ''
+                                                    ? status.toUpperCase()
+                                                    : "Belum memilih status",
+                                                style: textStyleColorWhite,
+                                              ),
+                                            ),
+                                          ),
+                                          Visibility(
+                                            visible: false,
                                             child: TextFormField(
-                                              //controller: userNameCtr,
+                                              controller: statusController,
                                               autocorrect: false,
+                                              style: const TextStyle(
+                                                  color: Colors.white),
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
                                                 hintText: 'Status',
                                                 hintStyle: textStyleColorWhite,
-                                                labelText: 'Status',
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                ),
                                                 enabledBorder:
                                                     const OutlineInputBorder(
                                                   borderSide: BorderSide(
@@ -6669,21 +8061,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                     ),
                                                   ),
                                                 ),
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    width: 2,
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
-                                                ),
                                               ),
                                             ),
                                           ),
@@ -6692,6 +8069,288 @@ class _ProspectPageState extends State<ProspectPage>
                                     ),
                                   ],
                                 ),
+                                idStatus == 2
+                                    ? BootstrapRow(
+                                        children: <BootstrapCol>[
+                                          BootstrapCol(
+                                              sizes: 'col-md-6 col-12',
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 0, 15),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "Alasan Lost Prospect :",
+                                                        style:
+                                                            textStyleColorWhite,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 0, 20),
+                                                    child: DropdownSearch<
+                                                        ModelSelect>(
+                                                      popupProps:
+                                                          PopupProps.dialog(
+                                                        // showSelectedItems: true,
+                                                        dialogProps:
+                                                            const DialogProps(
+                                                          shape:
+                                                              Border.symmetric(
+                                                                  vertical:
+                                                                      BorderSide
+                                                                          .none),
+                                                        ),
+                                                        showSearchBox: true,
+                                                        searchFieldProps:
+                                                            TextFieldProps(
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                "Search..",
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  134,
+                                                                  134,
+                                                                  134,
+                                                                ),
+                                                                width: 2,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  146,
+                                                                  2,
+                                                                  2,
+                                                                ),
+                                                                width: 2,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      items: alasanLpOptions,
+                                                      itemAsString: (ModelSelect
+                                                              alasanLp) =>
+                                                          alasanLp.value
+                                                              .toUpperCase(),
+                                                      dropdownDecoratorProps:
+                                                          DropDownDecoratorProps(
+                                                        dropdownSearchDecoration:
+                                                            InputDecoration(
+                                                          hintStyle:
+                                                              textStyleColorWhite,
+                                                          labelText:
+                                                              'Alasan Lost Prospect',
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255,
+                                                            ),
+                                                          ),
+                                                          enabledBorder:
+                                                              const OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                255,
+                                                                255,
+                                                                255,
+                                                                255,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                const BorderSide(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                255,
+                                                                255,
+                                                                255,
+                                                                255,
+                                                              ),
+                                                              width: 2,
+                                                            ),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onChanged:
+                                                          (ModelSelect? value) {
+                                                        setState(() {
+                                                          idAlasanLp =
+                                                              value!.id;
+                                                          alasanLp =
+                                                              value.value;
+                                                          alasanLostProspectController
+                                                                  .text =
+                                                              idAlasanLp
+                                                                  .toString();
+                                                        });
+                                                      },
+                                                      dropdownBuilder: (context,
+                                                              selectedItem) =>
+                                                          Text(
+                                                        alasanLp != ''
+                                                            ? alasanLp
+                                                                .toUpperCase()
+                                                            : "Alasan lost prospect",
+                                                        style:
+                                                            textStyleColorWhite,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Visibility(
+                                                    visible: false,
+                                                    child: TextFormField(
+                                                      controller:
+                                                          alasanLostProspectController,
+                                                      autocorrect: false,
+                                                      style: const TextStyle(
+                                                          color: Colors.white),
+                                                      textInputAction:
+                                                          TextInputAction.next,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText:
+                                                            'Alasan Lost Prospect',
+                                                        hintStyle:
+                                                            textStyleColorWhite,
+                                                        enabledBorder:
+                                                            const OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color:
+                                                                Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                          BootstrapCol(
+                                              sizes: 'col-md-6 col-12',
+                                              child: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 0, 15),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "keterangan :",
+                                                        style:
+                                                            textStyleColorWhite,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 0, 0, 20),
+                                                    child: TextFormField(
+                                                      style: const TextStyle(
+                                                        color: Colors.white,
+                                                      ),
+                                                      autocorrect: false,
+                                                      controller:
+                                                          keteranganController,
+                                                      textInputAction:
+                                                          TextInputAction.next,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        hintText: 'Keterangan',
+                                                        hintStyle:
+                                                            textStyleColorWhite,
+                                                        labelText: 'Keterangan',
+                                                        labelStyle:
+                                                            const TextStyle(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                        ),
+                                                        enabledBorder:
+                                                            const OutlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide(
+                                                            color:
+                                                                Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        focusedBorder:
+                                                            OutlineInputBorder(
+                                                          borderSide:
+                                                              const BorderSide(
+                                                            color:
+                                                                Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255,
+                                                            ),
+                                                            width: 2,
+                                                          ),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              )),
+                                        ],
+                                      )
+                                    : BootstrapRow(children: <BootstrapCol>[
+                                        BootstrapCol(child: const Text("")),
+                                      ]),
                                 BootstrapRow(
                                   children: [
                                     BootstrapCol(

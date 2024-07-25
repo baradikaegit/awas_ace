@@ -1,4 +1,3 @@
-import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_reminder.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_report.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_setting.dart';

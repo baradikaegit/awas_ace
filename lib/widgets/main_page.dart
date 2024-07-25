@@ -415,18 +415,22 @@ class _MainPageState extends State<MainPage> {
 
                 //body data login
                 String prefId = body['data']['id'].toString();
+                String prefSID = body['data']['sid'];
                 String prefUserName = body['data']['username'];
                 String prefName = body['data']['name'];
                 String prefEmail = body['data']['email'];
                 String prefPhoneNumber = body['data']['phoneNumber'];
+                String prefBranchID = body['data']['branchID'];
                 String prefBranchCode = body['data']['branchCode'];
                 String prefRoles = body['data']['roles'];
 
                 await prefs.setString("id", prefId);
+                await prefs.setString("SID", prefSID);
                 await prefs.setString("Username", prefUserName.toUpperCase());
                 await prefs.setString("Name", prefName);
                 await prefs.setString("Email", prefEmail);
                 await prefs.setString("PhoneNumber", prefPhoneNumber);
+                await prefs.setString("BranchID", prefBranchID);
                 await prefs.setString("BranchCode", prefBranchCode);
                 await prefs.setString("Roles", prefRoles);
                 //body data login
