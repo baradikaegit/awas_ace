@@ -48,21 +48,14 @@ class _ProspectPageState extends State<ProspectPage>
 
   String idProv = '';
   String nameProv = '';
-  String idKab = '';
   String nameKab = '';
-  String idKec = '';
   String nameKec = '';
-  String idKel = '';
   String nameKel = '';
   String idKodePos = '';
 
-  String idProvS2 = '';
   String nameProvS2 = '';
-  String idKabS2 = '';
   String nameKabS2 = '';
-  String idKecS2 = '';
   String nameKecS2 = '';
-  String idKelS2 = '';
   String nameKelS2 = '';
 
   String jkValue = '';
@@ -808,9 +801,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                   print("idProvinsi : $idProv");
                                                 });
                                               },
-                                              // onChanged: (value) =>
-                                              //     idProv = value?.id,
-
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
