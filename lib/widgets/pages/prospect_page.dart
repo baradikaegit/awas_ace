@@ -44,6 +44,9 @@ class ModelSelect {
 
 class _ProspectPageState extends ConsumerState<ProspectPage>
     with TickerProviderStateMixin {
+  GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  // final formkey = GlobalKey<FormState>();
+
   //STEP 1
   TextEditingController tglContactController = TextEditingController();
   final TextEditingController branchBusinessIDController =
@@ -115,7 +118,7 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
   String area = '';
   String iDSumberData = '';
   String sumberData = '';
-  String iDRencanaPembelian = '';
+  int? iDRencanaPembelian;
   String rencanaPembelian = '';
 
   //STEP 2
@@ -680,8 +683,6 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
 
   @override
   Widget build(BuildContext context) {
-    GlobalKey<FormState> formkey = GlobalKey<FormState>();
-
     var textStyleColorWhite = TextStyle(
       color: const Color.fromARGB(
         255,
@@ -701,37 +702,48 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
       ).value,
     );
 
-    return DefaultTabController(
-      length: 4,
-      child: Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text(
-            "Entry Prospect Sales",
-            style: TextStyle(color: Colors.white),
-          ),
-          iconTheme: const IconThemeData(color: Colors.white),
-          bottom: PreferredSize(
-            preferredSize: _tabBar.preferredSize,
-            child: Material(
-              color: const Color.fromARGB(
-                255,
-                3,
-                116,
-                18,
-              ),
-              child: Theme(
-                data: ThemeData().copyWith(
-                  splashColor: const Color.fromARGB(
-                    255,
-                    3,
-                    116,
-                    18,
-                  ),
+    return Form(
+      key: formkey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
+      child: DefaultTabController(
+        length: 4,
+        child: Scaffold(
+          appBar: AppBar(
+            centerTitle: true,
+            title: const Text(
+              "Entry Prospect Sales",
+              style: TextStyle(color: Colors.white),
+            ),
+            iconTheme: const IconThemeData(color: Colors.white),
+            bottom: PreferredSize(
+              preferredSize: _tabBar.preferredSize,
+              child: Material(
+                color: const Color.fromARGB(
+                  255,
+                  3,
+                  116,
+                  18,
                 ),
-                child: _tabBar,
+                child: Theme(
+                  data: ThemeData().copyWith(
+                    splashColor: const Color.fromARGB(
+                      255,
+                      3,
+                      116,
+                      18,
+                    ),
+                  ),
+                  child: _tabBar,
+                ),
               ),
             ),
+            backgroundColor: const Color.fromARGB(
+              255,
+              3,
+              116,
+              18,
+            ),
+            elevation: 0,
           ),
           backgroundColor: const Color.fromARGB(
             255,
@@ -739,33 +751,22 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
             116,
             18,
           ),
-          elevation: 0,
-        ),
-        backgroundColor: const Color.fromARGB(
-          255,
-          3,
-          116,
-          18,
-        ),
-        body: TabBarView(
-          controller: _tabController,
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(
-                  255,
-                  134,
-                  134,
-                  134,
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(
+                    255,
+                    134,
+                    134,
+                    134,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
-              ),
-              child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                key: formkey,
                 child: Center(
                   child: Stack(
                     children: [
@@ -980,6 +981,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               autocorrect: false,
                                               controller:
                                                   lokasiBertemuController,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Lokasi bertemu tidak boleh kosong.";
+                                                }
+                                                return null;
+                                              },
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
@@ -1049,6 +1057,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.text == '') {
+                                                  return "Provinsi tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
@@ -1222,6 +1237,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.text == '') {
+                                                  return "Kota tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -1390,6 +1412,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.text == '') {
+                                                  return "Kecamatan tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -1554,6 +1583,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.text == '') {
+                                                  return "Kelurahan tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -1732,8 +1768,14 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
-                                              //controller: userNameCtr,
                                               autocorrect: false,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Kode Pos tidak boleh kosong.";
+                                                }
+                                                return null;
+                                              },
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
@@ -1829,6 +1871,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               ),
                                               autocorrect: false,
                                               controller: areaController,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Area tidak boleh kosong.";
+                                                }
+                                                return null;
+                                              },
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
@@ -1922,6 +1971,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<SumberData>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.name == '') {
+                                                  return "Sumber data tidak boleh kosong.";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
@@ -2115,6 +2171,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<ModelSelect>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.value == '') {
+                                                  return "Rencana pembelian tidak boleh kosong.";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
@@ -2214,21 +2277,20 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               onChanged: (ModelSelect? value) {
                                                 setState(() {
                                                   iDRencanaPembelian =
-                                                      value!.id.toString();
+                                                      value!.id;
                                                   rencanaPembelian =
                                                       value.value;
                                                   rencanaPembelianController
                                                           .text =
-                                                      iDRencanaPembelian;
+                                                      iDRencanaPembelian
+                                                          .toString();
 
-                                                  if (iDRencanaPembelian ==
-                                                          '4' ||
-                                                      iDRencanaPembelian ==
-                                                          '5') {
+                                                  if (iDRencanaPembelian == 4 ||
+                                                      iDRencanaPembelian == 5) {
                                                     prospectStatusController
                                                         .text = '1';
                                                   } else if (iDRencanaPembelian ==
-                                                      '3') {
+                                                      3) {
                                                     prospectStatusController
                                                         .text = '2';
                                                   } else {
@@ -2312,23 +2374,19 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                   ),
                 ),
               ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(
-                  255,
-                  1,
-                  53,
-                  131,
+              Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(
+                    255,
+                    1,
+                    53,
+                    131,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
-              ),
-              child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
-                //key: formkey,
                 child: Center(
                   child: Stack(
                     children: [
@@ -2441,6 +2499,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               controller:
                                                   nameContactContactController,
                                               autocorrect: false,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Nama contact tidak boleh kosong.";
+                                                }
+                                                return null;
+                                              },
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
@@ -2512,6 +2577,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               controller:
                                                   noHP1ContactController,
                                               autocorrect: false,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "No HP1 tidak boleh kosong.";
+                                                }
+                                                return null;
+                                              },
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
@@ -2586,6 +2658,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               ),
                                               controller:
                                                   noHP2ContactController,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "No HP2 tidak boleh kosong.";
+                                                }
+                                                return null;
+                                              },
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -2760,7 +2839,7 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
-                                                hintText: 'Jabatan',
+                                                hintText: 'Jenis Kelamin',
                                                 hintStyle: textStyleColorWhite,
                                                 enabledBorder:
                                                     const OutlineInputBorder(
@@ -2806,6 +2885,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 color: Colors.white,
                                               ),
                                               controller: alamatController,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Alamat tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -2872,8 +2958,14 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.text == '') {
+                                                  return "Provinsi tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
-                                                // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
                                                       vertical:
@@ -3048,6 +3140,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.text == '') {
+                                                  return "Kota tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -3212,6 +3311,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.text == '') {
+                                                  return "Kecamatan tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -3379,6 +3485,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Wilayah>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.text == '') {
+                                                  return "Kelurahan tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -3550,6 +3663,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             child: TextFormField(
                                               readOnly: true,
                                               controller: kodePosS2Controller,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Kode pos tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               style: const TextStyle(
                                                 color: Colors.white,
                                               ),
@@ -3652,6 +3772,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 color: Colors.white,
                                               ),
                                               controller: areaS2Controller,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Area tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -3746,6 +3873,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 color: Colors.white,
                                               ),
                                               controller: emailController,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Email tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               autocorrect: false,
                                               textInputAction:
                                                   TextInputAction.next,
@@ -3816,6 +3950,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<CustType>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.name == '') {
+                                                  return "Tipe Customer tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -4039,6 +4180,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<ModelSelect>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.value == '') {
+                                                  return "Jabatan tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps:
                                                   const PopupProps.dialog(
                                                 // showSelectedItems: true,
@@ -4195,6 +4343,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<KisaranHarga>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.name == '') {
+                                                  return "Kisaran harga kendaraan tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -4390,6 +4545,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 0, 0, 0, 20),
                                             child:
                                                 DropdownSearch<TipePelanggan>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.name == '') {
+                                                  return "Tipe pelanggan tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -4575,22 +4737,19 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                   ),
                 ),
               ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(
-                  255,
-                  202,
-                  109,
-                  2,
+              Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(
+                    255,
+                    202,
+                    109,
+                    2,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
-              ),
-              child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Center(
                   child: Stack(
                     children: [
@@ -4697,6 +4856,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<Vgroup>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.vgroup == '') {
+                                                  return "Model tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
@@ -4887,6 +5053,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<String>(
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Tahun tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -4993,15 +5166,16 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               onChanged: (value) {
                                                 setState(() {
                                                   tahunVal = value!;
+
                                                   tahunController.text =
-                                                      tahunVal;
+                                                      tahunVal.toString();
                                                 });
                                               },
                                               dropdownBuilder:
                                                   (context, selectedItem) =>
                                                       Text(
                                                 tahunVal != ''
-                                                    ? tahunVal
+                                                    ? tahunVal.toString()
                                                     : "Belum memilih Tahun",
                                                 style: textStyleColorWhite,
                                               ),
@@ -5069,6 +5243,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 0, 0, 0, 20),
                                             child:
                                                 DropdownSearch<VfuelTransmisi>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.name == '') {
+                                                  return "Tahun tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
@@ -5278,6 +5459,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 0, 0, 0, 20),
                                             child:
                                                 DropdownSearch<VfuelTransmisi>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.name == '') {
+                                                  return "Transmisi tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 dialogProps: const DialogProps(
                                                   shape: Border.symmetric(
@@ -5815,6 +6003,7 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               onChanged: (value) {
                                                 setState(() {
                                                   tahunVal2 = value!;
+
                                                   tahun2Controller.text =
                                                       tahunVal2;
                                                 });
@@ -5823,7 +6012,7 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   (context, selectedItem) =>
                                                       Text(
                                                 tahunVal2 != ''
-                                                    ? tahunVal2
+                                                    ? tahunVal2.toString()
                                                     : "Belum memilih Tahun",
                                                 style: textStyleColorWhite,
                                               ),
@@ -6263,22 +6452,19 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                   ),
                 ),
               ),
-            ),
-            Container(
-              decoration: const BoxDecoration(
-                color: Color.fromARGB(
-                  255,
-                  146,
-                  2,
-                  2,
+              Container(
+                decoration: const BoxDecoration(
+                  color: Color.fromARGB(
+                    255,
+                    146,
+                    2,
+                    2,
+                  ),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(25),
+                    topRight: Radius.circular(25),
+                  ),
                 ),
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(25),
-                  topRight: Radius.circular(25),
-                ),
-              ),
-              child: Form(
-                autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Center(
                   child: Stack(
                     children: [
@@ -6909,6 +7095,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 color: Colors.white,
                                               ),
                                               controller: custTypeS2Controller,
+                                              validator: (value) {
+                                                if (value == null ||
+                                                    value.isEmpty) {
+                                                  return "Tipe Customer tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               autocorrect: false,
                                               readOnly: true,
                                               textInputAction:
@@ -7896,6 +8089,13 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 0, 0, 20),
                                             child: DropdownSearch<ModelSelect>(
+                                              validator: (val) {
+                                                if (val == null ||
+                                                    val.value == '') {
+                                                  return "Status tidak boleh kosong";
+                                                }
+                                                return null;
+                                              },
                                               popupProps: PopupProps.dialog(
                                                 // showSelectedItems: true,
                                                 dialogProps: const DialogProps(
@@ -8406,131 +8606,149 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                var prospect = ListProspectData(
-                                                  dateContact:
-                                                      tglContactController.text,
-                                                  meetingPoint:
-                                                      lokasiBertemuController
-                                                          .text,
-                                                  postalCodeID:
-                                                      idKodePosController.text,
-                                                  ringArea:
-                                                      idAreaController.text,
-                                                  referensiID:
-                                                      sumberDataController.text,
-                                                  rencanaPembelian: int.tryParse(
-                                                      rencanaPembelianController
-                                                          .text),
-                                                  branchBusinessID:
-                                                      branchBusinessIDController
-                                                          .text,
-                                                  salesmanHeaderID:
-                                                      salesmanIDController.text,
-                                                  prospectStatus: int.tryParse(
-                                                      prospectStatusController
-                                                          .text),
-                                                  customerName:
-                                                      nameContactContactController
-                                                          .text,
-                                                  handphone1:
-                                                      noHP1ContactController
-                                                          .text,
-                                                  handphone2:
-                                                      noHP2ContactController
-                                                          .text,
-                                                  gender: int.tryParse(
-                                                      jKController.text),
-                                                  customerAddres:
-                                                      alamatController.text,
-                                                  postaclCodeACEID:
-                                                      idKodePosS2Controller
-                                                          .text,
-                                                  ringAreaACE: int.tryParse(
-                                                      idAreaS2Controller.text),
-                                                  email: emailController.text,
-                                                  customerTypeID:
-                                                      idCustTypeS2Controller
-                                                          .text,
-                                                  pekerjaan:
-                                                      jabatanController.text,
-                                                  kisaranHargaID:
-                                                      hKendaraanController.text,
-                                                  customerStatusID:
+                                                if (formkey.currentState!
+                                                    .validate()) {
+                                                  var prospect =
+                                                      ListProspectData(
+                                                    dateContact:
+                                                        tglContactController
+                                                            .text,
+                                                    meetingPoint:
+                                                        lokasiBertemuController
+                                                            .text,
+                                                    postalCodeID:
+                                                        idKodePosController
+                                                            .text,
+                                                    ringArea:
+                                                        idAreaController.text,
+                                                    referensiID:
+                                                        sumberDataController
+                                                            .text,
+                                                    rencanaPembelian: int.tryParse(
+                                                        rencanaPembelianController
+                                                            .text),
+                                                    branchBusinessID:
+                                                        branchBusinessIDController
+                                                            .text,
+                                                    salesmanHeaderID:
+                                                        salesmanIDController
+                                                            .text,
+                                                    prospectStatus: int.tryParse(
+                                                        prospectStatusController
+                                                            .text),
+                                                    customerName:
+                                                        nameContactContactController
+                                                            .text,
+                                                    handphone1:
+                                                        noHP1ContactController
+                                                            .text,
+                                                    handphone2:
+                                                        noHP2ContactController
+                                                            .text,
+                                                    gender: int.tryParse(
+                                                        jKController.text),
+                                                    customerAddres:
+                                                        alamatController.text,
+                                                    postaclCodeACEID:
+                                                        idKodePosS2Controller
+                                                            .text,
+                                                    ringAreaACE: int.tryParse(
+                                                        idAreaS2Controller
+                                                            .text),
+                                                    email: emailController.text,
+                                                    customerTypeID:
+                                                        idCustTypeS2Controller
+                                                            .text,
+                                                    pekerjaan:
+                                                        jabatanController.text,
+                                                    kisaranHargaID:
+                                                        hKendaraanController
+                                                            .text,
+                                                    customerStatusID:
+                                                        tipePelangganController
+                                                            .text,
+                                                    vehicleGroupID1:
+                                                        vGroupController.text,
+                                                    vehicleYear1:
+                                                        tahunController.text,
+                                                    vehicleFuelID1:
+                                                        vFuelController.text,
+                                                    transmisiVehicle1:
+                                                        vTransmisiController
+                                                            .text,
+                                                    vehicleGroupID2:
+                                                        vGroup2Controller.text,
+                                                    vehicleYear2:
+                                                        tahun2Controller.text,
+                                                    vehicleFuelID2:
+                                                        vFuel2Controller.text,
+                                                    transmisiVehicle2:
+                                                        vTransmisi2Controller
+                                                            .text,
+                                                    payment:
+                                                        cashLeasingController
+                                                            .text,
+                                                    downPayment:
+                                                        dPController.text,
+                                                    tenor: tenorController.text,
+                                                    q1: int.tryParse(
+                                                        q1Controller.text),
+                                                    q2: int.tryParse(
+                                                        q2Controller.text),
+                                                    q3: int.tryParse(
+                                                        q3Controller.text),
+                                                    q4: int.tryParse(
+                                                        q4Controller.text),
+                                                    q5: int.tryParse(
+                                                        q5Controller.text),
+                                                    q6: int.tryParse(
+                                                        q6Controller.text),
+                                                    trackingStatus:
+                                                        int.tryParse(
+                                                            statusController
+                                                                .text),
+                                                    trackingReason: int.tryParse(
+                                                        alasanLostProspectController
+                                                            .text),
+                                                    trackingInfo:
+                                                        keteranganController
+                                                            .text,
+                                                  );
+
+                                                  try {
+                                                    var resp = await ref
+                                                        .read(
+                                                            prospectFormProvider)
+                                                        .onSubmitProspect(
+                                                            prospect);
+
+                                                    if (resp.statusMessage ==
+                                                        "Sucess") {
                                                       tipePelangganController
-                                                          .text,
-                                                  vehicleGroupID1:
-                                                      vGroupController.text,
-                                                  vehicleYear1: int.tryParse(
-                                                      tahunController.text),
-                                                  vehicleFuelID1:
-                                                      vFuelController.text,
-                                                  transmisiVehicle1:
-                                                      vTransmisiController.text,
-                                                  vehicleGroupID2:
-                                                      vGroup2Controller.text,
-                                                  vehicleYear2: int.tryParse(
-                                                      tahun2Controller.text),
-                                                  vehicleFuelID2:
-                                                      vFuel2Controller.text,
-                                                  transmisiVehicle2:
-                                                      vTransmisi2Controller
-                                                          .text,
-                                                  payment: cashLeasingController
-                                                      .text,
-                                                  downPayment:
-                                                      dPController.text,
-                                                  tenor: tenorController.text,
-                                                  q1: int.tryParse(
-                                                      q1Controller.text),
-                                                  q2: int.tryParse(
-                                                      q2Controller.text),
-                                                  q3: int.tryParse(
-                                                      q3Controller.text),
-                                                  q4: int.tryParse(
-                                                      q4Controller.text),
-                                                  q5: int.tryParse(
-                                                      q5Controller.text),
-                                                  q6: int.tryParse(
-                                                      q6Controller.text),
-                                                  trackingStatus: int.tryParse(
-                                                      statusController.text),
-                                                  trackingReason: int.tryParse(
-                                                      alasanLostProspectController
-                                                          .text),
-                                                  trackingInfo:
-                                                      keteranganController.text,
-                                                );
+                                                          .clear();
+                                                    }
 
-                                                try {
-                                                  var resp = await ref
-                                                      .read(
-                                                          prospectFormProvider)
-                                                      .onSubmitProspect(
-                                                          prospect);
+                                                    Navigator.of(context)
+                                                        .pushAndRemoveUntil(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const HomePage()),
+                                                            (route) => false);
 
-                                                  if (resp.statusMessage ==
-                                                      "Sucess") {
-                                                    tipePelangganController
-                                                        .clear();
+                                                    successSubmit(
+                                                        context, resp);
+                                                  } catch (e) {
+                                                    Navigator.of(context)
+                                                        .pushAndRemoveUntil(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const HomePage()),
+                                                            (route) => false);
+
+                                                    catchError(context, e);
                                                   }
-
-                                                  Navigator.of(context)
-                                                      .pushAndRemoveUntil(
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const HomePage()),
-                                                          (route) => false);
-
-                                                  successSubmit(context, resp);
-                                                } catch (e) {
-                                                  Navigator.of(context)
-                                                      .pushAndRemoveUntil(
-                                                          MaterialPageRoute(
-                                                              builder: (context) =>
-                                                                  const HomePage()),
-                                                          (route) => false);
-
-                                                  catchError(context, e);
                                                 }
                                               },
                                               child: Stack(
@@ -8563,8 +8781,8 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -94,11 +94,11 @@ class ListProspectData {
   late final String kisaranHargaID;
   late final String customerStatusID;
   late final String vehicleGroupID1;
-  late final int? vehicleYear1;
+  late final String vehicleYear1;
   late final String vehicleFuelID1;
   late final String transmisiVehicle1;
   late final String vehicleGroupID2;
-  late final int? vehicleYear2;
+  late final String vehicleYear2;
   late final String vehicleFuelID2;
   late final String transmisiVehicle2;
   late final String payment;
