@@ -1,32 +1,39 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:awas_ace/provider/prospect_provider.dart';
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/support/api_error.dart';
+import 'package:awas_ace/support/catch_error_submit.dart';
+import 'package:awas_ace/support/succes_submit.dart';
 import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/model/custtypemodel.dart';
 import 'package:awas_ace/widgets/model/kisaranhargamodel.dart';
+import 'package:awas_ace/widgets/model/prospectmodel.dart';
 import 'package:awas_ace/widgets/model/sumberdatamodel.dart';
 import 'package:awas_ace/widgets/model/tipepelangganmodel.dart';
 import 'package:awas_ace/widgets/model/vfueltransmisimodel.dart';
 import 'package:awas_ace/widgets/model/vgroupmodel.dart';
 import 'package:awas_ace/widgets/model/wilayah.dart';
+import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootstrap/flutter_bootstrap.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:http/http.dart ' as http;
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class ProspectPage extends StatefulWidget {
+class ProspectPage extends ConsumerStatefulWidget {
   const ProspectPage({super.key});
 
   static const String routeName = "/prospectPage";
 
   @override
-  State<ProspectPage> createState() => _ProspectPageState();
+  _ProspectPageState createState() => _ProspectPageState();
 }
 
 class ModelSelect {
@@ -35,7 +42,7 @@ class ModelSelect {
   ModelSelect(this.value, this.id);
 }
 
-class _ProspectPageState extends State<ProspectPage>
+class _ProspectPageState extends ConsumerState<ProspectPage>
     with TickerProviderStateMixin {
   //STEP 1
   TextEditingController tglContactController = TextEditingController();
@@ -90,12 +97,6 @@ class _ProspectPageState extends State<ProspectPage>
   final TextEditingController q4Controller = TextEditingController();
   final TextEditingController q5Controller = TextEditingController();
   final TextEditingController q6Controller = TextEditingController();
-  final TextEditingController q7Controller = TextEditingController();
-  final TextEditingController q8Controller = TextEditingController();
-  final TextEditingController q9Controller = TextEditingController();
-  final TextEditingController q10Controller = TextEditingController();
-  final TextEditingController q11Controller = TextEditingController();
-  final TextEditingController q12Controller = TextEditingController();
   final TextEditingController statusController = TextEditingController();
   final TextEditingController alasanLostProspectController =
       TextEditingController();
@@ -279,22 +280,10 @@ class _ProspectPageState extends State<ProspectPage>
             MaterialPageRoute(builder: (context) => const MainPage()),
             (route) => false);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.red,
-            content: Text("Gagal mengambil data: Silahkan Login Kembali"),
-          ),
-        );
+        catchApiError(context);
       }
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          content: Text("Terjadi Kesalahan: $error"),
-        ),
-      );
+    } catch (e) {
+      catchError(context, e);
     }
   }
 
@@ -338,22 +327,10 @@ class _ProspectPageState extends State<ProspectPage>
             MaterialPageRoute(builder: (context) => const MainPage()),
             (route) => false);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.red,
-            content: Text("Gagal mengambil data: Silahkan Login Kembali"),
-          ),
-        );
+        catchApiError(context);
       }
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          content: Text("Terjadi Kesalahan: $error"),
-        ),
-      );
+    } catch (e) {
+      catchError(context, e);
     }
   }
 
@@ -400,22 +377,10 @@ class _ProspectPageState extends State<ProspectPage>
             MaterialPageRoute(builder: (context) => const MainPage()),
             (route) => false);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.red,
-            content: Text("Gagal mengambil data: Silahkan Login Kembali"),
-          ),
-        );
+        catchApiError(context);
       }
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          content: Text("Terjadi Kesalahan: $error"),
-        ),
-      );
+    } catch (e) {
+      catchError(context, e);
     }
   }
 
@@ -459,26 +424,14 @@ class _ProspectPageState extends State<ProspectPage>
             MaterialPageRoute(builder: (context) => const MainPage()),
             (route) => false);
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            behavior: SnackBarBehavior.floating,
-            backgroundColor: Colors.red,
-            content: Text("Gagal mengambil data: Silahkan Login Kembali"),
-          ),
-        );
+        catchApiError(context);
       }
-    } catch (error) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          content: Text("Terjadi Kesalahan: $error"),
-        ),
-      );
+    } catch (e) {
+      catchError(context, e);
     }
   }
 
-  String dateNow = DateFormat('yyyy/MM/dd').format(DateTime.now());
+  String dateNow = DateFormat('MM/dd/yyyy').format(DateTime.now());
   String? userName;
   String? sid;
   String? branchID;
@@ -934,7 +887,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 );
                                                 if (pickedDate != null) {
                                                   String formatDate =
-                                                      DateFormat('yyyy-MM-dd')
+                                                      DateFormat('MM/dd/yyyy')
                                                           .format(pickedDate);
 
                                                   setState(() {
@@ -1706,9 +1659,6 @@ class _ProspectPageState extends State<ProspectPage>
                                                       nameKab,
                                                       nameKec,
                                                       nameKel);
-
-                                                  print(
-                                                      "$nameProv, $nameKab, $nameKec, $nameKel");
                                                 });
                                               },
                                               dropdownBuilder:
@@ -3974,6 +3924,29 @@ class _ProspectPageState extends State<ProspectPage>
                                                       idTipeCustS2;
                                                   custTypeS2Controller.text =
                                                       tipeCustS2;
+
+                                                  if (valTipeCutS2 == 2 ||
+                                                      valTipeCutS2 == 1) {
+                                                    q1Controller.text = "0";
+                                                    q2Controller.text = "0";
+                                                    q3Controller.text = "0";
+                                                    q4Controller.text = "0";
+                                                    q5Controller.text = "0";
+                                                    q6Controller.text = "0";
+
+                                                    checkQ1 = false;
+                                                    checkQ2 = false;
+                                                    checkQ3 = false;
+                                                    checkQ4 = false;
+                                                    checkQ5 = false;
+                                                    checkQ6 = false;
+                                                    checkQ7 = false;
+                                                    checkQ8 = false;
+                                                    checkQ9 = false;
+                                                    checkQ10 = false;
+                                                    checkQ11 = false;
+                                                    checkQ12 = false;
+                                                  }
                                                   // print(
                                                   //     "idProvinsi : $nameProvS2");
                                                 });
@@ -7474,10 +7447,10 @@ class _ProspectPageState extends State<ProspectPage>
                                                             checkQ7 = value!;
                                                             if (checkQ7 ==
                                                                 true) {
-                                                              q7Controller
+                                                              q1Controller
                                                                   .text = '1';
                                                             } else {
-                                                              q7Controller
+                                                              q1Controller
                                                                   .text = '0';
                                                             }
                                                           });
@@ -7499,7 +7472,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 Visibility(
                                                   visible: false,
                                                   child: TextFormField(
-                                                    controller: q7Controller,
+                                                    controller: q1Controller,
                                                     autocorrect: false,
                                                     style: const TextStyle(
                                                         color: Colors.white),
@@ -7549,10 +7522,10 @@ class _ProspectPageState extends State<ProspectPage>
                                                             checkQ8 = value!;
                                                             if (checkQ8 ==
                                                                 true) {
-                                                              q8Controller
+                                                              q2Controller
                                                                   .text = '1';
                                                             } else {
-                                                              q8Controller
+                                                              q2Controller
                                                                   .text = '0';
                                                             }
                                                           });
@@ -7574,7 +7547,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 Visibility(
                                                   visible: false,
                                                   child: TextFormField(
-                                                    controller: q8Controller,
+                                                    controller: q2Controller,
                                                     autocorrect: false,
                                                     style: const TextStyle(
                                                         color: Colors.white),
@@ -7624,10 +7597,10 @@ class _ProspectPageState extends State<ProspectPage>
                                                             checkQ9 = value!;
                                                             if (checkQ9 ==
                                                                 true) {
-                                                              q9Controller
+                                                              q3Controller
                                                                   .text = '1';
                                                             } else {
-                                                              q9Controller
+                                                              q3Controller
                                                                   .text = '0';
                                                             }
                                                           });
@@ -7649,7 +7622,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 Visibility(
                                                   visible: false,
                                                   child: TextFormField(
-                                                    controller: q9Controller,
+                                                    controller: q3Controller,
                                                     autocorrect: false,
                                                     style: const TextStyle(
                                                         color: Colors.white),
@@ -7699,10 +7672,10 @@ class _ProspectPageState extends State<ProspectPage>
                                                             checkQ10 = value!;
                                                             if (checkQ10 ==
                                                                 true) {
-                                                              q10Controller
+                                                              q4Controller
                                                                   .text = '1';
                                                             } else {
-                                                              q10Controller
+                                                              q4Controller
                                                                   .text = '0';
                                                             }
                                                           });
@@ -7724,7 +7697,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 Visibility(
                                                   visible: false,
                                                   child: TextFormField(
-                                                    controller: q10Controller,
+                                                    controller: q4Controller,
                                                     autocorrect: false,
                                                     style: const TextStyle(
                                                         color: Colors.white),
@@ -7775,10 +7748,10 @@ class _ProspectPageState extends State<ProspectPage>
                                                             checkQ11 = value!;
                                                             if (checkQ11 ==
                                                                 true) {
-                                                              q11Controller
+                                                              q5Controller
                                                                   .text = '1';
                                                             } else {
-                                                              q11Controller
+                                                              q5Controller
                                                                   .text = '0';
                                                             }
                                                           });
@@ -7800,7 +7773,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 Visibility(
                                                   visible: false,
                                                   child: TextFormField(
-                                                    controller: q11Controller,
+                                                    controller: q5Controller,
                                                     autocorrect: false,
                                                     style: const TextStyle(
                                                         color: Colors.white),
@@ -7851,10 +7824,10 @@ class _ProspectPageState extends State<ProspectPage>
                                                             checkQ12 = value!;
                                                             if (checkQ12 ==
                                                                 true) {
-                                                              q12Controller
+                                                              q6Controller
                                                                   .text = '1';
                                                             } else {
-                                                              q12Controller
+                                                              q6Controller
                                                                   .text = '0';
                                                             }
                                                           });
@@ -7876,7 +7849,7 @@ class _ProspectPageState extends State<ProspectPage>
                                                 Visibility(
                                                   visible: false,
                                                   child: TextFormField(
-                                                    controller: q12Controller,
+                                                    controller: q6Controller,
                                                     autocorrect: false,
                                                     style: const TextStyle(
                                                         color: Colors.white),
@@ -8432,7 +8405,134 @@ class _ProspectPageState extends State<ProspectPage>
                                                   },
                                                 ),
                                               ),
-                                              onPressed: () {},
+                                              onPressed: () async {
+                                                var prospect = ListProspectData(
+                                                  dateContact:
+                                                      tglContactController.text,
+                                                  meetingPoint:
+                                                      lokasiBertemuController
+                                                          .text,
+                                                  postalCodeID:
+                                                      idKodePosController.text,
+                                                  ringArea:
+                                                      idAreaController.text,
+                                                  referensiID:
+                                                      sumberDataController.text,
+                                                  rencanaPembelian: int.tryParse(
+                                                      rencanaPembelianController
+                                                          .text),
+                                                  branchBusinessID:
+                                                      branchBusinessIDController
+                                                          .text,
+                                                  salesmanHeaderID:
+                                                      salesmanIDController.text,
+                                                  prospectStatus: int.tryParse(
+                                                      prospectStatusController
+                                                          .text),
+                                                  customerName:
+                                                      nameContactContactController
+                                                          .text,
+                                                  handphone1:
+                                                      noHP1ContactController
+                                                          .text,
+                                                  handphone2:
+                                                      noHP2ContactController
+                                                          .text,
+                                                  gender: int.tryParse(
+                                                      jKController.text),
+                                                  customerAddres:
+                                                      alamatController.text,
+                                                  postaclCodeACEID:
+                                                      idKodePosS2Controller
+                                                          .text,
+                                                  ringAreaACE: int.tryParse(
+                                                      idAreaS2Controller.text),
+                                                  email: emailController.text,
+                                                  customerTypeID:
+                                                      idCustTypeS2Controller
+                                                          .text,
+                                                  pekerjaan:
+                                                      jabatanController.text,
+                                                  kisaranHargaID:
+                                                      hKendaraanController.text,
+                                                  customerStatusID:
+                                                      tipePelangganController
+                                                          .text,
+                                                  vehicleGroupID1:
+                                                      vGroupController.text,
+                                                  vehicleYear1: int.tryParse(
+                                                      tahunController.text),
+                                                  vehicleFuelID1:
+                                                      vFuelController.text,
+                                                  transmisiVehicle1:
+                                                      vTransmisiController.text,
+                                                  vehicleGroupID2:
+                                                      vGroup2Controller.text,
+                                                  vehicleYear2: int.tryParse(
+                                                      tahun2Controller.text),
+                                                  vehicleFuelID2:
+                                                      vFuel2Controller.text,
+                                                  transmisiVehicle2:
+                                                      vTransmisi2Controller
+                                                          .text,
+                                                  payment: cashLeasingController
+                                                      .text,
+                                                  downPayment:
+                                                      dPController.text,
+                                                  tenor: tenorController.text,
+                                                  q1: int.tryParse(
+                                                      q1Controller.text),
+                                                  q2: int.tryParse(
+                                                      q2Controller.text),
+                                                  q3: int.tryParse(
+                                                      q3Controller.text),
+                                                  q4: int.tryParse(
+                                                      q4Controller.text),
+                                                  q5: int.tryParse(
+                                                      q5Controller.text),
+                                                  q6: int.tryParse(
+                                                      q6Controller.text),
+                                                  trackingStatus: int.tryParse(
+                                                      statusController.text),
+                                                  trackingReason: int.tryParse(
+                                                      alasanLostProspectController
+                                                          .text),
+                                                  trackingInfo:
+                                                      keteranganController.text,
+                                                );
+
+                                                try {
+                                                  var resp = await ref
+                                                      .read(
+                                                          prospectFormProvider)
+                                                      .onSubmitProspect(
+                                                          prospect);
+
+                                                  if (resp.statusMessage ==
+                                                      "Sucess") {
+                                                    tipePelangganController
+                                                        .clear();
+                                                  }
+
+                                                  Navigator.of(context)
+                                                      .pushAndRemoveUntil(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const HomePage()),
+                                                          (route) => false);
+
+                                                  successSubmit(context, resp);
+                                                } catch (e) {
+                                                  Navigator.of(context)
+                                                      .pushAndRemoveUntil(
+                                                          MaterialPageRoute(
+                                                              builder: (context) =>
+                                                                  const HomePage()),
+                                                          (route) => false);
+
+                                                  catchError(context, e);
+                                                }
+                                              },
                                               child: Stack(
                                                 children: <Widget>[
                                                   Align(

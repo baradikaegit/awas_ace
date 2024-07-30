@@ -473,10 +473,6 @@ class _MainPageState extends State<MainPage> {
       const SnackBar(
         duration: Duration(milliseconds: 1000),
         behavior: SnackBarBehavior.floating,
-        margin: EdgeInsets.only(
-          left: 5,
-          right: 5,
-        ),
         backgroundColor: Color.fromARGB(
           255,
           1,
