@@ -2,12 +2,15 @@ import 'dart:io';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:awas_ace/widgets/main_page.dart';
+import 'package:awas_ace/widgets/pages/call_page.dart';
 import 'package:awas_ace/widgets/pages/changepass_page.dart';
+import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
+import 'package:awas_ace/widgets/pages/prospectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
-import 'package:awas_ace/widgets/pages/rotg_page.dart';
+import 'package:awas_ace/widgets/pages/settings/rotg_page.dart';
 import 'package:awas_ace/widgets/pages/sales/boccaisbe.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling.dart';
@@ -18,6 +21,8 @@ import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual.dart';
+import 'package:awas_ace/widgets/pages/targetsales_page.dart';
+import 'package:awas_ace/widgets/pages/targetsalesentry_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -59,6 +64,7 @@ class MyApp extends StatelessWidget {
       ),
       theme: ThemeData(
         scaffoldBackgroundColor: Colors.white,
+        fontFamily: 'Tahoma',
       ),
       home: AnimatedSplashScreen(
         splash: Image.asset('assets/images/logo_splash.png'),
@@ -70,6 +76,13 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         ResetPassword.routeName: (context) => const ResetPassword(),
+        CallPage.routeName: (context) => const CallPage(),
+        TargetsalesPage.routeName: (context) => const TargetsalesPage(),
+        TargetsalesEntryPage.routeName: (context) =>
+            const TargetsalesEntryPage(),
+        ProspectUEbpPage.routeName: (context) => const ProspectUEbpPage(),
+        EntryProspectUEbpPage.routeName: (context) =>
+            const EntryProspectUEbpPage(),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),
         FunnelingPage.routeName: (context) => const FunnelingPage(),

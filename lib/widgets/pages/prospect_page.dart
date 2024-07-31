@@ -443,6 +443,7 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
   void initState() {
     super.initState();
     tglContactController.text = dateNow;
+
     q1Controller.text = '0';
     q2Controller.text = '0';
     q3Controller.text = '0';
@@ -991,6 +992,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'Lokasi Bertemu',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'Lokasi Bertemu',
@@ -1121,6 +1141,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Provinsi',
@@ -1301,6 +1340,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Kota',
@@ -1476,6 +1534,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Kecamatan',
@@ -1647,6 +1724,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Kelurahan',
@@ -1779,6 +1875,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'Kode Pos',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'Kode Pos',
@@ -1881,6 +1996,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'Area',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'Area',
@@ -2035,6 +2169,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Sumber Data',
@@ -2233,6 +2386,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText:
@@ -2509,6 +2681,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'Nama Contact',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'Nama Contact',
@@ -2587,6 +2778,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'No HP1',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'No HP1',
@@ -2669,6 +2879,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'No HP2',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'No HP2',
@@ -2896,6 +3125,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'Alamat',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'Alamat',
@@ -3021,6 +3269,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Provinsi',
@@ -3204,6 +3471,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Kota',
@@ -3367,13 +3653,33 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
-                                                  title: Text(item.text),
+                                                  title: Text(
+                                                      item.text.toUpperCase()),
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Kecamatan',
@@ -3541,13 +3847,33 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                 itemBuilder: (context, item,
                                                         isSelected) =>
                                                     ListTile(
-                                                  title: Text(item.text),
+                                                  title: Text(
+                                                      item.text.toUpperCase()),
                                                 ),
                                               ),
                                               dropdownDecoratorProps:
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Kelurahan',
@@ -3677,6 +4003,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'Kode Pos',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'Kode Pos',
@@ -3783,6 +4128,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'Area',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'Area',
@@ -3875,8 +4239,11 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               controller: emailController,
                                               validator: (value) {
                                                 if (value == null ||
-                                                    value.isEmpty) {
-                                                  return "Email tidak boleh kosong";
+                                                    value.isEmpty ||
+                                                    !value
+                                                        .toString()
+                                                        .contains('@')) {
+                                                  return "E-mail tidak boleh kosong";
                                                 }
                                                 return null;
                                               },
@@ -3884,6 +4251,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    17,
+                                                    0,
+                                                  ),
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                ),
                                                 hintText: 'E-mail',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'E-mail',
@@ -4014,6 +4400,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Tipe Customer',
@@ -4235,6 +4640,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Jabatan',
@@ -4406,6 +4830,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText:
@@ -4609,6 +5052,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Tipe Pelanggan',
@@ -4920,6 +5382,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Model',
@@ -5123,6 +5604,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Tahun',
@@ -5307,6 +5807,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Bahan Bakar',
@@ -5523,6 +6042,25 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      255,
+                                                      17,
+                                                      0,
+                                                    ),
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        17,
+                                                        0,
+                                                      ),
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Transmisi',
@@ -7107,6 +7645,15 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                               textInputAction:
                                                   TextInputAction.next,
                                               decoration: InputDecoration(
+                                                errorStyle: const TextStyle(
+                                                  color: Colors.amber,
+                                                ),
+                                                errorBorder:
+                                                    const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                    color: Colors.amber,
+                                                  ),
+                                                ),
                                                 hintText: 'Tipe Customer',
                                                 hintStyle: textStyleColorWhite,
                                                 labelText: 'Tipe Customer',
@@ -8152,6 +8699,15 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   DropDownDecoratorProps(
                                                 dropdownSearchDecoration:
                                                     InputDecoration(
+                                                  errorStyle: const TextStyle(
+                                                    color: Colors.amber,
+                                                  ),
+                                                  errorBorder:
+                                                      const UnderlineInputBorder(
+                                                    borderSide: BorderSide(
+                                                      color: Colors.amber,
+                                                    ),
+                                                  ),
                                                   hintStyle:
                                                       textStyleColorWhite,
                                                   labelText: 'Status',
@@ -8724,8 +9280,12 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
 
                                                     if (resp.statusMessage ==
                                                         "Sucess") {
+                                                      // lokasiBertemuController
+                                                      //     .clear();
                                                       tipePelangganController
                                                           .clear();
+                                                      formkey.currentState!
+                                                          .reset();
                                                     }
 
                                                     Navigator.of(context)

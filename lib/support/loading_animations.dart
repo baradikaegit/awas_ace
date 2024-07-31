@@ -19,10 +19,13 @@ class _loadingAnimationState extends State<loadingAnimation> {
       padding: tabletWidth < 600
           ? const EdgeInsets.only(top: 300)
           : const EdgeInsets.only(top: 400),
-      child: LoadingAnimationWidget.discreteCircle(
-        color: const Color(0xFF3936AB),
-        secondRingColor: const Color.fromRGBO(245, 180, 4, 1),
-        thirdRingColor: const Color.fromARGB(255, 4, 245, 76),
+      child: LoadingAnimationWidget.inkDrop(
+        color: const Color.fromARGB(
+          255,
+          3,
+          116,
+          18,
+        ),
         size: 50,
       ),
     );

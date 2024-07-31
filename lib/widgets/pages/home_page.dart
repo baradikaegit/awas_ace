@@ -195,16 +195,31 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List menuRoles = [
-    'Call (Today/MTD)',
-    'Prospect (Today/MTD)',
-    'SPK (Today/MTD)',
-    'DO (Today/MTD)',
+    'Call',
+    'Prospect Sales',
+    'Prospect dari Bengkel',
+    'Target Sales',
+    'Prospect UE BP',
     'Lainnya',
   ];
 
-  List image = ['call.png', 'prospek.png', 'Spk.png', 'do.png', 'lainnya.png'];
+  List image = [
+    'call.png',
+    'sales.png',
+    'prospekbengkel.png',
+    'sales.png',
+    'sales.png',
+    'lainnya.png'
+  ];
 
-  List linkPage = ['/', '/', '/', '/', '/lainnyaPage'];
+  List linkPage = [
+    '/callPage',
+    '/',
+    '/',
+    '/targetSalesPage',
+    '/prospectUEbpPage',
+    '/lainnyaPage'
+  ];
 
   @override
   Widget build(BuildContext context) {
