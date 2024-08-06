@@ -24,6 +24,7 @@ import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual.dart';
 import 'package:awas_ace/widgets/pages/targetsales_page.dart';
 import 'package:awas_ace/widgets/pages/targetsalesentry_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
@@ -76,7 +77,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         ResetPassword.routeName: (context) => const ResetPassword(),
-        CallPage.routeName: (context) => const CallPage(),
+        CallPage.routeName: (context) => CallPage(
+            callDateObject: ModalRoute.of(context)!.settings.arguments),
         TargetsalesPage.routeName: (context) => const TargetsalesPage(),
         TargetsalesEntryPage.routeName: (context) =>
             const TargetsalesEntryPage(),

@@ -6,7 +6,9 @@ import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class HomePage extends StatefulWidget {
@@ -221,6 +223,25 @@ class _HomeScreenState extends State<HomeScreen> {
     '/lainnyaPage'
   ];
 
+  String? userName;
+  String? sid;
+  String? branchID;
+
+  final String dateNow = DateFormat('yyyy-MM-dd').format(DateTime.now());
+
+  @override
+  void initState() {
+    super.initState();
+    loadSharedPreference();
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('Username');
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -399,7 +420,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: FlipAnimation(
                                 child: InkWell(
                                   onTap: () => Navigator.pushNamed(
-                                      context, linkPage[index]),
+                                      context, linkPage[index],
+                                      arguments: linkPage[index] == '/callPage'
+                                          ? dateNow
+                                          : null),
                                   child: Column(
                                     children: <Widget>[
                                       const SizedBox(
