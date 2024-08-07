@@ -10,6 +10,8 @@ abstract class ICallinRepository {
   Future<ListReferensiResponse> fetchListData(String callDate);
   Future<CallResponse> createNewCall(ListEntryCallin call);
   Future<CallResponse> createNewCallDetail(ListEntryCallinDetail callDetail);
+  Future<UpdateCallResponse> updateNewCallDetail(
+      ListUpdateCallin updateCallDetail);
 }
 
 class CallinRepositories implements ICallinRepository {
@@ -85,5 +87,32 @@ class CallinRepositories implements ICallinRepository {
     final jsonObjectEntryCall = json.decode(resultsEntryCall.body);
     var responseEntryCall = CallResponse.fromJson(jsonObjectEntryCall);
     return responseEntryCall;
+  }
+
+  @override
+  Future<UpdateCallResponse> updateNewCallDetail(
+      ListUpdateCallin updateCallDetail) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    final Map<String, String> headers = {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    };
+
+    var urlUpdateCall = "${_host}UpdateCallDetail/${updateCallDetail.iD}";
+    var body = jsonEncode(updateCallDetail);
+
+    var resultUpdateCall = await http.put(
+      Uri.parse(urlUpdateCall),
+      body: body,
+      headers: headers,
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    final jsonObjectUpdateCall = json.decode(resultUpdateCall.body);
+    var responseUpdateCall = UpdateCallResponse.fromJson(jsonObjectUpdateCall);
+    return responseUpdateCall;
   }
 }

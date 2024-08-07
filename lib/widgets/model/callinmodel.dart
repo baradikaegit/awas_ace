@@ -40,6 +40,7 @@ class ListCallin {
     required this.callCustomerHeaderID,
     required this.branchBusinessUnitID,
     required this.salesmanHeaderID,
+    required this.days,
     required this.type,
   });
   late final String referensiID;
@@ -51,6 +52,7 @@ class ListCallin {
   late final String callCustomerHeaderID;
   late final String branchBusinessUnitID;
   late final String salesmanHeaderID;
+  late final int days;
   late final String type;
 
   ListCallin.fromJson(Map<String, dynamic> json) {
@@ -63,6 +65,7 @@ class ListCallin {
     callCustomerHeaderID = json['callCustomerHeaderID'];
     branchBusinessUnitID = json['branchBusinessUnitID'];
     salesmanHeaderID = json['salesmanHeaderID'];
+    days = json['days'];
     type = json['type'];
   }
 
@@ -77,6 +80,7 @@ class ListCallin {
     _data['callCustomerHeaderID'] = callCustomerHeaderID;
     _data['branchBusinessUnitID'] = branchBusinessUnitID;
     _data['salesmanHeaderID'] = salesmanHeaderID;
+    _data['days'] = days;
     _data['type'] = type;
     return _data;
   }
@@ -156,6 +160,62 @@ class CallResponse {
         (json['statusMessage'] != null) ? json['statusMessage'] : null;
     data = (json['data'] != null)
         ? ListEntryCallin.fromJson(json['data'][0])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['statusCode'] = statusCode;
+    _data['statusMessage'] = statusMessage;
+    _data['listCallin'] = data!.toJson();
+    return _data;
+  }
+}
+
+//update call
+class ListUpdateCallin {
+  ListUpdateCallin({
+    this.iD,
+    this.referensiID,
+    this.amount,
+  });
+
+  late String? iD;
+  late String? referensiID;
+  late int? amount;
+
+  ListUpdateCallin.fromJson(Map<String, dynamic> djson) {
+    iD = djson['iD'];
+    referensiID = djson['referensiID'];
+    amount = djson['amount'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['iD'] = iD;
+    _data['referensiID'] = referensiID;
+    _data['amount'] = amount;
+
+    return _data;
+  }
+}
+
+class UpdateCallResponse {
+  UpdateCallResponse({
+    this.statusCode,
+    this.statusMessage,
+    this.data,
+  });
+  late int? statusCode;
+  late String? statusMessage;
+  late ListUpdateCallin? data;
+
+  UpdateCallResponse.fromJson(Map<String, dynamic> json) {
+    statusCode = (json['statusCode'] != null) ? json['statusCode'] : null;
+    statusMessage =
+        (json['statusMessage'] != null) ? json['statusMessage'] : null;
+    data = (json['data'] != null)
+        ? ListUpdateCallin.fromJson(json['data'][0])
         : null;
   }
 

@@ -45,11 +45,14 @@ class _CallPageState extends ConsumerState<CallPage>
   List<TextEditingController> amountReferensiController = [];
   List<TextEditingController> idReferensiController = [];
   List<TextEditingController> codeReferensiController = [];
+  List<TextEditingController> callCustomerDetailIDController = [];
 
   String dateNow = DateFormat('MM/dd/yyyy').format(DateTime.now());
+
   String? userName;
   String? sid;
   String? branchID;
+  int? dateNew;
 
   @override
   void initState() {
@@ -206,6 +209,16 @@ class _CallPageState extends ConsumerState<CallPage>
                                                   TextEditingController(
                                                     text: dataCallIn
                                                         .listCallin![i].code
+                                                        .toString(),
+                                                  ),
+                                                );
+
+                                                callCustomerDetailIDController
+                                                    .add(
+                                                  TextEditingController(
+                                                    text: dataCallIn
+                                                        .listCallin![i]
+                                                        .callCustomerDetailID
                                                         .toString(),
                                                   ),
                                                 );
@@ -373,7 +386,9 @@ class _CallPageState extends ConsumerState<CallPage>
                                                                   } else {
                                                                     periodeController
                                                                             .text =
-                                                                        dateNow;
+                                                                        dataCallIn
+                                                                            .listCallin![index]
+                                                                            .callDate;
                                                                   }
                                                                 },
                                                               ),
@@ -936,6 +951,50 @@ class _CallPageState extends ConsumerState<CallPage>
                                                                   ),
                                                                 ),
                                                               ),
+                                                              Visibility(
+                                                                visible:
+                                                                    notShow,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          0,
+                                                                          0,
+                                                                          0,
+                                                                          15),
+                                                                  child:
+                                                                      TextFormField(
+                                                                    controller:
+                                                                        callCustomerDetailIDController[
+                                                                            formCall],
+                                                                    autocorrect:
+                                                                        false,
+                                                                    textInputAction:
+                                                                        TextInputAction
+                                                                            .next,
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      labelText:
+                                                                          "CallCustomerDetailID",
+                                                                      labelStyle:
+                                                                          textStyleColorGreen,
+                                                                      enabledBorder:
+                                                                          const OutlineInputBorder(
+                                                                        borderSide:
+                                                                            BorderSide(
+                                                                          color:
+                                                                              Color.fromARGB(
+                                                                            255,
+                                                                            3,
+                                                                            116,
+                                                                            18,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
                                                             ],
                                                           ),
                                                         ),
@@ -1003,14 +1062,47 @@ class _CallPageState extends ConsumerState<CallPage>
                                                                     ).value,
                                                                   ),
                                                                   elevation: 0,
-                                                                  backgroundColor:
-                                                                      const Color
-                                                                          .fromARGB(
-                                                                    255,
-                                                                    3,
-                                                                    116,
-                                                                    18,
+                                                                  side:
+                                                                      BorderSide(
+                                                                    color: 3 >
+                                                                            dataCallIn
+                                                                                .listCallin![
+                                                                                    index]
+                                                                                .days
+                                                                        ? const Color
+                                                                            .fromARGB(
+                                                                            255,
+                                                                            3,
+                                                                            116,
+                                                                            18,
+                                                                          )
+                                                                        : const Color
+                                                                            .fromARGB(
+                                                                            92,
+                                                                            150,
+                                                                            150,
+                                                                            150,
+                                                                          ),
                                                                   ),
+                                                                  backgroundColor: 3 >
+                                                                          dataCallIn
+                                                                              .listCallin![
+                                                                                  index]
+                                                                              .days
+                                                                      ? const Color
+                                                                          .fromARGB(
+                                                                          255,
+                                                                          3,
+                                                                          116,
+                                                                          18,
+                                                                        )
+                                                                      : const Color
+                                                                          .fromARGB(
+                                                                          92,
+                                                                          150,
+                                                                          150,
+                                                                          150,
+                                                                        ),
                                                                 ).copyWith(
                                                                   overlayColor:
                                                                       MaterialStateProperty
@@ -1035,54 +1127,95 @@ class _CallPageState extends ConsumerState<CallPage>
                                                                 ),
                                                                 onPressed:
                                                                     () async {
-                                                                  try {
-                                                                    if (typeController
-                                                                            .text ==
-                                                                        'Input') {
-                                                                      var call =
-                                                                          ListEntryCallin(
-                                                                        callCustomerHeaderID:
-                                                                            newIDController.text,
-                                                                        branchBusinessUnitID:
-                                                                            branchBusinessIDController.text,
-                                                                        salesmanHeaderID:
-                                                                            salesmanIDController.text,
-                                                                        callDate:
-                                                                            periodeController.text,
-                                                                      );
-
-                                                                      await ref
-                                                                          .read(
-                                                                              callFormProvider)
-                                                                          .onSubmitCall(
-                                                                              call);
-
-                                                                      for (int indexSubmit =
-                                                                              0;
-                                                                          indexSubmit <
-                                                                              dataCallIn.listCallin!.length;
-                                                                          indexSubmit++) {
-                                                                        var call2 =
-                                                                            ListEntryCallinDetail(
-                                                                          callCustomerHeaderID2:
-                                                                              listNewIDController[indexSubmit].text,
-                                                                          referensiID:
-                                                                              idReferensiController[indexSubmit].text,
-                                                                          amount:
-                                                                              int.tryParse(amountReferensiController[indexSubmit].text),
+                                                                  if (3 >
+                                                                      dataCallIn
+                                                                          .listCallin![
+                                                                              index]
+                                                                          .days) {
+                                                                    try {
+                                                                      if (typeController
+                                                                              .text ==
+                                                                          'Input') {
+                                                                        var call =
+                                                                            ListEntryCallin(
+                                                                          callCustomerHeaderID:
+                                                                              newIDController.text,
+                                                                          branchBusinessUnitID:
+                                                                              branchBusinessIDController.text,
+                                                                          salesmanHeaderID:
+                                                                              salesmanIDController.text,
+                                                                          callDate:
+                                                                              periodeController.text,
                                                                         );
 
-                                                                        var resp = await ref
-                                                                            .read(callFormProvider2)
-                                                                            .onSubmitCallDetail(call2);
+                                                                        await ref
+                                                                            .read(callFormProvider)
+                                                                            .onSubmitCall(call);
 
-                                                                        if (resp.statusMessage ==
-                                                                            "Sucess") {
-                                                                          idReferensiController[indexSubmit]
-                                                                              .clear();
+                                                                        for (int indexSubmit =
+                                                                                0;
+                                                                            indexSubmit <
+                                                                                dataCallIn.listCallin!.length;
+                                                                            indexSubmit++) {
+                                                                          var call2 =
+                                                                              ListEntryCallinDetail(
+                                                                            callCustomerHeaderID2:
+                                                                                listNewIDController[indexSubmit].text,
+                                                                            referensiID:
+                                                                                idReferensiController[indexSubmit].text,
+                                                                            amount:
+                                                                                int.tryParse(amountReferensiController[indexSubmit].text),
+                                                                          );
+
+                                                                          var resp = await ref
+                                                                              .read(callFormProviderDetail)
+                                                                              .onSubmitCallDetail(call2);
+
+                                                                          if (resp.statusMessage ==
+                                                                              "Sucess") {
+                                                                            idReferensiController[indexSubmit].clear();
+                                                                          }
                                                                         }
-                                                                      }
 
+                                                                        Navigator.of(context).pushAndRemoveUntil(
+                                                                            MaterialPageRoute(builder: (context) => const HomePage()),
+                                                                            (route) => false);
+
+                                                                        sucessSubmit(
+                                                                            context);
+                                                                      } else {
+                                                                        for (int indexUpdate =
+                                                                                0;
+                                                                            indexUpdate <
+                                                                                dataCallIn.listCallin!.length;
+                                                                            indexUpdate++) {
+                                                                          var updateCall =
+                                                                              ListUpdateCallin(
+                                                                            iD: callCustomerDetailIDController[indexUpdate].text,
+                                                                            referensiID:
+                                                                                idReferensiController[indexUpdate].text,
+                                                                            amount:
+                                                                                int.tryParse(amountReferensiController[indexUpdate].text),
+                                                                          );
+
+                                                                          var resp = await ref
+                                                                              .read(updateCallFormProviderDetail)
+                                                                              .onUpdateCallDetail(updateCall);
+                                                                          if (resp.statusMessage ==
+                                                                              "Sucess Updated") {
+                                                                            idReferensiController[indexUpdate].clear();
+                                                                            amountReferensiController[indexUpdate].clear();
+                                                                          }
+                                                                        }
+
+                                                                        Navigator.of(context).pushAndRemoveUntil(
+                                                                            MaterialPageRoute(builder: (context) => const HomePage()),
+                                                                            (route) => false);
+
+                                                                        sucessUpdate(
+                                                                            context);
+                                                                      }
+                                                                    } catch (e) {
                                                                       Navigator.of(context).pushAndRemoveUntil(
                                                                           MaterialPageRoute(
                                                                               builder: (context) =>
@@ -1090,24 +1223,11 @@ class _CallPageState extends ConsumerState<CallPage>
                                                                           (route) =>
                                                                               false);
 
-                                                                      sucessSubmit(
-                                                                          context);
-                                                                    } else {
-                                                                      print(
-                                                                          "update");
+                                                                      catchError(
+                                                                          context,
+                                                                          e);
                                                                     }
-                                                                  } catch (e) {
-                                                                    Navigator.of(context).pushAndRemoveUntil(
-                                                                        MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                const HomePage()),
-                                                                        (route) =>
-                                                                            false);
-
-                                                                    catchError(
-                                                                        context,
-                                                                        e);
-                                                                  }
+                                                                  } else {}
                                                                 },
                                                                 child: Stack(
                                                                   children: <Widget>[
@@ -1120,8 +1240,12 @@ class _CallPageState extends ConsumerState<CallPage>
                                                                         "Simpan",
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        style:
-                                                                            textStyleColorWhite,
+                                                                        style: 3 >
+                                                                                dataCallIn.listCallin![index].days
+                                                                            ? textStyleColorWhite
+                                                                            : const TextStyle(
+                                                                                color: Color.fromARGB(148, 150, 150, 150),
+                                                                              ),
                                                                       ),
                                                                     ),
                                                                   ],
@@ -1173,6 +1297,24 @@ class _CallPageState extends ConsumerState<CallPage>
               )
             : Colors.red,
         content: Text("Message : Success Insert"),
+      ),
+    );
+  }
+
+  void sucessUpdate(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(seconds: 3),
+        backgroundColor: ("Sucess Updated" == "Sucess Updated")
+            ? Color.fromARGB(
+                255,
+                1,
+                209,
+                29,
+              )
+            : Colors.red,
+        content: Text("Message : Sucess Updated"),
       ),
     );
   }

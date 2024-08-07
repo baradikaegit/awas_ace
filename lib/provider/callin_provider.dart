@@ -55,7 +55,28 @@ class CallFormNotifier2 extends ChangeNotifier {
   }
 }
 
-final callFormProvider2 =
+final callFormProviderDetail =
     ChangeNotifierProvider.autoDispose<CallFormNotifier2>((ref) {
   return CallFormNotifier2(ref as ProviderElementBase);
+});
+
+//update call
+class UpdateCallFormNotifier extends ChangeNotifier {
+  UpdateCallFormNotifier(this.ref) : super();
+
+  final ProviderElementBase ref;
+
+  Future<UpdateCallResponse> onUpdateCallDetail(
+      ListUpdateCallin updateCallDetail) async {
+    final repositorycall = ref.read(callInRepositoryProvider);
+    late UpdateCallResponse resp;
+
+    resp = await repositorycall.updateNewCallDetail(updateCallDetail);
+    return resp;
+  }
+}
+
+final updateCallFormProviderDetail =
+    ChangeNotifierProvider.autoDispose<UpdateCallFormNotifier>((ref) {
+  return UpdateCallFormNotifier(ref as ProviderElementBase);
 });
