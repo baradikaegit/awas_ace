@@ -1,10 +1,16 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
+import 'dart:convert';
+
+import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/prospectopsimodel.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootstrap/flutter_bootstrap.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart ' as http;
 
 class EntryProspectUEbpPage extends StatefulWidget {
   const EntryProspectUEbpPage({super.key});
@@ -57,14 +63,22 @@ class BodyEntryTSalesWidget extends StatefulWidget {
 class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
-  TextEditingController callController = TextEditingController();
-  TextEditingController prospectController = TextEditingController();
-  TextEditingController hotController = TextEditingController();
-  TextEditingController spkController = TextEditingController();
-  TextEditingController doController = TextEditingController();
+  TextEditingController noPolController = TextEditingController();
+  TextEditingController namaController = TextEditingController();
+  TextEditingController noHPController = TextEditingController();
+  TextEditingController vehicleYearController = TextEditingController();
+  TextEditingController idVehicleTypeController = TextEditingController();
+  TextEditingController vehicleTypeController = TextEditingController();
+  TextEditingController vehicleDamageController = TextEditingController();
+  TextEditingController idServiceBPController = TextEditingController();
+  TextEditingController serviceBPController = TextEditingController();
 
   String dateNow = DateFormat('MM/dd/yyyy').format(DateTime.now());
   String? userName;
+  String? idVtype;
+  String? vtype;
+  String? idSvcBP;
+  String? svcBP;
 
   @override
   void initState() {
@@ -78,6 +92,8 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
       userName = prefs.getString('Username');
     });
   }
+
+  bool notShow = false;
 
   @override
   Widget build(BuildContext context) {
@@ -176,7 +192,7 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                       ),
                                     ),
                                     autocorrect: false,
-                                    controller: callController,
+                                    controller: noPolController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return "No. Polisi tidak boleh kosong.";
@@ -271,7 +287,7 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                       ),
                                     ),
                                     autocorrect: false,
-                                    controller: prospectController,
+                                    controller: namaController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return "Nama tidak boleh kosong.";
@@ -370,7 +386,7 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                       ),
                                     ),
                                     autocorrect: false,
-                                    controller: hotController,
+                                    controller: noHPController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return "No. HP tidak boleh kosong.";
@@ -465,7 +481,7 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                       ),
                                     ),
                                     autocorrect: false,
-                                    controller: spkController,
+                                    controller: vehicleYearController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return "Tahun Kendaraan tidak boleh kosong.";
@@ -554,35 +570,62 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                 Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                                  child: TextFormField(
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(
-                                        255,
-                                        3,
-                                        116,
-                                        18,
-                                      ),
-                                    ),
-                                    autocorrect: false,
-                                    controller: hotController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "Tipe Kendaraan tidak boleh kosong.";
+                                  child: DropdownSearch<ProspectOpsi>(
+                                    validator: (val) {
+                                      if (val == null || val.name == '') {
+                                        return "Tipe kendaraan tidak boleh kosong";
                                       }
                                       return null;
                                     },
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      errorStyle: const TextStyle(
-                                        color: Color.fromARGB(
-                                          255,
-                                          255,
-                                          17,
-                                          0,
+                                    popupProps: PopupProps.dialog(
+                                      dialogProps: const DialogProps(
+                                        shape: Border.symmetric(
+                                            vertical: BorderSide.none),
+                                      ),
+                                      showSearchBox: true,
+                                      searchFieldProps: TextFieldProps(
+                                        decoration: InputDecoration(
+                                          hintText: "Search..",
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color.fromARGB(
+                                                255,
+                                                134,
+                                                134,
+                                                134,
+                                              ),
+                                              width: 2,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color.fromARGB(
+                                                255,
+                                                3,
+                                                116,
+                                                18,
+                                              ),
+                                              width: 2,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
                                         ),
                                       ),
-                                      errorBorder: const UnderlineInputBorder(
-                                        borderSide: BorderSide(
+                                      itemBuilder:
+                                          (context, item, isSelected) =>
+                                              ListTile(
+                                        title: Text(
+                                          item.name.toUpperCase(),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownDecoratorProps:
+                                        DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        errorStyle: const TextStyle(
                                           color: Color.fromARGB(
                                             255,
                                             255,
@@ -590,20 +633,19 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                             0,
                                           ),
                                         ),
-                                      ),
-                                      hintText: 'Tipe Kendaraan',
-                                      hintStyle: textStyleColorGreen,
-                                      labelText: 'Tipe Kendaraan',
-                                      labelStyle: const TextStyle(
-                                        color: Color.fromARGB(
-                                          255,
-                                          3,
-                                          116,
-                                          18,
+                                        errorBorder: const UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                              255,
+                                              255,
+                                              17,
+                                              0,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      enabledBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
+                                        hintStyle: textStyleColorWhite,
+                                        labelText: 'Tipe Kendaraan',
+                                        labelStyle: const TextStyle(
                                           color: Color.fromARGB(
                                             255,
                                             3,
@@ -611,19 +653,98 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                             18,
                                           ),
                                         ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color.fromARGB(
-                                            255,
-                                            3,
-                                            116,
-                                            18,
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                              255,
+                                              3,
+                                              116,
+                                              18,
+                                            ),
                                           ),
-                                          width: 2,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                              255,
+                                              3,
+                                              116,
+                                              18,
+                                            ),
+                                            width: 2,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                      ),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        idVtype = value!.iD;
+                                        vtype = value.name;
+
+                                        vehicleTypeController.text =
+                                            idVtype.toString();
+                                        idVehicleTypeController.text = idVtype!;
+                                      });
+                                    },
+                                    dropdownBuilder: (context, selectedItem) =>
+                                        Text(
+                                      vtype != null
+                                          ? vtype.toString()
+                                          : "Belum memilih model",
+                                      style: textStyleColorGreen,
+                                    ),
+                                    asyncItems: (String filter) async {
+                                      var response = await http.get(
+                                        Uri.parse(
+                                          "${urlApi()}Prospect/GetVtype",
+                                        ),
+                                      );
+                                      if (response.statusCode != 200) {
+                                        return [];
+                                      }
+                                      List allVtype = (jsonDecode(response.body)
+                                              as Map<String, dynamic>)[
+                                          "listProspectOpsi"];
+                                      List<ProspectOpsi> allModelVtype = [];
+
+                                      for (var element in allVtype) {
+                                        allModelVtype.add(
+                                          ProspectOpsi(
+                                            iD: element["iD"],
+                                            name: element["name"],
+                                          ),
+                                        );
+                                      }
+                                      return allModelVtype;
+                                    },
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: notShow,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                    child: TextFormField(
+                                      controller: idVehicleTypeController,
+                                      autocorrect: false,
+                                      textInputAction: TextInputAction.next,
+                                      decoration: InputDecoration(
+                                        hintText: 'VtypeID',
+                                        hintStyle: textStyleColorGreen,
+                                        labelText: 'VtypeID',
+                                        labelStyle: textStyleColorGreen,
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                              255,
+                                              3,
+                                              116,
+                                              18,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -659,7 +780,7 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                       ),
                                     ),
                                     autocorrect: false,
-                                    controller: spkController,
+                                    controller: vehicleDamageController,
                                     validator: (value) {
                                       if (value == null || value.isEmpty) {
                                         return "Kerusakan Kendaraan tidak boleh kosong.";
@@ -748,35 +869,62 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                 Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                                  child: TextFormField(
-                                    style: const TextStyle(
-                                      color: Color.fromARGB(
-                                        255,
-                                        3,
-                                        116,
-                                        18,
-                                      ),
-                                    ),
-                                    autocorrect: false,
-                                    controller: doController,
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return "Bengkel BP tidak boleh kosong.";
+                                  child: DropdownSearch<ProspectOpsi>(
+                                    validator: (val) {
+                                      if (val == null || val.name == '') {
+                                        return "Bengkel BP tidak boleh kosong";
                                       }
                                       return null;
                                     },
-                                    textInputAction: TextInputAction.next,
-                                    decoration: InputDecoration(
-                                      errorStyle: const TextStyle(
-                                        color: Color.fromARGB(
-                                          255,
-                                          255,
-                                          17,
-                                          0,
+                                    popupProps: PopupProps.dialog(
+                                      dialogProps: const DialogProps(
+                                        shape: Border.symmetric(
+                                            vertical: BorderSide.none),
+                                      ),
+                                      showSearchBox: true,
+                                      searchFieldProps: TextFieldProps(
+                                        decoration: InputDecoration(
+                                          hintText: "Search..",
+                                          enabledBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color.fromARGB(
+                                                255,
+                                                134,
+                                                134,
+                                                134,
+                                              ),
+                                              width: 2,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color.fromARGB(
+                                                255,
+                                                3,
+                                                116,
+                                                18,
+                                              ),
+                                              width: 2,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
                                         ),
                                       ),
-                                      errorBorder: const UnderlineInputBorder(
-                                        borderSide: BorderSide(
+                                      itemBuilder:
+                                          (context, item, isSelected) =>
+                                              ListTile(
+                                        title: Text(
+                                          item.name.toUpperCase(),
+                                        ),
+                                      ),
+                                    ),
+                                    dropdownDecoratorProps:
+                                        DropDownDecoratorProps(
+                                      dropdownSearchDecoration: InputDecoration(
+                                        errorStyle: const TextStyle(
                                           color: Color.fromARGB(
                                             255,
                                             255,
@@ -784,20 +932,19 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                             0,
                                           ),
                                         ),
-                                      ),
-                                      hintText: 'Bengkel BP',
-                                      hintStyle: textStyleColorGreen,
-                                      labelText: 'Bengkel BP',
-                                      labelStyle: const TextStyle(
-                                        color: Color.fromARGB(
-                                          255,
-                                          3,
-                                          116,
-                                          18,
+                                        errorBorder: const UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                              255,
+                                              255,
+                                              17,
+                                              0,
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                      enabledBorder: const OutlineInputBorder(
-                                        borderSide: BorderSide(
+                                        hintStyle: textStyleColorWhite,
+                                        labelText: 'Bengkel BP',
+                                        labelStyle: const TextStyle(
                                           color: Color.fromARGB(
                                             255,
                                             3,
@@ -805,19 +952,98 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                             18,
                                           ),
                                         ),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderSide: const BorderSide(
-                                          color: Color.fromARGB(
-                                            255,
-                                            3,
-                                            116,
-                                            18,
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                              255,
+                                              3,
+                                              116,
+                                              18,
+                                            ),
                                           ),
-                                          width: 2,
                                         ),
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                            color: Color.fromARGB(
+                                              255,
+                                              3,
+                                              116,
+                                              18,
+                                            ),
+                                            width: 2,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                      ),
+                                    ),
+                                    onChanged: (value) {
+                                      setState(() {
+                                        idSvcBP = value!.iD;
+                                        svcBP = value.name;
+
+                                        serviceBPController.text =
+                                            idSvcBP.toString();
+                                        idServiceBPController.text = idSvcBP!;
+                                      });
+                                    },
+                                    dropdownBuilder: (context, selectedItem) =>
+                                        Text(
+                                      svcBP != null
+                                          ? svcBP.toString()
+                                          : "Belum memilih bengkel BP",
+                                      style: textStyleColorGreen,
+                                    ),
+                                    asyncItems: (String filter) async {
+                                      var response = await http.get(
+                                        Uri.parse(
+                                          "${urlApi()}Prospect/GetServiceBP",
+                                        ),
+                                      );
+                                      if (response.statusCode != 200) {
+                                        return [];
+                                      }
+                                      List allVtype = (jsonDecode(response.body)
+                                              as Map<String, dynamic>)[
+                                          "listProspectOpsi"];
+                                      List<ProspectOpsi> allModelVtype = [];
+
+                                      for (var element in allVtype) {
+                                        allModelVtype.add(
+                                          ProspectOpsi(
+                                            iD: element["iD"],
+                                            name: element["code"],
+                                          ),
+                                        );
+                                      }
+                                      return allModelVtype;
+                                    },
+                                  ),
+                                ),
+                                Visibility(
+                                  visible: notShow,
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                    child: TextFormField(
+                                      controller: idServiceBPController,
+                                      autocorrect: false,
+                                      textInputAction: TextInputAction.next,
+                                      decoration: InputDecoration(
+                                        hintText: 'IDSvcBP',
+                                        hintStyle: textStyleColorGreen,
+                                        labelText: 'IDSvcBP',
+                                        labelStyle: textStyleColorGreen,
+                                        enabledBorder: const OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: Color.fromARGB(
+                                              255,
+                                              3,
+                                              116,
+                                              18,
+                                            ),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
