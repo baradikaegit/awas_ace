@@ -1,5 +1,6 @@
 import 'package:awas_ace/repositories/prospect_repositories.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
+import 'package:awas_ace/widgets/model/prospectuebp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -35,4 +36,30 @@ class ProspectFormNotifier extends ChangeNotifier {
 final prospectFormProvider =
     ChangeNotifierProvider.autoDispose<ProspectFormNotifier>((ref) {
   return ProspectFormNotifier(ref as ProviderElementBase);
+});
+
+//add prospect uebp
+class ProspectUEBPFormNotifier extends ChangeNotifier {
+  ProspectUEBPFormNotifier(this.ref) : super();
+
+  final ProviderElementBase ref;
+
+  Future<ProspectUEBPResponse> onSubmitProspectUEBP(
+      ListEntryProspectUEBP uebp) async {
+    final repositoryuebp = ref.read(prospectRepositoryProvider);
+    late ProspectUEBPResponse resp;
+
+    try {
+      resp = await repositoryuebp.createNewProspectUEBP(uebp);
+    } catch (e) {
+      print("kesalahan: $e");
+    }
+
+    return resp;
+  }
+}
+
+final prospectUEBPFormProvider =
+    ChangeNotifierProvider.autoDispose<ProspectUEBPFormNotifier>((ref) {
+  return ProspectUEBPFormNotifier(ref as ProviderElementBase);
 });

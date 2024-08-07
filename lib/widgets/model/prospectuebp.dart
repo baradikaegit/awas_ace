@@ -115,6 +115,11 @@ class ListEntryProspectUEBP {
     branchBPID = djson['branchBPID'];
     customerServiceID = djson['customerServiceID'];
     vehicleTypeID = djson['vehicleTypeID'];
+    nomorPolisi = djson['nomorPolisi'];
+    nama = djson['nama'];
+    noHandPhone = djson['noHandPhone'];
+    tahunKendaraan = djson['tahunKendaraan'];
+    keterangan = djson['keterangan'];
   }
 
   Map<String, dynamic> toJson() {
@@ -123,6 +128,11 @@ class ListEntryProspectUEBP {
     _data['branchBPID'] = branchBPID;
     _data['customerServiceID'] = customerServiceID;
     _data['vehicleTypeID'] = vehicleTypeID;
+    _data['nomorPolisi'] = nomorPolisi;
+    _data['nama'] = nama;
+    _data['noHandPhone'] = noHandPhone;
+    _data['tahunKendaraan'] = tahunKendaraan;
+    _data['keterangan'] = keterangan;
 
     return _data;
   }
