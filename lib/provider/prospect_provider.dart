@@ -63,3 +63,10 @@ final prospectUEBPFormProvider =
     ChangeNotifierProvider.autoDispose<ProspectUEBPFormNotifier>((ref) {
   return ProspectUEBPFormNotifier(ref as ProviderElementBase);
 });
+
+//list prospect uebp
+final prospectUEBPList = FutureProvider.autoDispose
+    .family<ListProspectUEBP, String>((ref, objID) async {
+  final repository = ref.watch(prospectRepositoryProvider);
+  return repository.fecthListDataUEBP(objID);
+});

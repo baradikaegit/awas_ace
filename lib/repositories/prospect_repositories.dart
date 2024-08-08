@@ -11,6 +11,7 @@ abstract class IProspectRepository {
   Future<ProspectResponse> createNewProspect(ListProspectData prospect);
   Future<ProspectUEBPResponse> createNewProspectUEBP(
       ListEntryProspectUEBP uebp);
+  Future<ListProspectUEBP> fecthListDataUEBP(String objID);
 }
 
 class ProspectRepositories implements IProspectRepository {
@@ -67,5 +68,23 @@ class ProspectRepositories implements IProspectRepository {
     final jsonObject = json.decode(results.body);
     var response = ProspectUEBPResponse.fromJson(jsonObject);
     return response;
+  }
+
+  @override
+  Future<ListProspectUEBP> fecthListDataUEBP(String objID) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlUEBP = "${_host}GetProspectUEBP/$objID";
+    var resultUEBP = await http.get(Uri.parse(urlUEBP), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjectUEBP = jsonDecode(resultUEBP.body);
+
+    var responseUEBP = ListProspectUEBP.fromJson(jsonObjectUEBP);
+    return responseUEBP;
   }
 }

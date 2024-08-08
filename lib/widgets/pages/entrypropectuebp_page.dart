@@ -4,8 +4,10 @@ import 'dart:convert';
 
 import 'package:awas_ace/provider/prospect_provider.dart';
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/widgets/model/prospectopsimodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebp.dart';
+import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootstrap/flutter_bootstrap.dart';
@@ -101,7 +103,7 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
     });
   }
 
-  bool notShow = true;
+  bool notShow = false;
 
   @override
   Widget build(BuildContext context) {
@@ -264,6 +266,29 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                             ),
                                             borderRadius:
                                                 BorderRadius.circular(10.0),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: notShow,
+                                      child: TextFormField(
+                                        controller: branchBusinessIDController,
+                                        autocorrect: false,
+                                        textInputAction: TextInputAction.next,
+                                        decoration: InputDecoration(
+                                          hintText: 'BranchBusinessID',
+                                          hintStyle: textStyleColorWhite,
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                255,
+                                                3,
+                                                116,
+                                                18,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),
@@ -1153,26 +1178,94 @@ class _BodyEntryTSalesWidgetState extends State<BodyEntryTSalesWidget> {
                                           ),
                                         ),
                                         onPressed: () async {
-                                          var uebp = ListEntryProspectUEBP(
-                                            branchBusinessUnitID:
-                                                branchBusinessIDController.text,
-                                            branchBPID:
-                                                idServiceBPController.text,
-                                            customerServiceID: '',
-                                            vehicleTypeID:
-                                                idVehicleTypeController.text,
-                                            nomorPolisi: noPolController.text,
-                                            nama: namaController.text,
-                                            noHandPhone: noHPController.text,
-                                            tahunKendaraan:
-                                                vehicleYearController.text,
-                                            keterangan:
-                                                vehicleDamageController.text,
-                                          );
-                                          print(uebp.branchBusinessUnitID);
-                                          // var resp = await ref
-                                          //     .read(prospectUEBPFormProvider)
-                                          //     .onSubmitProspectUEBP(uebp);
+                                          if (formkey.currentState!
+                                              .validate()) {
+                                            try {
+                                              var uebp = ListEntryProspectUEBP(
+                                                branchBusinessUnitID:
+                                                    branchBusinessIDController
+                                                        .text,
+                                                branchBPID:
+                                                    idServiceBPController.text,
+                                                customerServiceID: '',
+                                                vehicleTypeID:
+                                                    idVehicleTypeController
+                                                        .text,
+                                                nomorPolisi:
+                                                    noPolController.text,
+                                                nama: namaController.text,
+                                                noHandPhone:
+                                                    noHPController.text,
+                                                tahunKendaraan:
+                                                    vehicleYearController.text,
+                                                keterangan:
+                                                    vehicleDamageController
+                                                        .text,
+                                              );
+
+                                              var resp = await ref
+                                                  .read(
+                                                      prospectUEBPFormProvider)
+                                                  .onSubmitProspectUEBP(uebp);
+
+                                              if (resp.statusMessage ==
+                                                  "Sucess") {
+                                                branchBusinessIDController
+                                                    .clear();
+                                                idServiceBPController.clear();
+                                                vehicleTypeController.clear();
+                                                noPolController.clear();
+                                                namaController.clear();
+                                                noHPController.clear();
+                                                vehicleYearController.clear();
+                                                vehicleDamageController.clear();
+                                                formkey.currentState!.reset();
+                                              }
+
+                                              Navigator.of(context)
+                                                  .pushAndRemoveUntil(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const HomePage()),
+                                                      (route) => false);
+
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    AlertDialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15)),
+                                                  title: const Text("Info"),
+                                                  content: const Text(
+                                                    "Terima kasih, Pastikan mobil masuk dalam kurun waktu 45 hari, dan nikmati poin anda.",
+                                                  ),
+                                                  actions: [
+                                                    OutlinedButton(
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                      style: OutlinedButton
+                                                          .styleFrom(
+                                                        side: BorderSide.none,
+                                                      ),
+                                                      child: const Text("Ok"),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                            } catch (e) {
+                                              Navigator.of(context)
+                                                  .pushAndRemoveUntil(
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              const HomePage()),
+                                                      (route) => false);
+
+                                              catchError(context, e);
+                                            }
+                                          }
                                         },
                                         child: Stack(
                                           children: <Widget>[

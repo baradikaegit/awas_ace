@@ -5,6 +5,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
+import 'package:awas_ace/support/succes_submit.dart';
 import 'package:awas_ace/widgets/model/callinmodel.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:flutter/material.dart';
@@ -1181,7 +1182,7 @@ class _CallPageState extends ConsumerState<CallPage>
                                                                             MaterialPageRoute(builder: (context) => const HomePage()),
                                                                             (route) => false);
 
-                                                                        sucessSubmit(
+                                                                        sucessSubmit2(
                                                                             context);
                                                                       } else {
                                                                         for (int indexUpdate =
@@ -1279,24 +1280,6 @@ class _CallPageState extends ConsumerState<CallPage>
             },
           ),
         ),
-      ),
-    );
-  }
-
-  void sucessSubmit(BuildContext context) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        behavior: SnackBarBehavior.floating,
-        duration: Duration(seconds: 3),
-        backgroundColor: ("Success" == "Success")
-            ? Color.fromARGB(
-                255,
-                1,
-                209,
-                29,
-              )
-            : Colors.red,
-        content: Text("Message : Success Insert"),
       ),
     );
   }

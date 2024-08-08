@@ -18,3 +18,21 @@ void successSubmit(BuildContext context, ProspectResponse resp) {
     ),
   );
 }
+
+void sucessSubmit2(BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    const SnackBar(
+      behavior: SnackBarBehavior.floating,
+      duration: Duration(seconds: 3),
+      backgroundColor: ("Success" == "Success")
+          ? Color.fromARGB(
+              255,
+              1,
+              209,
+              29,
+            )
+          : Colors.red,
+      content: Text("Message : Success Insert"),
+    ),
+  );
+}

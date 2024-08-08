@@ -423,7 +423,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       context, linkPage[index],
                                       arguments: linkPage[index] == '/callPage'
                                           ? dateNow
-                                          : null),
+                                          : linkPage[index] ==
+                                                  '/prospectUEbpPage'
+                                              ? '1'
+                                              : null),
                                   child: Column(
                                     children: <Widget>[
                                       const SizedBox(
