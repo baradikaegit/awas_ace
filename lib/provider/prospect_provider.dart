@@ -1,6 +1,6 @@
 import 'package:awas_ace/repositories/prospect_repositories.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
-import 'package:awas_ace/widgets/model/prospectuebp.dart';
+import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

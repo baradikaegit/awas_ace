@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
-import 'package:awas_ace/widgets/model/prospectuebp.dart';
+import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 

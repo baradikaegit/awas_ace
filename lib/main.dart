@@ -78,14 +78,18 @@ class MyApp extends StatelessWidget {
         ResetPassword.routeName: (context) => const ResetPassword(),
         CallPage.routeName: (context) => CallPage(
             callDateObject: ModalRoute.of(context)!.settings.arguments),
-        TargetsalesPage.routeName: (context) => const TargetsalesPage(),
-        TargetsalesEntryPage.routeName: (context) =>
-            const TargetsalesEntryPage(),
+        TargetsalesPage.routeName: (context) => TargetsalesPage(
+              salesmanID: ModalRoute.of(context)!.settings.arguments,
+            ),
+        TargetsalesEntryPage.routeName: (context) => TargetsalesEntryPage(
+              salesmanID: ModalRoute.of(context)!.settings.arguments,
+            ),
         ProspectUEbpPage.routeName: (context) => ProspectUEbpPage(
               objID: ModalRoute.of(context)!.settings.arguments,
             ),
-        EntryProspectUEbpPage.routeName: (context) =>
-            const EntryProspectUEbpPage(),
+        EntryProspectUEbpPage.routeName: (context) => EntryProspectUEbpPage(
+              objID: ModalRoute.of(context)!.settings.arguments,
+            ),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),
         FunnelingPage.routeName: (context) => const FunnelingPage(),

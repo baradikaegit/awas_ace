@@ -4,7 +4,7 @@ import 'package:awas_ace/provider/prospect_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
-import 'package:awas_ace/widgets/model/prospectuebp.dart';
+import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -93,30 +93,29 @@ class _ProspectUEbpPageState extends State<ProspectUEbpPage> {
                     Column(
                       children: [
                         Expanded(
-                          child: InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const EntryProspectUEbpPage(),
-                                ),
-                              );
-                            },
-                            child: datauebp.when(
-                              data: (datauebp) => (datauebp
-                                          .listProspectUEBPData !=
-                                      null)
-                                  ? datauebp.listProspectUEBPData!.isNotEmpty
-                                      ? Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              20, 20, 20, 0),
-                                          child: SearchableList<
-                                              ListProspectUEBPData>(
-                                            initialList:
-                                                datauebp.listProspectUEBPData!,
-                                            itemBuilder: (item) {
-                                              return Padding(
+                          child: datauebp.when(
+                            data: (datauebp) => (datauebp
+                                        .listProspectUEBPData !=
+                                    null)
+                                ? datauebp.listProspectUEBPData!.isNotEmpty
+                                    ? Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            20, 20, 20, 0),
+                                        child: SearchableList<
+                                            ListProspectUEBPData>(
+                                          initialList:
+                                              datauebp.listProspectUEBPData!,
+                                          itemBuilder: (item) {
+                                            return InkWell(
+                                              onTap: () {
+                                                Navigator.pushNamed(
+                                                  context,
+                                                  EntryProspectUEbpPage
+                                                      .routeName,
+                                                  arguments: item.iD,
+                                                );
+                                              },
+                                              child: Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
                                                         0, 10, 0, 10),
@@ -161,7 +160,7 @@ class _ProspectUEbpPageState extends State<ProspectUEbpPage> {
                                                           alignment: Alignment
                                                               .centerLeft,
                                                           child: Text(
-                                                            item.nomorPolisi,
+                                                            "Nomor Polisi : ${item.nomorPolisi}",
                                                             style:
                                                                 textStyleColorWhite,
                                                           ),
@@ -176,7 +175,7 @@ class _ProspectUEbpPageState extends State<ProspectUEbpPage> {
                                                           alignment: Alignment
                                                               .centerLeft,
                                                           child: Text(
-                                                            item.branchBP,
+                                                            "Branch BP : ${item.branchBP}",
                                                             style:
                                                                 textStyleColorWhite,
                                                           ),
@@ -185,73 +184,73 @@ class _ProspectUEbpPageState extends State<ProspectUEbpPage> {
                                                     ],
                                                   ),
                                                 ),
-                                              );
-                                            },
-                                            searchTextController:
-                                                searchController,
-                                            filter: (searchController) {
-                                              return datauebp
-                                                  .listProspectUEBPData!
-                                                  .where(
-                                                    (element) =>
-                                                        element.nomorPolisi
-                                                            .toLowerCase()
-                                                            .contains(
-                                                              searchController
-                                                                  .toString()
-                                                                  .toLowerCase(),
-                                                            ) ||
-                                                        element.branchBP
-                                                            .toLowerCase()
-                                                            .contains(
-                                                              searchController
-                                                                  .toString()
-                                                                  .toLowerCase(),
-                                                            ),
-                                                  )
-                                                  .toList();
-                                            },
-                                            keyboardAction:
-                                                TextInputAction.search,
-                                            emptyWidget: const EmptyView(),
-                                            inputDecoration: InputDecoration(
-                                              contentPadding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 8.0),
-                                              labelText: "Search..",
-                                              labelStyle: const TextStyle(
+                                              ),
+                                            );
+                                          },
+                                          searchTextController:
+                                              searchController,
+                                          filter: (searchController) {
+                                            return datauebp
+                                                .listProspectUEBPData!
+                                                .where(
+                                                  (element) =>
+                                                      element.nomorPolisi
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ) ||
+                                                      element.branchBP
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ),
+                                                )
+                                                .toList();
+                                          },
+                                          keyboardAction:
+                                              TextInputAction.search,
+                                          emptyWidget: const EmptyView(),
+                                          inputDecoration: InputDecoration(
+                                            contentPadding:
+                                                const EdgeInsets.symmetric(
+                                                    horizontal: 8.0),
+                                            labelText: "Search..",
+                                            labelStyle: const TextStyle(
+                                              color: Color.fromARGB(
+                                                255,
+                                                3,
+                                                116,
+                                                18,
+                                              ),
+                                            ),
+                                            fillColor: Colors.white,
+                                            focusedBorder: OutlineInputBorder(
+                                              gapPadding: 15.0,
+                                              borderSide: const BorderSide(
                                                 color: Color.fromARGB(
                                                   255,
                                                   3,
                                                   116,
                                                   18,
                                                 ),
+                                                width: 1.0,
                                               ),
-                                              fillColor: Colors.white,
-                                              focusedBorder: OutlineInputBorder(
-                                                gapPadding: 15.0,
-                                                borderSide: const BorderSide(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    3,
-                                                    116,
-                                                    18,
-                                                  ),
-                                                  width: 1.0,
-                                                ),
-                                                borderRadius:
-                                                    BorderRadius.circular(10.0),
-                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
                                             ),
                                           ),
-                                        )
-                                      : const MyAlertDialog()
-                                  : const notActivetoken(),
-                              error: (err, stack) => Text('Error $err'),
-                              loading: () => const Center(
-                                child: Column(
-                                  children: [loadingAnimation()],
-                                ),
+                                        ),
+                                      )
+                                    : const MyAlertDialog()
+                                : const notActivetoken(),
+                            error: (err, stack) => Text('Error $err'),
+                            loading: () => const Center(
+                              child: Column(
+                                children: [loadingAnimation()],
                               ),
                             ),
                           ),
@@ -274,11 +273,10 @@ class _ProspectUEbpPageState extends State<ProspectUEbpPage> {
           ),
           tooltip: 'Prospect Pelanggan',
           onPressed: () {
-            Navigator.push(
+            Navigator.pushNamed(
               context,
-              MaterialPageRoute(
-                builder: (context) => const EntryProspectUEbpPage(),
-              ),
+              EntryProspectUEbpPage.routeName,
+              arguments: '0',
             );
           },
           child: const Icon(

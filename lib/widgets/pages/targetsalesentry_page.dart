@@ -8,7 +8,9 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TargetsalesEntryPage extends StatefulWidget {
-  const TargetsalesEntryPage({super.key});
+  final Object? salesmanID;
+
+  const TargetsalesEntryPage({super.key, required this.salesmanID});
 
   static const String routeName = "/targetSalesEntryPage";
 
