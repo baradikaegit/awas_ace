@@ -7,13 +7,12 @@ import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/widgets/pages/targetsalesentry_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:searchable_listview/searchable_listview.dart';
 
 class TargetsalesPage extends StatefulWidget {
-  final Object? salesmanID;
-
-  const TargetsalesPage({super.key, required this.salesmanID});
+  const TargetsalesPage({super.key});
 
   static const String routeName = "/targetSalesPage";
 
@@ -28,6 +27,9 @@ class _TargetsalesPageState extends State<TargetsalesPage> {
   );
 
   TextEditingController searchController = TextEditingController();
+
+  String monthNow = DateFormat('M').format(DateTime.now());
+  String yearNow = DateFormat('yyyy').format(DateTime.now());
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +102,14 @@ class _TargetsalesPageState extends State<TargetsalesPage> {
                                           datatargetsales.listTargetSales!,
                                       itemBuilder: (item) {
                                         return InkWell(
-                                          onTap: () {},
+                                          onTap: () {
+                                            Navigator.pushNamed(
+                                              context,
+                                              TargetsalesEntryPage.routeName,
+                                              arguments:
+                                                  "${item.bulanNum}/${item.tahun}/${item.iD}",
+                                            );
+                                          },
                                           child: Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                               0,
@@ -333,7 +342,7 @@ class _TargetsalesPageState extends State<TargetsalesPage> {
           Navigator.pushNamed(
             context,
             TargetsalesEntryPage.routeName,
-            arguments: widget.salesmanID,
+            arguments: "$monthNow/$yearNow/0",
           );
         },
         child: const Icon(

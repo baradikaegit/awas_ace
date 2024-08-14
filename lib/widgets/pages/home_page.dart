@@ -428,10 +428,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           : linkPage[index] ==
                                                   '/prospectUEbpPage'
                                               ? '1'
-                                              : linkPage[index] ==
-                                                      '/targetSalesPage'
-                                                  ? sid
-                                                  : null),
+                                              : null),
                                   child: Column(
                                     children: <Widget>[
                                       const SizedBox(
