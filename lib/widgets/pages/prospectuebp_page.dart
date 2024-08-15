@@ -4,6 +4,7 @@ import 'package:awas_ace/provider/prospect_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
+import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
 import 'package:flutter/material.dart';
@@ -82,185 +83,204 @@ class _ProspectUEbpPageState extends State<ProspectUEbpPage> {
               topRight: Radius.circular(25),
             ),
           ),
-          child: Consumer(
-            builder: (context, WidgetRef ref, child) {
-              var objID = widget.objID.toString();
-              final datauebp = ref.watch(prospectUEBPList(objID));
+          child: Stack(
+            children: [
+              const Watermark(),
+              Consumer(
+                builder: (context, WidgetRef ref, child) {
+                  var objID = widget.objID.toString();
+                  final datauebp = ref.watch(prospectUEBPList(objID));
 
-              return Center(
-                child: Stack(
-                  children: [
-                    Column(
+                  return Center(
+                    child: Stack(
                       children: [
-                        Expanded(
-                          child: datauebp.when(
-                            data: (datauebp) => (datauebp
-                                        .listProspectUEBPData !=
-                                    null)
-                                ? datauebp.listProspectUEBPData!.isNotEmpty
-                                    ? Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            20, 20, 20, 0),
-                                        child: SearchableList<
-                                            ListProspectUEBPData>(
-                                          initialList:
-                                              datauebp.listProspectUEBPData!,
-                                          itemBuilder: (item) {
-                                            return InkWell(
-                                              onTap: () {
-                                                Navigator.pushNamed(
-                                                  context,
-                                                  EntryProspectUEbpPage
-                                                      .routeName,
-                                                  arguments: item.iD,
+                        Column(
+                          children: [
+                            Expanded(
+                              child: datauebp.when(
+                                data: (datauebp) => (datauebp
+                                            .listProspectUEBPData !=
+                                        null)
+                                    ? datauebp.listProspectUEBPData!.isNotEmpty
+                                        ? Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                20, 20, 20, 0),
+                                            child: SearchableList<
+                                                ListProspectUEBPData>(
+                                              initialList: datauebp
+                                                  .listProspectUEBPData!,
+                                              itemBuilder: (item) {
+                                                return InkWell(
+                                                  onTap: () {
+                                                    Navigator.pushNamed(
+                                                      context,
+                                                      EntryProspectUEbpPage
+                                                          .routeName,
+                                                      arguments: item.iD,
+                                                    );
+                                                  },
+                                                  child: Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(0, 10, 0, 10),
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                        minHeight: 90,
+                                                        minWidth:
+                                                            double.infinity,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    197,
+                                                                    3,
+                                                                    116,
+                                                                    18),
+                                                            blurRadius: 3.0,
+                                                            offset:
+                                                                Offset(0, 0),
+                                                            spreadRadius: 1.1,
+                                                          ),
+                                                        ],
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .transparent,
+                                                            width: 2),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          167,
+                                                          19,
+                                                          160,
+                                                          0,
+                                                        ),
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                "Nomor Polisi : ${item.nomorPolisi}",
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                "Branch BP : ${item.branchBP}",
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
                                                 );
                                               },
-                                              child: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 10, 0, 10),
-                                                child: Container(
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                    minHeight: 90,
-                                                    minWidth: double.infinity,
+                                              searchTextController:
+                                                  searchController,
+                                              filter: (searchController) {
+                                                return datauebp
+                                                    .listProspectUEBPData!
+                                                    .where(
+                                                      (element) =>
+                                                          element.nomorPolisi
+                                                              .toLowerCase()
+                                                              .contains(
+                                                                searchController
+                                                                    .toString()
+                                                                    .toLowerCase(),
+                                                              ) ||
+                                                          element.branchBP
+                                                              .toLowerCase()
+                                                              .contains(
+                                                                searchController
+                                                                    .toString()
+                                                                    .toLowerCase(),
+                                                              ),
+                                                    )
+                                                    .toList();
+                                              },
+                                              keyboardAction:
+                                                  TextInputAction.search,
+                                              emptyWidget: const EmptyView(),
+                                              inputDecoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8.0),
+                                                labelText: "Search..",
+                                                labelStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                    255,
+                                                    3,
+                                                    116,
+                                                    18,
                                                   ),
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: const [
-                                                      BoxShadow(
-                                                        color: Color.fromARGB(
-                                                            197, 3, 116, 18),
-                                                        blurRadius: 5.0,
-                                                        offset: Offset(0, 0),
-                                                        spreadRadius: 2.1,
-                                                      ),
-                                                    ],
-                                                    border: Border.all(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 2),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    color: const Color.fromARGB(
+                                                ),
+                                                fillColor: Colors.white,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  gapPadding: 15.0,
+                                                  borderSide: const BorderSide(
+                                                    color: Color.fromARGB(
                                                       255,
                                                       3,
                                                       116,
                                                       18,
                                                     ),
+                                                    width: 1.0,
                                                   ),
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            "Nomor Polisi : ${item.nomorPolisi}",
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            "Branch BP : ${item.branchBP}",
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
                                                 ),
                                               ),
-                                            );
-                                          },
-                                          searchTextController:
-                                              searchController,
-                                          filter: (searchController) {
-                                            return datauebp
-                                                .listProspectUEBPData!
-                                                .where(
-                                                  (element) =>
-                                                      element.nomorPolisi
-                                                          .toLowerCase()
-                                                          .contains(
-                                                            searchController
-                                                                .toString()
-                                                                .toLowerCase(),
-                                                          ) ||
-                                                      element.branchBP
-                                                          .toLowerCase()
-                                                          .contains(
-                                                            searchController
-                                                                .toString()
-                                                                .toLowerCase(),
-                                                          ),
-                                                )
-                                                .toList();
-                                          },
-                                          keyboardAction:
-                                              TextInputAction.search,
-                                          emptyWidget: const EmptyView(),
-                                          inputDecoration: InputDecoration(
-                                            contentPadding:
-                                                const EdgeInsets.symmetric(
-                                                    horizontal: 8.0),
-                                            labelText: "Search..",
-                                            labelStyle: const TextStyle(
-                                              color: Color.fromARGB(
-                                                255,
-                                                3,
-                                                116,
-                                                18,
-                                              ),
                                             ),
-                                            fillColor: Colors.white,
-                                            focusedBorder: OutlineInputBorder(
-                                              gapPadding: 15.0,
-                                              borderSide: const BorderSide(
-                                                color: Color.fromARGB(
-                                                  255,
-                                                  3,
-                                                  116,
-                                                  18,
-                                                ),
-                                                width: 1.0,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    : const MyAlertDialog()
-                                : const notActivetoken(),
-                            error: (err, stack) => Text('Error $err'),
-                            loading: () => const Center(
-                              child: Column(
-                                children: [loadingAnimation()],
+                                          )
+                                        : const MyAlertDialog()
+                                    : const notActivetoken(),
+                                error: (err, stack) => Text('Error $err'),
+                                loading: () => const Center(
+                                  child: Column(
+                                    children: [loadingAnimation()],
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
-                        ),
+                          ],
+                        )
                       ],
-                    )
-                  ],
-                ),
-              );
-            },
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
         ),
         floatingActionButton: FloatingActionButton(

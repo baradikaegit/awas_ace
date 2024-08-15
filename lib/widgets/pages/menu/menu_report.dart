@@ -1,3 +1,4 @@
+import 'package:awas_ace/support/watermark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -117,791 +118,811 @@ class _ReportPageState extends State<ReportPage> {
             topRight: Radius.circular(25),
           ),
         ),
-        child: ListView(
-          padding: const EdgeInsets.only(top: 10.0),
+        child: Stack(
           children: [
-            SingleChildScrollView(
+            const Watermark(),
+            ListView(
               padding: const EdgeInsets.only(top: 10.0),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          "SALES",
-                          style: TextStyle(
-                            fontSize: ResponsiveValue(
+              children: [
+                SingleChildScrollView(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "SALES",
+                              style: TextStyle(
+                                fontSize: ResponsiveValue(
+                                  context,
+                                  conditionalValues: [
+                                    const Condition.equals(
+                                      name: TABLET,
+                                      value: 16.5,
+                                      landscapeValue: 18.5,
+                                    ),
+                                    const Condition.largerThan(
+                                      name: TABLET,
+                                      value: 16.5,
+                                      landscapeValue: 16.5,
+                                    ),
+                                  ],
+                                  defaultValue: 14.5,
+                                ).value,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      AnimationLimiter(
+                        child: GridView.builder(
+                          primary: false,
+                          gridDelegate:
+                              SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: ResponsiveValue<int>(
                               context,
                               conditionalValues: [
                                 const Condition.equals(
                                   name: TABLET,
-                                  value: 16.5,
-                                  landscapeValue: 18.5,
+                                  value: 4,
+                                  landscapeValue: 4,
                                 ),
                                 const Condition.largerThan(
                                   name: TABLET,
-                                  value: 16.5,
-                                  landscapeValue: 16.5,
+                                  value: 4,
+                                  landscapeValue: 4,
+                                  breakpoint: 800,
                                 ),
                               ],
-                              defaultValue: 14.5,
+                              defaultValue: 4,
                             ).value,
-                            fontWeight: FontWeight.bold,
+                            childAspectRatio: 5 / 6,
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  AnimationLimiter(
-                    child: GridView.builder(
-                      primary: false,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: ResponsiveValue<int>(
-                          context,
-                          conditionalValues: [
-                            const Condition.equals(
-                              name: TABLET,
-                              value: 4,
-                              landscapeValue: 4,
-                            ),
-                            const Condition.largerThan(
-                              name: TABLET,
-                              value: 4,
-                              landscapeValue: 4,
-                              breakpoint: 800,
-                            ),
-                          ],
-                          defaultValue: 4,
-                        ).value,
-                        childAspectRatio: 5 / 6,
-                      ),
-                      shrinkWrap: true,
-                      itemCount: menuRolesSales.length,
-                      itemBuilder: (context, index) {
-                        return AnimationConfiguration.staggeredGrid(
-                          duration: const Duration(milliseconds: 1500),
-                          position: index,
-                          columnCount: 2,
-                          child: FlipAnimation(
-                            child: InkWell(
-                              onTap: () => Navigator.pushNamed(
-                                  context, linkPageSales[index]),
-                              child: Column(
-                                children: <Widget>[
-                                  const SizedBox(
-                                    height: 10,
+                          shrinkWrap: true,
+                          itemCount: menuRolesSales.length,
+                          itemBuilder: (context, index) {
+                            return AnimationConfiguration.staggeredGrid(
+                              duration: const Duration(milliseconds: 1500),
+                              position: index,
+                              columnCount: 2,
+                              child: FlipAnimation(
+                                child: InkWell(
+                                  onTap: () => Navigator.pushNamed(
+                                      context, linkPageSales[index]),
+                                  child: Column(
+                                    children: <Widget>[
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      CircleAvatar(
+                                        backgroundColor: const Color.fromARGB(
+                                            0, 255, 255, 255),
+                                        radius: ResponsiveValue<double>(
+                                          context,
+                                          conditionalValues: [
+                                            const Condition.equals(
+                                              name: TABLET,
+                                              value: 35,
+                                              landscapeValue: 55,
+                                            ),
+                                            const Condition.largerThan(
+                                              name: TABLET,
+                                              value: 35,
+                                              landscapeValue: 55,
+                                              breakpoint: 800,
+                                            ),
+                                            const Condition.equals(
+                                              name: DESKTOP,
+                                              value: 75,
+                                              landscapeValue: 75,
+                                            ),
+                                            const Condition.largerThan(
+                                              name: DESKTOP,
+                                              value: 75,
+                                              landscapeValue: 75,
+                                              breakpoint: 1920,
+                                            ),
+                                          ],
+                                          defaultValue: 30,
+                                        ).value,
+                                        child: Container(
+                                          clipBehavior: Clip.antiAlias,
+                                          decoration: BoxDecoration(
+                                            boxShadow: const [
+                                              BoxShadow(
+                                                color: Color.fromARGB(
+                                                    0, 49, 49, 49),
+                                                blurRadius: 5.0,
+                                                offset: Offset(0, 0),
+                                                spreadRadius: 2.1,
+                                              ),
+                                            ],
+                                            border: Border.all(
+                                              color: Colors.transparent,
+                                              width: 2,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                            color: const Color.fromARGB(
+                                                0, 255, 255, 255),
+                                          ),
+                                          padding: const EdgeInsets.all(0.0),
+                                          child: Image.asset(
+                                            'assets/images/menu/${imageSales[index]}',
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            5, 10, 5, 0),
+                                        child: Center(
+                                          child: Text(
+                                            menuRolesSales[index],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                              fontSize: ResponsiveValue<double>(
+                                                context,
+                                                conditionalValues: [
+                                                  const Condition.equals(
+                                                    name: TABLET,
+                                                    value: 10.5,
+                                                    landscapeValue: 14.5,
+                                                  ),
+                                                  const Condition.largerThan(
+                                                    name: TABLET,
+                                                    value: 10.5,
+                                                    landscapeValue: 14.5,
+                                                  ),
+                                                ],
+                                                defaultValue: 10.0,
+                                              ).value,
+                                              overflow: TextOverflow.ellipsis,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            maxLines: 2,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  CircleAvatar(
-                                    backgroundColor:
-                                        const Color.fromARGB(0, 255, 255, 255),
-                                    radius: ResponsiveValue<double>(
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            height: 0,
+                            margin: const EdgeInsets.only(top: 15),
+                            decoration: const BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromARGB(43, 49, 49, 49),
+                                  blurRadius: 2.0,
+                                  offset: Offset(0, -3),
+                                  spreadRadius: 1.0,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25),
+                              ),
+                              color: Colors.white,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "AFTER SALES GR",
+                                  style: TextStyle(
+                                    fontSize: ResponsiveValue(
                                       context,
                                       conditionalValues: [
                                         const Condition.equals(
                                           name: TABLET,
-                                          value: 35,
-                                          landscapeValue: 55,
+                                          value: 16.5,
+                                          landscapeValue: 18.5,
                                         ),
                                         const Condition.largerThan(
                                           name: TABLET,
-                                          value: 35,
-                                          landscapeValue: 55,
-                                          breakpoint: 800,
-                                        ),
-                                        const Condition.equals(
-                                          name: DESKTOP,
-                                          value: 75,
-                                          landscapeValue: 75,
-                                        ),
-                                        const Condition.largerThan(
-                                          name: DESKTOP,
-                                          value: 75,
-                                          landscapeValue: 75,
-                                          breakpoint: 1920,
+                                          value: 16.5,
+                                          landscapeValue: 16.5,
                                         ),
                                       ],
-                                      defaultValue: 30,
+                                      defaultValue: 14.5,
                                     ).value,
-                                    child: Container(
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color:
-                                                Color.fromARGB(0, 49, 49, 49),
-                                            blurRadius: 5.0,
-                                            offset: Offset(0, 0),
-                                            spreadRadius: 2.1,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          AnimationLimiter(
+                            child: GridView.builder(
+                              primary: false,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: ResponsiveValue<int>(
+                                  context,
+                                  conditionalValues: [
+                                    const Condition.equals(
+                                      name: TABLET,
+                                      value: 4,
+                                      landscapeValue: 4,
+                                    ),
+                                    const Condition.largerThan(
+                                      name: TABLET,
+                                      value: 4,
+                                      landscapeValue: 4,
+                                      breakpoint: 800,
+                                    ),
+                                  ],
+                                  defaultValue: 4,
+                                ).value,
+                                childAspectRatio: 5 / 6,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: menuRolesASGR.length,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredGrid(
+                                  duration: const Duration(milliseconds: 1500),
+                                  position: index,
+                                  columnCount: 2,
+                                  child: FlipAnimation(
+                                    child: InkWell(
+                                      onTap: () => Navigator.pushNamed(
+                                          context, linkPageASGR[index]),
+                                      child: Column(
+                                        children: <Widget>[
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          CircleAvatar(
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    0, 255, 255, 255),
+                                            radius: ResponsiveValue<double>(
+                                              context,
+                                              conditionalValues: [
+                                                const Condition.equals(
+                                                  name: TABLET,
+                                                  value: 35,
+                                                  landscapeValue: 55,
+                                                ),
+                                                const Condition.largerThan(
+                                                  name: TABLET,
+                                                  value: 35,
+                                                  landscapeValue: 55,
+                                                  breakpoint: 800,
+                                                ),
+                                                const Condition.equals(
+                                                  name: DESKTOP,
+                                                  value: 75,
+                                                  landscapeValue: 75,
+                                                ),
+                                                const Condition.largerThan(
+                                                  name: DESKTOP,
+                                                  value: 75,
+                                                  landscapeValue: 75,
+                                                  breakpoint: 1920,
+                                                ),
+                                              ],
+                                              defaultValue: 30,
+                                            ).value,
+                                            child: Container(
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    color: Color.fromARGB(
+                                                      0,
+                                                      49,
+                                                      49,
+                                                      49,
+                                                    ),
+                                                    blurRadius: 5.0,
+                                                    offset: Offset(0, 0),
+                                                    spreadRadius: 2.1,
+                                                  ),
+                                                ],
+                                                border: Border.all(
+                                                  color: Colors.transparent,
+                                                  width: 2,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: const Color.fromARGB(
+                                                  242,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                ),
+                                              ),
+                                              padding:
+                                                  const EdgeInsets.all(0.0),
+                                              child: Image.asset(
+                                                'assets/images/menu/${imageASGR[index]}',
+                                                fit: BoxFit.fill,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                5, 10, 5, 0),
+                                            child: Center(
+                                              child: Text(
+                                                menuRolesASGR[index],
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize:
+                                                      ResponsiveValue<double>(
+                                                    context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                        name: TABLET,
+                                                        value: 10.5,
+                                                        landscapeValue: 14.5,
+                                                      ),
+                                                      const Condition
+                                                          .largerThan(
+                                                        name: TABLET,
+                                                        value: 10.5,
+                                                        landscapeValue: 14.5,
+                                                      ),
+                                                    ],
+                                                    defaultValue: 10.0,
+                                                  ).value,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                maxLines: 2,
+                                              ),
+                                            ),
                                           ),
                                         ],
-                                        border: Border.all(
-                                          color: Colors.transparent,
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(10),
-                                        color: const Color.fromARGB(
-                                            0, 255, 255, 255),
-                                      ),
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: Image.asset(
-                                        'assets/images/menu/${imageSales[index]}',
-                                        fit: BoxFit.fill,
                                       ),
                                     ),
                                   ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(5, 10, 5, 0),
-                                    child: Center(
-                                      child: Text(
-                                        menuRolesSales[index],
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: ResponsiveValue<double>(
-                                            context,
-                                            conditionalValues: [
-                                              const Condition.equals(
-                                                name: TABLET,
-                                                value: 10.5,
-                                                landscapeValue: 14.5,
-                                              ),
-                                              const Condition.largerThan(
-                                                name: TABLET,
-                                                value: 10.5,
-                                                landscapeValue: 14.5,
-                                              ),
-                                            ],
-                                            defaultValue: 10.0,
-                                          ).value,
-                                          overflow: TextOverflow.ellipsis,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        maxLines: 2,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                );
+                              },
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(43, 49, 49, 49),
-                          blurRadius: 2.0,
-                          offset: Offset(0, -3),
-                          spreadRadius: 1.0,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
+                        ],
                       ),
-                      color: Colors.white,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "AFTER SALES GR",
-                                style: TextStyle(
-                                  fontSize: ResponsiveValue(
-                                    context,
-                                    conditionalValues: [
-                                      const Condition.equals(
-                                        name: TABLET,
-                                        value: 16.5,
-                                        landscapeValue: 18.5,
-                                      ),
-                                      const Condition.largerThan(
-                                        name: TABLET,
-                                        value: 16.5,
-                                        landscapeValue: 16.5,
-                                      ),
-                                    ],
-                                    defaultValue: 14.5,
-                                  ).value,
-                                  fontWeight: FontWeight.bold,
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 15),
+                            decoration: const BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromARGB(43, 49, 49, 49),
+                                  blurRadius: 2.0,
+                                  offset: Offset(0, -3),
+                                  spreadRadius: 1.0,
                                 ),
+                              ],
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25),
                               ),
-                            ],
-                          ),
-                        ),
-                        AnimationLimiter(
-                          child: GridView.builder(
-                            primary: false,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: ResponsiveValue<int>(
-                                context,
-                                conditionalValues: [
-                                  const Condition.equals(
-                                    name: TABLET,
-                                    value: 4,
-                                    landscapeValue: 4,
-                                  ),
-                                  const Condition.largerThan(
-                                    name: TABLET,
-                                    value: 4,
-                                    landscapeValue: 4,
-                                    breakpoint: 800,
-                                  ),
-                                ],
-                                defaultValue: 4,
-                              ).value,
-                              childAspectRatio: 5 / 6,
+                              color: Colors.white,
                             ),
-                            shrinkWrap: true,
-                            itemCount: menuRolesASGR.length,
-                            itemBuilder: (context, index) {
-                              return AnimationConfiguration.staggeredGrid(
-                                duration: const Duration(milliseconds: 1500),
-                                position: index,
-                                columnCount: 2,
-                                child: FlipAnimation(
-                                  child: InkWell(
-                                    onTap: () => Navigator.pushNamed(
-                                        context, linkPageASGR[index]),
-                                    child: Column(
-                                      children: <Widget>[
-                                        const SizedBox(
-                                          height: 10,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "BODY & PAINT",
+                                  style: TextStyle(
+                                    fontSize: ResponsiveValue(
+                                      context,
+                                      conditionalValues: [
+                                        const Condition.equals(
+                                          name: TABLET,
+                                          value: 16.5,
+                                          landscapeValue: 18.5,
                                         ),
-                                        CircleAvatar(
-                                          backgroundColor: const Color.fromARGB(
-                                              0, 255, 255, 255),
-                                          radius: ResponsiveValue<double>(
-                                            context,
-                                            conditionalValues: [
-                                              const Condition.equals(
-                                                name: TABLET,
-                                                value: 35,
-                                                landscapeValue: 55,
-                                              ),
-                                              const Condition.largerThan(
-                                                name: TABLET,
-                                                value: 35,
-                                                landscapeValue: 55,
-                                                breakpoint: 800,
-                                              ),
-                                              const Condition.equals(
-                                                name: DESKTOP,
-                                                value: 75,
-                                                landscapeValue: 75,
-                                              ),
-                                              const Condition.largerThan(
-                                                name: DESKTOP,
-                                                value: 75,
-                                                landscapeValue: 75,
-                                                breakpoint: 1920,
-                                              ),
-                                            ],
-                                            defaultValue: 30,
-                                          ).value,
-                                          child: Container(
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Color.fromARGB(
-                                                    0,
-                                                    49,
-                                                    49,
-                                                    49,
-                                                  ),
-                                                  blurRadius: 5.0,
-                                                  offset: Offset(0, 0),
-                                                  spreadRadius: 2.1,
-                                                ),
-                                              ],
-                                              border: Border.all(
-                                                color: Colors.transparent,
-                                                width: 2,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: const Color.fromARGB(
-                                                242,
-                                                255,
-                                                255,
-                                                255,
-                                              ),
-                                            ),
-                                            padding: const EdgeInsets.all(0.0),
-                                            child: Image.asset(
-                                              'assets/images/menu/${imageASGR[index]}',
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              5, 10, 5, 0),
-                                          child: Center(
-                                            child: Text(
-                                              menuRolesASGR[index],
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize:
-                                                    ResponsiveValue<double>(
-                                                  context,
-                                                  conditionalValues: [
-                                                    const Condition.equals(
-                                                      name: TABLET,
-                                                      value: 10.5,
-                                                      landscapeValue: 14.5,
-                                                    ),
-                                                    const Condition.largerThan(
-                                                      name: TABLET,
-                                                      value: 10.5,
-                                                      landscapeValue: 14.5,
-                                                    ),
-                                                  ],
-                                                  defaultValue: 10.0,
-                                                ).value,
-                                                overflow: TextOverflow.ellipsis,
-                                                fontWeight: FontWeight.bold,
-                                              ),
-                                              maxLines: 2,
-                                            ),
-                                          ),
+                                        const Condition.largerThan(
+                                          name: TABLET,
+                                          value: 16.5,
+                                          landscapeValue: 16.5,
                                         ),
                                       ],
-                                    ),
+                                      defaultValue: 14.5,
+                                    ).value,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(43, 49, 49, 49),
-                          blurRadius: 2.0,
-                          offset: Offset(0, -3),
-                          spreadRadius: 1.0,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                      ),
-                      color: Colors.white,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "BODY & PAINT",
-                                style: TextStyle(
-                                  fontSize: ResponsiveValue(
-                                    context,
-                                    conditionalValues: [
-                                      const Condition.equals(
-                                        name: TABLET,
-                                        value: 16.5,
-                                        landscapeValue: 18.5,
-                                      ),
-                                      const Condition.largerThan(
-                                        name: TABLET,
-                                        value: 16.5,
-                                        landscapeValue: 16.5,
-                                      ),
-                                    ],
-                                    defaultValue: 14.5,
-                                  ).value,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        AnimationLimiter(
-                          child: GridView.builder(
-                            primary: false,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: ResponsiveValue<int>(
-                                context,
-                                conditionalValues: [
-                                  const Condition.equals(
-                                    name: TABLET,
-                                    value: 4,
-                                    landscapeValue: 4,
-                                  ),
-                                  const Condition.largerThan(
-                                    name: TABLET,
-                                    value: 4,
-                                    landscapeValue: 4,
-                                    breakpoint: 800,
-                                  ),
-                                ],
-                                defaultValue: 4,
-                              ).value,
-                              childAspectRatio: 5 / 6,
+                              ],
                             ),
-                            shrinkWrap: true,
-                            itemCount: menuRolesBP.length,
-                            itemBuilder: (context, index) {
-                              return AnimationConfiguration.staggeredGrid(
-                                duration: const Duration(milliseconds: 1500),
-                                position: index,
-                                columnCount: 2,
-                                child: FlipAnimation(
-                                  child: InkWell(
-                                    onTap: () => Navigator.pushNamed(
-                                        context, linkPageBP[index]),
-                                    child: Column(
-                                      children: <Widget>[
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        CircleAvatar(
-                                          backgroundColor: const Color.fromARGB(
-                                              0, 255, 255, 255),
-                                          radius: ResponsiveValue<double>(
-                                            context,
-                                            conditionalValues: [
-                                              const Condition.equals(
-                                                name: TABLET,
-                                                value: 35,
-                                                landscapeValue: 55,
-                                              ),
-                                              const Condition.largerThan(
-                                                name: TABLET,
-                                                value: 35,
-                                                landscapeValue: 55,
-                                                breakpoint: 800,
-                                              ),
-                                              const Condition.equals(
-                                                name: DESKTOP,
-                                                value: 75,
-                                                landscapeValue: 75,
-                                              ),
-                                              const Condition.largerThan(
-                                                name: DESKTOP,
-                                                value: 75,
-                                                landscapeValue: 75,
-                                                breakpoint: 1920,
-                                              ),
-                                            ],
-                                            defaultValue: 30,
-                                          ).value,
-                                          child: Container(
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Color.fromARGB(
-                                                    0,
-                                                    49,
-                                                    49,
-                                                    49,
-                                                  ),
-                                                  blurRadius: 5.0,
-                                                  offset: Offset(0, 0),
-                                                  spreadRadius: 2.1,
+                          ),
+                          AnimationLimiter(
+                            child: GridView.builder(
+                              primary: false,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: ResponsiveValue<int>(
+                                  context,
+                                  conditionalValues: [
+                                    const Condition.equals(
+                                      name: TABLET,
+                                      value: 4,
+                                      landscapeValue: 4,
+                                    ),
+                                    const Condition.largerThan(
+                                      name: TABLET,
+                                      value: 4,
+                                      landscapeValue: 4,
+                                      breakpoint: 800,
+                                    ),
+                                  ],
+                                  defaultValue: 4,
+                                ).value,
+                                childAspectRatio: 5 / 6,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: menuRolesBP.length,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredGrid(
+                                  duration: const Duration(milliseconds: 1500),
+                                  position: index,
+                                  columnCount: 2,
+                                  child: FlipAnimation(
+                                    child: InkWell(
+                                      onTap: () => Navigator.pushNamed(
+                                          context, linkPageBP[index]),
+                                      child: Column(
+                                        children: <Widget>[
+                                          const SizedBox(
+                                            height: 10,
+                                          ),
+                                          CircleAvatar(
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                                    0, 255, 255, 255),
+                                            radius: ResponsiveValue<double>(
+                                              context,
+                                              conditionalValues: [
+                                                const Condition.equals(
+                                                  name: TABLET,
+                                                  value: 35,
+                                                  landscapeValue: 55,
+                                                ),
+                                                const Condition.largerThan(
+                                                  name: TABLET,
+                                                  value: 35,
+                                                  landscapeValue: 55,
+                                                  breakpoint: 800,
+                                                ),
+                                                const Condition.equals(
+                                                  name: DESKTOP,
+                                                  value: 75,
+                                                  landscapeValue: 75,
+                                                ),
+                                                const Condition.largerThan(
+                                                  name: DESKTOP,
+                                                  value: 75,
+                                                  landscapeValue: 75,
+                                                  breakpoint: 1920,
                                                 ),
                                               ],
-                                              border: Border.all(
-                                                color: Colors.transparent,
-                                                width: 2,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: const Color.fromARGB(
-                                                  0, 255, 255, 255),
-                                            ),
-                                            padding: const EdgeInsets.all(0.0),
-                                            child: Image.asset(
-                                              'assets/images/menu/${imageBP[index]}',
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                            5,
-                                            10,
-                                            5,
-                                            0,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              menuRolesBP[index],
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize:
-                                                    ResponsiveValue<double>(
-                                                  context,
-                                                  conditionalValues: [
-                                                    const Condition.equals(
-                                                      name: TABLET,
-                                                      value: 10.5,
-                                                      landscapeValue: 14.5,
+                                              defaultValue: 30,
+                                            ).value,
+                                            child: Container(
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    color: Color.fromARGB(
+                                                      0,
+                                                      49,
+                                                      49,
+                                                      49,
                                                     ),
-                                                    const Condition.largerThan(
-                                                      name: TABLET,
-                                                      value: 10.5,
-                                                      landscapeValue: 14.5,
-                                                    ),
-                                                  ],
-                                                  defaultValue: 10.0,
-                                                ).value,
-                                                overflow: TextOverflow.ellipsis,
-                                                fontWeight: FontWeight.bold,
+                                                    blurRadius: 5.0,
+                                                    offset: Offset(0, 0),
+                                                    spreadRadius: 2.1,
+                                                  ),
+                                                ],
+                                                border: Border.all(
+                                                  color: Colors.transparent,
+                                                  width: 2,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: const Color.fromARGB(
+                                                    0, 255, 255, 255),
                                               ),
-                                              maxLines: 2,
+                                              padding:
+                                                  const EdgeInsets.all(0.0),
+                                              child: Image.asset(
+                                                'assets/images/menu/${imageBP[index]}',
+                                                fit: BoxFit.fill,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              5,
+                                              10,
+                                              5,
+                                              0,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                menuRolesBP[index],
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize:
+                                                      ResponsiveValue<double>(
+                                                    context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                        name: TABLET,
+                                                        value: 10.5,
+                                                        landscapeValue: 14.5,
+                                                      ),
+                                                      const Condition
+                                                          .largerThan(
+                                                        name: TABLET,
+                                                        value: 10.5,
+                                                        landscapeValue: 14.5,
+                                                      ),
+                                                    ],
+                                                    defaultValue: 10.0,
+                                                  ).value,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                maxLines: 2,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: const EdgeInsets.only(top: 15),
-                    decoration: const BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: Color.fromARGB(43, 49, 49, 49),
-                          blurRadius: 2.0,
-                          offset: Offset(0, -3),
-                          spreadRadius: 1.0,
-                        ),
-                      ],
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(25),
-                        topRight: Radius.circular(25),
-                      ),
-                      color: Colors.white,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "GENERAL",
-                                style: TextStyle(
-                                  fontSize: ResponsiveValue(
-                                    context,
-                                    conditionalValues: [
-                                      const Condition.equals(
-                                        name: TABLET,
-                                        value: 16.5,
-                                        landscapeValue: 18.5,
-                                      ),
-                                      const Condition.largerThan(
-                                        name: TABLET,
-                                        value: 16.5,
-                                        landscapeValue: 16.5,
-                                      ),
-                                    ],
-                                    defaultValue: 14.5,
-                                  ).value,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        AnimationLimiter(
-                          child: GridView.builder(
-                            primary: false,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: ResponsiveValue<int>(
-                                context,
-                                conditionalValues: [
-                                  const Condition.equals(
-                                    name: TABLET,
-                                    value: 4,
-                                    landscapeValue: 4,
-                                  ),
-                                  const Condition.largerThan(
-                                    name: TABLET,
-                                    value: 4,
-                                    landscapeValue: 4,
-                                    breakpoint: 800,
-                                  ),
-                                ],
-                                defaultValue: 4,
-                              ).value,
-                              childAspectRatio: 5 / 6,
+                                );
+                              },
                             ),
-                            shrinkWrap: true,
-                            itemCount: menuRolesGeneral.length,
-                            itemBuilder: (context, index) {
-                              return AnimationConfiguration.staggeredGrid(
-                                duration: const Duration(milliseconds: 1500),
-                                position: index,
-                                columnCount: 2,
-                                child: FlipAnimation(
-                                  child: InkWell(
-                                    onTap: () => Navigator.pushNamed(
-                                        context, linkPageGeneral[index]),
-                                    child: Column(
-                                      children: <Widget>[
-                                        const SizedBox(
-                                          height: 10,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Container(
+                            margin: const EdgeInsets.only(top: 15),
+                            decoration: const BoxDecoration(
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Color.fromARGB(43, 49, 49, 49),
+                                  blurRadius: 2.0,
+                                  offset: Offset(0, -3),
+                                  spreadRadius: 1.0,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(25),
+                                topRight: Radius.circular(25),
+                              ),
+                              color: Colors.white,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 20, 15, 10),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "GENERAL",
+                                  style: TextStyle(
+                                    fontSize: ResponsiveValue(
+                                      context,
+                                      conditionalValues: [
+                                        const Condition.equals(
+                                          name: TABLET,
+                                          value: 16.5,
+                                          landscapeValue: 18.5,
                                         ),
-                                        CircleAvatar(
-                                          backgroundColor: const Color.fromARGB(
-                                            0,
-                                            255,
-                                            255,
-                                            255,
+                                        const Condition.largerThan(
+                                          name: TABLET,
+                                          value: 16.5,
+                                          landscapeValue: 16.5,
+                                        ),
+                                      ],
+                                      defaultValue: 14.5,
+                                    ).value,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          AnimationLimiter(
+                            child: GridView.builder(
+                              primary: false,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: ResponsiveValue<int>(
+                                  context,
+                                  conditionalValues: [
+                                    const Condition.equals(
+                                      name: TABLET,
+                                      value: 4,
+                                      landscapeValue: 4,
+                                    ),
+                                    const Condition.largerThan(
+                                      name: TABLET,
+                                      value: 4,
+                                      landscapeValue: 4,
+                                      breakpoint: 800,
+                                    ),
+                                  ],
+                                  defaultValue: 4,
+                                ).value,
+                                childAspectRatio: 5 / 6,
+                              ),
+                              shrinkWrap: true,
+                              itemCount: menuRolesGeneral.length,
+                              itemBuilder: (context, index) {
+                                return AnimationConfiguration.staggeredGrid(
+                                  duration: const Duration(milliseconds: 1500),
+                                  position: index,
+                                  columnCount: 2,
+                                  child: FlipAnimation(
+                                    child: InkWell(
+                                      onTap: () => Navigator.pushNamed(
+                                          context, linkPageGeneral[index]),
+                                      child: Column(
+                                        children: <Widget>[
+                                          const SizedBox(
+                                            height: 10,
                                           ),
-                                          radius: ResponsiveValue<double>(
-                                            context,
-                                            conditionalValues: [
-                                              const Condition.equals(
-                                                name: TABLET,
-                                                value: 35,
-                                                landscapeValue: 55,
-                                              ),
-                                              const Condition.largerThan(
-                                                name: TABLET,
-                                                value: 35,
-                                                landscapeValue: 55,
-                                                breakpoint: 800,
-                                              ),
-                                              const Condition.equals(
-                                                name: DESKTOP,
-                                                value: 75,
-                                                landscapeValue: 75,
-                                              ),
-                                              const Condition.largerThan(
-                                                name: DESKTOP,
-                                                value: 75,
-                                                landscapeValue: 75,
-                                                breakpoint: 1920,
-                                              ),
-                                            ],
-                                            defaultValue: 30,
-                                          ).value,
-                                          child: Container(
-                                            clipBehavior: Clip.antiAlias,
-                                            decoration: BoxDecoration(
-                                              boxShadow: const [
-                                                BoxShadow(
-                                                  color: Color.fromARGB(
-                                                    0,
-                                                    49,
-                                                    49,
-                                                    49,
-                                                  ),
-                                                  blurRadius: 5.0,
-                                                  offset: Offset(0, 0),
-                                                  spreadRadius: 2.1,
+                                          CircleAvatar(
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                              0,
+                                              255,
+                                              255,
+                                              255,
+                                            ),
+                                            radius: ResponsiveValue<double>(
+                                              context,
+                                              conditionalValues: [
+                                                const Condition.equals(
+                                                  name: TABLET,
+                                                  value: 35,
+                                                  landscapeValue: 55,
+                                                ),
+                                                const Condition.largerThan(
+                                                  name: TABLET,
+                                                  value: 35,
+                                                  landscapeValue: 55,
+                                                  breakpoint: 800,
+                                                ),
+                                                const Condition.equals(
+                                                  name: DESKTOP,
+                                                  value: 75,
+                                                  landscapeValue: 75,
+                                                ),
+                                                const Condition.largerThan(
+                                                  name: DESKTOP,
+                                                  value: 75,
+                                                  landscapeValue: 75,
+                                                  breakpoint: 1920,
                                                 ),
                                               ],
-                                              border: Border.all(
-                                                color: Colors.transparent,
-                                                width: 2,
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: const Color.fromARGB(
-                                                0,
-                                                255,
-                                                255,
-                                                255,
-                                              ),
-                                            ),
-                                            padding: const EdgeInsets.all(0.0),
-                                            child: Image.asset(
-                                              'assets/images/menu/${imageGeneral[index]}',
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                            5,
-                                            10,
-                                            5,
-                                            0,
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              menuRolesGeneral[index],
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize:
-                                                    ResponsiveValue<double>(
-                                                  context,
-                                                  conditionalValues: [
-                                                    const Condition.equals(
-                                                      name: TABLET,
-                                                      value: 10.5,
-                                                      landscapeValue: 14.5,
+                                              defaultValue: 30,
+                                            ).value,
+                                            child: Container(
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                boxShadow: const [
+                                                  BoxShadow(
+                                                    color: Color.fromARGB(
+                                                      0,
+                                                      49,
+                                                      49,
+                                                      49,
                                                     ),
-                                                    const Condition.largerThan(
-                                                      name: TABLET,
-                                                      value: 10.5,
-                                                      landscapeValue: 14.5,
-                                                    ),
-                                                  ],
-                                                  defaultValue: 10.0,
-                                                ).value,
-                                                overflow: TextOverflow.ellipsis,
-                                                fontWeight: FontWeight.bold,
+                                                    blurRadius: 5.0,
+                                                    offset: Offset(0, 0),
+                                                    spreadRadius: 2.1,
+                                                  ),
+                                                ],
+                                                border: Border.all(
+                                                  color: Colors.transparent,
+                                                  width: 2,
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: const Color.fromARGB(
+                                                  0,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                ),
                                               ),
-                                              maxLines: 2,
+                                              padding:
+                                                  const EdgeInsets.all(0.0),
+                                              child: Image.asset(
+                                                'assets/images/menu/${imageGeneral[index]}',
+                                                fit: BoxFit.fill,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      ],
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                              5,
+                                              10,
+                                              5,
+                                              0,
+                                            ),
+                                            child: Center(
+                                              child: Text(
+                                                menuRolesGeneral[index],
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize:
+                                                      ResponsiveValue<double>(
+                                                    context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                        name: TABLET,
+                                                        value: 10.5,
+                                                        landscapeValue: 14.5,
+                                                      ),
+                                                      const Condition
+                                                          .largerThan(
+                                                        name: TABLET,
+                                                        value: 10.5,
+                                                        landscapeValue: 14.5,
+                                                      ),
+                                                    ],
+                                                    defaultValue: 10.0,
+                                                  ).value,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                                maxLines: 2,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                              );
-                            },
+                                );
+                              },
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
+                        ],
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            )
+                )
+              ],
+            ),
           ],
         ),
       ),
