@@ -8,6 +8,7 @@ import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
+import 'package:awas_ace/widgets/pages/prospectsales_page.dart';
 import 'package:awas_ace/widgets/pages/prospectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/settings/rotg_page.dart';
@@ -78,6 +79,7 @@ class MyApp extends StatelessWidget {
         ResetPassword.routeName: (context) => const ResetPassword(),
         CallPage.routeName: (context) => CallPage(
             callDateObject: ModalRoute.of(context)!.settings.arguments),
+        ProspectSalesPage.routeName: (context) => const ProspectSalesPage(),
         TargetsalesPage.routeName: (context) => const TargetsalesPage(),
         TargetsalesEntryPage.routeName: (context) => TargetsalesEntryPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,

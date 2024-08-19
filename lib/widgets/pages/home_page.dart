@@ -217,7 +217,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List linkPage = [
     '/callPage',
-    '/',
+    '/prospectSalesPage',
     '/',
     '/targetSalesPage',
     '/prospectUEbpPage',
