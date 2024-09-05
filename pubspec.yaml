@@ -50,6 +50,7 @@ dependencies:
   searchable_listview: ^2.15.0
   shared_preferences: ^2.2.0
   syncfusion_flutter_charts: ^21.2.6
+  syncfusion_flutter_datagrid: ^21.2.6
   syncfusion_flutter_gauges: ^21.2.6
   uuid: ^4.4.2
 

@@ -92,7 +92,9 @@ class MyApp extends StatelessWidget {
             ),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),
-        FunnelingPage.routeName: (context) => const FunnelingPage(),
+        FunnelingPage.routeName: (context) => FunnelingPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         ProspekVtoSpkPage.routeName: (context) => const ProspekVtoSpkPage(),
         ProspekUeBPPage.routeName: (context) => const ProspekUeBPPage(),
         MonitAreaMappingPage.routeName: (context) =>

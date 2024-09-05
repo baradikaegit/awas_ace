@@ -1,0 +1,87 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+class ListRptFunnelingResponse {
+  ListRptFunnelingResponse({
+    required this.statusCode,
+    required this.statusMessage,
+    required this.listRptFunneling,
+  });
+  late final int statusCode;
+  late final String statusMessage;
+  late final List<ListRptFunneling>? listRptFunneling;
+
+  ListRptFunnelingResponse.fromJson(Map<String, dynamic> json) {
+    statusCode = json['statusCode'];
+    statusMessage = json['statusMessage'];
+    listRptFunneling = (json['listRptFunneling'] != null)
+        ? List.from(json['listRptFunneling'])
+            .map((e) => ListRptFunneling.fromJson(e))
+            .toList()
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['statusCode'] = statusCode;
+    _data['statusMessage'] = statusMessage;
+    _data['listRptFunneling'] =
+        listRptFunneling!.map((e) => e.toJson()).toList();
+    return _data;
+  }
+}
+
+class ListRptFunneling {
+  ListRptFunneling({
+    required this.num,
+    required this.monthID,
+    required this.month,
+    required this.year,
+    required this.branchCode,
+    required this.call,
+    required this.prospek,
+    required this.hot,
+    required this.spk,
+    required this.dO,
+    required this.title,
+  });
+  late final int num;
+  late final String monthID;
+  late final int month;
+  late final int year;
+  late final String branchCode;
+  late final int call;
+  late final int prospek;
+  late final int hot;
+  late final int spk;
+  late final int dO;
+  late final String title;
+
+  ListRptFunneling.fromJson(Map<String, dynamic> json) {
+    num = json['num'];
+    monthID = json['monthID'];
+    month = json['month'];
+    year = json['year'];
+    branchCode = json['branchCode'];
+    call = json['call'];
+    prospek = json['prospek'];
+    hot = json['hot'];
+    spk = json['spk'];
+    dO = json['dO'];
+    title = json['title'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['num'] = num;
+    _data['monthID'] = monthID;
+    _data['month'] = month;
+    _data['year'] = year;
+    _data['branchCode'] = branchCode;
+    _data['call'] = call;
+    _data['prospek'] = prospek;
+    _data['hot'] = hot;
+    _data['spk'] = spk;
+    _data['dO'] = dO;
+    _data['title'] = title;
+    return _data;
+  }
+}

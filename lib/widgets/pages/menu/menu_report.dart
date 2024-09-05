@@ -1,7 +1,9 @@
 import 'package:awas_ace/support/watermark.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
@@ -25,6 +27,7 @@ class _ReportPageState extends State<ReportPage> {
     'Monitoring FOA & PMA',
     'Total Stock By Model',
   ];
+
   List imageSales = [
     'funneling_1.png',
     'prospek.png',
@@ -39,6 +42,7 @@ class _ReportPageState extends State<ReportPage> {
     'foampa.png',
     'stockbymodel.png',
   ];
+
   List linkPageSales = [
     '/funnelingPage',
     '/prospekVtoSpkPage',
@@ -63,6 +67,7 @@ class _ReportPageState extends State<ReportPage> {
     'TMS Productivity',
     'Boooking Show',
   ];
+
   List imageASGR = [
     'funneling_1.png',
     'prospek.png',
@@ -71,6 +76,7 @@ class _ReportPageState extends State<ReportPage> {
     'svc.png',
     'bookingshow.png'
   ];
+
   List linkPageASGR = ['/', '/', '/', '/', '/', '/'];
 
   List menuRolesBP = [
@@ -80,6 +86,7 @@ class _ReportPageState extends State<ReportPage> {
     'Prospect Ratio from BP to UE GR',
     'Daihatsu GR Contributon to UE BP',
   ];
+
   List imageBP = [
     'funneling_1.png',
     'prospek.png',
@@ -87,6 +94,7 @@ class _ReportPageState extends State<ReportPage> {
     'prospek.png',
     'contributor.png',
   ];
+
   List linkPageBP = ['/', '/', '/', '/', '/'];
 
   List menuRolesGeneral = [
@@ -94,12 +102,32 @@ class _ReportPageState extends State<ReportPage> {
     'Monitoring Redeem',
     'Monitoring Saldo'
   ];
+
   List imageGeneral = [
     'monitoringpoin.png',
     'monitoringredeem.png',
     'monitoringsaldo.png'
   ];
+
   List linkPageGeneral = ['/', '/', '/'];
+
+  String? roles;
+
+  final String _monthNow = DateFormat('M').format(DateTime.now());
+  final String _yearNow = DateFormat('yyyy').format(DateTime.now());
+
+  @override
+  void initState() {
+    super.initState();
+    loadSharedPreference();
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      roles = prefs.getString('Roles');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -191,8 +219,22 @@ class _ReportPageState extends State<ReportPage> {
                               columnCount: 2,
                               child: FlipAnimation(
                                 child: InkWell(
+                                  //  onTap: () => Navigator.pushNamed(
+                                  //         context, linkPage[index],
+                                  //         arguments:
+                                  //             linkPage[index] == '/callPage'
+                                  //                 ? dateNow
+                                  //                 : linkPage[index] ==
+                                  //                         '/prospectUEbpPage'
+                                  //                     ? '1'
+                                  //                     : null),
+
                                   onTap: () => Navigator.pushNamed(
-                                      context, linkPageSales[index]),
+                                      context, linkPageSales[index],
+                                      arguments: linkPageSales[index] ==
+                                              '/funnelingPage'
+                                          ? '$_monthNow/$_yearNow'
+                                          : null),
                                   child: Column(
                                     children: <Widget>[
                                       const SizedBox(
