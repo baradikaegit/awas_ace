@@ -239,7 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
   loadSharedPreference() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      userName = prefs.getString('Username');
+      userName = prefs.getString('Name');
       sid = prefs.getString('SID');
       branchID = prefs.getString('BranchID');
     });

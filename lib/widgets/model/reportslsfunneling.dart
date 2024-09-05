@@ -42,6 +42,7 @@ class ListRptFunneling {
     required this.spk,
     required this.dO,
     required this.title,
+    required this.userName,
   });
   late final int num;
   late final String monthID;
@@ -54,6 +55,7 @@ class ListRptFunneling {
   late final int spk;
   late final int dO;
   late final String title;
+  late final String userName;
 
   ListRptFunneling.fromJson(Map<String, dynamic> json) {
     num = json['num'];
@@ -67,6 +69,7 @@ class ListRptFunneling {
     spk = json['spk'];
     dO = json['dO'];
     title = json['title'];
+    userName = json['userName'];
   }
 
   Map<String, dynamic> toJson() {
@@ -82,6 +85,7 @@ class ListRptFunneling {
     _data['spk'] = spk;
     _data['dO'] = dO;
     _data['title'] = title;
+    _data['userName'] = userName;
     return _data;
   }
 }

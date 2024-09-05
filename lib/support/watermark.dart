@@ -24,7 +24,7 @@ class _WatermarkState extends State<Watermark> {
   loadSharedPreference() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
-      userName = prefs.getString('Username');
+      userName = prefs.getString('Name');
       roles = prefs.getString('Roles');
     });
   }
@@ -42,7 +42,10 @@ class _WatermarkState extends State<Watermark> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 100.0, landscapeValue: 100.0),
+            name: TABLET,
+            value: 65.0,
+            landscapeValue: 65.0,
+          ),
           const Condition.largerThan(
               name: TABLET,
               value: 100.0,
@@ -53,15 +56,27 @@ class _WatermarkState extends State<Watermark> {
       ).value,
     );
 
-    return Row(
+    return Wrap(
+      direction: Axis.horizontal,
+      verticalDirection: VerticalDirection.down,
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(75, 300, 50, 0),
           child: Transform.rotate(
             angle: -51,
-            child: Text(
-              '$userName',
-              style: textStyleWaterMark,
+            child: SizedBox(
+              height: 60,
+              width: 500,
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  '$userName',
+                  style: textStyleWaterMark,
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
             ),
           ),
         ),
