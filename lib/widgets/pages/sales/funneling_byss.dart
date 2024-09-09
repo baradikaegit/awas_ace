@@ -3,10 +3,8 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportslsfunneling.dart';
+import 'package:awas_ace/widgets/model/reportslsfunnelingdetail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
-import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
-import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,14 +13,14 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class FunnelingPage extends StatefulWidget {
+class FunnelingSSPage extends StatefulWidget {
   final Object? linkPageObj;
-  const FunnelingPage({super.key, required this.linkPageObj});
+  const FunnelingSSPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/funnelingPage";
+  static const String routeName = "/funnelingSSPage";
 
   @override
-  State<FunnelingPage> createState() => _FunnelingPageState();
+  State<FunnelingSSPage> createState() => _FunnelingSSPageState();
 }
 
 class ModelMonth {
@@ -31,7 +29,7 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _FunnelingPageState extends State<FunnelingPage> {
+class _FunnelingSSPageState extends State<FunnelingSSPage> {
   Widget titleBar = const Text(
     "Funneling",
     style: TextStyle(color: Colors.white),
@@ -61,7 +59,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
     DateFormat('yyyy').format(DateTime.utc(DateTime.now().year - 1))
   ];
 
-  List<ListRptFunnelingResponse> listRptFunnelingByModelRes = [];
+  List<ListRptFunnelingDetailResponse> listRptFunnelingSSByModelRes = [];
 
   @override
   void initState() {
@@ -170,7 +168,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
                     final rptFunneling =
-                        ref.watch(reportFunnelingList(linkPageObj));
+                        ref.watch(reportFunnelingBySSList(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -183,24 +181,28 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                   child: rptFunneling.when(
                                     data: (dataSelectOpt) {
                                       String monthSelected = dataSelectOpt
-                                              .listRptFunneling!.isNotEmpty
+                                              .listRptFunnelingDetail!
+                                              .isNotEmpty
                                           ? (linkPageObj ==
                                                   '$monthNow/$yearNow')
                                               ? DateFormat('M')
                                                   .format(DateTime.now())
                                               : dataSelectOpt
-                                                  .listRptFunneling![0].month
+                                                  .listRptFunnelingDetail![0]
+                                                  .month
                                                   .toString()
                                           : '';
 
                                       String yearSelected = dataSelectOpt
-                                              .listRptFunneling!.isNotEmpty
+                                              .listRptFunnelingDetail!
+                                              .isNotEmpty
                                           ? (linkPageObj ==
                                                   '$monthNow/$yearNow')
                                               ? DateFormat('yyyy')
                                                   .format(DateTime.now())
                                               : dataSelectOpt
-                                                  .listRptFunneling![0].year
+                                                  .listRptFunnelingDetail![0]
+                                                  .year
                                                   .toString()
                                           : '';
 
@@ -294,17 +296,23 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                               newValMonth!;
                                                           var yearNow =
                                                               dataSelectOpt
-                                                                  .listRptFunneling![
+                                                                  .listRptFunnelingDetail![
                                                                       0]
                                                                   .year;
 
+                                                          var branchCode =
+                                                              dataSelectOpt
+                                                                  .listRptFunnelingDetail![
+                                                                      0]
+                                                                  .title;
+
                                                           var linkResultMonth =
-                                                              '$monthSelected/$yearNow';
+                                                              '$monthSelected/$yearNow/$branchCode';
 
                                                           Navigator
                                                               .pushReplacementNamed(
                                                             context,
-                                                            FunnelingPage
+                                                            FunnelingSSPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultMonth,
@@ -373,16 +381,22 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                               newValYear!;
                                                           var monthNow =
                                                               dataSelectOpt
-                                                                  .listRptFunneling![
+                                                                  .listRptFunnelingDetail![
                                                                       0]
                                                                   .month;
 
+                                                          var branchCode =
+                                                              dataSelectOpt
+                                                                  .listRptFunnelingDetail![
+                                                                      0]
+                                                                  .title;
+
                                                           var linkResultYear =
-                                                              '$monthNow/$yearSelected';
+                                                              '$monthNow/$yearSelected/$branchCode';
 
                                                           Navigator.pushNamed(
                                                             context,
-                                                            FunnelingPage
+                                                            FunnelingSSPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultYear,
@@ -423,9 +437,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                 ),
                               ),
                               Padding(
-                                padding: roles == 'OD' || roles == 'PD'
-                                    ? const EdgeInsets.fromLTRB(0, 10, 0, 0)
-                                    : const EdgeInsets.fromLTRB(0, 10, 0, 15),
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: rptFunneling.when(
                                   data: (dataHeader) => AppBar(
                                     automaticallyImplyLeading: false,
@@ -433,7 +445,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                     title: Column(
                                       children: [
                                         Text(
-                                          "Data Corong (${dataHeader.listRptFunneling![0].title})",
+                                          "Data Corong (${dataHeader.listRptFunnelingDetail![0].title})",
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -464,7 +476,8 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                         Text(
                                           roles == 'OD' || roles == 'PD'
                                               ? ""
-                                              : dataHeader.listRptFunneling![0]
+                                              : dataHeader
+                                                  .listRptFunnelingDetail![0]
                                                   .userName,
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
@@ -519,7 +532,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                           Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              "Periode : ${dataPeriod.listRptFunneling![0].monthID} ${dataPeriod.listRptFunneling![0].year}",
+                                              "Periode : ${dataPeriod.listRptFunnelingDetail![0].monthID} ${dataPeriod.listRptFunnelingDetail![0].year}",
                                               style: TextStyle(
                                                 color: const Color.fromARGB(
                                                   255,
@@ -593,19 +606,21 @@ class _FunnelingPageState extends State<FunnelingPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportFunnelingList(
+                                    return ref.refresh(reportFunnelingBySSList(
                                         linkPageObj.toString()));
                                   },
                                   child: rptFunneling.when(
                                     data: (dataFunneling) {
-                                      listRptFunnelingByModelRes.clear();
-                                      listRptFunnelingByModelRes
+                                      listRptFunnelingSSByModelRes.clear();
+                                      listRptFunnelingSSByModelRes
                                           .add(dataFunneling);
 
-                                      return (dataFunneling.listRptFunneling !=
+                                      return (dataFunneling
+                                                  .listRptFunnelingDetail !=
                                               null)
                                           ? dataFunneling
-                                                  .listRptFunneling!.isNotEmpty
+                                                  .listRptFunnelingDetail!
+                                                  .isNotEmpty
                                               ? ListView.builder(
                                                   physics:
                                                       const AlwaysScrollableScrollPhysics(),
@@ -683,7 +698,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                               .circle,
                                                                       dataSource:
                                                                           toDynamic(
-                                                                              listRptFunnelingByModelRes[0].listRptFunneling!),
+                                                                              listRptFunnelingSSByModelRes[0].listRptFunnelingDetail!),
                                                                       xValueMapper:
                                                                           (DataFunneling data, _) =>
                                                                               data.x,
@@ -723,7 +738,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                               .circle,
                                                                       dataSource:
                                                                           toDynamic(
-                                                                              listRptFunnelingByModelRes[0].listRptFunneling!),
+                                                                              listRptFunnelingSSByModelRes[0].listRptFunnelingDetail!),
                                                                       pointColorMapper:
                                                                           (DataFunneling data, _) =>
                                                                               data.color2,
@@ -766,7 +781,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                               .circle,
                                                                       dataSource:
                                                                           toDynamic(
-                                                                              listRptFunnelingByModelRes[0].listRptFunneling!),
+                                                                              listRptFunnelingSSByModelRes[0].listRptFunnelingDetail!),
                                                                       pointColorMapper:
                                                                           (DataFunneling data, _) =>
                                                                               data.color3,
@@ -809,7 +824,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                               .circle,
                                                                       dataSource:
                                                                           toDynamic(
-                                                                              listRptFunnelingByModelRes[0].listRptFunneling!),
+                                                                              listRptFunnelingSSByModelRes[0].listRptFunnelingDetail!),
                                                                       pointColorMapper:
                                                                           (DataFunneling data, _) =>
                                                                               data.color4,
@@ -970,14 +985,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                           120,
                                                                       child:
                                                                           Text(
-                                                                        roles ==
-                                                                                'SALESMAN'
-                                                                            ? "TANGGAL"
-                                                                            : roles == 'SALES SUPERVISOR'
-                                                                                ? "SALES"
-                                                                                : roles == 'KACAB'
-                                                                                    ? "SS"
-                                                                                    : "BRANCH",
+                                                                        "SS",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1097,81 +1105,78 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                               rows: List<
                                                                   DataRow>.generate(
                                                                 dataFunneling
-                                                                    .listRptFunneling!
+                                                                    .listRptFunnelingDetail!
                                                                     .length,
                                                                 (indexObj) {
                                                                   final dataRptFunneling =
                                                                       dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                           indexObj];
 
                                                                   var persenProspek = dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                                   indexObj]
                                                                               .call >
                                                                           0
                                                                       ? (dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                                   indexObj]
                                                                               .prospek /
                                                                           dataFunneling
-                                                                              .listRptFunneling![indexObj]
+                                                                              .listRptFunnelingDetail![indexObj]
                                                                               .call *
                                                                           100)
                                                                       : 0;
 
                                                                   var persenHot = dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                                   indexObj]
                                                                               .prospek >
                                                                           0
                                                                       ? (dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                                   indexObj]
                                                                               .hot /
                                                                           dataFunneling
-                                                                              .listRptFunneling![indexObj]
+                                                                              .listRptFunnelingDetail![indexObj]
                                                                               .prospek *
                                                                           100)
                                                                       : 0;
 
                                                                   var persenSpk = dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                                   indexObj]
                                                                               .hot >
                                                                           0
                                                                       ? (dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                                   indexObj]
                                                                               .spk /
                                                                           dataFunneling
-                                                                              .listRptFunneling![indexObj]
+                                                                              .listRptFunnelingDetail![indexObj]
                                                                               .hot *
                                                                           100)
                                                                       : 0;
 
                                                                   var persenDO = dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                                   indexObj]
                                                                               .spk >
                                                                           0
                                                                       ? (dataFunneling
-                                                                              .listRptFunneling![
+                                                                              .listRptFunnelingDetail![
                                                                                   indexObj]
                                                                               .dO /
                                                                           dataFunneling
-                                                                              .listRptFunneling![indexObj]
+                                                                              .listRptFunnelingDetail![indexObj]
                                                                               .spk *
                                                                           100)
                                                                       : 0;
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataFunneling.listRptFunneling![indexObj].branchCode == 'TOTAL' ||
-                                                                            dataFunneling.listRptFunneling![indexObj].tipe ==
-                                                                                'SlsDetail' ||
-                                                                            dataFunneling.listRptFunneling![indexObj].headerName ==
-                                                                                'TOTAL'
+                                                                    color: dataFunneling.listRptFunnelingDetail![indexObj].headerName ==
+                                                                            'TOTAL'
                                                                         ? const Color
                                                                             .fromARGB(
                                                                             255,
@@ -1228,51 +1233,23 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataFunneling.listRptFunneling![indexObj].branchCode == 'TOTAL' || dataFunneling.listRptFunneling![indexObj].tipe == 'SlsDetail' || dataFunneling.listRptFunneling![indexObj].headerName == 'TOTAL'
+                                                                          onTap: dataFunneling.listRptFunnelingDetail![indexObj].headerName == 'TOTAL'
                                                                               ? () {}
-                                                                              : dataFunneling.listRptFunneling![indexObj].tipe == 'Sales'
-                                                                                  ? () {
-                                                                                      var month = dataFunneling.listRptFunneling![indexObj].month.toString();
-                                                                                      var year = dataFunneling.listRptFunneling![indexObj].year.toString();
-                                                                                      var branchCode = dataFunneling.listRptFunneling![indexObj].title;
-                                                                                      var ssCode = dataFunneling.listRptFunneling![indexObj].ssCode;
-                                                                                      var salesCode = dataFunneling.listRptFunneling![indexObj].headerCode;
+                                                                              : () {
+                                                                                  var month = dataFunneling.listRptFunnelingDetail![indexObj].month.toString();
+                                                                                  var year = dataFunneling.listRptFunnelingDetail![indexObj].year.toString();
+                                                                                  var branchCode = dataFunneling.listRptFunnelingDetail![indexObj].title;
+                                                                                  var ssCode = dataFunneling.listRptFunnelingDetail![indexObj].headerCode;
 
-                                                                                      Navigator.pushNamed(
-                                                                                        context,
-                                                                                        FunnelingSalesDetailPage.routeName,
-                                                                                        arguments: '$month/$year/$branchCode/$ssCode/$salesCode',
-                                                                                      );
-                                                                                    }
-                                                                                  : dataFunneling.listRptFunneling![indexObj].tipe == 'SS'
-                                                                                      ? () {
-                                                                                          var month = dataFunneling.listRptFunneling![indexObj].month.toString();
-                                                                                          var year = dataFunneling.listRptFunneling![indexObj].year.toString();
-                                                                                          var branchCode = dataFunneling.listRptFunneling![indexObj].title;
-                                                                                          var ssCode = dataFunneling.listRptFunneling![indexObj].headerCode;
-
-                                                                                          Navigator.pushNamed(
-                                                                                            context,
-                                                                                            FunnelingSalesPage.routeName,
-                                                                                            arguments: '$month/$year/$branchCode/$ssCode',
-                                                                                          );
-                                                                                        }
-                                                                                      : () {
-                                                                                          var month = dataFunneling.listRptFunneling![indexObj].month.toString();
-                                                                                          var year = dataFunneling.listRptFunneling![indexObj].year.toString();
-                                                                                          var branchCode = dataFunneling.listRptFunneling![indexObj].branchCode;
-
-                                                                                          Navigator.pushNamed(
-                                                                                            context,
-                                                                                            FunnelingSSPage.routeName,
-                                                                                            arguments: '$month/$year/$branchCode',
-                                                                                          );
-                                                                                        },
+                                                                                  Navigator.pushNamed(
+                                                                                    context,
+                                                                                    FunnelingSalesPage.routeName,
+                                                                                    arguments: '$month/$year/$branchCode/$ssCode',
+                                                                                  );
+                                                                                },
                                                                           child:
                                                                               Text(
-                                                                            roles == 'SALESMAN' || roles == 'SALES SUPERVISOR' || roles == 'KACAB'
-                                                                                ? dataRptFunneling.headerName
-                                                                                : dataRptFunneling.branchCode,
+                                                                            dataRptFunneling.headerName,
                                                                             style:
                                                                                 textStyleDataTable,
                                                                           ),
@@ -1414,40 +1391,22 @@ class DataFunneling {
   );
 }
 
-dynamic toDynamic(List<ListRptFunneling> objList) {
+dynamic toDynamic(List<ListRptFunnelingDetail> objList) {
   List<DataFunneling> barData = [];
 
   for (var i = 1; i < objList.length + 1; i++) {
-    if (objList[objList.length - i].tipe == 'SlsDetail' ||
-        objList[objList.length - i].tipe == 'Sales' ||
-        objList[objList.length - i].tipe == 'SS') {
-      if (objList[objList.length - i].headerName != 'TOTAL') {
-        barData.add(DataFunneling(
-          objList[objList.length - i].headerName,
-          objList[objList.length - i].call.toDouble(),
-          objList[objList.length - i].prospek.toDouble(),
-          objList[objList.length - i].spk.toDouble(),
-          objList[objList.length - i].dO.toDouble(),
-          const Color.fromARGB(183, 0, 89, 255),
-          const Color.fromARGB(155, 0, 255, 170),
-          const Color.fromARGB(185, 255, 238, 2),
-          const Color.fromARGB(192, 255, 81, 0),
-        ));
-      }
-    } else {
-      if (objList[objList.length - i].branchCode != 'TOTAL') {
-        barData.add(DataFunneling(
-          objList[objList.length - i].branchCode,
-          objList[objList.length - i].call.toDouble(),
-          objList[objList.length - i].prospek.toDouble(),
-          objList[objList.length - i].spk.toDouble(),
-          objList[objList.length - i].dO.toDouble(),
-          const Color.fromARGB(183, 0, 89, 255),
-          const Color.fromARGB(155, 0, 255, 170),
-          const Color.fromARGB(185, 255, 238, 2),
-          const Color.fromARGB(192, 255, 81, 0),
-        ));
-      }
+    if (objList[objList.length - i].headerName != 'TOTAL') {
+      barData.add(DataFunneling(
+        objList[objList.length - i].headerName,
+        objList[objList.length - i].call.toDouble(),
+        objList[objList.length - i].prospek.toDouble(),
+        objList[objList.length - i].spk.toDouble(),
+        objList[objList.length - i].dO.toDouble(),
+        const Color.fromARGB(183, 0, 89, 255),
+        const Color.fromARGB(155, 0, 255, 170),
+        const Color.fromARGB(185, 255, 238, 2),
+        const Color.fromARGB(192, 255, 81, 0),
+      ));
     }
   }
   return barData;
