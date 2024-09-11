@@ -219,22 +219,15 @@ class _ReportPageState extends State<ReportPage> {
                               columnCount: 2,
                               child: FlipAnimation(
                                 child: InkWell(
-                                  //  onTap: () => Navigator.pushNamed(
-                                  //         context, linkPage[index],
-                                  //         arguments:
-                                  //             linkPage[index] == '/callPage'
-                                  //                 ? dateNow
-                                  //                 : linkPage[index] ==
-                                  //                         '/prospectUEbpPage'
-                                  //                     ? '1'
-                                  //                     : null),
-
                                   onTap: () => Navigator.pushNamed(
                                       context, linkPageSales[index],
                                       arguments: linkPageSales[index] ==
                                               '/funnelingPage'
                                           ? '$_monthNow/$_yearNow'
-                                          : null),
+                                          : linkPageSales[index] ==
+                                                  '/prospekVtoSpkPage'
+                                              ? '$_monthNow/$_yearNow/MTD'
+                                              : null),
                                   child: Column(
                                     children: <Widget>[
                                       const SizedBox(

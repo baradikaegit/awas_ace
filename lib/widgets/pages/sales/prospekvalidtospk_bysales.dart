@@ -4,8 +4,6 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvs.dart';
-import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
-import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_byss.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,13 +12,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ProspekVtoSpkPage extends StatefulWidget {
+class ProspekVtoSpkSalesPage extends StatefulWidget {
   final Object? linkPageObj;
-  const ProspekVtoSpkPage({super.key, required this.linkPageObj});
+  const ProspekVtoSpkSalesPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/prospekVtoSpkPage";
+  static const String routeName = "/prospekVtoSpkSalesPage";
   @override
-  State<ProspekVtoSpkPage> createState() => _ProspekVtoSpkPageState();
+  State<ProspekVtoSpkSalesPage> createState() => _ProspekVtoSpkSalesPageState();
 }
 
 class ModelMonth {
@@ -29,7 +27,7 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
+class _ProspekVtoSpkSalesPageState extends State<ProspekVtoSpkSalesPage> {
   Widget titleBar = const Text(
     "Prospek Valid vs SPK",
     style: TextStyle(color: Colors.white),
@@ -164,7 +162,7 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
                     final rptProspekVSpk =
-                        ref.watch(reportProspekVspk(linkPageObj));
+                        ref.watch(reportProspekVspkBySales(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -256,13 +254,25 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                   .listRptProspekSpk![
                                                                       0]
                                                                   .year;
+
+                                                          var branchCode =
+                                                              dataSelectOpt
+                                                                  .listRptProspekSpk![
+                                                                      0]
+                                                                  .title;
+
+                                                          var ssCode = dataSelectOpt
+                                                              .listRptProspekSpk![
+                                                                  0]
+                                                              .headerCode2;
+
                                                           var linkResultPeriodTipe =
-                                                              '$monthNow/$yearNow/$tipePeriode';
+                                                              '$monthNow/$yearNow/$tipePeriode/$branchCode/$ssCode';
 
                                                           Navigator
                                                               .pushReplacementNamed(
                                                             context,
-                                                            ProspekVtoSpkPage
+                                                            ProspekVtoSpkSalesPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultPeriodTipe,
@@ -341,13 +351,24 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                       0]
                                                                   .periodTipe;
 
+                                                          var branchCode =
+                                                              dataSelectOpt
+                                                                  .listRptProspekSpk![
+                                                                      0]
+                                                                  .title;
+
+                                                          var ssCode = dataSelectOpt
+                                                              .listRptProspekSpk![
+                                                                  0]
+                                                              .headerCode2;
+
                                                           var linkResultMonth =
-                                                              '$monthSelected/$yearNow/$periodTipe';
+                                                              '$monthSelected/$yearNow/$periodTipe/$branchCode/$ssCode';
 
                                                           Navigator
                                                               .pushReplacementNamed(
                                                             context,
-                                                            ProspekVtoSpkPage
+                                                            ProspekVtoSpkSalesPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultMonth,
@@ -424,13 +445,23 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                   .listRptProspekSpk![
                                                                       0]
                                                                   .periodTipe;
+                                                          var branchCode =
+                                                              dataSelectOpt
+                                                                  .listRptProspekSpk![
+                                                                      0]
+                                                                  .title;
+
+                                                          var ssCode = dataSelectOpt
+                                                              .listRptProspekSpk![
+                                                                  0]
+                                                              .headerCode2;
 
                                                           var linkResultYear =
-                                                              '$monthNow/$yearSelected/$periodTipe';
+                                                              '$monthNow/$yearSelected/$periodTipe/$branchCode/$ssCode';
 
                                                           Navigator.pushNamed(
                                                             context,
-                                                            ProspekVtoSpkPage
+                                                            ProspekVtoSpkSalesPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultYear,
@@ -471,9 +502,7 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                 ),
                               ),
                               Padding(
-                                padding: roles == 'OD' || roles == 'PD'
-                                    ? const EdgeInsets.fromLTRB(0, 10, 0, 0)
-                                    : const EdgeInsets.fromLTRB(0, 10, 0, 15),
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: rptProspekVSpk.when(
                                   data: (dataHeader) => AppBar(
                                     automaticallyImplyLeading: false,
@@ -609,7 +638,7 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportProspekVspk(
+                                    return ref.refresh(reportProspekVspkBySales(
                                         linkPageObj.toString()));
                                   },
                                   child: rptProspekVSpk.when(
@@ -1008,20 +1037,13 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataProspekVSpk.listRptProspekSpk![indexObj].headerCode == 'TOTAL' ||
-                                                                            dataProspekVSpk.listRptProspekSpk![indexObj].tipe ==
-                                                                                'Sales' ||
-                                                                            dataProspekVSpk.listRptProspekSpk![indexObj].headerName ==
-                                                                                'TOTAL'
-                                                                        ? const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                          )
-                                                                        : Colors
-                                                                            .blue,
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                    ),
                                                                     fontSize:
                                                                         ResponsiveValue<
                                                                             double>(
@@ -1068,43 +1090,11 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                     ),
                                                                     cells: <DataCell>[
                                                                       DataCell(
-                                                                        InkWell(
-                                                                          onTap: dataProspekVSpk.listRptProspekSpk![indexObj].headerCode == 'TOTAL' || dataProspekVSpk.listRptProspekSpk![indexObj].tipe == 'Sales' || dataProspekVSpk.listRptProspekSpk![indexObj].headerName == 'TOTAL'
-                                                                              ? () {}
-                                                                              : dataProspekVSpk.listRptProspekSpk![indexObj].tipe == 'SS'
-                                                                                  ? () {
-                                                                                      var month = dataProspekVSpk.listRptProspekSpk![indexObj].month.toString();
-                                                                                      var year = dataProspekVSpk.listRptProspekSpk![indexObj].year.toString();
-                                                                                      var periodTipe = dataProspekVSpk.listRptProspekSpk![indexObj].periodTipe;
-                                                                                      var branchCode = dataProspekVSpk.listRptProspekSpk![indexObj].title;
-                                                                                      var ssCode = dataProspekVSpk.listRptProspekSpk![indexObj].headerCode;
-
-                                                                                      Navigator.pushNamed(
-                                                                                        context,
-                                                                                        ProspekVtoSpkSalesPage.routeName,
-                                                                                        arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                      );
-                                                                                    }
-                                                                                  : () {
-                                                                                      var month = dataProspekVSpk.listRptProspekSpk![indexObj].month.toString();
-                                                                                      var year = dataProspekVSpk.listRptProspekSpk![indexObj].year.toString();
-                                                                                      var periodTipe = dataProspekVSpk.listRptProspekSpk![indexObj].periodTipe;
-                                                                                      var branchCode = dataProspekVSpk.listRptProspekSpk![indexObj].headerCode;
-
-                                                                                      Navigator.pushNamed(
-                                                                                        context,
-                                                                                        ProspekVtoSpkSsPage.routeName,
-                                                                                        arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                      );
-                                                                                    },
-                                                                          child:
-                                                                              Text(
-                                                                            roles == 'SALES SUPERVISOR' || roles == 'KACAB'
-                                                                                ? dataRptProspekVSpk.headerName
-                                                                                : dataRptProspekVSpk.headerCode,
-                                                                            style:
-                                                                                textStyleDataTable,
-                                                                          ),
+                                                                        Text(
+                                                                          dataRptProspekVSpk
+                                                                              .headerName,
+                                                                          style:
+                                                                              textStyleDataTable,
                                                                         ),
                                                                       ),
                                                                       DataCell(

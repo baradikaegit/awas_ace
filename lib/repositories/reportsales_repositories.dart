@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/reportslsfunneling.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetail.dart';
+import 'package:awas_ace/widgets/model/reportslsprospekvs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -13,6 +14,11 @@ abstract class IReportSalesRepository {
   Future<ListRptFunnelingDetailResponse> fecthListDataBySales(
       String linkPageObj);
   Future<ListRptFunnelingDetailResponse> fecthListDataBySalesDetail(
+      String linkPageObj);
+  Future<ListRptProspekVsResponse> fecthListDataProspekVs(String linkPageObj);
+  Future<ListRptProspekVsResponse> fecthListDataProspekVsBySS(
+      String linkPageObj);
+  Future<ListRptProspekVsResponse> fecthListDataProspekVsBySales(
       String linkPageObj);
 }
 
@@ -111,5 +117,78 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptFunnelingSalesDetail =
         ListRptFunnelingDetailResponse.fromJson(jsonObjRptFunnelingSalesDetail);
     return responseGetRptFunnelingSalesDetail;
+  }
+
+  //Prospek valid spk
+  @override
+  Future<ListRptProspekVsResponse> fecthListDataProspekVs(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptProspekVspk = "${_host}GetReportProspekValidSpk/$linkPageObj";
+
+    var resultGetRptProspekVspk =
+        await http.get(Uri.parse(urlGetRptProspekVspk), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptProspekVspk = jsonDecode(resultGetRptProspekVspk.body);
+
+    var responseGetRptProspekVspk =
+        ListRptProspekVsResponse.fromJson(jsonObjRptProspekVspk);
+    return responseGetRptProspekVspk;
+  }
+
+  //Prospek valid spk by ss
+  @override
+  Future<ListRptProspekVsResponse> fecthListDataProspekVsBySS(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptProspekVspkBySS =
+        "${_host}GetReportProspekValidSpkBySS/$linkPageObj";
+
+    var resultGetRptProspekVspkBySS =
+        await http.get(Uri.parse(urlGetRptProspekVspkBySS), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptProspekVspkBySS =
+        jsonDecode(resultGetRptProspekVspkBySS.body);
+
+    var responseGetRptProspekVspkBySS =
+        ListRptProspekVsResponse.fromJson(jsonObjRptProspekVspkBySS);
+    return responseGetRptProspekVspkBySS;
+  }
+
+  //Prospek valid spk by sales
+  @override
+  Future<ListRptProspekVsResponse> fecthListDataProspekVsBySales(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptProspekVspkBySales =
+        "${_host}GetReportProspekValidSpkBySales/$linkPageObj";
+
+    var resultGetRptProspekVspkBySales =
+        await http.get(Uri.parse(urlGetRptProspekVspkBySales), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptProspekVspkBySales =
+        jsonDecode(resultGetRptProspekVspkBySales.body);
+
+    var responseGetRptProspekVspkBySales =
+        ListRptProspekVsResponse.fromJson(jsonObjRptProspekVspkBySales);
+    return responseGetRptProspekVspkBySales;
   }
 }

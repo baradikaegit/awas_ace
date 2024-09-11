@@ -14,6 +14,8 @@ import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
+import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_byss.dart';
 import 'package:awas_ace/widgets/pages/settings/rotg_page.dart';
 import 'package:awas_ace/widgets/pages/sales/boccaisbe.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass.dart';
@@ -108,7 +110,15 @@ class MyApp extends StatelessWidget {
             FunnelingSalesDetailPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
-        ProspekVtoSpkPage.routeName: (context) => const ProspekVtoSpkPage(),
+        ProspekVtoSpkPage.routeName: (context) => ProspekVtoSpkPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ProspekVtoSpkSsPage.routeName: (context) => ProspekVtoSpkSsPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ProspekVtoSpkSalesPage.routeName: (context) => ProspekVtoSpkSalesPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         ProspekUeBPPage.routeName: (context) => const ProspekUeBPPage(),
         MonitAreaMappingPage.routeName: (context) =>
             const MonitAreaMappingPage(),
