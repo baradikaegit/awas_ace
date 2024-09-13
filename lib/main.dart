@@ -14,6 +14,7 @@ import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_byss.dart';
 import 'package:awas_ace/widgets/pages/settings/rotg_page.dart';
@@ -119,7 +120,12 @@ class MyApp extends StatelessWidget {
         ProspekVtoSpkSalesPage.routeName: (context) => ProspekVtoSpkSalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
-        ProspekUeBPPage.routeName: (context) => const ProspekUeBPPage(),
+        ProspekUeBPPage.routeName: (context) => ProspekUeBPPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ProspekUeBPSsPage.routeName: (context) => ProspekUeBPSsPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         MonitAreaMappingPage.routeName: (context) =>
             const MonitAreaMappingPage(),
         MonitAreaVolumeMakerPage.routeName: (context) =>

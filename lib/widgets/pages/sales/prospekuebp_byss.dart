@@ -3,8 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
-import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
+import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,14 +12,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class FunnelingSSPage extends StatefulWidget {
+class ProspekUeBPSsPage extends StatefulWidget {
   final Object? linkPageObj;
-  const FunnelingSSPage({super.key, required this.linkPageObj});
+  const ProspekUeBPSsPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/funnelingSSPage";
-
+  static const String routeName = "/prospekUeBPSsPage";
   @override
-  State<FunnelingSSPage> createState() => _FunnelingSSPageState();
+  State<ProspekUeBPSsPage> createState() => _ProspekUeBPSsPageState();
 }
 
 class ModelMonth {
@@ -29,9 +27,9 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _FunnelingSSPageState extends State<FunnelingSSPage> {
+class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
   Widget titleBar = const Text(
-    "Funneling",
+    "Prospek UE BP to UE BP",
     style: TextStyle(color: Colors.white),
   );
 
@@ -40,6 +38,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
   String? sid;
   String? branchID;
 
+  List<String> tipePeriodeOptions = ['MTD', 'YTD'];
   List<ModelMonth> monthOptions = [
     ModelMonth('January', 1),
     ModelMonth('February', 2),
@@ -59,7 +58,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
     DateFormat('yyyy').format(DateTime.utc(DateTime.now().year - 1))
   ];
 
-  List<ListRptFunnelingDetailResponse> listRptFunnelingSSByModelRes = [];
+  List<ListRptProspekUeBpResponse> listRptProspekUeBPByModelRes = [];
 
   @override
   void initState() {
@@ -144,12 +143,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
           ),
           body: Container(
             decoration: const BoxDecoration(
-              color: Color.fromARGB(
-                255,
-                33,
-                44,
-                81,
-              ),
+              color: Color.fromARGB(255, 33, 44, 81),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
@@ -167,8 +161,8 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                     final String dateNow =
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
-                    final rptFunneling =
-                        ref.watch(reportFunnelingBySSList(linkPageObj));
+                    final rptProspekUeBP =
+                        ref.watch(reportProspekUeBPBySS(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -178,31 +172,37 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 20, 0, 0),
                                 child: SizedBox(
-                                  child: rptFunneling.when(
+                                  child: rptProspekUeBP.when(
                                     data: (dataSelectOpt) {
+                                      String tipePeriode = dataSelectOpt
+                                              .listRptProspekUeBp!.isNotEmpty
+                                          ? (linkPageObj ==
+                                                  '$monthNow/$yearNow')
+                                              ? 'MTD'
+                                              : dataSelectOpt
+                                                  .listRptProspekUeBp![0]
+                                                  .periodTipe
+                                          : '';
+
                                       String monthSelected = dataSelectOpt
-                                              .listRptFunnelingDetail!
-                                              .isNotEmpty
+                                              .listRptProspekUeBp!.isNotEmpty
                                           ? (linkPageObj ==
                                                   '$monthNow/$yearNow')
                                               ? DateFormat('M')
                                                   .format(DateTime.now())
                                               : dataSelectOpt
-                                                  .listRptFunnelingDetail![0]
-                                                  .month
+                                                  .listRptProspekUeBp![0].month
                                                   .toString()
                                           : '';
 
                                       String yearSelected = dataSelectOpt
-                                              .listRptFunnelingDetail!
-                                              .isNotEmpty
+                                              .listRptProspekUeBp!.isNotEmpty
                                           ? (linkPageObj ==
                                                   '$monthNow/$yearNow')
                                               ? DateFormat('yyyy')
                                                   .format(DateTime.now())
                                               : dataSelectOpt
-                                                  .listRptFunnelingDetail![0]
-                                                  .year
+                                                  .listRptProspekUeBp![0].year
                                                   .toString()
                                           : '';
 
@@ -215,53 +215,87 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.start,
                                               children: [
-                                                // Padding(
-                                                //   padding:
-                                                //       const EdgeInsets.fromLTRB(
-                                                //           0, 15, 0, 0),
-                                                //   child:
-                                                //       DropdownButtonHideUnderline(
-                                                //     child:
-                                                //         DropdownButton2<String>(
-                                                //       value: tipePeriode,
-                                                //       isExpanded: false,
-                                                //       items: tipePeriodeOptions
-                                                //           .map((String
-                                                //               valueTipePeriode) {
-                                                //         return DropdownMenuItem<
-                                                //             String>(
-                                                //           value: valueTipePeriode,
-                                                //           child: Text(
-                                                //               valueTipePeriode),
-                                                //         );
-                                                //       }).toList(),
-                                                //       onChanged:
-                                                //           (String? newValTp) {
-                                                //         setState(() {
-                                                //           tipePeriode = newValTp!;
-                                                //           var monthNow = appbar
-                                                //               .listMonitoringSpk![
-                                                //                   0]
-                                                //               .month;
-                                                //           var yearNow = appbar
-                                                //               .listMonitoringSpk![
-                                                //                   0]
-                                                //               .year;
-                                                //           var linkResultSPK =
-                                                //               '$monthNow/$yearNow/$tipePeriode';
-                                                //           Navigator
-                                                //               .pushReplacementNamed(
-                                                //             context,
-                                                //             TotalResultSpk
-                                                //                 .routeName,
-                                                //             arguments:
-                                                //                 linkResultSPK,
-                                                //           );
-                                                //         });
-                                                //       },
-                                                //     ),
-                                                //   ),
-                                                // ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 15, 0, 0),
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                    child:
+                                                        DropdownButton2<String>(
+                                                      value: tipePeriode,
+                                                      isExpanded: false,
+                                                      items: tipePeriodeOptions
+                                                          .map((String
+                                                              valueTipePeriode) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value:
+                                                              valueTipePeriode,
+                                                          child: Text(
+                                                            valueTipePeriode,
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                      onChanged:
+                                                          (String? newValTp) {
+                                                        setState(() {
+                                                          tipePeriode =
+                                                              newValTp!;
+                                                          var monthNow =
+                                                              dataSelectOpt
+                                                                  .listRptProspekUeBp![
+                                                                      0]
+                                                                  .month;
+                                                          var yearNow =
+                                                              dataSelectOpt
+                                                                  .listRptProspekUeBp![
+                                                                      0]
+                                                                  .year;
+                                                          var linkResultPeriodTipe =
+                                                              '$monthNow/$yearNow/$tipePeriode';
+
+                                                          Navigator
+                                                              .pushReplacementNamed(
+                                                            context,
+                                                            ProspekUeBPSsPage
+                                                                .routeName,
+                                                            arguments:
+                                                                linkResultPeriodTipe,
+                                                          );
+                                                        });
+                                                      },
+                                                      dropdownStyleData:
+                                                          DropdownStyleData(
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            33,
+                                                            44,
+                                                            81,
+                                                          ),
+                                                        ),
+                                                        maxHeight: 250,
+                                                        offset:
+                                                            const Offset(0, 0),
+                                                        scrollbarTheme:
+                                                            ScrollbarThemeData(
+                                                          radius: const Radius
+                                                              .circular(40),
+                                                          thickness:
+                                                              MaterialStateProperty
+                                                                  .all(5),
+                                                          thumbVisibility:
+                                                              MaterialStateProperty
+                                                                  .all(true),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
                                                 Padding(
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
@@ -296,23 +330,22 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                               newValMonth!;
                                                           var yearNow =
                                                               dataSelectOpt
-                                                                  .listRptFunnelingDetail![
+                                                                  .listRptProspekUeBp![
                                                                       0]
                                                                   .year;
-
-                                                          var branchCode =
+                                                          var periodTipe =
                                                               dataSelectOpt
-                                                                  .listRptFunnelingDetail![
+                                                                  .listRptProspekUeBp![
                                                                       0]
-                                                                  .title;
+                                                                  .periodTipe;
 
                                                           var linkResultMonth =
-                                                              '$monthSelected/$yearNow/$branchCode';
+                                                              '$monthSelected/$yearNow/$periodTipe';
 
                                                           Navigator
                                                               .pushReplacementNamed(
                                                             context,
-                                                            FunnelingSSPage
+                                                            ProspekUeBPSsPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultMonth,
@@ -381,22 +414,21 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                               newValYear!;
                                                           var monthNow =
                                                               dataSelectOpt
-                                                                  .listRptFunnelingDetail![
+                                                                  .listRptProspekUeBp![
                                                                       0]
                                                                   .month;
-
-                                                          var branchCode =
+                                                          var periodTipe =
                                                               dataSelectOpt
-                                                                  .listRptFunnelingDetail![
+                                                                  .listRptProspekUeBp![
                                                                       0]
-                                                                  .title;
+                                                                  .periodTipe;
 
                                                           var linkResultYear =
-                                                              '$monthNow/$yearSelected/$branchCode';
+                                                              '$monthNow/$yearSelected/$periodTipe';
 
                                                           Navigator.pushNamed(
                                                             context,
-                                                            FunnelingSSPage
+                                                            ProspekUeBPSsPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultYear,
@@ -438,14 +470,14 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: rptFunneling.when(
+                                child: rptProspekUeBP.when(
                                   data: (dataHeader) => AppBar(
                                     automaticallyImplyLeading: false,
                                     centerTitle: true,
                                     title: Column(
                                       children: [
                                         Text(
-                                          "Data Corong (${dataHeader.listRptFunnelingDetail![0].title})",
+                                          "Prospek Valid to SPK",
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -474,11 +506,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                           ),
                                         ),
                                         Text(
-                                          roles == 'OD' || roles == 'PD'
-                                              ? ""
-                                              : dataHeader
-                                                  .listRptFunnelingDetail![0]
-                                                  .userName,
+                                          "(${dataHeader.listRptProspekUeBp![0].title})",
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -520,7 +548,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                 ),
                               ),
                               SizedBox(
-                                child: rptFunneling.when(
+                                child: rptProspekUeBP.when(
                                   data: (dataPeriod) => AppBar(
                                     automaticallyImplyLeading: false,
                                     centerTitle: false,
@@ -532,7 +560,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                           Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              "Periode : ${dataPeriod.listRptFunnelingDetail![0].monthID} ${dataPeriod.listRptFunnelingDetail![0].year}",
+                                              "Periode : ${dataPeriod.listRptProspekUeBp![0].monthID} ${dataPeriod.listRptProspekUeBp![0].year}",
                                               style: TextStyle(
                                                 color: const Color.fromARGB(
                                                   255,
@@ -606,20 +634,19 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportFunnelingBySSList(
+                                    return ref.refresh(reportProspekUeBPBySS(
                                         linkPageObj.toString()));
                                   },
-                                  child: rptFunneling.when(
-                                    data: (dataFunneling) {
-                                      listRptFunnelingSSByModelRes.clear();
-                                      listRptFunnelingSSByModelRes
-                                          .add(dataFunneling);
+                                  child: rptProspekUeBP.when(
+                                    data: (dataProspekUeBP) {
+                                      listRptProspekUeBPByModelRes.clear();
+                                      listRptProspekUeBPByModelRes
+                                          .add(dataProspekUeBP);
 
-                                      return (dataFunneling
-                                                  .listRptFunnelingDetail !=
+                                      return (dataProspekUeBP
+                                                  .listRptProspekUeBp !=
                                               null)
-                                          ? dataFunneling
-                                                  .listRptFunnelingDetail!
+                                          ? dataProspekUeBP.listRptProspekUeBp!
                                                   .isNotEmpty
                                               ? ListView.builder(
                                                   physics:
@@ -641,225 +668,86 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                           child: Column(
                                                             children: [
                                                               SizedBox(
-                                                                height: 900,
+                                                                height: 400,
+                                                                width: double
+                                                                    .infinity,
                                                                 child:
-                                                                    SfCartesianChart(
-                                                                  title:
-                                                                      ChartTitle(
-                                                                          text:
-                                                                              ""),
-                                                                  legend:
-                                                                      Legend(
-                                                                    isVisible:
+                                                                    SfCircularChart(
+                                                                  tooltipBehavior:
+                                                                      TooltipBehavior(
+                                                                    enable:
                                                                         true,
-                                                                    textStyle:
-                                                                        TextStyle(
-                                                                      color: Colors
-                                                                          .white,
-                                                                      fontSize:
-                                                                          ResponsiveValue<
-                                                                              double>(
-                                                                        context,
-                                                                        conditionalValues: [
-                                                                          const Condition
-                                                                              .equals(
-                                                                              name: TABLET,
-                                                                              value: 14.0,
-                                                                              landscapeValue: 14.0),
-                                                                          const Condition
-                                                                              .largerThan(
-                                                                              name: TABLET,
-                                                                              value: 14.0,
-                                                                              landscapeValue: 14.0,
-                                                                              breakpoint: 800),
-                                                                        ],
-                                                                        defaultValue:
-                                                                            12.5,
-                                                                      ).value,
-                                                                    ),
                                                                   ),
-                                                                  series: <ChartSeries>[
-                                                                    //memanggil isi grafik
-
-                                                                    StackedBarSeries<
-                                                                        DataFunneling,
-                                                                        String>(
-                                                                      color: const Color
-                                                                          .fromARGB(
-                                                                        183,
-                                                                        0,
-                                                                        89,
-                                                                        255,
-                                                                      ),
-                                                                      name:
-                                                                          "CALL",
-                                                                      legendIconType:
-                                                                          LegendIconType
-                                                                              .circle,
-                                                                      dataSource:
-                                                                          toDynamic(
-                                                                              listRptFunnelingSSByModelRes[0].listRptFunnelingDetail!),
-                                                                      xValueMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.x,
-
-                                                                      yValueMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.y,
-
-                                                                      // untuk menampilkan label pada grafik
-                                                                      dataLabelSettings:
-                                                                          const DataLabelSettings(
-                                                                        textStyle:
-                                                                            TextStyle(color: Colors.white),
-                                                                        isVisible:
-                                                                            true,
-                                                                        showCumulativeValues:
-                                                                            true,
-                                                                        // labelAlignment:
-                                                                        //     ChartDataLabelAlignment.middle,
-                                                                      ),
-                                                                    ),
-
-                                                                    StackedBarSeries<
-                                                                        DataFunneling,
-                                                                        String>(
-                                                                      color: const Color
-                                                                          .fromARGB(
-                                                                        155,
-                                                                        0,
-                                                                        255,
-                                                                        170,
-                                                                      ),
-                                                                      name:
-                                                                          "PROSPEK",
-                                                                      legendIconType:
-                                                                          LegendIconType
-                                                                              .circle,
-                                                                      dataSource:
-                                                                          toDynamic(
-                                                                              listRptFunnelingSSByModelRes[0].listRptFunnelingDetail!),
-                                                                      pointColorMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.color2,
-                                                                      xValueMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.x,
-
-                                                                      yValueMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.y2,
-
-                                                                      // untuk menampilkan label pada grafik
-                                                                      dataLabelSettings:
-                                                                          const DataLabelSettings(
-                                                                        textStyle:
-                                                                            TextStyle(color: Colors.white),
-                                                                        isVisible:
-                                                                            true,
-                                                                        showCumulativeValues:
-                                                                            true,
-                                                                        // labelAlignment:
-                                                                        //     ChartDataLabelAlignment.middle,
-                                                                      ),
-                                                                    ),
-
-                                                                    StackedBarSeries<
-                                                                        DataFunneling,
-                                                                        String>(
-                                                                      color: const Color
-                                                                          .fromARGB(
-                                                                        185,
-                                                                        255,
-                                                                        238,
-                                                                        2,
-                                                                      ),
-                                                                      name:
-                                                                          "SPK",
-                                                                      legendIconType:
-                                                                          LegendIconType
-                                                                              .circle,
-                                                                      dataSource:
-                                                                          toDynamic(
-                                                                              listRptFunnelingSSByModelRes[0].listRptFunnelingDetail!),
-                                                                      pointColorMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.color3,
-                                                                      xValueMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.x,
-
-                                                                      yValueMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.y3,
-
-                                                                      // untuk menampilkan label pada grafik
-                                                                      dataLabelSettings:
-                                                                          const DataLabelSettings(
-                                                                        textStyle:
-                                                                            TextStyle(color: Colors.white),
-                                                                        isVisible:
-                                                                            true,
-                                                                        showCumulativeValues:
-                                                                            true,
-                                                                        // labelAlignment:
-                                                                        //     ChartDataLabelAlignment.middle,
-                                                                      ),
-                                                                    ),
-
-                                                                    StackedBarSeries<
-                                                                        DataFunneling,
-                                                                        String>(
-                                                                      color: const Color
-                                                                          .fromARGB(
-                                                                        192,
-                                                                        255,
-                                                                        81,
-                                                                        0,
-                                                                      ),
-                                                                      name:
-                                                                          "DO",
-                                                                      legendIconType:
-                                                                          LegendIconType
-                                                                              .circle,
-                                                                      dataSource:
-                                                                          toDynamic(
-                                                                              listRptFunnelingSSByModelRes[0].listRptFunnelingDetail!),
-                                                                      pointColorMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.color4,
-                                                                      xValueMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.x,
-
-                                                                      yValueMapper:
-                                                                          (DataFunneling data, _) =>
-                                                                              data.y4,
-
-                                                                      // untuk menampilkan label pada grafik
-                                                                      dataLabelSettings:
-                                                                          const DataLabelSettings(
-                                                                        textStyle:
-                                                                            TextStyle(color: Colors.white),
-                                                                        isVisible:
-                                                                            true,
-                                                                        showCumulativeValues:
-                                                                            true,
-                                                                        // labelAlignment:
-                                                                        //     ChartDataLabelAlignment.middle,
+                                                                  annotations: [
+                                                                    CircularChartAnnotation(
+                                                                      widget:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "ASTRIDO \n${dataProspekUeBP.listRptProspekUeBp![0].persen}%",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontSize:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 25.0, landscapeValue: 25.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 35.0, landscapeValue: 35.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                25.5,
+                                                                          ).value,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ],
-                                                                  primaryXAxis:
-                                                                      CategoryAxis(
-                                                                    labelStyle:
-                                                                        textStyleColorWhite,
-                                                                  ),
-                                                                  primaryYAxis:
-                                                                      NumericAxis(
-                                                                    labelStyle:
-                                                                        textStyleColorWhite,
-                                                                  ),
+                                                                  series: <CircularSeries>[
+                                                                    DoughnutSeries<
+                                                                        DataProspekUeBP,
+                                                                        String>(
+                                                                      dataSource:
+                                                                          toDynamic(
+                                                                              listRptProspekUeBPByModelRes[0].listRptProspekUeBp!),
+                                                                      xValueMapper:
+                                                                          (DataProspekUeBP data, _) =>
+                                                                              data.x,
+                                                                      yValueMapper:
+                                                                          (DataProspekUeBP data, _) =>
+                                                                              data.y,
+                                                                      pointColorMapper:
+                                                                          (DataProspekUeBP data, _) =>
+                                                                              data.color,
+                                                                      innerRadius:
+                                                                          '60%',
+                                                                      radius:
+                                                                          '90%',
+                                                                      explode:
+                                                                          true,
+                                                                      explodeGesture:
+                                                                          ActivationMode
+                                                                              .singleTap,
+                                                                      explodeOffset:
+                                                                          '5',
+                                                                      // explodeIndex: 1,
+                                                                      dataLabelSettings:
+                                                                          const DataLabelSettings(
+                                                                        showZeroValue:
+                                                                            false,
+                                                                        isVisible:
+                                                                            true,
+                                                                        labelAlignment:
+                                                                            ChartDataLabelAlignment.middle,
+                                                                        overflowMode:
+                                                                            OverflowMode.trim,
+                                                                        textStyle:
+                                                                            TextStyle(color: Colors.white),
+                                                                      ),
+                                                                    ),
+                                                                  ],
                                                                 ),
                                                               ),
                                                             ],
@@ -982,10 +870,10 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                     child:
                                                                         SizedBox(
                                                                       width:
-                                                                          120,
+                                                                          130,
                                                                       child:
                                                                           Text(
-                                                                        "SS",
+                                                                        "CABANG",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1003,10 +891,13 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                             .topCenter,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 40,
+                                                                      width:
+                                                                          110,
                                                                       child:
                                                                           Text(
-                                                                        "CALL",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "PROSPEK UE BP",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1024,10 +915,12 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                             .topCenter,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 40,
+                                                                      width: 70,
                                                                       child:
                                                                           Text(
-                                                                        "PROSPEK",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "UE BP",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1045,52 +938,12 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                             .topCenter,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 40,
+                                                                      width: 70,
                                                                       child:
                                                                           Text(
-                                                                        "HOT",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                    label:
-                                                                        Align(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .topCenter,
-                                                                  child:
-                                                                      SizedBox(
-                                                                    width: 40,
-                                                                    child: Text(
-                                                                      "SPK",
-                                                                      style:
-                                                                          textStyleColorWhiteB,
-                                                                      maxLines:
-                                                                          2,
-                                                                      overflow:
-                                                                          TextOverflow
-                                                                              .ellipsis,
-                                                                    ),
-                                                                  ),
-                                                                )),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 40,
-                                                                      child:
-                                                                          Text(
-                                                                        "DO",
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "%",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1104,79 +957,22 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                               ],
                                                               rows: List<
                                                                   DataRow>.generate(
-                                                                dataFunneling
-                                                                    .listRptFunnelingDetail!
+                                                                dataProspekUeBP
+                                                                    .listRptProspekUeBp!
                                                                     .length,
                                                                 (indexObj) {
-                                                                  final dataRptFunneling =
-                                                                      dataFunneling
-                                                                              .listRptFunnelingDetail![
+                                                                  final dataRptProspekUeBP =
+                                                                      dataProspekUeBP
+                                                                              .listRptProspekUeBp![
                                                                           indexObj];
-
-                                                                  var persenProspek = dataFunneling
-                                                                              .listRptFunnelingDetail![
-                                                                                  indexObj]
-                                                                              .call >
-                                                                          0
-                                                                      ? (dataFunneling
-                                                                              .listRptFunnelingDetail![
-                                                                                  indexObj]
-                                                                              .prospek /
-                                                                          dataFunneling
-                                                                              .listRptFunnelingDetail![indexObj]
-                                                                              .call *
-                                                                          100)
-                                                                      : 0;
-
-                                                                  var persenHot = dataFunneling
-                                                                              .listRptFunnelingDetail![
-                                                                                  indexObj]
-                                                                              .prospek >
-                                                                          0
-                                                                      ? (dataFunneling
-                                                                              .listRptFunnelingDetail![
-                                                                                  indexObj]
-                                                                              .hot /
-                                                                          dataFunneling
-                                                                              .listRptFunnelingDetail![indexObj]
-                                                                              .prospek *
-                                                                          100)
-                                                                      : 0;
-
-                                                                  var persenSpk = dataFunneling
-                                                                              .listRptFunnelingDetail![
-                                                                                  indexObj]
-                                                                              .hot >
-                                                                          0
-                                                                      ? (dataFunneling
-                                                                              .listRptFunnelingDetail![
-                                                                                  indexObj]
-                                                                              .spk /
-                                                                          dataFunneling
-                                                                              .listRptFunnelingDetail![indexObj]
-                                                                              .hot *
-                                                                          100)
-                                                                      : 0;
-
-                                                                  var persenDO = dataFunneling
-                                                                              .listRptFunnelingDetail![
-                                                                                  indexObj]
-                                                                              .spk >
-                                                                          0
-                                                                      ? (dataFunneling
-                                                                              .listRptFunnelingDetail![
-                                                                                  indexObj]
-                                                                              .dO /
-                                                                          dataFunneling
-                                                                              .listRptFunnelingDetail![indexObj]
-                                                                              .spk *
-                                                                          100)
-                                                                      : 0;
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataFunneling.listRptFunnelingDetail![indexObj].headerName ==
-                                                                            'TOTAL'
+                                                                    color: dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode == 'TOTAL' ||
+                                                                            dataProspekUeBP.listRptProspekUeBp![indexObj].tipe ==
+                                                                                'Sales' ||
+                                                                            dataProspekUeBP.listRptProspekUeBp![indexObj].headerName ==
+                                                                                'TOTAL'
                                                                         ? const Color
                                                                             .fromARGB(
                                                                             255,
@@ -1233,98 +1029,70 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataFunneling.listRptFunnelingDetail![indexObj].headerName == 'TOTAL'
+                                                                          onTap: dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode == 'TOTAL' || dataProspekUeBP.listRptProspekUeBp![indexObj].tipe == 'Sales' || dataProspekUeBP.listRptProspekUeBp![indexObj].headerName == 'TOTAL'
                                                                               ? () {}
                                                                               : () {
-                                                                                  var month = dataFunneling.listRptFunnelingDetail![indexObj].month.toString();
-                                                                                  var year = dataFunneling.listRptFunnelingDetail![indexObj].year.toString();
-                                                                                  var branchCode = dataFunneling.listRptFunnelingDetail![indexObj].title;
-                                                                                  var ssCode = dataFunneling.listRptFunnelingDetail![indexObj].headerCode;
+                                                                                  var month = dataProspekUeBP.listRptProspekUeBp![indexObj].month.toString();
+                                                                                  var year = dataProspekUeBP.listRptProspekUeBp![indexObj].year.toString();
+                                                                                  var periodTipe = dataProspekUeBP.listRptProspekUeBp![indexObj].periodTipe;
+                                                                                  var branchCode = dataProspekUeBP.listRptProspekUeBp![indexObj].title;
+                                                                                  var ssCode = dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode;
 
-                                                                                  Navigator.pushNamed(
-                                                                                    context,
-                                                                                    FunnelingSalesPage.routeName,
-                                                                                    arguments: '$month/$year/$branchCode/$ssCode',
-                                                                                  );
+                                                                                  print('$month/$year/$periodTipe/$branchCode/$ssCode');
+
+                                                                                  // Navigator.pushNamed(
+                                                                                  //   context,
+                                                                                  //   ProspekVtoSpkSalesPage.routeName,
+                                                                                  //   arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                  // );
                                                                                 },
                                                                           child:
                                                                               Text(
-                                                                            dataRptFunneling.headerName,
+                                                                            dataRptProspekUeBP.headerName,
                                                                             style:
                                                                                 textStyleDataTable,
                                                                           ),
                                                                         ),
                                                                       ),
                                                                       DataCell(
-                                                                        Text(
-                                                                          dataRptFunneling
-                                                                              .call
-                                                                              .toString(),
-                                                                          style:
-                                                                              textStyleColorWhite,
-                                                                        ),
-                                                                      ),
-                                                                      DataCell(
-                                                                        RichText(
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          text:
-                                                                              TextSpan(
-                                                                            text:
-                                                                                dataRptFunneling.prospek.toString(),
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptProspekUeBP.prospekUeBp.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
                                                                             style:
                                                                                 textStyleColorWhite,
-                                                                            children: <TextSpan>[
-                                                                              TextSpan(text: ' (${persenProspek.floor()}%)', style: textStyleColorGold),
-                                                                            ],
                                                                           ),
                                                                         ),
                                                                       ),
                                                                       DataCell(
-                                                                        RichText(
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          text:
-                                                                              TextSpan(
-                                                                            text:
-                                                                                dataRptFunneling.hot.toString(),
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptProspekUeBP.ueBp.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.right,
                                                                             style:
                                                                                 textStyleColorWhite,
-                                                                            children: <TextSpan>[
-                                                                              TextSpan(text: ' (${persenHot.floor()}%)', style: textStyleColorGold),
-                                                                            ],
                                                                           ),
                                                                         ),
                                                                       ),
                                                                       DataCell(
-                                                                        RichText(
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          text:
-                                                                              TextSpan(
-                                                                            text:
-                                                                                dataRptFunneling.spk.toString(),
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptProspekUeBP.persen.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
                                                                             style:
-                                                                                textStyleColorWhite,
-                                                                            children: <TextSpan>[
-                                                                              TextSpan(text: ' (${persenSpk.floor()}%)', style: textStyleColorGold),
-                                                                            ],
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      DataCell(
-                                                                        RichText(
-                                                                          textAlign:
-                                                                              TextAlign.right,
-                                                                          text:
-                                                                              TextSpan(
-                                                                            text:
-                                                                                dataRptFunneling.dO.toString(),
-                                                                            style:
-                                                                                textStyleColorWhite,
-                                                                            children: <TextSpan>[
-                                                                              TextSpan(text: ' (${persenDO.floor()}%)', style: textStyleColorGold),
-                                                                            ],
+                                                                                textStyleColorGold,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1352,12 +1120,12 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                 ),
                               ),
                             ],
-                          )
+                          ),
                         ],
                       ),
                     );
                   },
-                ),
+                )
               ],
             ),
           ),
@@ -1367,47 +1135,26 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
   }
 }
 
-class DataFunneling {
+class DataProspekUeBP {
   String x;
-  double y;
-  double y2;
-  double y3;
-  double y4;
+  int y;
   Color color;
-  Color color2;
-  Color color3;
-  Color color4;
 
-  DataFunneling(
-    this.x,
-    this.y,
-    this.y2,
-    this.y3,
-    this.y4,
-    this.color,
-    this.color2,
-    this.color3,
-    this.color4,
-  );
+  DataProspekUeBP(this.x, this.y, this.color);
 }
 
-dynamic toDynamic(List<ListRptFunnelingDetail> objList) {
-  List<DataFunneling> barData = [];
-
-  for (var i = 1; i < objList.length + 1; i++) {
-    if (objList[objList.length - i].headerName != 'TOTAL') {
-      barData.add(DataFunneling(
-        objList[objList.length - i].headerName,
-        objList[objList.length - i].call.toDouble(),
-        objList[objList.length - i].prospek.toDouble(),
-        objList[objList.length - i].spk.toDouble(),
-        objList[objList.length - i].dO.toDouble(),
-        const Color.fromARGB(183, 0, 89, 255),
-        const Color.fromARGB(155, 0, 255, 170),
-        const Color.fromARGB(185, 255, 238, 2),
-        const Color.fromARGB(192, 255, 81, 0),
-      ));
-    }
-  }
-  return barData;
+dynamic toDynamic(List<ListRptProspekUeBp> objList) {
+  List<DataProspekUeBP> chartData = <DataProspekUeBP>[
+    DataProspekUeBP(
+      "Prospek UE BP",
+      objList[0].prospekUeBp,
+      const Color.fromARGB(155, 0, 255, 170),
+    ),
+    DataProspekUeBP(
+      "UE BP",
+      objList[0].ueBp,
+      const Color.fromARGB(183, 0, 89, 255),
+    ),
+  ];
+  return chartData;
 }

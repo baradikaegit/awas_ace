@@ -225,7 +225,9 @@ class _ReportPageState extends State<ReportPage> {
                                               '/funnelingPage'
                                           ? '$_monthNow/$_yearNow'
                                           : linkPageSales[index] ==
-                                                  '/prospekVtoSpkPage'
+                                                      '/prospekVtoSpkPage' ||
+                                                  linkPageSales[index] ==
+                                                      '/prospekUeBPPage'
                                               ? '$_monthNow/$_yearNow/MTD'
                                               : null),
                                   child: Column(

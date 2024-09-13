@@ -3,7 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportslsfunneling.dart';
+import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';

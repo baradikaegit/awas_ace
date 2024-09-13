@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
-import 'package:awas_ace/widgets/model/reportslsfunneling.dart';
-import 'package:awas_ace/widgets/model/reportslsfunnelingdetail.dart';
-import 'package:awas_ace/widgets/model/reportslsprospekvs.dart';
+import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,6 +20,10 @@ abstract class IReportSalesRepository {
   Future<ListRptProspekVsResponse> fecthListDataProspekVsBySS(
       String linkPageObj);
   Future<ListRptProspekVsResponse> fecthListDataProspekVsBySales(
+      String linkPageObj);
+  Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBP(
+      String linkPageObj);
+  Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBPBySS(
       String linkPageObj);
 }
 
@@ -190,5 +195,53 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptProspekVspkBySales =
         ListRptProspekVsResponse.fromJson(jsonObjRptProspekVspkBySales);
     return responseGetRptProspekVspkBySales;
+  }
+
+  //Prospek uebp
+  @override
+  Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBP(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptProspekUeBP = "${_host}GetReportProspekUeBp/$linkPageObj";
+
+    var resultGetRptProspekUeBP =
+        await http.get(Uri.parse(urlGetRptProspekUeBP), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptProspekUeBP = jsonDecode(resultGetRptProspekUeBP.body);
+
+    var responseGetRptProspekUeBP =
+        ListRptProspekUeBpResponse.fromJson(jsonObjRptProspekUeBP);
+    return responseGetRptProspekUeBP;
+  }
+
+  //Prospek uebp by ss
+  @override
+  Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBPBySS(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptProspekUeBPBySS =
+        "${_host}GetReportProspekUeBpBySS/$linkPageObj";
+
+    var resultGetRptProspekUeBPBySS =
+        await http.get(Uri.parse(urlGetRptProspekUeBPBySS), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptProspekUeBPBySS =
+        jsonDecode(resultGetRptProspekUeBPBySS.body);
+
+    var responseGetRptProspekUeBPBySS =
+        ListRptProspekUeBpResponse.fromJson(jsonObjRptProspekUeBPBySS);
+    return responseGetRptProspekUeBPBySS;
   }
 }

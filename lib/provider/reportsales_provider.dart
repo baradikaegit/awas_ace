@@ -1,7 +1,8 @@
 import 'package:awas_ace/repositories/reportsales_repositories.dart';
-import 'package:awas_ace/widgets/model/reportslsfunneling.dart';
-import 'package:awas_ace/widgets/model/reportslsfunnelingdetail.dart';
-import 'package:awas_ace/widgets/model/reportslsprospekvs.dart';
+import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportSalesRepositoryProvider =
@@ -55,4 +56,18 @@ final reportProspekVspkBySales = FutureProvider.autoDispose
   final repositoryProspekVspkBySales = ref.watch(reportSalesRepositoryProvider);
   return repositoryProspekVspkBySales
       .fecthListDataProspekVsBySales(linkPageObj);
+});
+
+//list report prospek uebp
+final reportProspekUeBP = FutureProvider.autoDispose
+    .family<ListRptProspekUeBpResponse, String>((ref, linkPageObj) async {
+  final repositoryProspekUeBP = ref.watch(reportSalesRepositoryProvider);
+  return repositoryProspekUeBP.fecthListDataProspekUeBP(linkPageObj);
+});
+
+//list report prospek uebp by ss
+final reportProspekUeBPBySS = FutureProvider.autoDispose
+    .family<ListRptProspekUeBpResponse, String>((ref, linkPageObj) async {
+  final repositoryProspekUeBPBySS = ref.watch(reportSalesRepositoryProvider);
+  return repositoryProspekUeBPBySS.fecthListDataProspekUeBPBySS(linkPageObj);
 });

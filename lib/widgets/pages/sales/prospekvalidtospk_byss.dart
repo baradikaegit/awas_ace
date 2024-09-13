@@ -3,7 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportslsprospekvs.dart';
+import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';

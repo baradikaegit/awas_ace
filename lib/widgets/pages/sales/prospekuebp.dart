@@ -1,13 +1,31 @@
-import 'package:data_table_2/data_table_2.dart';
+import 'package:awas_ace/provider/reportsales_provider.dart';
+import 'package:awas_ace/support/alert_dialog.dart';
+import 'package:awas_ace/support/loading_animations.dart';
+import 'package:awas_ace/support/not_active_token.dart';
+import 'package:awas_ace/support/watermark.dart';
+import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
+import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 class ProspekUeBPPage extends StatefulWidget {
-  const ProspekUeBPPage({super.key});
+  final Object? linkPageObj;
+  const ProspekUeBPPage({super.key, required this.linkPageObj});
+
   static const String routeName = "/prospekUeBPPage";
   @override
   State<ProspekUeBPPage> createState() => _ProspekUeBPPageState();
+}
+
+class ModelMonth {
+  String value;
+  int id;
+  ModelMonth(this.value, this.id);
 }
 
 class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
@@ -15,6 +33,49 @@ class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
     "Prospek UE BP to UE BP",
     style: TextStyle(color: Colors.white),
   );
+
+  String? userName;
+  String? roles;
+  String? sid;
+  String? branchID;
+
+  List<String> tipePeriodeOptions = ['MTD', 'YTD'];
+  List<ModelMonth> monthOptions = [
+    ModelMonth('January', 1),
+    ModelMonth('February', 2),
+    ModelMonth('March', 3),
+    ModelMonth('April', 4),
+    ModelMonth('May', 5),
+    ModelMonth('June', 6),
+    ModelMonth('July', 7),
+    ModelMonth('August', 8),
+    ModelMonth('September', 9),
+    ModelMonth('October', 10),
+    ModelMonth('November', 11),
+    ModelMonth('December', 12)
+  ];
+  List<String> yearOPtions = [
+    DateFormat('yyyy').format(DateTime.now()),
+    DateFormat('yyyy').format(DateTime.utc(DateTime.now().year - 1))
+  ];
+
+  List<ListRptProspekUeBpResponse> listRptProspekUeBPByModelRes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadSharedPreference();
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('Name');
+      roles = prefs.getString('Roles');
+      sid = prefs.getString('SID');
+      branchID = prefs.getString('BranchID');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +86,20 @@ class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
         255,
         255,
       ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 14.0, landscapeValue: 14.0),
+          const Condition.largerThan(
+              name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
+        ],
+        defaultValue: 12.5,
+      ).value,
+    );
+
+    var textStyleColorGold = TextStyle(
+      color: const Color.fromARGB(255, 250, 158, 19),
       fontSize: ResponsiveValue<double>(
         context,
         conditionalValues: [
@@ -75,262 +150,999 @@ class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
                 topRight: Radius.circular(25),
               ),
             ),
-            child: Center(
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 25, 0, 25),
-                          child: Text(
-                            "Prospek UE BP to UE BP (TVHO)",
-                            style: TextStyle(
-                              color: const Color.fromARGB(
-                                255,
-                                255,
-                                255,
-                                255,
-                              ),
-                              fontSize: ResponsiveValue<double>(
-                                context,
-                                conditionalValues: [
-                                  const Condition.equals(
-                                      name: TABLET,
-                                      value: 17.0,
-                                      landscapeValue: 17.0),
-                                  const Condition.largerThan(
-                                      name: TABLET,
-                                      value: 17.0,
-                                      landscapeValue: 17.0,
-                                      breakpoint: 800),
-                                ],
-                                defaultValue: 14.5,
-                              ).value,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                      SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 25),
-                          child: Column(
+            child: Stack(
+              children: [
+                const Watermark(),
+                Consumer(
+                  builder: (context, ref, child) {
+                    var linkPageObj = widget.linkPageObj.toString();
+
+                    String monthNow = DateFormat('M').format(DateTime.now());
+                    String yearNow = DateFormat('yyyy').format(DateTime.now());
+                    final String dateNow =
+                        DateFormat('dd MMMM yyyy').format(DateTime.now());
+
+                    final rptProspekUeBP =
+                        ref.watch(reportProspekUeBP(linkPageObj));
+
+                    return Center(
+                      child: Stack(
+                        children: [
+                          Column(
                             children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Periode : Juli 2024",
-                                  style: TextStyle(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    fontSize: ResponsiveValue<double>(
-                                      context,
-                                      conditionalValues: [
-                                        const Condition.equals(
-                                            name: TABLET,
-                                            value: 12.5,
-                                            landscapeValue: 12.5),
-                                        const Condition.largerThan(
-                                            name: TABLET,
-                                            value: 12.5,
-                                            landscapeValue: 12.5,
-                                            breakpoint: 800),
-                                      ],
-                                      defaultValue: 11.5,
-                                    ).value,
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 20, 0, 0),
+                                child: SizedBox(
+                                  child: rptProspekUeBP.when(
+                                    data: (dataSelectOpt) {
+                                      String tipePeriode = dataSelectOpt
+                                              .listRptProspekUeBp!.isNotEmpty
+                                          ? (linkPageObj ==
+                                                  '$monthNow/$yearNow')
+                                              ? 'MTD'
+                                              : dataSelectOpt
+                                                  .listRptProspekUeBp![0]
+                                                  .periodTipe
+                                          : '';
+
+                                      String monthSelected = dataSelectOpt
+                                              .listRptProspekUeBp!.isNotEmpty
+                                          ? (linkPageObj ==
+                                                  '$monthNow/$yearNow')
+                                              ? DateFormat('M')
+                                                  .format(DateTime.now())
+                                              : dataSelectOpt
+                                                  .listRptProspekUeBp![0].month
+                                                  .toString()
+                                          : '';
+
+                                      String yearSelected = dataSelectOpt
+                                              .listRptProspekUeBp!.isNotEmpty
+                                          ? (linkPageObj ==
+                                                  '$monthNow/$yearNow')
+                                              ? DateFormat('yyyy')
+                                                  .format(DateTime.now())
+                                              : dataSelectOpt
+                                                  .listRptProspekUeBp![0].year
+                                                  .toString()
+                                          : '';
+
+                                      return AppBar(
+                                        automaticallyImplyLeading: false,
+                                        centerTitle: false,
+                                        title: Column(
+                                          children: [
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 15, 0, 0),
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                    child:
+                                                        DropdownButton2<String>(
+                                                      value: tipePeriode,
+                                                      isExpanded: false,
+                                                      items: tipePeriodeOptions
+                                                          .map((String
+                                                              valueTipePeriode) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value:
+                                                              valueTipePeriode,
+                                                          child: Text(
+                                                            valueTipePeriode,
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                      onChanged:
+                                                          (String? newValTp) {
+                                                        setState(() {
+                                                          tipePeriode =
+                                                              newValTp!;
+                                                          var monthNow =
+                                                              dataSelectOpt
+                                                                  .listRptProspekUeBp![
+                                                                      0]
+                                                                  .month;
+                                                          var yearNow =
+                                                              dataSelectOpt
+                                                                  .listRptProspekUeBp![
+                                                                      0]
+                                                                  .year;
+                                                          var linkResultPeriodTipe =
+                                                              '$monthNow/$yearNow/$tipePeriode';
+
+                                                          Navigator
+                                                              .pushReplacementNamed(
+                                                            context,
+                                                            ProspekUeBPPage
+                                                                .routeName,
+                                                            arguments:
+                                                                linkResultPeriodTipe,
+                                                          );
+                                                        });
+                                                      },
+                                                      dropdownStyleData:
+                                                          DropdownStyleData(
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            33,
+                                                            44,
+                                                            81,
+                                                          ),
+                                                        ),
+                                                        maxHeight: 250,
+                                                        offset:
+                                                            const Offset(0, 0),
+                                                        scrollbarTheme:
+                                                            ScrollbarThemeData(
+                                                          radius: const Radius
+                                                              .circular(40),
+                                                          thickness:
+                                                              MaterialStateProperty
+                                                                  .all(5),
+                                                          thumbVisibility:
+                                                              MaterialStateProperty
+                                                                  .all(true),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                    0,
+                                                    15,
+                                                    0,
+                                                    0,
+                                                  ),
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                    child:
+                                                        DropdownButton2<String>(
+                                                      isExpanded: false,
+                                                      items: monthOptions
+                                                          .map((valueMonth) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value: valueMonth.id
+                                                              .toString(),
+                                                          child: Text(
+                                                            valueMonth.value,
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                      value: monthSelected,
+                                                      onChanged: (String?
+                                                          newValMonth) {
+                                                        setState(() {
+                                                          monthSelected =
+                                                              newValMonth!;
+                                                          var yearNow =
+                                                              dataSelectOpt
+                                                                  .listRptProspekUeBp![
+                                                                      0]
+                                                                  .year;
+                                                          var periodTipe =
+                                                              dataSelectOpt
+                                                                  .listRptProspekUeBp![
+                                                                      0]
+                                                                  .periodTipe;
+
+                                                          var linkResultMonth =
+                                                              '$monthSelected/$yearNow/$periodTipe';
+
+                                                          Navigator
+                                                              .pushReplacementNamed(
+                                                            context,
+                                                            ProspekUeBPPage
+                                                                .routeName,
+                                                            arguments:
+                                                                linkResultMonth,
+                                                          );
+                                                        });
+                                                      },
+                                                      dropdownStyleData:
+                                                          DropdownStyleData(
+                                                        decoration:
+                                                            const BoxDecoration(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            33,
+                                                            44,
+                                                            81,
+                                                          ),
+                                                        ),
+                                                        maxHeight: 250,
+                                                        offset:
+                                                            const Offset(0, 0),
+                                                        scrollbarTheme:
+                                                            ScrollbarThemeData(
+                                                          radius: const Radius
+                                                              .circular(40),
+                                                          thickness:
+                                                              MaterialStateProperty
+                                                                  .all(5),
+                                                          thumbVisibility:
+                                                              MaterialStateProperty
+                                                                  .all(true),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                    0,
+                                                    15,
+                                                    15,
+                                                    0,
+                                                  ),
+                                                  child:
+                                                      DropdownButtonHideUnderline(
+                                                    child:
+                                                        DropdownButton2<String>(
+                                                      value: yearSelected,
+                                                      isExpanded: false,
+                                                      items: yearOPtions.map(
+                                                          (String valueYear) {
+                                                        return DropdownMenuItem<
+                                                            String>(
+                                                          value: valueYear,
+                                                          child: Text(
+                                                            valueYear,
+                                                            style:
+                                                                textStyleColorWhite,
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                      onChanged:
+                                                          (String? newValYear) {
+                                                        setState(() {
+                                                          yearSelected =
+                                                              newValYear!;
+                                                          var monthNow =
+                                                              dataSelectOpt
+                                                                  .listRptProspekUeBp![
+                                                                      0]
+                                                                  .month;
+                                                          var periodTipe =
+                                                              dataSelectOpt
+                                                                  .listRptProspekUeBp![
+                                                                      0]
+                                                                  .periodTipe;
+
+                                                          var linkResultYear =
+                                                              '$monthNow/$yearSelected/$periodTipe';
+
+                                                          Navigator.pushNamed(
+                                                            context,
+                                                            ProspekUeBPPage
+                                                                .routeName,
+                                                            arguments:
+                                                                linkResultYear,
+                                                          );
+                                                        });
+                                                      },
+                                                      dropdownStyleData:
+                                                          const DropdownStyleData(
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Color.fromARGB(
+                                                            255,
+                                                            33,
+                                                            44,
+                                                            81,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        backgroundColor: const Color.fromARGB(
+                                          255,
+                                          33,
+                                          44,
+                                          81,
+                                        ),
+                                      );
+                                    },
+                                    error: (err, stack) => Text('Error $err'),
+                                    loading: () =>
+                                        const Center(child: Text('')),
                                   ),
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Tanggal Hari ini : ",
-                                  style: TextStyle(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    fontSize: ResponsiveValue<double>(
-                                      context,
-                                      conditionalValues: [
-                                        const Condition.equals(
-                                            name: TABLET,
-                                            value: 12.5,
-                                            landscapeValue: 12.5),
-                                        const Condition.largerThan(
-                                            name: TABLET,
-                                            value: 12.5,
-                                            landscapeValue: 12.5,
-                                            breakpoint: 800),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: rptProspekUeBP.when(
+                                  data: (dataHeader) => AppBar(
+                                    automaticallyImplyLeading: false,
+                                    centerTitle: true,
+                                    title: Column(
+                                      children: [
+                                        Text(
+                                          "Prospek Valid to SPK",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: const Color.fromARGB(
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                            ),
+                                            fontSize: ResponsiveValue<double>(
+                                              context,
+                                              conditionalValues: [
+                                                const Condition.equals(
+                                                    name: TABLET,
+                                                    value: 17.0,
+                                                    landscapeValue: 17.0),
+                                                const Condition.largerThan(
+                                                    name: TABLET,
+                                                    value: 17.0,
+                                                    landscapeValue: 17.0,
+                                                    breakpoint: 800),
+                                              ],
+                                              defaultValue: 14.5,
+                                            ).value,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          "(ALL)",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: const Color.fromARGB(
+                                              255,
+                                              255,
+                                              255,
+                                              255,
+                                            ),
+                                            fontSize: ResponsiveValue<double>(
+                                              context,
+                                              conditionalValues: [
+                                                const Condition.equals(
+                                                    name: TABLET,
+                                                    value: 17.0,
+                                                    landscapeValue: 17.0),
+                                                const Condition.largerThan(
+                                                    name: TABLET,
+                                                    value: 17.0,
+                                                    landscapeValue: 17.0,
+                                                    breakpoint: 800),
+                                              ],
+                                              defaultValue: 14.5,
+                                            ).value,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
                                       ],
-                                      defaultValue: 11.5,
-                                    ).value,
+                                    ),
+                                    backgroundColor: const Color.fromARGB(
+                                      255,
+                                      33,
+                                      44,
+                                      81,
+                                    ),
+                                  ),
+                                  error: (err, stack) => Text('Error $err'),
+                                  loading: () => const Center(child: Text('')),
+                                ),
+                              ),
+                              SizedBox(
+                                child: rptProspekUeBP.when(
+                                  data: (dataPeriod) => AppBar(
+                                    automaticallyImplyLeading: false,
+                                    centerTitle: false,
+                                    title: Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      child: Column(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Periode : ${dataPeriod.listRptProspekUeBp![0].monthID} ${dataPeriod.listRptProspekUeBp![0].year}",
+                                              style: TextStyle(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                ),
+                                                fontSize:
+                                                    ResponsiveValue<double>(
+                                                  context,
+                                                  conditionalValues: [
+                                                    const Condition.equals(
+                                                        name: TABLET,
+                                                        value: 12.5,
+                                                        landscapeValue: 12.5),
+                                                    const Condition.largerThan(
+                                                        name: TABLET,
+                                                        value: 12.5,
+                                                        landscapeValue: 12.5,
+                                                        breakpoint: 800),
+                                                  ],
+                                                  defaultValue: 11.5,
+                                                ).value,
+                                              ),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "Tanggal Hari ini : $dateNow",
+                                              style: TextStyle(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
+                                                ),
+                                                fontSize:
+                                                    ResponsiveValue<double>(
+                                                  context,
+                                                  conditionalValues: [
+                                                    const Condition.equals(
+                                                        name: TABLET,
+                                                        value: 12.5,
+                                                        landscapeValue: 12.5),
+                                                    const Condition.largerThan(
+                                                        name: TABLET,
+                                                        value: 12.5,
+                                                        landscapeValue: 12.5,
+                                                        breakpoint: 800),
+                                                  ],
+                                                  defaultValue: 11.5,
+                                                ).value,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    backgroundColor: const Color.fromARGB(
+                                      255,
+                                      33,
+                                      44,
+                                      81,
+                                    ),
+                                  ),
+                                  error: (err, stack) => Text('Error $err'),
+                                  loading: () => const Center(child: Text('')),
+                                ),
+                              ),
+                              Expanded(
+                                child: RefreshIndicator(
+                                  onRefresh: () async {
+                                    return ref.refresh(reportProspekUeBP(
+                                        linkPageObj.toString()));
+                                  },
+                                  child: rptProspekUeBP.when(
+                                    data: (dataProspekUeBP) {
+                                      listRptProspekUeBPByModelRes.clear();
+                                      listRptProspekUeBPByModelRes
+                                          .add(dataProspekUeBP);
+
+                                      return (dataProspekUeBP
+                                                  .listRptProspekUeBp !=
+                                              null)
+                                          ? dataProspekUeBP.listRptProspekUeBp!
+                                                  .isNotEmpty
+                                              ? ListView.builder(
+                                                  physics:
+                                                      const AlwaysScrollableScrollPhysics(),
+                                                  itemCount: 1,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                            10,
+                                                            20,
+                                                            10,
+                                                            20,
+                                                          ),
+                                                          child: Column(
+                                                            children: [
+                                                              SizedBox(
+                                                                height: 400,
+                                                                width: double
+                                                                    .infinity,
+                                                                child:
+                                                                    SfCircularChart(
+                                                                  tooltipBehavior:
+                                                                      TooltipBehavior(
+                                                                    enable:
+                                                                        true,
+                                                                  ),
+                                                                  annotations: [
+                                                                    CircularChartAnnotation(
+                                                                      widget:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "ASTRIDO \n${dataProspekUeBP.listRptProspekUeBp![0].persen}%",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontSize:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 25.0, landscapeValue: 25.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 35.0, landscapeValue: 35.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                25.5,
+                                                                          ).value,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                  series: <CircularSeries>[
+                                                                    DoughnutSeries<
+                                                                        DataProspekUeBP,
+                                                                        String>(
+                                                                      dataSource:
+                                                                          toDynamic(
+                                                                              listRptProspekUeBPByModelRes[0].listRptProspekUeBp!),
+                                                                      xValueMapper:
+                                                                          (DataProspekUeBP data, _) =>
+                                                                              data.x,
+                                                                      yValueMapper:
+                                                                          (DataProspekUeBP data, _) =>
+                                                                              data.y,
+                                                                      pointColorMapper:
+                                                                          (DataProspekUeBP data, _) =>
+                                                                              data.color,
+                                                                      innerRadius:
+                                                                          '60%',
+                                                                      radius:
+                                                                          '90%',
+                                                                      explode:
+                                                                          true,
+                                                                      explodeGesture:
+                                                                          ActivationMode
+                                                                              .singleTap,
+                                                                      explodeOffset:
+                                                                          '5',
+                                                                      // explodeIndex: 1,
+                                                                      dataLabelSettings:
+                                                                          const DataLabelSettings(
+                                                                        showZeroValue:
+                                                                            false,
+                                                                        isVisible:
+                                                                            true,
+                                                                        labelAlignment:
+                                                                            ChartDataLabelAlignment.middle,
+                                                                        overflowMode:
+                                                                            OverflowMode.trim,
+                                                                        textStyle:
+                                                                            TextStyle(color: Colors.white),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                            10,
+                                                            20,
+                                                            10,
+                                                            20,
+                                                          ),
+                                                          child: Container(
+                                                            constraints:
+                                                                const BoxConstraints(
+                                                              minHeight: 600,
+                                                              minWidth: double
+                                                                  .infinity,
+                                                            ),
+                                                            child: DataTable(
+                                                              border:
+                                                                  const TableBorder(
+                                                                horizontalInside:
+                                                                    BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                    255,
+                                                                    27,
+                                                                    37,
+                                                                    68,
+                                                                  ),
+                                                                  width: 2.5,
+                                                                ),
+                                                              ),
+                                                              columnSpacing:
+                                                                  ResponsiveValue<
+                                                                      double>(
+                                                                context,
+                                                                conditionalValues: [
+                                                                  const Condition
+                                                                      .equals(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          20.0,
+                                                                      landscapeValue:
+                                                                          20.0),
+                                                                  const Condition
+                                                                      .largerThan(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          0.0,
+                                                                      landscapeValue:
+                                                                          0.0)
+                                                                ],
+                                                                defaultValue:
+                                                                    10,
+                                                              ).value,
+                                                              horizontalMargin: ResponsiveValue<
+                                                                          double>(
+                                                                      context,
+                                                                      conditionalValues: [
+                                                                        const Condition
+                                                                            .equals(
+                                                                            name:
+                                                                                TABLET,
+                                                                            value:
+                                                                                5.0,
+                                                                            landscapeValue:
+                                                                                5.0),
+                                                                        const Condition
+                                                                            .largerThan(
+                                                                            name:
+                                                                                TABLET,
+                                                                            value:
+                                                                                5.0,
+                                                                            landscapeValue:
+                                                                                5.0,
+                                                                            breakpoint:
+                                                                                800)
+                                                                      ],
+                                                                      defaultValue:
+                                                                          12.0)
+                                                                  .value,
+                                                              headingRowHeight:
+                                                                  ResponsiveValue<
+                                                                      double>(
+                                                                context,
+                                                                conditionalValues: [
+                                                                  const Condition
+                                                                      .equals(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          42.0,
+                                                                      landscapeValue:
+                                                                          42.0),
+                                                                  const Condition.largerThan(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          50.0,
+                                                                      landscapeValue:
+                                                                          50.0,
+                                                                      breakpoint:
+                                                                          800),
+                                                                ],
+                                                                defaultValue:
+                                                                    40.0,
+                                                              ).value,
+                                                              columns: [
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topLeft,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width:
+                                                                          130,
+                                                                      child:
+                                                                          Text(
+                                                                        "CABANG",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topCenter,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width:
+                                                                          110,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "PROSPEK UE BP",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topCenter,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width: 70,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "UE BP",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topCenter,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width: 70,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "%",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                              rows: List<
+                                                                  DataRow>.generate(
+                                                                dataProspekUeBP
+                                                                    .listRptProspekUeBp!
+                                                                    .length,
+                                                                (indexObj) {
+                                                                  final dataRptProspekUeBP =
+                                                                      dataProspekUeBP
+                                                                              .listRptProspekUeBp![
+                                                                          indexObj];
+
+                                                                  var textStyleDataTable =
+                                                                      TextStyle(
+                                                                    color: dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode == 'TOTAL' ||
+                                                                            dataProspekUeBP.listRptProspekUeBp![indexObj].tipe ==
+                                                                                'Sales' ||
+                                                                            dataProspekUeBP.listRptProspekUeBp![indexObj].headerName ==
+                                                                                'TOTAL'
+                                                                        ? const Color
+                                                                            .fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                          )
+                                                                        : Colors
+                                                                            .blue,
+                                                                    fontSize:
+                                                                        ResponsiveValue<
+                                                                            double>(
+                                                                      context,
+                                                                      conditionalValues: [
+                                                                        const Condition
+                                                                            .equals(
+                                                                            name:
+                                                                                TABLET,
+                                                                            value:
+                                                                                14.0,
+                                                                            landscapeValue:
+                                                                                14.0),
+                                                                        const Condition
+                                                                            .largerThan(
+                                                                            name:
+                                                                                TABLET,
+                                                                            value:
+                                                                                14.0,
+                                                                            landscapeValue:
+                                                                                14.0,
+                                                                            breakpoint:
+                                                                                800),
+                                                                      ],
+                                                                      defaultValue:
+                                                                          12.5,
+                                                                    ).value,
+                                                                  );
+
+                                                                  return DataRow(
+                                                                    color: MaterialStateColor
+                                                                        .resolveWith(
+                                                                      (states) => indexObj
+                                                                              .isEven
+                                                                          ? const Color
+                                                                              .fromARGB(
+                                                                              213,
+                                                                              27,
+                                                                              37,
+                                                                              68,
+                                                                            )
+                                                                          : Colors
+                                                                              .transparent,
+                                                                    ),
+                                                                    cells: <DataCell>[
+                                                                      DataCell(
+                                                                        InkWell(
+                                                                          onTap: dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode == 'TOTAL' || dataProspekUeBP.listRptProspekUeBp![indexObj].tipe == 'Sales' || dataProspekUeBP.listRptProspekUeBp![indexObj].headerName == 'TOTAL'
+                                                                              ? () {}
+                                                                              : dataProspekUeBP.listRptProspekUeBp![indexObj].tipe == 'SS'
+                                                                                  ? () {
+                                                                                      var month = dataProspekUeBP.listRptProspekUeBp![indexObj].month.toString();
+                                                                                      var year = dataProspekUeBP.listRptProspekUeBp![indexObj].year.toString();
+                                                                                      var periodTipe = dataProspekUeBP.listRptProspekUeBp![indexObj].periodTipe;
+                                                                                      var branchCode = dataProspekUeBP.listRptProspekUeBp![indexObj].title;
+                                                                                      var ssCode = dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode;
+
+                                                                                      print('$month/$year/$periodTipe/$branchCode/$ssCode');
+
+                                                                                      // Navigator.pushNamed(
+                                                                                      //   context,
+                                                                                      //   ProspekVtoSpkSalesPage.routeName,
+                                                                                      //   arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                      // );
+                                                                                    }
+                                                                                  : () {
+                                                                                      var month = dataProspekUeBP.listRptProspekUeBp![indexObj].month.toString();
+                                                                                      var year = dataProspekUeBP.listRptProspekUeBp![indexObj].year.toString();
+                                                                                      var periodTipe = dataProspekUeBP.listRptProspekUeBp![indexObj].periodTipe;
+                                                                                      var branchCode = dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode;
+
+                                                                                      Navigator.pushNamed(
+                                                                                        context,
+                                                                                        ProspekUeBPSsPage.routeName,
+                                                                                        arguments: '$month/$year/$periodTipe/$branchCode',
+                                                                                      );
+                                                                                    },
+                                                                          child:
+                                                                              Text(
+                                                                            roles == 'SALES SUPERVISOR' || roles == 'KACAB'
+                                                                                ? dataRptProspekUeBP.headerName
+                                                                                : dataRptProspekUeBP.headerCode,
+                                                                            style:
+                                                                                textStyleDataTable,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptProspekUeBP.prospekUeBp.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                textStyleColorWhite,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptProspekUeBP.ueBp.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            style:
+                                                                                textStyleColorWhite,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptProspekUeBP.persen.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                textStyleColorGold,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                )
+                                              : const MyAlertDialog()
+                                          : const notActivetoken();
+                                    },
+                                    error: (err, stack) => Text('Error $err'),
+                                    loading: () => const Center(
+                                      child: Column(
+                                        children: [loadingAnimation()],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
                             ],
-                          ),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            height: 400,
-                            width: double.infinity,
-                            child: SfCircularChart(
-                              tooltipBehavior: TooltipBehavior(
-                                enable: true,
-                              ),
-                              annotations: [
-                                CircularChartAnnotation(
-                                  widget: const Text(
-                                    "ASTRIDO",
-                                    style: TextStyle(
-                                      fontSize: 25.0,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              series: <CircularSeries>[
-                                DoughnutSeries<SalesData, String>(
-                                  dataSource: getColumnData(),
-                                  xValueMapper: (SalesData sales, _) => sales.x,
-                                  yValueMapper: (SalesData sales, _) => sales.y,
-                                  pointColorMapper: (SalesData sales, _) =>
-                                      sales.color,
-
-                                  innerRadius: '60%',
-                                  radius: '90%',
-                                  explode: true,
-
-                                  explodeGesture: ActivationMode.singleTap,
-                                  explodeOffset: '5',
-                                  // explodeIndex: 1,
-
-                                  // untuk menampilkan label pada grafik
-                                  dataLabelSettings: const DataLabelSettings(
-                                      showZeroValue: true,
-                                      isVisible: true,
-                                      labelAlignment:
-                                          ChartDataLabelAlignment.middle,
-                                      overflowMode: OverflowMode.trim,
-                                      textStyle:
-                                          TextStyle(color: Colors.white)),
-                                ),
-                              ],
-                            ),
                           ),
                         ],
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 25, 10, 0),
-                          child: DataTable2(
-                            border: const TableBorder(
-                              bottom: BorderSide(
-                                style: BorderStyle.solid,
-                                color: Color.fromARGB(
-                                  30,
-                                  255,
-                                  255,
-                                  255,
-                                ),
-                              ),
-                            ),
-                            columnSpacing: 0,
-                            horizontalMargin: 5,
-                            minWidth: 400,
-                            headingRowHeight: 40.0,
-                            columns: [
-                              DataColumn2(
-                                label: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "CABANG",
-                                    style: textStyleColorWhite,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                              DataColumn2(
-                                  size: ColumnSize.L,
-                                  label: Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Text(
-                                      "PORESPECT UE BP",
-                                      style: textStyleColorWhite,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  )),
-                              DataColumn2(
-                                  label: Align(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  "UE BP",
-                                  style: textStyleColorWhite,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )),
-                              DataColumn2(
-                                  label: Align(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  "%",
-                                  style: textStyleColorWhite,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )),
-                            ],
-                            rows: <DataRow>[
-                              DataRow(
-                                cells: [
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                    );
+                  },
+                )
+              ],
             ),
           ),
         ),
@@ -339,29 +1151,26 @@ class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
   }
 }
 
-class SalesData {
+class DataProspekUeBP {
   String x;
-  double y;
+  int y;
   Color color;
-  SalesData(this.x, this.y, this.color);
+
+  DataProspekUeBP(this.x, this.y, this.color);
 }
 
-// isi dari grafik
-dynamic getColumnData() {
-  List<SalesData> columnData = <SalesData>[
-    SalesData("Toyota", 100, Colors.blue.shade700),
-    SalesData("Daihatsu", 200, Colors.greenAccent.shade700),
-    SalesData("Isuzu", 100, Colors.amber),
-    SalesData(
-      "Honda",
-      200,
-      const Color.fromARGB(
-        255,
-        251,
-        71,
-        0,
-      ),
+dynamic toDynamic(List<ListRptProspekUeBp> objList) {
+  List<DataProspekUeBP> chartData = <DataProspekUeBP>[
+    DataProspekUeBP(
+      "Prospek UE BP",
+      objList[0].prospekUeBp,
+      const Color.fromARGB(155, 0, 255, 170),
+    ),
+    DataProspekUeBP(
+      "UE BP",
+      objList[0].ueBp,
+      const Color.fromARGB(183, 0, 89, 255),
     ),
   ];
-  return columnData;
+  return chartData;
 }
