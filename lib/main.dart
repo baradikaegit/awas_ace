@@ -14,6 +14,7 @@ import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_byss.dart';
@@ -124,6 +125,9 @@ class MyApp extends StatelessWidget {
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         ProspekUeBPSsPage.routeName: (context) => ProspekUeBPSsPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ProspekUeBPSalesPage.routeName: (context) => ProspekUeBPSalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         MonitAreaMappingPage.routeName: (context) =>

@@ -71,3 +71,11 @@ final reportProspekUeBPBySS = FutureProvider.autoDispose
   final repositoryProspekUeBPBySS = ref.watch(reportSalesRepositoryProvider);
   return repositoryProspekUeBPBySS.fecthListDataProspekUeBPBySS(linkPageObj);
 });
+
+//list report prospek uebp by sales
+final reportProspekUeBPBySales = FutureProvider.autoDispose
+    .family<ListRptProspekUeBpResponse, String>((ref, linkPageObj) async {
+  final repositoryProspekUeBPBySales = ref.watch(reportSalesRepositoryProvider);
+  return repositoryProspekUeBPBySales
+      .fecthListDataProspekUeBPBySales(linkPageObj);
+});

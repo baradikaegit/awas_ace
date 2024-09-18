@@ -5,7 +5,6 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
-import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,13 +13,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ProspekUeBPSsPage extends StatefulWidget {
+class ProspekUeBPSalesPage extends StatefulWidget {
   final Object? linkPageObj;
-  const ProspekUeBPSsPage({super.key, required this.linkPageObj});
+  const ProspekUeBPSalesPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/prospekUeBPSsPage";
+  static const String routeName = "/prospekUeBPSalesPage";
   @override
-  State<ProspekUeBPSsPage> createState() => _ProspekUeBPSsPageState();
+  State<ProspekUeBPSalesPage> createState() => _ProspekUeBPSalesPageState();
 }
 
 class ModelMonth {
@@ -29,7 +28,7 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
+class _ProspekUeBPSalesPageState extends State<ProspekUeBPSalesPage> {
   Widget titleBar = const Text(
     "Prospek UE BP to UE BP",
     style: TextStyle(color: Colors.white),
@@ -164,7 +163,7 @@ class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
                     final rptProspekUeBP =
-                        ref.watch(reportProspekUeBPBySS(linkPageObj));
+                        ref.watch(reportProspekUeBPBySales(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -261,13 +260,21 @@ class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
                                                                   .listRptProspekUeBp![
                                                                       0]
                                                                   .title;
+                                                          var ssCode = dataSelectOpt
+                                                              .listRptProspekUeBp![
+                                                                  0]
+                                                              .headerCode2;
+
                                                           var linkResultPeriodTipe =
-                                                              '$monthNow/$yearNow/$tipePeriode/$branchCode';
+                                                              '$monthNow/$yearNow/$tipePeriode/$branchCode/$ssCode';
+
+                                                          print(
+                                                              linkResultPeriodTipe);
 
                                                           Navigator
                                                               .pushReplacementNamed(
                                                             context,
-                                                            ProspekUeBPSsPage
+                                                            ProspekUeBPSalesPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultPeriodTipe,
@@ -350,14 +357,21 @@ class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
                                                                   .listRptProspekUeBp![
                                                                       0]
                                                                   .title;
+                                                          var ssCode = dataSelectOpt
+                                                              .listRptProspekUeBp![
+                                                                  0]
+                                                              .headerCode2;
 
                                                           var linkResultMonth =
-                                                              '$monthSelected/$yearNow/$periodTipe/$branchCode';
+                                                              '$monthSelected/$yearNow/$periodTipe/$branchCode/$ssCode';
+
+                                                          print(
+                                                              linkResultMonth);
 
                                                           Navigator
                                                               .pushReplacementNamed(
                                                             context,
-                                                            ProspekUeBPSsPage
+                                                            ProspekUeBPSalesPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultMonth,
@@ -439,13 +453,17 @@ class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
                                                                   .listRptProspekUeBp![
                                                                       0]
                                                                   .title;
+                                                          var ssCode = dataSelectOpt
+                                                              .listRptProspekUeBp![
+                                                                  0]
+                                                              .headerCode2;
 
                                                           var linkResultYear =
-                                                              '$monthNow/$yearSelected/$periodTipe/$branchCode';
+                                                              '$monthNow/$yearSelected/$periodTipe/$branchCode/$ssCode';
 
                                                           Navigator.pushNamed(
                                                             context,
-                                                            ProspekUeBPSsPage
+                                                            ProspekUeBPSalesPage
                                                                 .routeName,
                                                             arguments:
                                                                 linkResultYear,
@@ -651,7 +669,7 @@ class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportProspekUeBPBySS(
+                                    return ref.refresh(reportProspekUeBPBySales(
                                         linkPageObj.toString()));
                                   },
                                   child: rptProspekUeBP.when(
@@ -1035,11 +1053,13 @@ class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
                                                                                       var branchCode = dataProspekUeBP.listRptProspekUeBp![indexObj].title;
                                                                                       var ssCode = dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode;
 
-                                                                                      Navigator.pushNamed(
-                                                                                        context,
-                                                                                        ProspekUeBPSalesPage.routeName,
-                                                                                        arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                      );
+                                                                                      print('$month/$year/$periodTipe/$branchCode/$ssCode');
+
+                                                                                      // Navigator.pushNamed(
+                                                                                      //   context,
+                                                                                      //   ProspekVtoSpkSalesPage.routeName,
+                                                                                      //   arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                      // );
                                                                                     },
                                                                               child: Text(
                                                                                 dataRptProspekUeBP.headerName,

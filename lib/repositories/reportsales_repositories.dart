@@ -25,6 +25,8 @@ abstract class IReportSalesRepository {
       String linkPageObj);
   Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBPBySS(
       String linkPageObj);
+  Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBPBySales(
+      String linkPageObj);
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
@@ -243,5 +245,30 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptProspekUeBPBySS =
         ListRptProspekUeBpResponse.fromJson(jsonObjRptProspekUeBPBySS);
     return responseGetRptProspekUeBPBySS;
+  }
+
+  //Prospek uebp by sales
+  @override
+  Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBPBySales(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptProspekUeBPBySales =
+        "${_host}GetReportProspekUeBpBySales/$linkPageObj";
+
+    var resultGetRptProspekUeBPBySales =
+        await http.get(Uri.parse(urlGetRptProspekUeBPBySales), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptProspekUeBPBySales =
+        jsonDecode(resultGetRptProspekUeBPBySales.body);
+
+    var responseGetRptProspekUeBPBySales =
+        ListRptProspekUeBpResponse.fromJson(jsonObjRptProspekUeBPBySales);
+    return responseGetRptProspekUeBPBySales;
   }
 }
