@@ -5,6 +5,7 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
+import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -1021,13 +1022,11 @@ class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
                                                                                           var branchCode = dataProspekUeBP.listRptProspekUeBp![indexObj].title;
                                                                                           var ssCode = dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode;
 
-                                                                                          print('$month/$year/$periodTipe/$branchCode/$ssCode');
-
-                                                                                          // Navigator.pushNamed(
-                                                                                          //   context,
-                                                                                          //   ProspekVtoSpkSalesPage.routeName,
-                                                                                          //   arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                          // );
+                                                                                          Navigator.pushNamed(
+                                                                                            context,
+                                                                                            ProspekUeBPSalesPage.routeName,
+                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                          );
                                                                                         }
                                                                                       : () {
                                                                                           var month = dataProspekUeBP.listRptProspekUeBp![indexObj].month.toString();

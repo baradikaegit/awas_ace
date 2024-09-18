@@ -268,9 +268,6 @@ class _ProspekUeBPSalesPageState extends State<ProspekUeBPSalesPage> {
                                                           var linkResultPeriodTipe =
                                                               '$monthNow/$yearNow/$tipePeriode/$branchCode/$ssCode';
 
-                                                          print(
-                                                              linkResultPeriodTipe);
-
                                                           Navigator
                                                               .pushReplacementNamed(
                                                             context,
@@ -364,9 +361,6 @@ class _ProspekUeBPSalesPageState extends State<ProspekUeBPSalesPage> {
 
                                                           var linkResultMonth =
                                                               '$monthSelected/$yearNow/$periodTipe/$branchCode/$ssCode';
-
-                                                          print(
-                                                              linkResultMonth);
 
                                                           Navigator
                                                               .pushReplacementNamed(
@@ -1043,28 +1037,9 @@ class _ProspekUeBPSalesPageState extends State<ProspekUeBPSalesPage> {
                                                                         ),
                                                                         cells: <DataCell>[
                                                                           DataCell(
-                                                                            InkWell(
-                                                                              onTap: dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode == 'TOTAL' || dataProspekUeBP.listRptProspekUeBp![indexObj].tipe == 'Sales' || dataProspekUeBP.listRptProspekUeBp![indexObj].headerName == 'TOTAL'
-                                                                                  ? () {}
-                                                                                  : () {
-                                                                                      var month = dataProspekUeBP.listRptProspekUeBp![indexObj].month.toString();
-                                                                                      var year = dataProspekUeBP.listRptProspekUeBp![indexObj].year.toString();
-                                                                                      var periodTipe = dataProspekUeBP.listRptProspekUeBp![indexObj].periodTipe;
-                                                                                      var branchCode = dataProspekUeBP.listRptProspekUeBp![indexObj].title;
-                                                                                      var ssCode = dataProspekUeBP.listRptProspekUeBp![indexObj].headerCode;
-
-                                                                                      print('$month/$year/$periodTipe/$branchCode/$ssCode');
-
-                                                                                      // Navigator.pushNamed(
-                                                                                      //   context,
-                                                                                      //   ProspekVtoSpkSalesPage.routeName,
-                                                                                      //   arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                      // );
-                                                                                    },
-                                                                              child: Text(
-                                                                                dataRptProspekUeBP.headerName,
-                                                                                style: textStyleDataTable,
-                                                                              ),
+                                                                            Text(
+                                                                              dataRptProspekUeBP.headerName,
+                                                                              style: textStyleDataTable,
                                                                             ),
                                                                           ),
                                                                           DataCell(
