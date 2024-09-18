@@ -681,7 +681,7 @@ class _ProspekUeBPSalesPageState extends State<ProspekUeBPSalesPage> {
                                                               .listRptProspekUeBp![
                                                                   0]
                                                               .prospekUeBp >
-                                                          0 &&
+                                                          0 ||
                                                       dataProspekUeBP
                                                               .listRptProspekUeBp![
                                                                   0]

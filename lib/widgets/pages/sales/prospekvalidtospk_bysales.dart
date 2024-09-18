@@ -1,5 +1,6 @@
 import 'package:awas_ace/provider/reportsales_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
+import 'package:awas_ace/support/alert_notempty.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
@@ -652,533 +653,489 @@ class _ProspekVtoSpkSalesPageState extends State<ProspekVtoSpkSalesPage> {
                                               null)
                                           ? dataProspekVSpk
                                                   .listRptProspekSpk!.isNotEmpty
-                                              ? ListView.builder(
-                                                  physics:
-                                                      const AlwaysScrollableScrollPhysics(),
-                                                  itemCount: 1,
-                                                  itemBuilder:
-                                                      (context, index) {
-                                                    return Column(
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                            10,
-                                                            20,
-                                                            10,
-                                                            20,
-                                                          ),
-                                                          child: Column(
-                                                            children: [
-                                                              SizedBox(
-                                                                height: 400,
-                                                                width: double
-                                                                    .infinity,
-                                                                child:
-                                                                    SfCircularChart(
-                                                                  tooltipBehavior:
-                                                                      TooltipBehavior(
-                                                                    enable:
-                                                                        true,
-                                                                  ),
-                                                                  annotations: [
-                                                                    CircularChartAnnotation(
-                                                                      widget:
-                                                                          Text(
-                                                                        "ASTRIDO",
-                                                                        style:
-                                                                            TextStyle(
-                                                                          color:
-                                                                              Colors.white,
-                                                                          fontSize:
-                                                                              ResponsiveValue<double>(
-                                                                            context,
-                                                                            conditionalValues: [
-                                                                              const Condition.equals(name: TABLET, value: 25.0, landscapeValue: 25.0),
-                                                                              const Condition.largerThan(name: TABLET, value: 35.0, landscapeValue: 35.0, breakpoint: 800),
-                                                                            ],
-                                                                            defaultValue:
-                                                                                25.5,
-                                                                          ).value,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                        ),
-                                                                      ),
-                                                                    ),
-                                                                  ],
-                                                                  series: <CircularSeries>[
-                                                                    DoughnutSeries<
-                                                                        DataProspekVspk,
-                                                                        String>(
-                                                                      dataSource:
-                                                                          toDynamic(
-                                                                              listRptProspekVsByModelRes[0].listRptProspekSpk!),
-                                                                      xValueMapper:
-                                                                          (DataProspekVspk data, _) =>
-                                                                              data.x,
-                                                                      yValueMapper:
-                                                                          (DataProspekVspk data, _) =>
-                                                                              data.y,
-                                                                      pointColorMapper:
-                                                                          (DataProspekVspk data, _) =>
-                                                                              data.color,
-                                                                      innerRadius:
-                                                                          '60%',
-                                                                      radius:
-                                                                          '90%',
-                                                                      explode:
-                                                                          true,
-                                                                      explodeGesture:
-                                                                          ActivationMode
-                                                                              .singleTap,
-                                                                      explodeOffset:
-                                                                          '5',
-                                                                      // explodeIndex: 1,
-
-                                                                      dataLabelSettings:
-                                                                          const DataLabelSettings(
-                                                                        showZeroValue:
-                                                                            false,
-                                                                        isVisible:
+                                              ? dataProspekVSpk
+                                                              .listRptProspekSpk![
+                                                                  0]
+                                                              .prospek >
+                                                          0 ||
+                                                      dataProspekVSpk
+                                                              .listRptProspekSpk![
+                                                                  0]
+                                                              .prospekValid >
+                                                          0 ||
+                                                      dataProspekVSpk
+                                                              .listRptProspekSpk![
+                                                                  0]
+                                                              .spk >
+                                                          0 ||
+                                                      dataProspekVSpk
+                                                              .listRptProspekSpk![
+                                                                  0]
+                                                              .dO >
+                                                          0
+                                                  ? ListView.builder(
+                                                      physics:
+                                                          const AlwaysScrollableScrollPhysics(),
+                                                      itemCount: 1,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return Column(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                10,
+                                                                20,
+                                                                10,
+                                                                20,
+                                                              ),
+                                                              child: Column(
+                                                                children: [
+                                                                  SizedBox(
+                                                                    height: 400,
+                                                                    width: double
+                                                                        .infinity,
+                                                                    child:
+                                                                        SfCircularChart(
+                                                                      tooltipBehavior:
+                                                                          TooltipBehavior(
+                                                                        enable:
                                                                             true,
-                                                                        labelAlignment:
-                                                                            ChartDataLabelAlignment.middle,
-                                                                        overflowMode:
-                                                                            OverflowMode.trim,
-                                                                        textStyle:
-                                                                            TextStyle(color: Colors.white),
                                                                       ),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .fromLTRB(
-                                                            10,
-                                                            20,
-                                                            10,
-                                                            20,
-                                                          ),
-                                                          child: Container(
-                                                            constraints:
-                                                                const BoxConstraints(
-                                                              minHeight: 600,
-                                                              minWidth: double
-                                                                  .infinity,
-                                                            ),
-                                                            child: DataTable(
-                                                              border:
-                                                                  const TableBorder(
-                                                                horizontalInside:
-                                                                    BorderSide(
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                    255,
-                                                                    27,
-                                                                    37,
-                                                                    68,
-                                                                  ),
-                                                                  width: 2.5,
-                                                                ),
-                                                              ),
-                                                              columnSpacing:
-                                                                  ResponsiveValue<
-                                                                      double>(
-                                                                context,
-                                                                conditionalValues: [
-                                                                  const Condition
-                                                                      .equals(
-                                                                      name:
-                                                                          TABLET,
-                                                                      value:
-                                                                          20.0,
-                                                                      landscapeValue:
-                                                                          20.0),
-                                                                  const Condition
-                                                                      .largerThan(
-                                                                      name:
-                                                                          TABLET,
-                                                                      value:
-                                                                          0.0,
-                                                                      landscapeValue:
-                                                                          0.0)
-                                                                ],
-                                                                defaultValue:
-                                                                    10,
-                                                              ).value,
-                                                              horizontalMargin: ResponsiveValue<
-                                                                          double>(
-                                                                      context,
-                                                                      conditionalValues: [
-                                                                        const Condition
-                                                                            .equals(
-                                                                            name:
-                                                                                TABLET,
-                                                                            value:
-                                                                                5.0,
-                                                                            landscapeValue:
-                                                                                5.0),
-                                                                        const Condition
-                                                                            .largerThan(
-                                                                            name:
-                                                                                TABLET,
-                                                                            value:
-                                                                                5.0,
-                                                                            landscapeValue:
-                                                                                5.0,
-                                                                            breakpoint:
-                                                                                800)
-                                                                      ],
-                                                                      defaultValue:
-                                                                          12.0)
-                                                                  .value,
-                                                              headingRowHeight:
-                                                                  ResponsiveValue<
-                                                                      double>(
-                                                                context,
-                                                                conditionalValues: [
-                                                                  const Condition
-                                                                      .equals(
-                                                                      name:
-                                                                          TABLET,
-                                                                      value:
-                                                                          42.0,
-                                                                      landscapeValue:
-                                                                          42.0),
-                                                                  const Condition.largerThan(
-                                                                      name:
-                                                                          TABLET,
-                                                                      value:
-                                                                          50.0,
-                                                                      landscapeValue:
-                                                                          50.0,
-                                                                      breakpoint:
-                                                                          800),
-                                                                ],
-                                                                defaultValue:
-                                                                    40.0,
-                                                              ).value,
-                                                              columns: [
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topLeft,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 80,
-                                                                      child:
-                                                                          Text(
-                                                                        "CABANG",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 90,
-                                                                      child:
-                                                                          Text(
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        "PROSPEK ALL",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 95,
-                                                                      child:
-                                                                          Text(
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        "PROSPEK VALID",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 40,
-                                                                      child:
-                                                                          Text(
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        "SPK",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 40,
-                                                                      child:
-                                                                          Text(
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        "DO",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                              rows: List<
-                                                                  DataRow>.generate(
-                                                                dataProspekVSpk
-                                                                    .listRptProspekSpk!
-                                                                    .length,
-                                                                (indexObj) {
-                                                                  final dataRptProspekVSpk =
-                                                                      dataProspekVSpk
-                                                                              .listRptProspekSpk![
-                                                                          indexObj];
-
-                                                                  var persenValid = dataProspekVSpk
-                                                                              .listRptProspekSpk![
-                                                                                  indexObj]
-                                                                              .prospek >
-                                                                          0
-                                                                      ? (dataProspekVSpk
-                                                                              .listRptProspekSpk![
-                                                                                  indexObj]
-                                                                              .prospekValid /
-                                                                          dataProspekVSpk
-                                                                              .listRptProspekSpk![indexObj]
-                                                                              .prospek *
-                                                                          100)
-                                                                      : 0;
-
-                                                                  var persenSpk = dataProspekVSpk
-                                                                              .listRptProspekSpk![
-                                                                                  indexObj]
-                                                                              .prospekValid >
-                                                                          0
-                                                                      ? (dataProspekVSpk
-                                                                              .listRptProspekSpk![
-                                                                                  indexObj]
-                                                                              .spk /
-                                                                          dataProspekVSpk
-                                                                              .listRptProspekSpk![indexObj]
-                                                                              .prospekValid *
-                                                                          100)
-                                                                      : 0;
-
-                                                                  var persenDO = dataProspekVSpk
-                                                                              .listRptProspekSpk![
-                                                                                  indexObj]
-                                                                              .spk >
-                                                                          0
-                                                                      ? (dataProspekVSpk
-                                                                              .listRptProspekSpk![
-                                                                                  indexObj]
-                                                                              .dO /
-                                                                          dataProspekVSpk
-                                                                              .listRptProspekSpk![indexObj]
-                                                                              .spk *
-                                                                          100)
-                                                                      : 0;
-
-                                                                  var textStyleDataTable =
-                                                                      TextStyle(
-                                                                    color: const Color
-                                                                        .fromARGB(
-                                                                      255,
-                                                                      255,
-                                                                      255,
-                                                                      255,
-                                                                    ),
-                                                                    fontSize:
-                                                                        ResponsiveValue<
-                                                                            double>(
-                                                                      context,
-                                                                      conditionalValues: [
-                                                                        const Condition
-                                                                            .equals(
-                                                                            name:
-                                                                                TABLET,
-                                                                            value:
-                                                                                14.0,
-                                                                            landscapeValue:
-                                                                                14.0),
-                                                                        const Condition
-                                                                            .largerThan(
-                                                                            name:
-                                                                                TABLET,
-                                                                            value:
-                                                                                14.0,
-                                                                            landscapeValue:
-                                                                                14.0,
-                                                                            breakpoint:
-                                                                                800),
-                                                                      ],
-                                                                      defaultValue:
-                                                                          12.5,
-                                                                    ).value,
-                                                                  );
-
-                                                                  return DataRow(
-                                                                    color: MaterialStateColor
-                                                                        .resolveWith(
-                                                                      (states) => indexObj
-                                                                              .isEven
-                                                                          ? const Color
-                                                                              .fromARGB(
-                                                                              213,
-                                                                              27,
-                                                                              37,
-                                                                              68,
-                                                                            )
-                                                                          : Colors
-                                                                              .transparent,
-                                                                    ),
-                                                                    cells: <DataCell>[
-                                                                      DataCell(
-                                                                        Text(
-                                                                          dataRptProspekVSpk
-                                                                              .headerName,
-                                                                          style:
-                                                                              textStyleDataTable,
+                                                                      annotations: [
+                                                                        CircularChartAnnotation(
+                                                                          widget:
+                                                                              Text(
+                                                                            "ASTRIDO",
+                                                                            style:
+                                                                                TextStyle(
+                                                                              color: Colors.white,
+                                                                              fontSize: ResponsiveValue<double>(
+                                                                                context,
+                                                                                conditionalValues: [
+                                                                                  const Condition.equals(name: TABLET, value: 25.0, landscapeValue: 25.0),
+                                                                                  const Condition.largerThan(name: TABLET, value: 35.0, landscapeValue: 35.0, breakpoint: 800),
+                                                                                ],
+                                                                                defaultValue: 25.5,
+                                                                              ).value,
+                                                                              fontWeight: FontWeight.bold,
+                                                                            ),
+                                                                          ),
                                                                         ),
+                                                                      ],
+                                                                      series: <CircularSeries>[
+                                                                        DoughnutSeries<
+                                                                            DataProspekVspk,
+                                                                            String>(
+                                                                          dataSource:
+                                                                              toDynamic(listRptProspekVsByModelRes[0].listRptProspekSpk!),
+                                                                          xValueMapper: (DataProspekVspk data, _) =>
+                                                                              data.x,
+                                                                          yValueMapper: (DataProspekVspk data, _) =>
+                                                                              data.y,
+                                                                          pointColorMapper: (DataProspekVspk data, _) =>
+                                                                              data.color,
+                                                                          innerRadius:
+                                                                              '60%',
+                                                                          radius:
+                                                                              '90%',
+                                                                          explode:
+                                                                              true,
+                                                                          explodeGesture:
+                                                                              ActivationMode.singleTap,
+                                                                          explodeOffset:
+                                                                              '5',
+                                                                          // explodeIndex: 1,
+
+                                                                          dataLabelSettings:
+                                                                              const DataLabelSettings(
+                                                                            showZeroValue:
+                                                                                false,
+                                                                            isVisible:
+                                                                                true,
+                                                                            labelAlignment:
+                                                                                ChartDataLabelAlignment.middle,
+                                                                            overflowMode:
+                                                                                OverflowMode.trim,
+                                                                            textStyle:
+                                                                                TextStyle(color: Colors.white),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                10,
+                                                                20,
+                                                                10,
+                                                                20,
+                                                              ),
+                                                              child: Container(
+                                                                constraints:
+                                                                    const BoxConstraints(
+                                                                  minHeight:
+                                                                      600,
+                                                                  minWidth: double
+                                                                      .infinity,
+                                                                ),
+                                                                child:
+                                                                    DataTable(
+                                                                  border:
+                                                                      const TableBorder(
+                                                                    horizontalInside:
+                                                                        BorderSide(
+                                                                      color: Color
+                                                                          .fromARGB(
+                                                                        255,
+                                                                        27,
+                                                                        37,
+                                                                        68,
                                                                       ),
-                                                                      DataCell(
-                                                                        Align(
-                                                                          alignment:
-                                                                              Alignment.centerRight,
+                                                                      width:
+                                                                          2.5,
+                                                                    ),
+                                                                  ),
+                                                                  columnSpacing:
+                                                                      ResponsiveValue<
+                                                                          double>(
+                                                                    context,
+                                                                    conditionalValues: [
+                                                                      const Condition
+                                                                          .equals(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              20.0,
+                                                                          landscapeValue:
+                                                                              20.0),
+                                                                      const Condition
+                                                                          .largerThan(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              0.0,
+                                                                          landscapeValue:
+                                                                              0.0)
+                                                                    ],
+                                                                    defaultValue:
+                                                                        10,
+                                                                  ).value,
+                                                                  horizontalMargin: ResponsiveValue<
+                                                                              double>(
+                                                                          context,
+                                                                          conditionalValues: [
+                                                                            const Condition.equals(
+                                                                                name: TABLET,
+                                                                                value: 5.0,
+                                                                                landscapeValue: 5.0),
+                                                                            const Condition.largerThan(
+                                                                                name: TABLET,
+                                                                                value: 5.0,
+                                                                                landscapeValue: 5.0,
+                                                                                breakpoint: 800)
+                                                                          ],
+                                                                          defaultValue:
+                                                                              12.0)
+                                                                      .value,
+                                                                  headingRowHeight:
+                                                                      ResponsiveValue<
+                                                                          double>(
+                                                                    context,
+                                                                    conditionalValues: [
+                                                                      const Condition
+                                                                          .equals(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              42.0,
+                                                                          landscapeValue:
+                                                                              42.0),
+                                                                      const Condition
+                                                                          .largerThan(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              50.0,
+                                                                          landscapeValue:
+                                                                              50.0,
+                                                                          breakpoint:
+                                                                              800),
+                                                                    ],
+                                                                    defaultValue:
+                                                                        40.0,
+                                                                  ).value,
+                                                                  columns: [
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.topLeft,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              80,
                                                                           child:
                                                                               Text(
-                                                                            dataRptProspekVSpk.prospek.toString(),
-                                                                            textAlign:
-                                                                                TextAlign.right,
+                                                                            "CABANG",
                                                                             style:
-                                                                                textStyleColorWhite,
+                                                                                textStyleColorWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
                                                                           ),
                                                                         ),
                                                                       ),
-                                                                      DataCell(
-                                                                        Align(
-                                                                          alignment:
-                                                                              Alignment.centerRight,
+                                                                    ),
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.topCenter,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              90,
                                                                           child:
-                                                                              RichText(
+                                                                              Text(
                                                                             textAlign:
-                                                                                TextAlign.right,
-                                                                            text:
-                                                                                TextSpan(
-                                                                              text: dataRptProspekVSpk.prospekValid.toString(),
-                                                                              style: textStyleColorWhite,
-                                                                              children: <TextSpan>[
-                                                                                TextSpan(text: ' (${persenValid.floor()}%)', style: textStyleColorGold),
-                                                                              ],
+                                                                                TextAlign.center,
+                                                                            "PROSPEK ALL",
+                                                                            style:
+                                                                                textStyleColorWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.topCenter,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              95,
+                                                                          child:
+                                                                              Text(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            "PROSPEK VALID",
+                                                                            style:
+                                                                                textStyleColorWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.topCenter,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              40,
+                                                                          child:
+                                                                              Text(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            "SPK",
+                                                                            style:
+                                                                                textStyleColorWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.topCenter,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              40,
+                                                                          child:
+                                                                              Text(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            "DO",
+                                                                            style:
+                                                                                textStyleColorWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                  rows: List<
+                                                                      DataRow>.generate(
+                                                                    dataProspekVSpk
+                                                                        .listRptProspekSpk!
+                                                                        .length,
+                                                                    (indexObj) {
+                                                                      final dataRptProspekVSpk =
+                                                                          dataProspekVSpk
+                                                                              .listRptProspekSpk![indexObj];
+
+                                                                      var persenValid = dataProspekVSpk.listRptProspekSpk![indexObj].prospek >
+                                                                              0
+                                                                          ? (dataProspekVSpk.listRptProspekSpk![indexObj].prospekValid /
+                                                                              dataProspekVSpk.listRptProspekSpk![indexObj].prospek *
+                                                                              100)
+                                                                          : 0;
+
+                                                                      var persenSpk = dataProspekVSpk.listRptProspekSpk![indexObj].prospekValid >
+                                                                              0
+                                                                          ? (dataProspekVSpk.listRptProspekSpk![indexObj].spk /
+                                                                              dataProspekVSpk.listRptProspekSpk![indexObj].prospekValid *
+                                                                              100)
+                                                                          : 0;
+
+                                                                      var persenDO = dataProspekVSpk.listRptProspekSpk![indexObj].spk >
+                                                                              0
+                                                                          ? (dataProspekVSpk.listRptProspekSpk![indexObj].dO /
+                                                                              dataProspekVSpk.listRptProspekSpk![indexObj].spk *
+                                                                              100)
+                                                                          : 0;
+
+                                                                      var textStyleDataTable =
+                                                                          TextStyle(
+                                                                        color: const Color
+                                                                            .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          255,
+                                                                          255,
+                                                                        ),
+                                                                        fontSize:
+                                                                            ResponsiveValue<double>(
+                                                                          context,
+                                                                          conditionalValues: [
+                                                                            const Condition.equals(
+                                                                                name: TABLET,
+                                                                                value: 14.0,
+                                                                                landscapeValue: 14.0),
+                                                                            const Condition.largerThan(
+                                                                                name: TABLET,
+                                                                                value: 14.0,
+                                                                                landscapeValue: 14.0,
+                                                                                breakpoint: 800),
+                                                                          ],
+                                                                          defaultValue:
+                                                                              12.5,
+                                                                        ).value,
+                                                                      );
+
+                                                                      return DataRow(
+                                                                        color: MaterialStateColor
+                                                                            .resolveWith(
+                                                                          (states) => indexObj.isEven
+                                                                              ? const Color.fromARGB(
+                                                                                  213,
+                                                                                  27,
+                                                                                  37,
+                                                                                  68,
+                                                                                )
+                                                                              : Colors.transparent,
+                                                                        ),
+                                                                        cells: <DataCell>[
+                                                                          DataCell(
+                                                                            Text(
+                                                                              dataRptProspekVSpk.headerName,
+                                                                              style: textStyleDataTable,
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      ),
-                                                                      DataCell(
-                                                                        Align(
-                                                                          alignment:
-                                                                              Alignment.centerRight,
-                                                                          child:
-                                                                              RichText(
-                                                                            textAlign:
-                                                                                TextAlign.right,
-                                                                            text:
-                                                                                TextSpan(
-                                                                              text: dataRptProspekVSpk.spk.toString(),
-                                                                              style: textStyleColorWhite,
-                                                                              children: <TextSpan>[
-                                                                                TextSpan(text: ' (${persenSpk.floor()}%)', style: textStyleColorGold),
-                                                                              ],
+                                                                          DataCell(
+                                                                            Align(
+                                                                              alignment: Alignment.centerRight,
+                                                                              child: Text(
+                                                                                dataRptProspekVSpk.prospek.toString(),
+                                                                                textAlign: TextAlign.right,
+                                                                                style: textStyleColorWhite,
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      ),
-                                                                      DataCell(
-                                                                        Align(
-                                                                          alignment:
-                                                                              Alignment.centerRight,
-                                                                          child:
-                                                                              RichText(
-                                                                            textAlign:
-                                                                                TextAlign.right,
-                                                                            text:
-                                                                                TextSpan(
-                                                                              text: dataRptProspekVSpk.dO.toString(),
-                                                                              style: textStyleColorWhite,
-                                                                              children: <TextSpan>[
-                                                                                TextSpan(text: ' (${persenDO.floor()}%)', style: textStyleColorGold),
-                                                                              ],
+                                                                          DataCell(
+                                                                            Align(
+                                                                              alignment: Alignment.centerRight,
+                                                                              child: RichText(
+                                                                                textAlign: TextAlign.right,
+                                                                                text: TextSpan(
+                                                                                  text: dataRptProspekVSpk.prospekValid.toString(),
+                                                                                  style: textStyleColorWhite,
+                                                                                  children: <TextSpan>[
+                                                                                    TextSpan(text: ' (${persenValid.floor()}%)', style: textStyleColorGold),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
                                                                             ),
                                                                           ),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  );
-                                                                },
+                                                                          DataCell(
+                                                                            Align(
+                                                                              alignment: Alignment.centerRight,
+                                                                              child: RichText(
+                                                                                textAlign: TextAlign.right,
+                                                                                text: TextSpan(
+                                                                                  text: dataRptProspekVSpk.spk.toString(),
+                                                                                  style: textStyleColorWhite,
+                                                                                  children: <TextSpan>[
+                                                                                    TextSpan(text: ' (${persenSpk.floor()}%)', style: textStyleColorGold),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          DataCell(
+                                                                            Align(
+                                                                              alignment: Alignment.centerRight,
+                                                                              child: RichText(
+                                                                                textAlign: TextAlign.right,
+                                                                                text: TextSpan(
+                                                                                  text: dataRptProspekVSpk.dO.toString(),
+                                                                                  style: textStyleColorWhite,
+                                                                                  children: <TextSpan>[
+                                                                                    TextSpan(text: ' (${persenDO.floor()}%)', style: textStyleColorGold),
+                                                                                  ],
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    );
-                                                  },
-                                                )
+                                                          ],
+                                                        );
+                                                      },
+                                                    )
+                                                  : const AlertNotempty()
                                               : const MyAlertDialog()
                                           : const notActivetoken();
                                     },

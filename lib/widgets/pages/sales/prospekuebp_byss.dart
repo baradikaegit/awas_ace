@@ -669,7 +669,7 @@ class _ProspekUeBPSsPageState extends State<ProspekUeBPSsPage> {
                                                               .listRptProspekUeBp![
                                                                   0]
                                                               .prospekUeBp >
-                                                          0 &&
+                                                          0 ||
                                                       dataProspekUeBP
                                                               .listRptProspekUeBp![
                                                                   0]

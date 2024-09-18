@@ -655,11 +655,11 @@ class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
                                                               .listRptProspekUeBp![
                                                                   0]
                                                               .prospekUeBp >
-                                                          0 &&
+                                                          0 ||
                                                       dataProspekUeBP
                                                               .listRptProspekUeBp![
                                                                   0]
-                                                              .prospekUeBp >
+                                                              .ueBp >
                                                           0
                                                   ? ListView.builder(
                                                       physics:
