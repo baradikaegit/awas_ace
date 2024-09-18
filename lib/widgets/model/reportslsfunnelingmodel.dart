@@ -32,6 +32,7 @@ class ListRptFunnelingResponse {
 class ListRptFunneling {
   ListRptFunneling({
     required this.num,
+    required this.periodTipe,
     required this.monthID,
     required this.month,
     required this.year,
@@ -50,6 +51,7 @@ class ListRptFunneling {
     required this.tipe,
   });
   late final int num;
+  late final String periodTipe;
   late final String monthID;
   late final int month;
   late final int year;
@@ -69,6 +71,7 @@ class ListRptFunneling {
 
   ListRptFunneling.fromJson(Map<String, dynamic> json) {
     num = json['num'];
+    periodTipe = json['periodTipe'];
     monthID = json['monthID'];
     month = json['month'];
     year = json['year'];
@@ -90,6 +93,7 @@ class ListRptFunneling {
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['num'] = num;
+    _data['periodTipe'] = periodTipe;
     _data['monthID'] = monthID;
     _data['month'] = month;
     _data['year'] = year;

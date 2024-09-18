@@ -220,16 +220,17 @@ class _ReportPageState extends State<ReportPage> {
                               child: FlipAnimation(
                                 child: InkWell(
                                   onTap: () => Navigator.pushNamed(
-                                      context, linkPageSales[index],
-                                      arguments: linkPageSales[index] ==
-                                              '/funnelingPage'
-                                          ? '$_monthNow/$_yearNow'
-                                          : linkPageSales[index] ==
-                                                      '/prospekVtoSpkPage' ||
-                                                  linkPageSales[index] ==
-                                                      '/prospekUeBPPage'
-                                              ? '$_monthNow/$_yearNow/MTD'
-                                              : null),
+                                    context,
+                                    linkPageSales[index],
+                                    arguments: linkPageSales[index] ==
+                                                '/funnelingPage' ||
+                                            linkPageSales[index] ==
+                                                '/prospekVtoSpkPage' ||
+                                            linkPageSales[index] ==
+                                                '/prospekUeBPPage'
+                                        ? '$_monthNow/$_yearNow/MTD'
+                                        : null,
+                                  ),
                                   child: Column(
                                     children: <Widget>[
                                       const SizedBox(
