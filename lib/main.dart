@@ -18,6 +18,7 @@ import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byss.dart';
 import 'package:awas_ace/widgets/pages/settings/rotg_page.dart';
 import 'package:awas_ace/widgets/pages/sales/boccaisbe.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass.dart';
@@ -139,6 +140,10 @@ class MyApp extends StatelessWidget {
         DOtoGatePassPage.routeName: (context) => const DOtoGatePassPage(),
         GatePasstoSBIPage.routeName: (context) => const GatePasstoSBIPage(),
         TargetSalesActualPage.routeName: (context) => TargetSalesActualPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        TargetSalesActualBySSPage.routeName: (context) =>
+            TargetSalesActualBySSPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         BocCaiSBEPage.routeName: (context) => const BocCaiSBEPage(),

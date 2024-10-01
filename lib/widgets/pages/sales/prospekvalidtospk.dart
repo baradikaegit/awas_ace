@@ -482,133 +482,44 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                     ? const EdgeInsets.fromLTRB(0, 10, 0, 0)
                                     : const EdgeInsets.fromLTRB(0, 10, 0, 15),
                                 child: rptProspekVSpk.when(
-                                  data: (dataHeader) => AppBar(
-                                    automaticallyImplyLeading: false,
-                                    centerTitle: true,
-                                    title: Column(
-                                      children: [
-                                        Text(
-                                          "Prospek Valid to SPK",
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: const Color.fromARGB(
-                                              255,
-                                              255,
-                                              255,
-                                              255,
-                                            ),
-                                            fontSize: ResponsiveValue<double>(
-                                              context,
-                                              conditionalValues: [
-                                                const Condition.equals(
-                                                    name: TABLET,
-                                                    value: 17.0,
-                                                    landscapeValue: 17.0),
-                                                const Condition.largerThan(
-                                                    name: TABLET,
-                                                    value: 17.0,
-                                                    landscapeValue: 17.0,
-                                                    breakpoint: 800),
-                                              ],
-                                              defaultValue: 14.5,
-                                            ).value,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      33,
-                                      44,
-                                      81,
-                                    ),
-                                  ),
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
-                                ),
-                              ),
-                              SizedBox(
-                                child: rptProspekVSpk.when(
-                                  data: (dataPeriod) {
-                                    if (dataPeriod.listRptProspekSpk != null) {
+                                  data: (dataHeader) {
+                                    if (dataHeader.listRptProspekSpk != null) {
                                       AppBar(
                                         automaticallyImplyLeading: false,
-                                        centerTitle: false,
-                                        title: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              5, 0, 0, 0),
-                                          child: Column(
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  "Periode : ${dataPeriod.listRptProspekSpk![0].monthID} ${dataPeriod.listRptProspekSpk![0].year}",
-                                                  style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    fontSize:
-                                                        ResponsiveValue<double>(
-                                                      context,
-                                                      conditionalValues: [
-                                                        const Condition.equals(
-                                                            name: TABLET,
-                                                            value: 12.5,
-                                                            landscapeValue:
-                                                                12.5),
-                                                        const Condition
-                                                            .largerThan(
-                                                            name: TABLET,
-                                                            value: 12.5,
-                                                            landscapeValue:
-                                                                12.5,
-                                                            breakpoint: 800),
-                                                      ],
-                                                      defaultValue: 11.5,
-                                                    ).value,
-                                                  ),
+                                        centerTitle: true,
+                                        title: Column(
+                                          children: [
+                                            Text(
+                                              "Prospek Valid to SPK",
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: TextStyle(
+                                                color: const Color.fromARGB(
+                                                  255,
+                                                  255,
+                                                  255,
+                                                  255,
                                                 ),
+                                                fontSize:
+                                                    ResponsiveValue<double>(
+                                                  context,
+                                                  conditionalValues: [
+                                                    const Condition.equals(
+                                                        name: TABLET,
+                                                        value: 17.0,
+                                                        landscapeValue: 17.0),
+                                                    const Condition.largerThan(
+                                                        name: TABLET,
+                                                        value: 17.0,
+                                                        landscapeValue: 17.0,
+                                                        breakpoint: 800),
+                                                  ],
+                                                  defaultValue: 14.5,
+                                                ).value,
+                                                fontWeight: FontWeight.bold,
                                               ),
-                                              Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  "Tanggal Hari ini : $dateNow",
-                                                  style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
-                                                    ),
-                                                    fontSize:
-                                                        ResponsiveValue<double>(
-                                                      context,
-                                                      conditionalValues: [
-                                                        const Condition.equals(
-                                                            name: TABLET,
-                                                            value: 12.5,
-                                                            landscapeValue:
-                                                                12.5),
-                                                        const Condition
-                                                            .largerThan(
-                                                            name: TABLET,
-                                                            value: 12.5,
-                                                            landscapeValue:
-                                                                12.5,
-                                                            breakpoint: 800),
-                                                      ],
-                                                      defaultValue: 11.5,
-                                                    ).value,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                          ],
                                         ),
                                         backgroundColor: const Color.fromARGB(
                                           255,
@@ -617,11 +528,111 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                           81,
                                         ),
                                       );
-                                    } else {
-                                      notActivetoken;
                                     }
                                     return null;
                                   },
+                                  error: (err, stack) => Text('Error $err'),
+                                  loading: () => const Center(child: Text('')),
+                                ),
+                              ),
+                              SizedBox(
+                                child: rptProspekVSpk.when(
+                                  data: (dataPeriod) => (dataPeriod
+                                              .listRptProspekSpk !=
+                                          null)
+                                      ? AppBar(
+                                          automaticallyImplyLeading: false,
+                                          centerTitle: false,
+                                          title: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                5, 0, 0, 0),
+                                            child: Column(
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Periode : ${dataPeriod.listRptProspekSpk![0].monthID} ${dataPeriod.listRptProspekSpk![0].year}",
+                                                    style: TextStyle(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      fontSize: ResponsiveValue<
+                                                          double>(
+                                                        context,
+                                                        conditionalValues: [
+                                                          const Condition
+                                                              .equals(
+                                                              name: TABLET,
+                                                              value: 12.5,
+                                                              landscapeValue:
+                                                                  12.5),
+                                                          const Condition
+                                                              .largerThan(
+                                                              name: TABLET,
+                                                              value: 12.5,
+                                                              landscapeValue:
+                                                                  12.5,
+                                                              breakpoint: 800),
+                                                        ],
+                                                        defaultValue: 11.5,
+                                                      ).value,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Tanggal Hari ini : $dateNow",
+                                                    style: TextStyle(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      fontSize: ResponsiveValue<
+                                                          double>(
+                                                        context,
+                                                        conditionalValues: [
+                                                          const Condition
+                                                              .equals(
+                                                              name: TABLET,
+                                                              value: 12.5,
+                                                              landscapeValue:
+                                                                  12.5),
+                                                          const Condition
+                                                              .largerThan(
+                                                              name: TABLET,
+                                                              value: 12.5,
+                                                              landscapeValue:
+                                                                  12.5,
+                                                              breakpoint: 800),
+                                                        ],
+                                                        defaultValue: 11.5,
+                                                      ).value,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          backgroundColor: const Color.fromARGB(
+                                            255,
+                                            33,
+                                            44,
+                                            81,
+                                          ),
+                                        )
+                                      : const Column(
+                                          children: [],
+                                        ),
                                   error: (err, stack) => Text('Error $err'),
                                   loading: () => const Center(child: Text('')),
                                 ),

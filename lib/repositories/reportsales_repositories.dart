@@ -30,6 +30,8 @@ abstract class IReportSalesRepository {
       String linkPageObj);
   Future<ListRptTSalesActualResponse> fecthListDataTSalesActual(
       String linkPageObj);
+  Future<ListRptTSalesActualResponse> fecthListDataTSalesActualBySS(
+      String linkPageObj);
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
@@ -296,5 +298,30 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptTSalesActual =
         ListRptTSalesActualResponse.fromJson(jsonObjRptTSalesActual);
     return responseGetRptTSalesActual;
+  }
+
+  //Target Sales Actual By SS
+  @override
+  Future<ListRptTSalesActualResponse> fecthListDataTSalesActualBySS(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptTSalesActualBySS =
+        "${_host}GetReportTSalesActualBySS/$linkPageObj";
+
+    var resultGetRptTSalesActualBySS =
+        await http.get(Uri.parse(urlGetRptTSalesActualBySS), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptTSalesActualBySS =
+        jsonDecode(resultGetRptTSalesActualBySS.body);
+
+    var responseGetRptTSalesActualBySS =
+        ListRptTSalesActualResponse.fromJson(jsonObjRptTSalesActualBySS);
+    return responseGetRptTSalesActualBySS;
   }
 }

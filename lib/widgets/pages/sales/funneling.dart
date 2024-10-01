@@ -572,92 +572,97 @@ class _FunnelingPageState extends State<FunnelingPage> {
                               ),
                               SizedBox(
                                 child: rptFunneling.when(
-                                  data: (dataPeriod) {
-                                    if (dataPeriod.listRptFunneling != null) {
-                                      AppBar(
-                                        automaticallyImplyLeading: false,
-                                        centerTitle: false,
-                                        title: Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              5, 0, 0, 0),
-                                          child: Column(
-                                            children: [
-                                              Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  "Periode : ${dataPeriod.listRptFunneling![0].monthID} ${dataPeriod.listRptFunneling![0].year}",
-                                                  style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
+                                  data: (dataPeriod) => (dataPeriod
+                                              .listRptFunneling !=
+                                          null)
+                                      ? AppBar(
+                                          automaticallyImplyLeading: false,
+                                          centerTitle: false,
+                                          title: Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                5, 0, 0, 0),
+                                            child: Column(
+                                              children: [
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Periode : ${dataPeriod.listRptFunneling![0].monthID} ${dataPeriod.listRptFunneling![0].year}",
+                                                    style: TextStyle(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      fontSize: ResponsiveValue<
+                                                          double>(
+                                                        context,
+                                                        conditionalValues: [
+                                                          const Condition
+                                                              .equals(
+                                                              name: TABLET,
+                                                              value: 12.5,
+                                                              landscapeValue:
+                                                                  12.5),
+                                                          const Condition
+                                                              .largerThan(
+                                                              name: TABLET,
+                                                              value: 12.5,
+                                                              landscapeValue:
+                                                                  12.5,
+                                                              breakpoint: 800),
+                                                        ],
+                                                        defaultValue: 11.5,
+                                                      ).value,
                                                     ),
-                                                    fontSize:
-                                                        ResponsiveValue<double>(
-                                                      context,
-                                                      conditionalValues: [
-                                                        const Condition.equals(
-                                                            name: TABLET,
-                                                            value: 12.5,
-                                                            landscapeValue:
-                                                                12.5),
-                                                        const Condition
-                                                            .largerThan(
-                                                            name: TABLET,
-                                                            value: 12.5,
-                                                            landscapeValue:
-                                                                12.5,
-                                                            breakpoint: 800),
-                                                      ],
-                                                      defaultValue: 11.5,
-                                                    ).value,
                                                   ),
                                                 ),
-                                              ),
-                                              Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  "Tanggal Hari ini : $dateNow",
-                                                  style: TextStyle(
-                                                    color: const Color.fromARGB(
-                                                      255,
-                                                      255,
-                                                      255,
-                                                      255,
+                                                Align(
+                                                  alignment:
+                                                      Alignment.centerLeft,
+                                                  child: Text(
+                                                    "Tanggal Hari ini : $dateNow",
+                                                    style: TextStyle(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      fontSize: ResponsiveValue<
+                                                          double>(
+                                                        context,
+                                                        conditionalValues: [
+                                                          const Condition
+                                                              .equals(
+                                                              name: TABLET,
+                                                              value: 12.5,
+                                                              landscapeValue:
+                                                                  12.5),
+                                                          const Condition
+                                                              .largerThan(
+                                                              name: TABLET,
+                                                              value: 12.5,
+                                                              landscapeValue:
+                                                                  12.5,
+                                                              breakpoint: 800),
+                                                        ],
+                                                        defaultValue: 11.5,
+                                                      ).value,
                                                     ),
-                                                    fontSize:
-                                                        ResponsiveValue<double>(
-                                                      context,
-                                                      conditionalValues: [
-                                                        const Condition.equals(
-                                                            name: TABLET,
-                                                            value: 12.5,
-                                                            landscapeValue:
-                                                                12.5),
-                                                        const Condition
-                                                            .largerThan(
-                                                            name: TABLET,
-                                                            value: 12.5,
-                                                            landscapeValue:
-                                                                12.5,
-                                                            breakpoint: 800),
-                                                      ],
-                                                      defaultValue: 11.5,
-                                                    ).value,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                              ],
+                                            ),
                                           ),
+                                          backgroundColor: Colors.transparent,
+                                        )
+                                      : const Column(
+                                          children: [],
                                         ),
-                                        backgroundColor: Colors.transparent,
-                                      );
-                                    } else {
-                                      notActivetoken;
-                                    }
-                                    return null;
-                                  },
                                   error: (err, stack) => Text('Error $err'),
                                   loading: () => const Center(child: Text('')),
                                 ),

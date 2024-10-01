@@ -5,8 +5,7 @@ import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslstargetslsactmodel.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
-import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
-import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byss.dart';
+
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,13 +14,14 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class TargetSalesActualPage extends StatefulWidget {
+class TargetSalesActualBySSPage extends StatefulWidget {
   final Object? linkPageObj;
-  const TargetSalesActualPage({super.key, required this.linkPageObj});
+  const TargetSalesActualBySSPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/targetSalesActualPage";
+  static const String routeName = "/targetSalesActualBySSPage";
   @override
-  State<TargetSalesActualPage> createState() => _TargetSalesActualPageState();
+  State<TargetSalesActualBySSPage> createState() =>
+      _TargetSalesActualBySSPageState();
 }
 
 class ModelMonth {
@@ -30,7 +30,7 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _TargetSalesActualPageState extends State<TargetSalesActualPage>
+class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
     with TickerProviderStateMixin {
   Widget titleBar = const Text(
     "Target Sales Actual vs Actual",
@@ -322,7 +322,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
                     final rptTSalesActual =
-                        ref.watch(reportTargetSalesActual(linkPageObj));
+                        ref.watch(reportTargetSalesActualBySS(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -417,13 +417,20 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                     .listRptTSalesActual![
                                                                         0]
                                                                     .year;
+
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .title;
+
                                                             var linkResultPeriodTipe =
-                                                                '$monthNow/$yearNow/$tipePeriode';
+                                                                '$monthNow/$yearNow/$tipePeriode/$branchCode';
 
                                                             Navigator
                                                                 .pushReplacementNamed(
                                                               context,
-                                                              TargetSalesActualPage
+                                                              TargetSalesActualBySSPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultPeriodTipe,
@@ -503,13 +510,19 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                         0]
                                                                     .periodTipe;
 
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .title;
+
                                                             var linkResultMonth =
-                                                                '$monthSelected/$yearNow/$periodTipe';
+                                                                '$monthSelected/$yearNow/$periodTipe/$branchCode';
 
                                                             Navigator
                                                                 .pushReplacementNamed(
                                                               context,
-                                                              TargetSalesActualPage
+                                                              TargetSalesActualBySSPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultMonth,
@@ -588,12 +601,18 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                         0]
                                                                     .periodTipe;
 
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .title;
+
                                                             var linkResultYear =
-                                                                '$monthNow/$yearSelected/$periodTipe';
+                                                                '$monthNow/$yearSelected/$periodTipe/$branchCode';
 
                                                             Navigator.pushNamed(
                                                               context,
-                                                              TargetSalesActualPage
+                                                              TargetSalesActualBySSPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultYear,
@@ -800,8 +819,9 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportTargetSalesActual(
-                                        linkPageObj.toString()));
+                                    return ref.refresh(
+                                        reportTargetSalesActualBySS(
+                                            linkPageObj.toString()));
                                   },
                                   child: rptTSalesActual.when(
                                     data: (dataTSalesActual) {
@@ -1538,7 +1558,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
@@ -1770,7 +1790,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
@@ -2002,7 +2022,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
@@ -2234,7 +2254,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
@@ -2470,7 +2490,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
