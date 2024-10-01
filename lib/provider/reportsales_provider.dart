@@ -3,6 +3,7 @@ import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
+import 'package:awas_ace/widgets/model/reportslstargetslsactmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportSalesRepositoryProvider =
@@ -78,4 +79,11 @@ final reportProspekUeBPBySales = FutureProvider.autoDispose
   final repositoryProspekUeBPBySales = ref.watch(reportSalesRepositoryProvider);
   return repositoryProspekUeBPBySales
       .fecthListDataProspekUeBPBySales(linkPageObj);
+});
+
+//list report target sales actual
+final reportTargetSalesActual = FutureProvider.autoDispose
+    .family<ListRptTSalesActualResponse, String>((ref, linkPageObj) async {
+  final repositoryTSalesActual = ref.watch(reportSalesRepositoryProvider);
+  return repositoryTSalesActual.fecthListDataTSalesActual(linkPageObj);
 });

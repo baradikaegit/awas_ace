@@ -227,7 +227,9 @@ class _ReportPageState extends State<ReportPage> {
                                             linkPageSales[index] ==
                                                 '/prospekVtoSpkPage' ||
                                             linkPageSales[index] ==
-                                                '/prospekUeBPPage'
+                                                '/prospekUeBPPage' ||
+                                            linkPageSales[index] ==
+                                                '/targetSalesActualPage'
                                         ? '$_monthNow/$_yearNow/MTD'
                                         : null,
                                   ),

@@ -138,8 +138,9 @@ class MyApp extends StatelessWidget {
             const MonitProfitMakerPage(),
         DOtoGatePassPage.routeName: (context) => const DOtoGatePassPage(),
         GatePasstoSBIPage.routeName: (context) => const GatePasstoSBIPage(),
-        TargetSalesActualPage.routeName: (context) =>
-            const TargetSalesActualPage(),
+        TargetSalesActualPage.routeName: (context) => TargetSalesActualPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         BocCaiSBEPage.routeName: (context) => const BocCaiSBEPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),

@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
+import 'package:awas_ace/widgets/model/reportslstargetslsactmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,6 +27,8 @@ abstract class IReportSalesRepository {
   Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBPBySS(
       String linkPageObj);
   Future<ListRptProspekUeBpResponse> fecthListDataProspekUeBPBySales(
+      String linkPageObj);
+  Future<ListRptTSalesActualResponse> fecthListDataTSalesActual(
       String linkPageObj);
 }
 
@@ -270,5 +273,28 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptProspekUeBPBySales =
         ListRptProspekUeBpResponse.fromJson(jsonObjRptProspekUeBPBySales);
     return responseGetRptProspekUeBPBySales;
+  }
+
+  //Target Sales Actual
+  @override
+  Future<ListRptTSalesActualResponse> fecthListDataTSalesActual(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptTSalesActual = "${_host}GetReportTSalesActual/$linkPageObj";
+
+    var resultGetRptTSalesActual =
+        await http.get(Uri.parse(urlGetRptTSalesActual), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptTSalesActual = jsonDecode(resultGetRptTSalesActual.body);
+
+    var responseGetRptTSalesActual =
+        ListRptTSalesActualResponse.fromJson(jsonObjRptTSalesActual);
+    return responseGetRptTSalesActual;
   }
 }
