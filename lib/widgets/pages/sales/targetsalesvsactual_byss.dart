@@ -4,8 +4,7 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslstargetslsactmodel.dart';
-import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
-
+import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byssales.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -1529,34 +1528,19 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                             InkWell(
                                                                                               onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
                                                                                                   ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
+                                                                                                  : () {
+                                                                                                      var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
+                                                                                                      var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
+                                                                                                      var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
+                                                                                                      var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
+                                                                                                      var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
 
-                                                                                                          print('$month/$year/$periodTipe/$branchCode/$ssCode');
-
-                                                                                                          // Navigator.pushNamed(
-                                                                                                          //   context,
-                                                                                                          //   ProspekUeBPSalesPage.routeName,
-                                                                                                          //   arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          // );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
+                                                                                                      Navigator.pushNamed(
+                                                                                                        context,
+                                                                                                        TargetSalesActualBySalesPage.routeName,
+                                                                                                        arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                                      );
+                                                                                                    },
                                                                                               child: Text(
                                                                                                 dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
@@ -1763,32 +1747,19 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                             InkWell(
                                                                                               onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
                                                                                                   ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
+                                                                                                  : () {
+                                                                                                      var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
+                                                                                                      var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
+                                                                                                      var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
+                                                                                                      var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
+                                                                                                      var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
 
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            ProspekUeBPSalesPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
+                                                                                                      Navigator.pushNamed(
+                                                                                                        context,
+                                                                                                        TargetSalesActualBySalesPage.routeName,
+                                                                                                        arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                                      );
+                                                                                                    },
                                                                                               child: Text(
                                                                                                 dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
@@ -1995,32 +1966,19 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                             InkWell(
                                                                                               onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
                                                                                                   ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
+                                                                                                  : () {
+                                                                                                      var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
+                                                                                                      var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
+                                                                                                      var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
+                                                                                                      var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
+                                                                                                      var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
 
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            ProspekUeBPSalesPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
+                                                                                                      Navigator.pushNamed(
+                                                                                                        context,
+                                                                                                        TargetSalesActualBySalesPage.routeName,
+                                                                                                        arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                                      );
+                                                                                                    },
                                                                                               child: Text(
                                                                                                 dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
@@ -2227,32 +2185,19 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                             InkWell(
                                                                                               onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
                                                                                                   ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
+                                                                                                  : () {
+                                                                                                      var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
+                                                                                                      var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
+                                                                                                      var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
+                                                                                                      var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
+                                                                                                      var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
 
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            ProspekUeBPSalesPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
+                                                                                                      Navigator.pushNamed(
+                                                                                                        context,
+                                                                                                        TargetSalesActualBySalesPage.routeName,
+                                                                                                        arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                                      );
+                                                                                                    },
                                                                                               child: Text(
                                                                                                 dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,
@@ -2459,36 +2404,19 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                             InkWell(
                                                                                               onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
                                                                                                   ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
+                                                                                                  : () {
+                                                                                                      var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
+                                                                                                      var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
+                                                                                                      var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
+                                                                                                      var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
+                                                                                                      var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
 
-                                                                                                          print('$month/$year/$periodTipe/$branchCode');
-
-                                                                                                          // Navigator.pushNamed(
-                                                                                                          //   context,
-                                                                                                          //   ProspekUeBPSalesPage.routeName,
-                                                                                                          //   arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          // );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          print('$month/$year/$periodTipe/$branchCode');
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
+                                                                                                      Navigator.pushNamed(
+                                                                                                        context,
+                                                                                                        TargetSalesActualBySalesPage.routeName,
+                                                                                                        arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                                      );
+                                                                                                    },
                                                                                               child: Text(
                                                                                                 dataRptTSalesActual.headerName,
                                                                                                 style: textStyleDataTable,

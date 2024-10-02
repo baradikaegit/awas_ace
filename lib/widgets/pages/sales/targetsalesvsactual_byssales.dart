@@ -4,8 +4,6 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslstargetslsactmodel.dart';
-import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byss.dart';
-import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byssales.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,13 +12,14 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class TargetSalesActualPage extends StatefulWidget {
+class TargetSalesActualBySalesPage extends StatefulWidget {
   final Object? linkPageObj;
-  const TargetSalesActualPage({super.key, required this.linkPageObj});
+  const TargetSalesActualBySalesPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/targetSalesActualPage";
+  static const String routeName = "/targetSalesActualBySalesPage";
   @override
-  State<TargetSalesActualPage> createState() => _TargetSalesActualPageState();
+  State<TargetSalesActualBySalesPage> createState() =>
+      _TargetSalesActualBySalesPageState();
 }
 
 class ModelMonth {
@@ -29,8 +28,8 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _TargetSalesActualPageState extends State<TargetSalesActualPage>
-    with TickerProviderStateMixin {
+class _TargetSalesActualBySalesPageState
+    extends State<TargetSalesActualBySalesPage> with TickerProviderStateMixin {
   Widget titleBar = const Text(
     "Target Sales Actual vs Actual",
     style: TextStyle(color: Colors.white),
@@ -321,7 +320,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
                     final rptTSalesActual =
-                        ref.watch(reportTargetSalesActual(linkPageObj));
+                        ref.watch(reportTargetSalesActualBySales(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -416,13 +415,26 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                     .listRptTSalesActual![
                                                                         0]
                                                                     .year;
+
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .title;
+
+                                                            var ssCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .headerCode2;
+
                                                             var linkResultPeriodTipe =
-                                                                '$monthNow/$yearNow/$tipePeriode';
+                                                                '$monthNow/$yearNow/$tipePeriode/$branchCode/$ssCode';
 
                                                             Navigator
                                                                 .pushReplacementNamed(
                                                               context,
-                                                              TargetSalesActualPage
+                                                              TargetSalesActualBySalesPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultPeriodTipe,
@@ -502,13 +514,25 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                         0]
                                                                     .periodTipe;
 
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .title;
+
+                                                            var ssCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .headerCode2;
+
                                                             var linkResultMonth =
-                                                                '$monthSelected/$yearNow/$periodTipe';
+                                                                '$monthSelected/$yearNow/$periodTipe/$branchCode/$ssCode';
 
                                                             Navigator
                                                                 .pushReplacementNamed(
                                                               context,
-                                                              TargetSalesActualPage
+                                                              TargetSalesActualBySalesPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultMonth,
@@ -587,12 +611,24 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                         0]
                                                                     .periodTipe;
 
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .title;
+
+                                                            var ssCode =
+                                                                dataSelectOpt
+                                                                    .listRptTSalesActual![
+                                                                        0]
+                                                                    .headerCode2;
+
                                                             var linkResultYear =
-                                                                '$monthNow/$yearSelected/$periodTipe';
+                                                                '$monthNow/$yearSelected/$periodTipe/$branchCode/$ssCode';
 
                                                             Navigator.pushNamed(
                                                               context,
-                                                              TargetSalesActualPage
+                                                              TargetSalesActualBySalesPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultYear,
@@ -799,8 +835,9 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportTargetSalesActual(
-                                        linkPageObj.toString()));
+                                    return ref.refresh(
+                                        reportTargetSalesActualBySales(
+                                            linkPageObj.toString()));
                                   },
                                   child: rptTSalesActual.when(
                                     data: (dataTSalesActual) {
@@ -1505,39 +1542,9 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                         ),
                                                                                         cells: <DataCell>[
                                                                                           DataCell(
-                                                                                            InkWell(
-                                                                                              onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
-                                                                                                  ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySalesPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
-                                                                                              child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
-                                                                                                style: textStyleDataTable,
-                                                                                              ),
+                                                                                            Text(
+                                                                                              dataRptTSalesActual.headerName,
+                                                                                              style: textStyleDataTable,
                                                                                             ),
                                                                                           ),
                                                                                           DataCell(
@@ -1737,39 +1744,9 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                         ),
                                                                                         cells: <DataCell>[
                                                                                           DataCell(
-                                                                                            InkWell(
-                                                                                              onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
-                                                                                                  ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySalesPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
-                                                                                              child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
-                                                                                                style: textStyleDataTable,
-                                                                                              ),
+                                                                                            Text(
+                                                                                              dataRptTSalesActual.headerName,
+                                                                                              style: textStyleDataTable,
                                                                                             ),
                                                                                           ),
                                                                                           DataCell(
@@ -1969,39 +1946,9 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                         ),
                                                                                         cells: <DataCell>[
                                                                                           DataCell(
-                                                                                            InkWell(
-                                                                                              onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
-                                                                                                  ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySalesPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
-                                                                                              child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
-                                                                                                style: textStyleDataTable,
-                                                                                              ),
+                                                                                            Text(
+                                                                                              dataRptTSalesActual.headerName,
+                                                                                              style: textStyleDataTable,
                                                                                             ),
                                                                                           ),
                                                                                           DataCell(
@@ -2201,39 +2148,9 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                         ),
                                                                                         cells: <DataCell>[
                                                                                           DataCell(
-                                                                                            InkWell(
-                                                                                              onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
-                                                                                                  ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySalesPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
-                                                                                              child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
-                                                                                                style: textStyleDataTable,
-                                                                                              ),
+                                                                                            Text(
+                                                                                              dataRptTSalesActual.headerName,
+                                                                                              style: textStyleDataTable,
                                                                                             ),
                                                                                           ),
                                                                                           DataCell(
@@ -2433,39 +2350,9 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                         ),
                                                                                         cells: <DataCell>[
                                                                                           DataCell(
-                                                                                            InkWell(
-                                                                                              onTap: dataTSalesActual.listRptTSalesActual![indexObj].headerCode == 'TOTAL' || dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'Sales' || dataTSalesActual.listRptTSalesActual![indexObj].headerName == 'TOTAL'
-                                                                                                  ? () {}
-                                                                                                  : dataTSalesActual.listRptTSalesActual![indexObj].tipe == 'SS'
-                                                                                                      ? () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].title;
-                                                                                                          var ssCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySalesPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
-                                                                                                          );
-                                                                                                        }
-                                                                                                      : () {
-                                                                                                          var month = dataTSalesActual.listRptTSalesActual![indexObj].month.toString();
-                                                                                                          var year = dataTSalesActual.listRptTSalesActual![indexObj].year.toString();
-                                                                                                          var periodTipe = dataTSalesActual.listRptTSalesActual![indexObj].periodTipe;
-                                                                                                          var branchCode = dataTSalesActual.listRptTSalesActual![indexObj].headerCode;
-
-                                                                                                          Navigator.pushNamed(
-                                                                                                            context,
-                                                                                                            TargetSalesActualBySSPage.routeName,
-                                                                                                            arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                                          );
-                                                                                                        },
-                                                                                              child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
-                                                                                                style: textStyleDataTable,
-                                                                                              ),
+                                                                                            Text(
+                                                                                              dataRptTSalesActual.headerName,
+                                                                                              style: textStyleDataTable,
                                                                                             ),
                                                                                           ),
                                                                                           DataCell(

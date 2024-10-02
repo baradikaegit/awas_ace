@@ -94,3 +94,12 @@ final reportTargetSalesActualBySS = FutureProvider.autoDispose
   final repositoryTSalesActualBySS = ref.watch(reportSalesRepositoryProvider);
   return repositoryTSalesActualBySS.fecthListDataTSalesActualBySS(linkPageObj);
 });
+
+//list report target sales actual by sales
+final reportTargetSalesActualBySales = FutureProvider.autoDispose
+    .family<ListRptTSalesActualResponse, String>((ref, linkPageObj) async {
+  final repositoryTSalesActualBySales =
+      ref.watch(reportSalesRepositoryProvider);
+  return repositoryTSalesActualBySales
+      .fecthListDataTSalesActualBySales(linkPageObj);
+});
