@@ -55,8 +55,7 @@ class _ReportPageState extends State<ReportPage> {
     '/gatePasstoSBIPage',
     '/targetSalesActualPage',
     '/',
-    '/',
-    '/',
+    '/stockByModelPage',
   ];
 
   List menuRolesASGR = [

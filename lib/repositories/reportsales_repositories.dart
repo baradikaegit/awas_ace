@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsstockmodel.dart';
 import 'package:awas_ace/widgets/model/reportslstargetslsactmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -34,6 +35,7 @@ abstract class IReportSalesRepository {
       String linkPageObj);
   Future<ListRptTSalesActualResponse> fecthListDataTSalesActualBySales(
       String linkPageObj);
+  Future<ListRptStockByModelResponse> fecthListDataStockByModel();
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
@@ -350,5 +352,27 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptTSalesActualBySales =
         ListRptTSalesActualResponse.fromJson(jsonObjRptTSalesActualBySales);
     return responseGetRptTSalesActualBySales;
+  }
+
+  //Stock By Model
+  @override
+  Future<ListRptStockByModelResponse> fecthListDataStockByModel() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptStockByModel = "${_host}GetReportStockByModel";
+
+    var resultGetRptStockByModel =
+        await http.get(Uri.parse(urlGetRptStockByModel), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptStockByModel = jsonDecode(resultGetRptStockByModel.body);
+
+    var responseGetRptStockByModel =
+        ListRptStockByModelResponse.fromJson(jsonObjRptStockByModel);
+    return responseGetRptStockByModel;
   }
 }

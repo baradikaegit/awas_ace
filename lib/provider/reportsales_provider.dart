@@ -3,6 +3,7 @@ import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsstockmodel.dart';
 import 'package:awas_ace/widgets/model/reportslstargetslsactmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -102,4 +103,11 @@ final reportTargetSalesActualBySales = FutureProvider.autoDispose
       ref.watch(reportSalesRepositoryProvider);
   return repositoryTSalesActualBySales
       .fecthListDataTSalesActualBySales(linkPageObj);
+});
+
+//list report stock by model
+final reportStockByModel =
+    FutureProvider.autoDispose<ListRptStockByModelResponse>((ref) async {
+  final repositoryStockByModel = ref.watch(reportSalesRepositoryProvider);
+  return repositoryStockByModel.fecthListDataStockByModel();
 });

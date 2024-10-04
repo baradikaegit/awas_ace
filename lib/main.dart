@@ -18,6 +18,7 @@ import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/stockbymodel.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byssales.dart';
 import 'package:awas_ace/widgets/pages/settings/rotg_page.dart';
@@ -151,6 +152,7 @@ class MyApp extends StatelessWidget {
             TargetSalesActualBySalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
+        StockByModelPage.routeName: (context) => const StockByModelPage(),
         BocCaiSBEPage.routeName: (context) => const BocCaiSBEPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
