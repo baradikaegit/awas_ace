@@ -4,7 +4,7 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslsstockmodel.dart';
-import 'package:awas_ace/widgets/pages/sales/stockbymodel_vtype.dart';
+import 'package:awas_ace/widgets/pages/sales/stockbymodel_vcolor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -12,13 +12,14 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class StockByModelPage extends StatefulWidget {
-  const StockByModelPage({super.key});
+class StockByModelVtypePage extends StatefulWidget {
+  final Object? linkPageObj;
+  const StockByModelVtypePage({super.key, this.linkPageObj});
 
-  static const String routeName = "/stockByModelPage";
+  static const String routeName = "/stockByModelVtypePage";
 
   @override
-  State<StockByModelPage> createState() => _StockByModelPageState();
+  State<StockByModelVtypePage> createState() => _StockByModelVtypePageState();
 }
 
 class ModelMonth {
@@ -27,7 +28,7 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _StockByModelPageState extends State<StockByModelPage> {
+class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
   Widget titleBar = const Text(
     "Total Stock By Model",
     style: TextStyle(color: Colors.white),
@@ -125,10 +126,13 @@ class _StockByModelPageState extends State<StockByModelPage> {
                 const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
+                    var linkPageObj = widget.linkPageObj.toString();
+
                     final String dateNow =
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
-                    final rptStockByModel = ref.watch(reportStockByModel);
+                    final rptStockByModel =
+                        ref.watch(reportStockByModelVtype(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -199,7 +203,8 @@ class _StockByModelPageState extends State<StockByModelPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportStockByModel);
+                                    return ref.refresh(
+                                        reportStockByModelVtype(linkPageObj));
                                   },
                                   child: rptStockByModel.when(
                                     data: (dataStockByModel) {
@@ -306,7 +311,7 @@ class _StockByModelPageState extends State<StockByModelPage> {
                                                           child: Container(
                                                             constraints:
                                                                 const BoxConstraints(
-                                                              minHeight: 600,
+                                                              minHeight: 200,
                                                               minWidth: double
                                                                   .infinity,
                                                             ),
@@ -526,22 +531,23 @@ class _StockByModelPageState extends State<StockByModelPage> {
                                                                       cells: <DataCell>[
                                                                         DataCell(
                                                                           InkWell(
-                                                                            onTap: dataStockByModel.listRptStockByModel![i].headerName == 'ASTRIDO'
+                                                                            onTap: dataStockByModel.listRptStockByModel![i].headerName == 'TOTAL'
                                                                                 ? () {}
                                                                                 : () {
-                                                                                    var vCode = dataStockByModel.listRptStockByModel![i].headerCode;
+                                                                                    var linkCode = dataStockByModel.listRptStockByModel![i].linkCode;
+                                                                                    var vTcode = dataStockByModel.listRptStockByModel![i].headerCode;
 
                                                                                     Navigator.pushNamed(
                                                                                       context,
-                                                                                      StockByModelVtypePage.routeName,
-                                                                                      arguments: vCode,
+                                                                                      StockByModelVcolorPage.routeName,
+                                                                                      arguments: '$linkCode/$vTcode',
                                                                                     );
                                                                                   },
                                                                             child:
                                                                                 Text(
                                                                               dataStockByModel.listRptStockByModel![i].headerName,
                                                                               style: TextStyle(
-                                                                                color: dataStockByModel.listRptStockByModel![i].headerCode == 'ASTRIDO'
+                                                                                color: dataStockByModel.listRptStockByModel![i].headerCode == 'TOTAL'
                                                                                     ? const Color.fromARGB(
                                                                                         255,
                                                                                         255,
@@ -592,10 +598,7 @@ class _StockByModelPageState extends State<StockByModelPage> {
                                                                       ],
                                                                     ),
                                                               ],
-
-                                                              // },
                                                             ),
-                                                            // ),
                                                           ),
                                                         ),
                                                         Padding(
@@ -852,22 +855,23 @@ class _StockByModelPageState extends State<StockByModelPage> {
                                                                       cells: <DataCell>[
                                                                         DataCell(
                                                                           InkWell(
-                                                                            onTap: dataStockByModel.listRptStockByModel![i].headerName == 'ASTRIDO'
+                                                                            onTap: dataStockByModel.listRptStockByModel![i].headerName == 'TOTAL'
                                                                                 ? () {}
                                                                                 : () {
-                                                                                    var vCode = dataStockByModel.listRptStockByModel![i].headerCode;
+                                                                                    var linkCode = dataStockByModel.listRptStockByModel![i].linkCode;
+                                                                                    var vTcode = dataStockByModel.listRptStockByModel![i].headerCode;
 
                                                                                     Navigator.pushNamed(
                                                                                       context,
-                                                                                      StockByModelVtypePage.routeName,
-                                                                                      arguments: vCode,
+                                                                                      StockByModelVcolorPage.routeName,
+                                                                                      arguments: '$linkCode/$vTcode',
                                                                                     );
                                                                                   },
                                                                             child:
                                                                                 Text(
                                                                               dataStockByModel.listRptStockByModel![i].headerName,
                                                                               style: TextStyle(
-                                                                                color: dataStockByModel.listRptStockByModel![i].headerCode == 'ASTRIDO'
+                                                                                color: dataStockByModel.listRptStockByModel![i].headerCode == 'TOTAL'
                                                                                     ? const Color.fromARGB(
                                                                                         255,
                                                                                         255,
@@ -950,10 +954,7 @@ class _StockByModelPageState extends State<StockByModelPage> {
                                                                       ],
                                                                     ),
                                                               ],
-
-                                                              // },
                                                             ),
-                                                            // ),
                                                           ),
                                                         ),
                                                       ],
@@ -1002,7 +1003,7 @@ dynamic toDynamic(List<ListRptStockByModel> objList) {
   List<DataStockByModel> barData = [];
 
   for (var i = 1; i < objList.length + 1; i++) {
-    if (objList[objList.length - i].headerName != 'ASTRIDO' &&
+    if (objList[objList.length - i].headerName != 'TOTAL' &&
         objList[objList.length - i].tipe == 'M1') {
       barData.add(DataStockByModel(
         objList[objList.length - i].headerName,

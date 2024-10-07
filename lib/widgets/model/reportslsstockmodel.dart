@@ -42,6 +42,7 @@ class ListRptStockByModel {
     required this.umurTerlama,
     required this.title,
     required this.tipe,
+    required this.linkCode,
   });
   late final int num;
   late final String headerCode;
@@ -54,6 +55,7 @@ class ListRptStockByModel {
   late final int umurTerlama;
   late final String title;
   late final String tipe;
+  late final String linkCode;
 
   ListRptStockByModel.fromJson(Map<String, dynamic> json) {
     num = json['num'];
@@ -67,6 +69,7 @@ class ListRptStockByModel {
     umurTerlama = json['umurTerlama'];
     title = json['title'];
     tipe = json['tipe'];
+    linkCode = json['linkCode'];
   }
 
   Map<String, dynamic> toJson() {
@@ -82,6 +85,7 @@ class ListRptStockByModel {
     _data['umurTerlama'] = umurTerlama;
     _data['title'] = title;
     _data['tipe'] = tipe;
+    _data['linkCode'] = linkCode;
     return _data;
   }
 }

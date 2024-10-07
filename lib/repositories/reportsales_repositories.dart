@@ -36,6 +36,12 @@ abstract class IReportSalesRepository {
   Future<ListRptTSalesActualResponse> fecthListDataTSalesActualBySales(
       String linkPageObj);
   Future<ListRptStockByModelResponse> fecthListDataStockByModel();
+  Future<ListRptStockByModelResponse> fecthListDataStockByModelVtype(
+      String linkPageObj);
+  Future<ListRptStockByModelResponse> fecthListDataStockByModelVcolor(
+      String linkPageObj);
+  Future<ListRptStockByModelResponse> fecthListDataStockByModelVbranch(
+      String linkPageObj);
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
@@ -374,5 +380,80 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptStockByModel =
         ListRptStockByModelResponse.fromJson(jsonObjRptStockByModel);
     return responseGetRptStockByModel;
+  }
+
+  //Stock By Model vtype
+  @override
+  Future<ListRptStockByModelResponse> fecthListDataStockByModelVtype(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptStockByModelVtype =
+        "${_host}GetReportStockByModelVtype/$linkPageObj";
+
+    var resultGetRptStockByModelVtype =
+        await http.get(Uri.parse(urlGetRptStockByModelVtype), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptStockByModelVtype =
+        jsonDecode(resultGetRptStockByModelVtype.body);
+
+    var responseGetRptStockByModelVtype =
+        ListRptStockByModelResponse.fromJson(jsonObjRptStockByModelVtype);
+    return responseGetRptStockByModelVtype;
+  }
+
+  //Stock By Model vcolor
+  @override
+  Future<ListRptStockByModelResponse> fecthListDataStockByModelVcolor(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptStockByModelVcolor =
+        "${_host}GetReportStockByModelVcolor/$linkPageObj";
+
+    var resultGetRptStockByModelVcolor =
+        await http.get(Uri.parse(urlGetRptStockByModelVcolor), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptStockByModelVcolor =
+        jsonDecode(resultGetRptStockByModelVcolor.body);
+
+    var responseGetRptStockByModelVcolor =
+        ListRptStockByModelResponse.fromJson(jsonObjRptStockByModelVcolor);
+    return responseGetRptStockByModelVcolor;
+  }
+
+  //Stock By Model vbranch
+  @override
+  Future<ListRptStockByModelResponse> fecthListDataStockByModelVbranch(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptStockByModelVbranch =
+        "${_host}GetReportStockByModelBranch/$linkPageObj";
+
+    var resultGetRptStockByModelVbranch =
+        await http.get(Uri.parse(urlGetRptStockByModelVbranch), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptStockByModelVbranch =
+        jsonDecode(resultGetRptStockByModelVbranch.body);
+
+    var responseGetRptStockByModelVbranch =
+        ListRptStockByModelResponse.fromJson(jsonObjRptStockByModelVbranch);
+    return responseGetRptStockByModelVbranch;
   }
 }

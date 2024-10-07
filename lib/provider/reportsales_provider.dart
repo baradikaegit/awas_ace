@@ -111,3 +111,28 @@ final reportStockByModel =
   final repositoryStockByModel = ref.watch(reportSalesRepositoryProvider);
   return repositoryStockByModel.fecthListDataStockByModel();
 });
+
+//list report stock by model vtype
+final reportStockByModelVtype = FutureProvider.autoDispose
+    .family<ListRptStockByModelResponse, String>((ref, linkPageObj) async {
+  final repositoryStockByModelVtype = ref.watch(reportSalesRepositoryProvider);
+  return repositoryStockByModelVtype
+      .fecthListDataStockByModelVtype(linkPageObj);
+});
+
+//list report stock by model vcolor
+final reportStockByModelVcolor = FutureProvider.autoDispose
+    .family<ListRptStockByModelResponse, String>((ref, linkPageObj) async {
+  final repositoryStockByModelVcolor = ref.watch(reportSalesRepositoryProvider);
+  return repositoryStockByModelVcolor
+      .fecthListDataStockByModelVcolor(linkPageObj);
+});
+
+//list report stock by model vbranch
+final reportStockByModelVbranch = FutureProvider.autoDispose
+    .family<ListRptStockByModelResponse, String>((ref, linkPageObj) async {
+  final repositoryStockByModelVbranch =
+      ref.watch(reportSalesRepositoryProvider);
+  return repositoryStockByModelVbranch
+      .fecthListDataStockByModelVbranch(linkPageObj);
+});
