@@ -4,6 +4,7 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslsdotogatepass.dart';
+import 'package:awas_ace/widgets/pages/sales/dotogatepass_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_byss.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -1013,8 +1014,9 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode ==
-                                                                                'TOTAL' ||
+                                                                    color: dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode == 'TOTAL' ||
+                                                                            dataDoToGatepass.listRptDoToGatepass![indexObj].tipe ==
+                                                                                'Sales' ||
                                                                             dataDoToGatepass.listRptDoToGatepass![indexObj].headerName ==
                                                                                 'TOTAL'
                                                                         ? const Color
@@ -1073,20 +1075,34 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode == 'TOTAL' || dataDoToGatepass.listRptDoToGatepass![indexObj].headerName == 'TOTAL'
+                                                                          onTap: dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode == 'TOTAL' || dataDoToGatepass.listRptDoToGatepass![indexObj].tipe == 'Sales' || dataDoToGatepass.listRptDoToGatepass![indexObj].headerName == 'TOTAL'
                                                                               ? () {}
-                                                                              : () {
-                                                                                  var month = dataDoToGatepass.listRptDoToGatepass![indexObj].month.toString();
-                                                                                  var year = dataDoToGatepass.listRptDoToGatepass![indexObj].year.toString();
-                                                                                  var periodTipe = dataDoToGatepass.listRptDoToGatepass![indexObj].periodTipe;
-                                                                                  var branchCode = dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode;
+                                                                              : dataDoToGatepass.listRptDoToGatepass![indexObj].tipe == 'SS'
+                                                                                  ? () {
+                                                                                      var month = dataDoToGatepass.listRptDoToGatepass![indexObj].month.toString();
+                                                                                      var year = dataDoToGatepass.listRptDoToGatepass![indexObj].year.toString();
+                                                                                      var periodTipe = dataDoToGatepass.listRptDoToGatepass![indexObj].periodTipe;
+                                                                                      var branchCode = dataDoToGatepass.listRptDoToGatepass![indexObj].title;
+                                                                                      var ssCode = dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode;
 
-                                                                                  Navigator.pushNamed(
-                                                                                    context,
-                                                                                    DOtoGatePassBySSPage.routeName,
-                                                                                    arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                  );
-                                                                                },
+                                                                                      Navigator.pushNamed(
+                                                                                        context,
+                                                                                        DOtoGatePassBySalesPage.routeName,
+                                                                                        arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                      );
+                                                                                    }
+                                                                                  : () {
+                                                                                      var month = dataDoToGatepass.listRptDoToGatepass![indexObj].month.toString();
+                                                                                      var year = dataDoToGatepass.listRptDoToGatepass![indexObj].year.toString();
+                                                                                      var periodTipe = dataDoToGatepass.listRptDoToGatepass![indexObj].periodTipe;
+                                                                                      var branchCode = dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode;
+
+                                                                                      Navigator.pushNamed(
+                                                                                        context,
+                                                                                        DOtoGatePassBySSPage.routeName,
+                                                                                        arguments: '$month/$year/$periodTipe/$branchCode',
+                                                                                      );
+                                                                                    },
                                                                           child:
                                                                               Text(
                                                                             roles == 'SALES SUPERVISOR' || roles == 'KACAB'
