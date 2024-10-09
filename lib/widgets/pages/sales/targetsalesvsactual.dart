@@ -2559,13 +2559,13 @@ dynamic toDynamicCall(List<ListRptTSalesActual> objList) {
   List<DataTSalesActualCall> chartDataCall = <DataTSalesActualCall>[
     DataTSalesActualCall(
       "Target",
-      objList[0].tCall > 0 ? objList[0].tCall : 50,
+      objList[0].tCall > 0 || objList[0].call > 0 ? objList[0].tCall : 50,
       objList[0].tCall > 0 ? objList[0].tCall : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
     DataTSalesActualCall(
       "Actual",
-      objList[0].call > 0 ? objList[0].call : 50,
+      objList[0].call > 0 || objList[0].tCall > 0 ? objList[0].call : 50,
       objList[0].call > 0 ? objList[0].call : 0,
       const Color.fromARGB(155, 0, 255, 170),
     ),
@@ -2586,13 +2586,17 @@ dynamic toDynamicProspect(List<ListRptTSalesActual> objList) {
   List<DataTSalesActualProspect> chartDataProspect = <DataTSalesActualProspect>[
     DataTSalesActualProspect(
       "Target",
-      objList[0].tProspek > 0 ? objList[0].tProspek : 50,
+      objList[0].tProspek > 0 || objList[0].prospek > 0
+          ? objList[0].tProspek
+          : 50,
       objList[0].tProspek > 0 ? objList[0].tProspek : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
     DataTSalesActualProspect(
       "Actual",
-      objList[0].prospek > 0 ? objList[0].prospek : 50,
+      objList[0].prospek > 0 || objList[0].prospek > 0
+          ? objList[0].prospek
+          : 50,
       objList[0].prospek > 0 ? objList[0].prospek : 0,
       const Color.fromARGB(155, 0, 255, 170),
     ),
@@ -2613,13 +2617,13 @@ dynamic toDynamicHot(List<ListRptTSalesActual> objList) {
   List<DataTSalesActualHot> chartDataHot = <DataTSalesActualHot>[
     DataTSalesActualHot(
       "Target",
-      objList[0].tHot > 0 ? objList[0].tHot : 50,
+      objList[0].tHot > 0 || objList[0].hot > 0 ? objList[0].tHot : 50,
       objList[0].tHot > 0 ? objList[0].tHot : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
     DataTSalesActualHot(
       "Actual",
-      objList[0].hot > 0 ? objList[0].hot : 50,
+      objList[0].hot > 0 || objList[0].tHot > 0 ? objList[0].hot : 50,
       objList[0].hot > 0 ? objList[0].hot : 0,
       const Color.fromARGB(155, 0, 255, 170),
     ),
@@ -2640,13 +2644,13 @@ dynamic toDynamicSpk(List<ListRptTSalesActual> objList) {
   List<DataTSalesActualSpk> chartDataSpk = <DataTSalesActualSpk>[
     DataTSalesActualSpk(
       "Target",
-      objList[0].tSpk > 0 ? objList[0].tSpk : 50,
+      objList[0].tSpk > 0 || objList[0].spk > 0 ? objList[0].tSpk : 50,
       objList[0].tSpk > 0 ? objList[0].tSpk : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
     DataTSalesActualSpk(
       "Actual",
-      objList[0].spk > 0 ? objList[0].spk : 50,
+      objList[0].spk > 0 || objList[0].tSpk > 0 ? objList[0].spk : 50,
       objList[0].spk > 0 ? objList[0].spk : 0,
       const Color.fromARGB(155, 0, 255, 170),
     ),
@@ -2667,13 +2671,13 @@ dynamic toDynamic(List<ListRptTSalesActual> objList) {
   List<DataTSalesActualDO> chartData = <DataTSalesActualDO>[
     DataTSalesActualDO(
       "Target",
-      objList[0].tDo > 0 ? objList[0].tDo : 50,
+      objList[0].tDo > 0 || objList[0].dO > 0 ? objList[0].tDo : 50,
       objList[0].tDo > 0 ? objList[0].tDo : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
     DataTSalesActualDO(
       "Actual",
-      objList[0].dO > 0 ? objList[0].dO : 50,
+      objList[0].dO > 0 || objList[0].tDo > 0 ? objList[0].dO : 50,
       objList[0].dO > 0 ? objList[0].dO : 0,
       const Color.fromARGB(155, 0, 255, 170),
     ),
