@@ -506,7 +506,7 @@ class _ProspekUeBPSalesPageState extends State<ProspekUeBPSalesPage> {
                                     title: Column(
                                       children: [
                                         Text(
-                                          "Prospek Valid to SPK",
+                                          "Prospek Ue Bp to Ue Bp",
                                           maxLines: 2,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(

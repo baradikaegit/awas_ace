@@ -1,4 +1,5 @@
 import 'package:awas_ace/repositories/reportsales_repositories.dart';
+import 'package:awas_ace/widgets/model/reportslsdotogatepass.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
@@ -135,4 +136,27 @@ final reportStockByModelVbranch = FutureProvider.autoDispose
       ref.watch(reportSalesRepositoryProvider);
   return repositoryStockByModelVbranch
       .fecthListDataStockByModelVbranch(linkPageObj);
+});
+
+//list report do to gatepass
+final reportDoToGatepass = FutureProvider.autoDispose
+    .family<ListRptDoToGatepassResponse, String>((ref, linkPageObj) async {
+  final repositoryDoToGatepass = ref.watch(reportSalesRepositoryProvider);
+  return repositoryDoToGatepass.fecthListDataDotoGatepass(linkPageObj);
+});
+
+//list report do to gatepass by ss
+final reportDoToGatepassBySS = FutureProvider.autoDispose
+    .family<ListRptDoToGatepassResponse, String>((ref, linkPageObj) async {
+  final repositoryDoToGatepassBySS = ref.watch(reportSalesRepositoryProvider);
+  return repositoryDoToGatepassBySS.fecthListDataDotoGatepassBySS(linkPageObj);
+});
+
+//list report do to gatepass by sales
+final reportDoToGatepassBySales = FutureProvider.autoDispose
+    .family<ListRptDoToGatepassResponse, String>((ref, linkPageObj) async {
+  final repositoryDoToGatepassBySales =
+      ref.watch(reportSalesRepositoryProvider);
+  return repositoryDoToGatepassBySales
+      .fecthListDataDotoGatepassBySales(linkPageObj);
 });

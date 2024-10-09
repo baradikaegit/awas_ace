@@ -674,56 +674,49 @@ class _TargetSalesActualBySalesPageState
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: rptTSalesActual.when(
-                                  data: (dataHeader) {
-                                    if (dataHeader.listRptTSalesActual !=
-                                        null) {
-                                      AppBar(
-                                        automaticallyImplyLeading: false,
-                                        centerTitle: true,
-                                        title: Column(
-                                          children: [
-                                            Text(
-                                              "Cabang ALL",
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  255,
-                                                  255,
-                                                  255,
-                                                ),
-                                                fontSize:
-                                                    ResponsiveValue<double>(
-                                                  context,
-                                                  conditionalValues: [
-                                                    const Condition.equals(
-                                                        name: TABLET,
-                                                        value: 17.0,
-                                                        landscapeValue: 17.0),
-                                                    const Condition.largerThan(
-                                                        name: TABLET,
-                                                        value: 17.0,
-                                                        landscapeValue: 17.0,
-                                                        breakpoint: 800),
-                                                  ],
-                                                  defaultValue: 14.5,
-                                                ).value,
-                                                fontWeight: FontWeight.bold,
-                                              ),
+                                  data: (dataHeader) => AppBar(
+                                    automaticallyImplyLeading: false,
+                                    centerTitle: true,
+                                    title: Column(
+                                      children: [
+                                        Text(
+                                          "Cabang ALL",
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            color: const Color.fromARGB(
+                                              255,
+                                              255,
+                                              255,
+                                              255,
                                             ),
-                                          ],
+                                            fontSize: ResponsiveValue<double>(
+                                              context,
+                                              conditionalValues: [
+                                                const Condition.equals(
+                                                    name: TABLET,
+                                                    value: 17.0,
+                                                    landscapeValue: 17.0),
+                                                const Condition.largerThan(
+                                                    name: TABLET,
+                                                    value: 17.0,
+                                                    landscapeValue: 17.0,
+                                                    breakpoint: 800),
+                                              ],
+                                              defaultValue: 14.5,
+                                            ).value,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
-                                        backgroundColor: const Color.fromARGB(
-                                          255,
-                                          33,
-                                          44,
-                                          81,
-                                        ),
-                                      );
-                                    }
-                                    return null;
-                                  },
+                                      ],
+                                    ),
+                                    backgroundColor: const Color.fromARGB(
+                                      255,
+                                      33,
+                                      44,
+                                      81,
+                                    ),
+                                  ),
                                   error: (err, stack) => Text('Error $err'),
                                   loading: () => const Center(child: Text('')),
                                 ),

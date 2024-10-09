@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/reportslsdotogatepass.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
@@ -41,6 +42,12 @@ abstract class IReportSalesRepository {
   Future<ListRptStockByModelResponse> fecthListDataStockByModelVcolor(
       String linkPageObj);
   Future<ListRptStockByModelResponse> fecthListDataStockByModelVbranch(
+      String linkPageObj);
+  Future<ListRptDoToGatepassResponse> fecthListDataDotoGatepass(
+      String linkPageObj);
+  Future<ListRptDoToGatepassResponse> fecthListDataDotoGatepassBySS(
+      String linkPageObj);
+  Future<ListRptDoToGatepassResponse> fecthListDataDotoGatepassBySales(
       String linkPageObj);
 }
 
@@ -455,5 +462,80 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptStockByModelVbranch =
         ListRptStockByModelResponse.fromJson(jsonObjRptStockByModelVbranch);
     return responseGetRptStockByModelVbranch;
+  }
+
+  //Do to Gatepass
+  @override
+  Future<ListRptDoToGatepassResponse> fecthListDataDotoGatepass(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptDoToGatepass = "${_host}GetReportDoToGatepass/$linkPageObj";
+
+    var resultGetRptDoToGatepass =
+        await http.get(Uri.parse(urlGetRptDoToGatepass), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptStockByModelVbranch =
+        jsonDecode(resultGetRptDoToGatepass.body);
+
+    var responseGetRptDoToGatepass =
+        ListRptDoToGatepassResponse.fromJson(jsonObjRptStockByModelVbranch);
+    return responseGetRptDoToGatepass;
+  }
+
+  //Do to Gatepass by ss
+  @override
+  Future<ListRptDoToGatepassResponse> fecthListDataDotoGatepassBySS(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptDoToGatepassBySS =
+        "${_host}GetReportDoToGatepassBySS/$linkPageObj";
+
+    var resultGetRptDoToGatepassBySS =
+        await http.get(Uri.parse(urlGetRptDoToGatepassBySS), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptStockByModelVbranchBySS =
+        jsonDecode(resultGetRptDoToGatepassBySS.body);
+
+    var responseGetRptDoToGatepassBySS =
+        ListRptDoToGatepassResponse.fromJson(jsonObjRptStockByModelVbranchBySS);
+    return responseGetRptDoToGatepassBySS;
+  }
+
+  //Do to Gatepass by sales
+  @override
+  Future<ListRptDoToGatepassResponse> fecthListDataDotoGatepassBySales(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptDoToGatepassBySales =
+        "${_host}GetReportDoToGatepassBySales/$linkPageObj";
+
+    var resultGetRptDoToGatepassBySales =
+        await http.get(Uri.parse(urlGetRptDoToGatepassBySales), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptStockByModelVbranchBySales =
+        jsonDecode(resultGetRptDoToGatepassBySales.body);
+
+    var responseGetRptDoToGatepassBySales =
+        ListRptDoToGatepassResponse.fromJson(
+            jsonObjRptStockByModelVbranchBySales);
+    return responseGetRptDoToGatepassBySales;
   }
 }

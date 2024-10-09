@@ -4,7 +4,7 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportslsdotogatepass.dart';
-import 'package:awas_ace/widgets/pages/sales/dotogatepass_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/dotogatepass_bysales.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,13 +13,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class DOtoGatePassPage extends StatefulWidget {
+class DOtoGatePassBySSPage extends StatefulWidget {
   final Object? linkPageObj;
-  const DOtoGatePassPage({super.key, required this.linkPageObj});
+  const DOtoGatePassBySSPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/dOtoGatePassPage";
+  static const String routeName = "/dOtoGatePassBySSPage";
   @override
-  State<DOtoGatePassPage> createState() => _DOtoGatePassPageState();
+  State<DOtoGatePassBySSPage> createState() => _DOtoGatePassBySSPageState();
 }
 
 class ModelMonth {
@@ -28,7 +28,7 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
+class _DOtoGatePassBySSPageState extends State<DOtoGatePassBySSPage> {
   Widget titleBar = const Text(
     "DO to Gatepass",
     style: TextStyle(color: Colors.white),
@@ -163,7 +163,7 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
                     final rptdOtoGatepass =
-                        ref.watch(reportDoToGatepass(linkPageObj));
+                        ref.watch(reportDoToGatepassBySS(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -258,13 +258,19 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                                                                     .listRptDoToGatepass![
                                                                         0]
                                                                     .year;
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptDoToGatepass![
+                                                                        0]
+                                                                    .title;
+
                                                             var linkResultPeriodTipe =
-                                                                '$monthNow/$yearNow/$tipePeriode';
+                                                                '$monthNow/$yearNow/$tipePeriode/$branchCode';
 
                                                             Navigator
                                                                 .pushReplacementNamed(
                                                               context,
-                                                              DOtoGatePassPage
+                                                              DOtoGatePassBySSPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultPeriodTipe,
@@ -343,14 +349,19 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                                                                     .listRptDoToGatepass![
                                                                         0]
                                                                     .periodTipe;
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptDoToGatepass![
+                                                                        0]
+                                                                    .title;
 
                                                             var linkResultMonth =
-                                                                '$monthSelected/$yearNow/$periodTipe';
+                                                                '$monthSelected/$yearNow/$periodTipe/$branchCode';
 
                                                             Navigator
                                                                 .pushReplacementNamed(
                                                               context,
-                                                              DOtoGatePassPage
+                                                              DOtoGatePassBySSPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultMonth,
@@ -428,13 +439,18 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                                                                     .listRptDoToGatepass![
                                                                         0]
                                                                     .periodTipe;
+                                                            var branchCode =
+                                                                dataSelectOpt
+                                                                    .listRptDoToGatepass![
+                                                                        0]
+                                                                    .title;
 
                                                             var linkResultYear =
-                                                                '$monthNow/$yearSelected/$periodTipe';
+                                                                '$monthNow/$yearSelected/$periodTipe/$branchCode';
 
                                                             Navigator.pushNamed(
                                                               context,
-                                                              DOtoGatePassPage
+                                                              DOtoGatePassBySSPage
                                                                   .routeName,
                                                               arguments:
                                                                   linkResultYear,
@@ -522,7 +538,7 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                                                 ),
                                               ),
                                               Text(
-                                                "(ALL)",
+                                                "(${dataHeader.listRptDoToGatepass![0].title})",
                                                 maxLines: 2,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
@@ -671,7 +687,7 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportDoToGatepass(
+                                    return ref.refresh(reportDoToGatepassBySS(
                                         linkPageObj.toString()));
                                   },
                                   child: rptdOtoGatepass.when(
@@ -1079,19 +1095,18 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                                                                                   var month = dataDoToGatepass.listRptDoToGatepass![indexObj].month.toString();
                                                                                   var year = dataDoToGatepass.listRptDoToGatepass![indexObj].year.toString();
                                                                                   var periodTipe = dataDoToGatepass.listRptDoToGatepass![indexObj].periodTipe;
-                                                                                  var branchCode = dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode;
+                                                                                  var branchCode = dataDoToGatepass.listRptDoToGatepass![indexObj].title;
+                                                                                  var ssCode = dataDoToGatepass.listRptDoToGatepass![indexObj].headerCode;
 
                                                                                   Navigator.pushNamed(
                                                                                     context,
-                                                                                    DOtoGatePassBySSPage.routeName,
-                                                                                    arguments: '$month/$year/$periodTipe/$branchCode',
+                                                                                    DOtoGatePassBySalesPage.routeName,
+                                                                                    arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
                                                                                   );
                                                                                 },
                                                                           child:
                                                                               Text(
-                                                                            roles == 'SALES SUPERVISOR' || roles == 'KACAB'
-                                                                                ? dataRptDoToGatepass.headerName
-                                                                                : dataRptDoToGatepass.headerCode,
+                                                                            dataRptDoToGatepass.headerName,
                                                                             style:
                                                                                 textStyleDataTable,
                                                                           ),

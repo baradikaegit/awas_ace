@@ -488,84 +488,85 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                     ? const EdgeInsets.fromLTRB(0, 10, 0, 0)
                                     : const EdgeInsets.fromLTRB(0, 10, 0, 15),
                                 child: rptFunneling.when(
-                                  data: (dataHeader) {
-                                    if (dataHeader.listRptFunneling != null) {
-                                      AppBar(
-                                        automaticallyImplyLeading: false,
-                                        centerTitle: true,
-                                        title: Column(
-                                          children: [
-                                            Text(
-                                              "Data Corong (${dataHeader.listRptFunneling![0].title})",
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  255,
-                                                  255,
-                                                  255,
+                                  data: (dataHeader) => (dataHeader
+                                              .listRptFunneling !=
+                                          null)
+                                      ? AppBar(
+                                          automaticallyImplyLeading: false,
+                                          centerTitle: true,
+                                          title: Column(
+                                            children: [
+                                              Text(
+                                                "Data Corong (${dataHeader.listRptFunneling![0].title})",
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  color: const Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    255,
+                                                    255,
+                                                  ),
+                                                  fontSize:
+                                                      ResponsiveValue<double>(
+                                                    context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                          name: TABLET,
+                                                          value: 17.0,
+                                                          landscapeValue: 17.0),
+                                                      const Condition
+                                                          .largerThan(
+                                                          name: TABLET,
+                                                          value: 17.0,
+                                                          landscapeValue: 17.0,
+                                                          breakpoint: 800),
+                                                    ],
+                                                    defaultValue: 14.5,
+                                                  ).value,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                fontSize:
-                                                    ResponsiveValue<double>(
-                                                  context,
-                                                  conditionalValues: [
-                                                    const Condition.equals(
-                                                        name: TABLET,
-                                                        value: 17.0,
-                                                        landscapeValue: 17.0),
-                                                    const Condition.largerThan(
-                                                        name: TABLET,
-                                                        value: 17.0,
-                                                        landscapeValue: 17.0,
-                                                        breakpoint: 800),
-                                                  ],
-                                                  defaultValue: 14.5,
-                                                ).value,
-                                                fontWeight: FontWeight.bold,
                                               ),
-                                            ),
-                                            Text(
-                                              roles == 'OD' || roles == 'PD'
-                                                  ? ""
-                                                  : dataHeader
-                                                      .listRptFunneling![0]
-                                                      .userName,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  255,
-                                                  255,
-                                                  255,
+                                              Text(
+                                                roles == 'OD' || roles == 'PD'
+                                                    ? ""
+                                                    : dataHeader
+                                                        .listRptFunneling![0]
+                                                        .userName,
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                  color: const Color.fromARGB(
+                                                    255,
+                                                    255,
+                                                    255,
+                                                    255,
+                                                  ),
+                                                  fontSize:
+                                                      ResponsiveValue<double>(
+                                                    context,
+                                                    conditionalValues: [
+                                                      const Condition.equals(
+                                                          name: TABLET,
+                                                          value: 17.0,
+                                                          landscapeValue: 17.0),
+                                                      const Condition
+                                                          .largerThan(
+                                                          name: TABLET,
+                                                          value: 17.0,
+                                                          landscapeValue: 17.0,
+                                                          breakpoint: 800),
+                                                    ],
+                                                    defaultValue: 14.5,
+                                                  ).value,
+                                                  fontWeight: FontWeight.bold,
                                                 ),
-                                                fontSize:
-                                                    ResponsiveValue<double>(
-                                                  context,
-                                                  conditionalValues: [
-                                                    const Condition.equals(
-                                                        name: TABLET,
-                                                        value: 17.0,
-                                                        landscapeValue: 17.0),
-                                                    const Condition.largerThan(
-                                                        name: TABLET,
-                                                        value: 17.0,
-                                                        landscapeValue: 17.0,
-                                                        breakpoint: 800),
-                                                  ],
-                                                  defaultValue: 14.5,
-                                                ).value,
-                                                fontWeight: FontWeight.bold,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        backgroundColor: Colors.transparent,
-                                      );
-                                    }
-                                    return null;
-                                  },
+                                            ],
+                                          ),
+                                          backgroundColor: Colors.transparent,
+                                        )
+                                      : null,
                                   error: (err, stack) => Text('Error $err'),
                                   loading: () => const Center(child: Text('')),
                                 ),
