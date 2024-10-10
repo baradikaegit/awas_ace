@@ -1,16 +1,22 @@
+import 'dart:convert';
+
 import 'package:awas_ace/provider/reportsales_provider.dart';
+import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/alert_notempty.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
+import 'package:awas_ace/widgets/model/referensimodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart ' as http;
 import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,6 +48,8 @@ class _FunnelingPageState extends State<FunnelingPage> {
   String? roles;
   String? sid;
   String? branchID;
+  String nameRef = '';
+  String idRef = '';
 
   List<String> tipePeriodeOptions = ['MTD', 'YTD'];
   List<ModelMonth> monthOptions = [
@@ -217,262 +225,735 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                     .listRptFunneling![0].year
                                                     .toString()
                                             : '';
-                                        return AppBar(
-                                          automaticallyImplyLeading: false,
-                                          centerTitle: false,
-                                          title: Column(
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
+
+                                        String refSelected = dataSelectOpt
+                                                .listRptFunneling!.isNotEmpty
+                                            ? (linkPageObj ==
+                                                    '$monthNow/$yearNow')
+                                                ? 'ALL'
+                                                : dataSelectOpt
+                                                    .listRptFunneling![0]
+                                                    .referensi
+                                                    .toString()
+                                            : '';
+
+                                        return Column(
+                                          children: [
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
+                                              centerTitle: false,
+                                              title: Column(
+                                                children: [
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 15, 0, 0),
+                                                        child:
+                                                            DropdownButtonHideUnderline(
+                                                          child:
+                                                              DropdownButton2<
+                                                                  String>(
+                                                            value: tipePeriode,
+                                                            isExpanded: false,
+                                                            items: tipePeriodeOptions
+                                                                .map((String
+                                                                    valueTipePeriode) {
+                                                              return DropdownMenuItem<
+                                                                  String>(
+                                                                value:
+                                                                    valueTipePeriode,
+                                                                child: Text(
+                                                                  valueTipePeriode,
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                ),
+                                                              );
+                                                            }).toList(),
+                                                            onChanged: (String?
+                                                                newValTp) {
+                                                              setState(() {
+                                                                tipePeriode =
+                                                                    newValTp!;
+                                                                var monthNow =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .month;
+                                                                var yearNow =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .year;
+                                                                var refId =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .refId;
+
+                                                                var linkResultPeriodTipe =
+                                                                    '$monthNow/$yearNow/$tipePeriode/$refId';
+
+                                                                Navigator
+                                                                    .pushReplacementNamed(
+                                                                  context,
+                                                                  FunnelingPage
+                                                                      .routeName,
+                                                                  arguments:
+                                                                      linkResultPeriodTipe,
+                                                                );
+                                                              });
+                                                            },
+                                                            dropdownStyleData:
+                                                                DropdownStyleData(
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  33,
+                                                                  44,
+                                                                  81,
+                                                                ),
+                                                              ),
+                                                              maxHeight: 250,
+                                                              offset:
+                                                                  const Offset(
+                                                                      0, 0),
+                                                              scrollbarTheme:
+                                                                  ScrollbarThemeData(
+                                                                radius:
+                                                                    const Radius
+                                                                        .circular(
+                                                                        40),
+                                                                thickness:
+                                                                    MaterialStateProperty
+                                                                        .all(5),
+                                                                thumbVisibility:
+                                                                    MaterialStateProperty
+                                                                        .all(
+                                                                            true),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                          0,
+                                                          15,
+                                                          0,
+                                                          0,
+                                                        ),
+                                                        child:
+                                                            DropdownButtonHideUnderline(
+                                                          child:
+                                                              DropdownButton2<
+                                                                  String>(
+                                                            isExpanded: false,
+                                                            items: monthOptions
+                                                                .map(
+                                                                    (valueMonth) {
+                                                              return DropdownMenuItem<
+                                                                  String>(
+                                                                value: valueMonth
+                                                                    .id
+                                                                    .toString(),
+                                                                child: Text(
+                                                                  valueMonth
+                                                                      .value,
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                ),
+                                                              );
+                                                            }).toList(),
+                                                            value:
+                                                                monthSelected,
+                                                            onChanged: (String?
+                                                                newValMonth) {
+                                                              setState(() {
+                                                                monthSelected =
+                                                                    newValMonth!;
+                                                                var yearNow =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .year;
+                                                                var periodTipe =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .periodTipe;
+                                                                var refId =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .refId;
+
+                                                                var linkResultMonth =
+                                                                    '$monthSelected/$yearNow/$periodTipe/$refId';
+
+                                                                Navigator
+                                                                    .pushReplacementNamed(
+                                                                  context,
+                                                                  FunnelingPage
+                                                                      .routeName,
+                                                                  arguments:
+                                                                      linkResultMonth,
+                                                                );
+                                                              });
+                                                            },
+                                                            dropdownStyleData:
+                                                                DropdownStyleData(
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  33,
+                                                                  44,
+                                                                  81,
+                                                                ),
+                                                              ),
+                                                              maxHeight: 250,
+                                                              offset:
+                                                                  const Offset(
+                                                                      0, 0),
+                                                              scrollbarTheme:
+                                                                  ScrollbarThemeData(
+                                                                radius:
+                                                                    const Radius
+                                                                        .circular(
+                                                                        40),
+                                                                thickness:
+                                                                    MaterialStateProperty
+                                                                        .all(5),
+                                                                thumbVisibility:
+                                                                    MaterialStateProperty
+                                                                        .all(
+                                                                            true),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                          0,
+                                                          15,
+                                                          15,
+                                                          0,
+                                                        ),
+                                                        child:
+                                                            DropdownButtonHideUnderline(
+                                                          child:
+                                                              DropdownButton2<
+                                                                  String>(
+                                                            value: yearSelected,
+                                                            isExpanded: false,
+                                                            items: yearOPtions
+                                                                .map((String
+                                                                    valueYear) {
+                                                              return DropdownMenuItem<
+                                                                  String>(
+                                                                value:
+                                                                    valueYear,
+                                                                child: Text(
+                                                                  valueYear,
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                ),
+                                                              );
+                                                            }).toList(),
+                                                            onChanged: (String?
+                                                                newValYear) {
+                                                              setState(() {
+                                                                yearSelected =
+                                                                    newValYear!;
+                                                                var monthNow =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .month;
+                                                                var periodTipe =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .periodTipe;
+                                                                var refId =
+                                                                    dataSelectOpt
+                                                                        .listRptFunneling![
+                                                                            0]
+                                                                        .refId;
+
+                                                                var linkResultYear =
+                                                                    '$monthNow/$yearSelected/$periodTipe/$refId';
+
+                                                                Navigator
+                                                                    .pushNamed(
+                                                                  context,
+                                                                  FunnelingPage
+                                                                      .routeName,
+                                                                  arguments:
+                                                                      linkResultYear,
+                                                                );
+                                                              });
+                                                            },
+                                                            dropdownStyleData:
+                                                                const DropdownStyleData(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  33,
+                                                                  44,
+                                                                  81,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                255,
+                                                33,
+                                                44,
+                                                81,
+                                              ),
+                                            ),
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
+                                              centerTitle: false,
+                                              title: Column(
                                                 children: [
                                                   Padding(
                                                     padding: const EdgeInsets
-                                                        .fromLTRB(0, 15, 0, 0),
-                                                    child:
-                                                        DropdownButtonHideUnderline(
-                                                      child: DropdownButton2<
-                                                          String>(
-                                                        value: tipePeriode,
-                                                        isExpanded: false,
-                                                        items: tipePeriodeOptions
-                                                            .map((String
-                                                                valueTipePeriode) {
-                                                          return DropdownMenuItem<
-                                                              String>(
-                                                            value:
-                                                                valueTipePeriode,
-                                                            child: Text(
-                                                              valueTipePeriode,
-                                                              style:
-                                                                  textStyleColorWhite,
-                                                            ),
-                                                          );
-                                                        }).toList(),
-                                                        onChanged:
-                                                            (String? newValTp) {
-                                                          setState(() {
-                                                            tipePeriode =
-                                                                newValTp!;
-                                                            var monthNow =
-                                                                dataSelectOpt
-                                                                    .listRptFunneling![
-                                                                        0]
-                                                                    .month;
-                                                            var yearNow =
-                                                                dataSelectOpt
-                                                                    .listRptFunneling![
-                                                                        0]
-                                                                    .year;
-                                                            var linkResultPeriodTipe =
-                                                                '$monthNow/$yearNow/$tipePeriode';
-
-                                                            Navigator
-                                                                .pushReplacementNamed(
-                                                              context,
-                                                              FunnelingPage
-                                                                  .routeName,
-                                                              arguments:
-                                                                  linkResultPeriodTipe,
-                                                            );
-                                                          });
-                                                        },
-                                                        dropdownStyleData:
-                                                            DropdownStyleData(
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                            color:
-                                                                Color.fromARGB(
-                                                              255,
-                                                              33,
-                                                              44,
-                                                              81,
-                                                            ),
-                                                          ),
-                                                          maxHeight: 250,
-                                                          offset: const Offset(
-                                                              0, 0),
-                                                          scrollbarTheme:
-                                                              ScrollbarThemeData(
-                                                            radius: const Radius
-                                                                .circular(40),
-                                                            thickness:
-                                                                MaterialStateProperty
-                                                                    .all(5),
-                                                            thumbVisibility:
-                                                                MaterialStateProperty
-                                                                    .all(true),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
                                                         .fromLTRB(
-                                                      0,
+                                                      20,
+                                                      10,
                                                       15,
                                                       0,
-                                                      0,
                                                     ),
-                                                    child:
-                                                        DropdownButtonHideUnderline(
-                                                      child: DropdownButton2<
-                                                          String>(
-                                                        isExpanded: false,
-                                                        items: monthOptions
-                                                            .map((valueMonth) {
-                                                          return DropdownMenuItem<
-                                                              String>(
-                                                            value: valueMonth.id
-                                                                .toString(),
-                                                            child: Text(
-                                                              valueMonth.value,
-                                                              style:
-                                                                  textStyleColorWhite,
-                                                            ),
-                                                          );
-                                                        }).toList(),
-                                                        value: monthSelected,
-                                                        onChanged: (String?
-                                                            newValMonth) {
-                                                          setState(() {
-                                                            monthSelected =
-                                                                newValMonth!;
-                                                            var yearNow =
-                                                                dataSelectOpt
-                                                                    .listRptFunneling![
-                                                                        0]
-                                                                    .year;
-                                                            var periodTipe =
-                                                                dataSelectOpt
-                                                                    .listRptFunneling![
-                                                                        0]
-                                                                    .periodTipe;
-
-                                                            var linkResultMonth =
-                                                                '$monthSelected/$yearNow/$periodTipe';
-
-                                                            Navigator
-                                                                .pushReplacementNamed(
-                                                              context,
-                                                              FunnelingPage
-                                                                  .routeName,
-                                                              arguments:
-                                                                  linkResultMonth,
-                                                            );
-                                                          });
-                                                        },
-                                                        dropdownStyleData:
-                                                            DropdownStyleData(
-                                                          decoration:
-                                                              const BoxDecoration(
-                                                            color:
-                                                                Color.fromARGB(
-                                                              255,
-                                                              33,
-                                                              44,
-                                                              81,
-                                                            ),
-                                                          ),
-                                                          maxHeight: 250,
-                                                          offset: const Offset(
-                                                              0, 0),
-                                                          scrollbarTheme:
-                                                              ScrollbarThemeData(
-                                                            radius: const Radius
-                                                                .circular(40),
-                                                            thickness:
-                                                                MaterialStateProperty
-                                                                    .all(5),
-                                                            thumbVisibility:
-                                                                MaterialStateProperty
-                                                                    .all(true),
-                                                          ),
+                                                    child: DropdownSearch<
+                                                        Referensi>(
+                                                      popupProps:
+                                                          PopupProps.dialog(
+                                                        dialogProps:
+                                                            const DialogProps(
+                                                          shape:
+                                                              Border.symmetric(
+                                                                  vertical:
+                                                                      BorderSide
+                                                                          .none),
                                                         ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(
-                                                      0,
-                                                      15,
-                                                      15,
-                                                      0,
-                                                    ),
-                                                    child:
-                                                        DropdownButtonHideUnderline(
-                                                      child: DropdownButton2<
-                                                          String>(
-                                                        value: yearSelected,
-                                                        isExpanded: false,
-                                                        items: yearOPtions.map(
-                                                            (String valueYear) {
-                                                          return DropdownMenuItem<
-                                                              String>(
-                                                            value: valueYear,
-                                                            child: Text(
-                                                              valueYear,
-                                                              style:
-                                                                  textStyleColorWhite,
-                                                            ),
-                                                          );
-                                                        }).toList(),
-                                                        onChanged: (String?
-                                                            newValYear) {
-                                                          setState(() {
-                                                            yearSelected =
-                                                                newValYear!;
-                                                            var monthNow =
-                                                                dataSelectOpt
-                                                                    .listRptFunneling![
-                                                                        0]
-                                                                    .month;
-                                                            var periodTipe =
-                                                                dataSelectOpt
-                                                                    .listRptFunneling![
-                                                                        0]
-                                                                    .periodTipe;
-
-                                                            var linkResultYear =
-                                                                '$monthNow/$yearSelected/$periodTipe';
-
-                                                            Navigator.pushNamed(
-                                                              context,
-                                                              FunnelingPage
-                                                                  .routeName,
-                                                              arguments:
-                                                                  linkResultYear,
-                                                            );
-                                                          });
-                                                        },
-                                                        dropdownStyleData:
-                                                            const DropdownStyleData(
+                                                        showSearchBox: false,
+                                                        searchFieldProps:
+                                                            TextFieldProps(
                                                           decoration:
-                                                              BoxDecoration(
-                                                            color:
-                                                                Color.fromARGB(
-                                                              255,
-                                                              33,
-                                                              44,
-                                                              81,
+                                                              InputDecoration(
+                                                            hintText:
+                                                                "Search..",
+                                                            enabledBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  134,
+                                                                  134,
+                                                                  134,
+                                                                ),
+                                                                width: 2,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
+                                                            ),
+                                                            focusedBorder:
+                                                                OutlineInputBorder(
+                                                              borderSide:
+                                                                  const BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  134,
+                                                                  134,
+                                                                  134,
+                                                                ),
+                                                                width: 2,
+                                                              ),
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          10.0),
                                                             ),
                                                           ),
                                                         ),
+                                                        itemBuilder: (context,
+                                                                item,
+                                                                isSelected) =>
+                                                            ListTile(
+                                                          title: Text(
+                                                            item.name
+                                                                .toUpperCase(),
+                                                          ),
+                                                        ),
                                                       ),
+                                                      dropdownDecoratorProps:
+                                                          DropDownDecoratorProps(
+                                                        dropdownSearchDecoration:
+                                                            InputDecoration(
+                                                          errorStyle:
+                                                              const TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              17,
+                                                              0,
+                                                            ),
+                                                          ),
+                                                          errorBorder:
+                                                              const UnderlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                255,
+                                                                255,
+                                                                17,
+                                                                0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          hintStyle:
+                                                              textStyleColorWhite,
+                                                          labelStyle:
+                                                              const TextStyle(
+                                                            color:
+                                                                Color.fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255,
+                                                            ),
+                                                          ),
+                                                          enabledBorder:
+                                                              const OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide.none,
+                                                          ),
+                                                          focusedBorder:
+                                                              OutlineInputBorder(
+                                                            borderSide:
+                                                                BorderSide.none,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      onChanged: (value) {
+                                                        setState(() {
+                                                          nameRef = value!.name;
+                                                          idRef = value.iD;
+
+                                                          var monthNow =
+                                                              dataSelectOpt
+                                                                  .listRptFunneling![
+                                                                      0]
+                                                                  .month;
+                                                          var yearNow =
+                                                              dataSelectOpt
+                                                                  .listRptFunneling![
+                                                                      0]
+                                                                  .year;
+                                                          var periodTipe =
+                                                              dataSelectOpt
+                                                                  .listRptFunneling![
+                                                                      0]
+                                                                  .periodTipe;
+
+                                                          var linkResultRef =
+                                                              '$monthNow/$yearNow/$periodTipe/$idRef';
+
+                                                          Navigator.pushNamed(
+                                                            context,
+                                                            FunnelingPage
+                                                                .routeName,
+                                                            arguments:
+                                                                linkResultRef,
+                                                          );
+                                                        });
+                                                      },
+                                                      dropdownBuilder: (context,
+                                                              selectedItem) =>
+                                                          Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          refSelected,
+                                                          style:
+                                                              textStyleColorWhite,
+                                                        ),
+                                                      ),
+                                                      asyncItems: (String
+                                                          filter) async {
+                                                        var response =
+                                                            await http.get(
+                                                          Uri.parse(
+                                                            "${urlApi()}ReportSales/GetReferensi",
+                                                          ),
+                                                        );
+                                                        if (response
+                                                                .statusCode !=
+                                                            200) {
+                                                          return [];
+                                                        }
+                                                        List allRef = (jsonDecode(
+                                                                    response
+                                                                        .body)
+                                                                as Map<String,
+                                                                    dynamic>)[
+                                                            "listReferensi"];
+                                                        List<Referensi>
+                                                            allModelRef = [];
+
+                                                        for (var element
+                                                            in allRef) {
+                                                          allModelRef.add(
+                                                            Referensi(
+                                                              iD: element["iD"],
+                                                              name: element[
+                                                                  "name"],
+                                                            ),
+                                                          );
+                                                        }
+                                                        return allModelRef;
+                                                      },
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                            ],
-                                          ),
-                                          backgroundColor: const Color.fromARGB(
-                                            255,
-                                            33,
-                                            44,
-                                            81,
-                                          ),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                255,
+                                                33,
+                                                44,
+                                                81,
+                                              ),
+                                            ),
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
+                                              centerTitle: true,
+                                              title: Padding(
+                                                padding: roles == 'OD' ||
+                                                        roles == 'PD'
+                                                    ? const EdgeInsets.fromLTRB(
+                                                        0, 10, 0, 0)
+                                                    : const EdgeInsets.fromLTRB(
+                                                        0, 10, 0, 15),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      "Data Corong (${dataSelectOpt.listRptFunneling![0].title})",
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 14.5,
+                                                        ).value,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      roles == 'OD' ||
+                                                              roles == 'PD'
+                                                          ? ""
+                                                          : dataSelectOpt
+                                                              .listRptFunneling![
+                                                                  0]
+                                                              .userName,
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 14.5,
+                                                        ).value,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
+                                              centerTitle: false,
+                                              title: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        5, 0, 0, 0),
+                                                child: Column(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "Periode : ${dataSelectOpt.listRptFunneling![0].monthID} ${dataSelectOpt.listRptFunneling![0].year}",
+                                                        style: TextStyle(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                          fontSize:
+                                                              ResponsiveValue<
+                                                                  double>(
+                                                            context,
+                                                            conditionalValues: [
+                                                              const Condition
+                                                                  .equals(
+                                                                  name: TABLET,
+                                                                  value: 12.5,
+                                                                  landscapeValue:
+                                                                      12.5),
+                                                              const Condition
+                                                                  .largerThan(
+                                                                  name: TABLET,
+                                                                  value: 12.5,
+                                                                  landscapeValue:
+                                                                      12.5,
+                                                                  breakpoint:
+                                                                      800),
+                                                            ],
+                                                            defaultValue: 11.5,
+                                                          ).value,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "Tanggal Hari ini : $dateNow",
+                                                        style: TextStyle(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                          fontSize:
+                                                              ResponsiveValue<
+                                                                  double>(
+                                                            context,
+                                                            conditionalValues: [
+                                                              const Condition
+                                                                  .equals(
+                                                                  name: TABLET,
+                                                                  value: 12.5,
+                                                                  landscapeValue:
+                                                                      12.5),
+                                                              const Condition
+                                                                  .largerThan(
+                                                                  name: TABLET,
+                                                                  value: 12.5,
+                                                                  landscapeValue:
+                                                                      12.5,
+                                                                  breakpoint:
+                                                                      800),
+                                                            ],
+                                                            defaultValue: 11.5,
+                                                          ).value,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                            ),
+                                          ],
                                         );
                                       }
                                       return null;
@@ -481,191 +962,6 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                     loading: () =>
                                         const Center(child: Text('')),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: roles == 'OD' || roles == 'PD'
-                                    ? const EdgeInsets.fromLTRB(0, 10, 0, 0)
-                                    : const EdgeInsets.fromLTRB(0, 10, 0, 15),
-                                child: rptFunneling.when(
-                                  data: (dataHeader) => (dataHeader
-                                              .listRptFunneling !=
-                                          null)
-                                      ? AppBar(
-                                          automaticallyImplyLeading: false,
-                                          centerTitle: true,
-                                          title: Column(
-                                            children: [
-                                              Text(
-                                                "Data Corong (${dataHeader.listRptFunneling![0].title})",
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                  fontSize:
-                                                      ResponsiveValue<double>(
-                                                    context,
-                                                    conditionalValues: [
-                                                      const Condition.equals(
-                                                          name: TABLET,
-                                                          value: 17.0,
-                                                          landscapeValue: 17.0),
-                                                      const Condition
-                                                          .largerThan(
-                                                          name: TABLET,
-                                                          value: 17.0,
-                                                          landscapeValue: 17.0,
-                                                          breakpoint: 800),
-                                                    ],
-                                                    defaultValue: 14.5,
-                                                  ).value,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                              Text(
-                                                roles == 'OD' || roles == 'PD'
-                                                    ? ""
-                                                    : dataHeader
-                                                        .listRptFunneling![0]
-                                                        .userName,
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(
-                                                  color: const Color.fromARGB(
-                                                    255,
-                                                    255,
-                                                    255,
-                                                    255,
-                                                  ),
-                                                  fontSize:
-                                                      ResponsiveValue<double>(
-                                                    context,
-                                                    conditionalValues: [
-                                                      const Condition.equals(
-                                                          name: TABLET,
-                                                          value: 17.0,
-                                                          landscapeValue: 17.0),
-                                                      const Condition
-                                                          .largerThan(
-                                                          name: TABLET,
-                                                          value: 17.0,
-                                                          landscapeValue: 17.0,
-                                                          breakpoint: 800),
-                                                    ],
-                                                    defaultValue: 14.5,
-                                                  ).value,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          backgroundColor: Colors.transparent,
-                                        )
-                                      : null,
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
-                                ),
-                              ),
-                              SizedBox(
-                                child: rptFunneling.when(
-                                  data: (dataPeriod) => (dataPeriod
-                                              .listRptFunneling !=
-                                          null)
-                                      ? AppBar(
-                                          automaticallyImplyLeading: false,
-                                          centerTitle: false,
-                                          title: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                5, 0, 0, 0),
-                                            child: Column(
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    "Periode : ${dataPeriod.listRptFunneling![0].monthID} ${dataPeriod.listRptFunneling![0].year}",
-                                                    style: TextStyle(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                        255,
-                                                        255,
-                                                        255,
-                                                        255,
-                                                      ),
-                                                      fontSize: ResponsiveValue<
-                                                          double>(
-                                                        context,
-                                                        conditionalValues: [
-                                                          const Condition
-                                                              .equals(
-                                                              name: TABLET,
-                                                              value: 12.5,
-                                                              landscapeValue:
-                                                                  12.5),
-                                                          const Condition
-                                                              .largerThan(
-                                                              name: TABLET,
-                                                              value: 12.5,
-                                                              landscapeValue:
-                                                                  12.5,
-                                                              breakpoint: 800),
-                                                        ],
-                                                        defaultValue: 11.5,
-                                                      ).value,
-                                                    ),
-                                                  ),
-                                                ),
-                                                Align(
-                                                  alignment:
-                                                      Alignment.centerLeft,
-                                                  child: Text(
-                                                    "Tanggal Hari ini : $dateNow",
-                                                    style: TextStyle(
-                                                      color:
-                                                          const Color.fromARGB(
-                                                        255,
-                                                        255,
-                                                        255,
-                                                        255,
-                                                      ),
-                                                      fontSize: ResponsiveValue<
-                                                          double>(
-                                                        context,
-                                                        conditionalValues: [
-                                                          const Condition
-                                                              .equals(
-                                                              name: TABLET,
-                                                              value: 12.5,
-                                                              landscapeValue:
-                                                                  12.5),
-                                                          const Condition
-                                                              .largerThan(
-                                                              name: TABLET,
-                                                              value: 12.5,
-                                                              landscapeValue:
-                                                                  12.5,
-                                                              breakpoint: 800),
-                                                        ],
-                                                        defaultValue: 11.5,
-                                                      ).value,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          backgroundColor: Colors.transparent,
-                                        )
-                                      : const Column(
-                                          children: [],
-                                        ),
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
                                 ),
                               ),
                               Expanded(
@@ -1280,12 +1576,13 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                                               var month = dataFunneling.listRptFunneling![indexObj].month.toString();
                                                                                               var year = dataFunneling.listRptFunneling![indexObj].year.toString();
                                                                                               var periodTipe = dataFunneling.listRptFunneling![indexObj].periodTipe;
+                                                                                              var refId = dataFunneling.listRptFunneling![indexObj].refId;
                                                                                               var branchCode = dataFunneling.listRptFunneling![indexObj].branchCode;
 
                                                                                               Navigator.pushNamed(
                                                                                                 context,
                                                                                                 FunnelingSSPage.routeName,
-                                                                                                arguments: '$month/$year/$periodTipe/$branchCode',
+                                                                                                arguments: '$month/$year/$periodTipe/$refId/$branchCode',
                                                                                               );
                                                                                             },
                                                                               child: Text(

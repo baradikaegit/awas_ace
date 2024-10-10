@@ -222,8 +222,6 @@ class _ReportPageState extends State<ReportPage> {
                                     context,
                                     linkPageSales[index],
                                     arguments: linkPageSales[index] ==
-                                                '/funnelingPage' ||
-                                            linkPageSales[index] ==
                                                 '/prospekVtoSpkPage' ||
                                             linkPageSales[index] ==
                                                 '/prospekUeBPPage' ||
@@ -232,7 +230,10 @@ class _ReportPageState extends State<ReportPage> {
                                             linkPageSales[index] ==
                                                 '/dOtoGatePassPage'
                                         ? '$_monthNow/$_yearNow/MTD'
-                                        : null,
+                                        : linkPageSales[index] ==
+                                                '/funnelingPage'
+                                            ? '$_monthNow/$_yearNow/MTD/00000000-0000-0000-0000-000000000000'
+                                            : null,
                                   ),
                                   child: Column(
                                     children: <Widget>[

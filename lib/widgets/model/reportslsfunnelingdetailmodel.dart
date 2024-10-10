@@ -36,6 +36,8 @@ class ListRptFunnelingDetail {
     required this.monthID,
     required this.month,
     required this.year,
+    required this.refId,
+    required this.referensi,
     required this.headerCode,
     required this.headerName,
     required this.call,
@@ -53,6 +55,8 @@ class ListRptFunnelingDetail {
   late final String monthID;
   late final int month;
   late final int year;
+  late final String refId;
+  late final String referensi;
   late final String headerCode;
   late final String headerName;
   late final int call;
@@ -71,6 +75,8 @@ class ListRptFunnelingDetail {
     monthID = json['monthID'];
     month = json['month'];
     year = json['year'];
+    refId = json['refId'];
+    referensi = json['referensi'];
     headerCode = json['headerCode'];
     headerName = json['headerName'];
     call = json['call'];
@@ -91,6 +97,8 @@ class ListRptFunnelingDetail {
     _data['monthID'] = monthID;
     _data['month'] = month;
     _data['year'] = year;
+    _data['refId'] = refId;
+    _data['referensi'] = referensi;
     _data['headerCode'] = headerCode;
     _data['headerName'] = headerName;
     _data['call'] = call;
