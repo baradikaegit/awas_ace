@@ -206,457 +206,516 @@ class _ProspekUeBPSalesPageState extends State<ProspekUeBPSalesPage> {
                                                   .toString()
                                           : '';
 
-                                      return AppBar(
-                                        automaticallyImplyLeading: false,
-                                        centerTitle: false,
-                                        title: Column(
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                      return Column(
+                                        children: [
+                                          AppBar(
+                                            automaticallyImplyLeading: false,
+                                            centerTitle: false,
+                                            title: Column(
                                               children: [
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(
                                                           0, 15, 0, 0),
-                                                  child:
-                                                      DropdownButtonHideUnderline(
-                                                    child:
-                                                        DropdownButton2<String>(
-                                                      value: tipePeriode,
-                                                      isExpanded: false,
-                                                      items: tipePeriodeOptions
-                                                          .map((String
-                                                              valueTipePeriode) {
-                                                        return DropdownMenuItem<
+                                                      child:
+                                                          DropdownButtonHideUnderline(
+                                                        child: DropdownButton2<
                                                             String>(
-                                                          value:
-                                                              valueTipePeriode,
-                                                          child: Text(
-                                                            valueTipePeriode,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        );
-                                                      }).toList(),
-                                                      onChanged:
-                                                          (String? newValTp) {
-                                                        setState(() {
-                                                          tipePeriode =
-                                                              newValTp!;
-                                                          var monthNow =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .month;
-                                                          var yearNow =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .year;
-                                                          var branchCode =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .title;
-                                                          var ssCode = dataSelectOpt
-                                                              .listRptProspekUeBp![
-                                                                  0]
-                                                              .headerCode2;
+                                                          value: tipePeriode,
+                                                          isExpanded: false,
+                                                          items: tipePeriodeOptions
+                                                              .map((String
+                                                                  valueTipePeriode) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value:
+                                                                  valueTipePeriode,
+                                                              child: Text(
+                                                                valueTipePeriode,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            );
+                                                          }).toList(),
+                                                          onChanged: (String?
+                                                              newValTp) {
+                                                            setState(() {
+                                                              tipePeriode =
+                                                                  newValTp!;
+                                                              var monthNow =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .month;
+                                                              var yearNow =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .year;
+                                                              var branchCode =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .title;
+                                                              var ssCode =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .headerCode2;
 
-                                                          var linkResultPeriodTipe =
-                                                              '$monthNow/$yearNow/$tipePeriode/$branchCode/$ssCode';
+                                                              var linkResultPeriodTipe =
+                                                                  '$monthNow/$yearNow/$tipePeriode/$branchCode/$ssCode';
 
-                                                          Navigator
-                                                              .pushReplacementNamed(
-                                                            context,
-                                                            ProspekUeBPSalesPage
-                                                                .routeName,
-                                                            arguments:
-                                                                linkResultPeriodTipe,
-                                                          );
-                                                        });
-                                                      },
-                                                      dropdownStyleData:
-                                                          DropdownStyleData(
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color: Color.fromARGB(
-                                                            255,
-                                                            33,
-                                                            44,
-                                                            81,
-                                                          ),
-                                                        ),
-                                                        maxHeight: 250,
-                                                        offset:
-                                                            const Offset(0, 0),
-                                                        scrollbarTheme:
-                                                            ScrollbarThemeData(
-                                                          radius: const Radius
-                                                              .circular(40),
-                                                          thickness:
-                                                              MaterialStateProperty
-                                                                  .all(5),
-                                                          thumbVisibility:
-                                                              MaterialStateProperty
-                                                                  .all(true),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                    0,
-                                                    15,
-                                                    0,
-                                                    0,
-                                                  ),
-                                                  child:
-                                                      DropdownButtonHideUnderline(
-                                                    child:
-                                                        DropdownButton2<String>(
-                                                      isExpanded: false,
-                                                      items: monthOptions
-                                                          .map((valueMonth) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: valueMonth.id
-                                                              .toString(),
-                                                          child: Text(
-                                                            valueMonth.value,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        );
-                                                      }).toList(),
-                                                      value: monthSelected,
-                                                      onChanged: (String?
-                                                          newValMonth) {
-                                                        setState(() {
-                                                          monthSelected =
-                                                              newValMonth!;
-                                                          var yearNow =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .year;
-                                                          var periodTipe =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .periodTipe;
-                                                          var branchCode =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .title;
-                                                          var ssCode = dataSelectOpt
-                                                              .listRptProspekUeBp![
-                                                                  0]
-                                                              .headerCode2;
-
-                                                          var linkResultMonth =
-                                                              '$monthSelected/$yearNow/$periodTipe/$branchCode/$ssCode';
-
-                                                          Navigator
-                                                              .pushReplacementNamed(
-                                                            context,
-                                                            ProspekUeBPSalesPage
-                                                                .routeName,
-                                                            arguments:
-                                                                linkResultMonth,
-                                                          );
-                                                        });
-                                                      },
-                                                      dropdownStyleData:
-                                                          DropdownStyleData(
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                          color: Color.fromARGB(
-                                                            255,
-                                                            33,
-                                                            44,
-                                                            81,
-                                                          ),
-                                                        ),
-                                                        maxHeight: 250,
-                                                        offset:
-                                                            const Offset(0, 0),
-                                                        scrollbarTheme:
-                                                            ScrollbarThemeData(
-                                                          radius: const Radius
-                                                              .circular(40),
-                                                          thickness:
-                                                              MaterialStateProperty
-                                                                  .all(5),
-                                                          thumbVisibility:
-                                                              MaterialStateProperty
-                                                                  .all(true),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.fromLTRB(
-                                                    0,
-                                                    15,
-                                                    15,
-                                                    0,
-                                                  ),
-                                                  child:
-                                                      DropdownButtonHideUnderline(
-                                                    child:
-                                                        DropdownButton2<String>(
-                                                      value: yearSelected,
-                                                      isExpanded: false,
-                                                      items: yearOPtions.map(
-                                                          (String valueYear) {
-                                                        return DropdownMenuItem<
-                                                            String>(
-                                                          value: valueYear,
-                                                          child: Text(
-                                                            valueYear,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        );
-                                                      }).toList(),
-                                                      onChanged:
-                                                          (String? newValYear) {
-                                                        setState(() {
-                                                          yearSelected =
-                                                              newValYear!;
-                                                          var monthNow =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .month;
-                                                          var periodTipe =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .periodTipe;
-                                                          var branchCode =
-                                                              dataSelectOpt
-                                                                  .listRptProspekUeBp![
-                                                                      0]
-                                                                  .title;
-                                                          var ssCode = dataSelectOpt
-                                                              .listRptProspekUeBp![
-                                                                  0]
-                                                              .headerCode2;
-
-                                                          var linkResultYear =
-                                                              '$monthNow/$yearSelected/$periodTipe/$branchCode/$ssCode';
-
-                                                          Navigator.pushNamed(
-                                                            context,
-                                                            ProspekUeBPSalesPage
-                                                                .routeName,
-                                                            arguments:
-                                                                linkResultYear,
-                                                          );
-                                                        });
-                                                      },
-                                                      dropdownStyleData:
-                                                          const DropdownStyleData(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Color.fromARGB(
-                                                            255,
-                                                            33,
-                                                            44,
-                                                            81,
+                                                              Navigator
+                                                                  .pushReplacementNamed(
+                                                                context,
+                                                                ProspekUeBPSalesPage
+                                                                    .routeName,
+                                                                arguments:
+                                                                    linkResultPeriodTipe,
+                                                              );
+                                                            });
+                                                          },
+                                                          dropdownStyleData:
+                                                              DropdownStyleData(
+                                                            decoration:
+                                                                const BoxDecoration(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                255,
+                                                                33,
+                                                                44,
+                                                                81,
+                                                              ),
+                                                            ),
+                                                            maxHeight: 250,
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 0),
+                                                            scrollbarTheme:
+                                                                ScrollbarThemeData(
+                                                              radius:
+                                                                  const Radius
+                                                                      .circular(
+                                                                      40),
+                                                              thickness:
+                                                                  MaterialStateProperty
+                                                                      .all(5),
+                                                              thumbVisibility:
+                                                                  MaterialStateProperty
+                                                                      .all(
+                                                                          true),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(
+                                                        0,
+                                                        15,
+                                                        0,
+                                                        0,
+                                                      ),
+                                                      child:
+                                                          DropdownButtonHideUnderline(
+                                                        child: DropdownButton2<
+                                                            String>(
+                                                          isExpanded: false,
+                                                          items: monthOptions
+                                                              .map(
+                                                                  (valueMonth) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value: valueMonth
+                                                                  .id
+                                                                  .toString(),
+                                                              child: Text(
+                                                                valueMonth
+                                                                    .value,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            );
+                                                          }).toList(),
+                                                          value: monthSelected,
+                                                          onChanged: (String?
+                                                              newValMonth) {
+                                                            setState(() {
+                                                              monthSelected =
+                                                                  newValMonth!;
+                                                              var yearNow =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .year;
+                                                              var periodTipe =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .periodTipe;
+                                                              var branchCode =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .title;
+                                                              var ssCode =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .headerCode2;
+
+                                                              var linkResultMonth =
+                                                                  '$monthSelected/$yearNow/$periodTipe/$branchCode/$ssCode';
+
+                                                              Navigator
+                                                                  .pushReplacementNamed(
+                                                                context,
+                                                                ProspekUeBPSalesPage
+                                                                    .routeName,
+                                                                arguments:
+                                                                    linkResultMonth,
+                                                              );
+                                                            });
+                                                          },
+                                                          dropdownStyleData:
+                                                              DropdownStyleData(
+                                                            decoration:
+                                                                const BoxDecoration(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                255,
+                                                                33,
+                                                                44,
+                                                                81,
+                                                              ),
+                                                            ),
+                                                            maxHeight: 250,
+                                                            offset:
+                                                                const Offset(
+                                                                    0, 0),
+                                                            scrollbarTheme:
+                                                                ScrollbarThemeData(
+                                                              radius:
+                                                                  const Radius
+                                                                      .circular(
+                                                                      40),
+                                                              thickness:
+                                                                  MaterialStateProperty
+                                                                      .all(5),
+                                                              thumbVisibility:
+                                                                  MaterialStateProperty
+                                                                      .all(
+                                                                          true),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(
+                                                        0,
+                                                        15,
+                                                        15,
+                                                        0,
+                                                      ),
+                                                      child:
+                                                          DropdownButtonHideUnderline(
+                                                        child: DropdownButton2<
+                                                            String>(
+                                                          value: yearSelected,
+                                                          isExpanded: false,
+                                                          items: yearOPtions
+                                                              .map((String
+                                                                  valueYear) {
+                                                            return DropdownMenuItem<
+                                                                String>(
+                                                              value: valueYear,
+                                                              child: Text(
+                                                                valueYear,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            );
+                                                          }).toList(),
+                                                          onChanged: (String?
+                                                              newValYear) {
+                                                            setState(() {
+                                                              yearSelected =
+                                                                  newValYear!;
+                                                              var monthNow =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .month;
+                                                              var periodTipe =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .periodTipe;
+                                                              var branchCode =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .title;
+                                                              var ssCode =
+                                                                  dataSelectOpt
+                                                                      .listRptProspekUeBp![
+                                                                          0]
+                                                                      .headerCode2;
+
+                                                              var linkResultYear =
+                                                                  '$monthNow/$yearSelected/$periodTipe/$branchCode/$ssCode';
+
+                                                              Navigator
+                                                                  .pushNamed(
+                                                                context,
+                                                                ProspekUeBPSalesPage
+                                                                    .routeName,
+                                                                arguments:
+                                                                    linkResultYear,
+                                                              );
+                                                            });
+                                                          },
+                                                          dropdownStyleData:
+                                                              const DropdownStyleData(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                255,
+                                                                33,
+                                                                44,
+                                                                81,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ],
                                             ),
-                                          ],
-                                        ),
-                                        backgroundColor: const Color.fromARGB(
-                                          255,
-                                          33,
-                                          44,
-                                          81,
-                                        ),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                              255,
+                                              33,
+                                              44,
+                                              81,
+                                            ),
+                                          ),
+                                          AppBar(
+                                            automaticallyImplyLeading: false,
+                                            centerTitle: true,
+                                            title: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                0,
+                                                10,
+                                                0,
+                                                0,
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Text(
+                                                    "Prospek Ue Bp to Ue Bp",
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      fontSize: ResponsiveValue<
+                                                          double>(
+                                                        context,
+                                                        conditionalValues: [
+                                                          const Condition
+                                                              .equals(
+                                                              name: TABLET,
+                                                              value: 17.0,
+                                                              landscapeValue:
+                                                                  17.0),
+                                                          const Condition
+                                                              .largerThan(
+                                                              name: TABLET,
+                                                              value: 17.0,
+                                                              landscapeValue:
+                                                                  17.0,
+                                                              breakpoint: 800),
+                                                        ],
+                                                        defaultValue: 14.5,
+                                                      ).value,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    "(${dataSelectOpt.listRptProspekUeBp![0].title})",
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      color:
+                                                          const Color.fromARGB(
+                                                        255,
+                                                        255,
+                                                        255,
+                                                        255,
+                                                      ),
+                                                      fontSize: ResponsiveValue<
+                                                          double>(
+                                                        context,
+                                                        conditionalValues: [
+                                                          const Condition
+                                                              .equals(
+                                                              name: TABLET,
+                                                              value: 17.0,
+                                                              landscapeValue:
+                                                                  17.0),
+                                                          const Condition
+                                                              .largerThan(
+                                                              name: TABLET,
+                                                              value: 17.0,
+                                                              landscapeValue:
+                                                                  17.0,
+                                                              breakpoint: 800),
+                                                        ],
+                                                        defaultValue: 14.5,
+                                                      ).value,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                              255,
+                                              33,
+                                              44,
+                                              81,
+                                            ),
+                                          ),
+                                          AppBar(
+                                            automaticallyImplyLeading: false,
+                                            centerTitle: false,
+                                            title: Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                5,
+                                                0,
+                                                0,
+                                                0,
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      "Periode : ${dataSelectOpt.listRptProspekUeBp![0].monthID} ${dataSelectOpt.listRptProspekUeBp![0].year}",
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                                name: TABLET,
+                                                                value: 12.5,
+                                                                landscapeValue:
+                                                                    12.5),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 12.5,
+                                                                landscapeValue:
+                                                                    12.5,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 11.5,
+                                                        ).value,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Align(
+                                                    alignment:
+                                                        Alignment.centerLeft,
+                                                    child: Text(
+                                                      "Tanggal Hari ini : $dateNow",
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                                name: TABLET,
+                                                                value: 12.5,
+                                                                landscapeValue:
+                                                                    12.5),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 12.5,
+                                                                landscapeValue:
+                                                                    12.5,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 11.5,
+                                                        ).value,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            backgroundColor:
+                                                const Color.fromARGB(
+                                              255,
+                                              33,
+                                              44,
+                                              81,
+                                            ),
+                                          ),
+                                        ],
                                       );
                                     },
                                     error: (err, stack) => Text('Error $err'),
                                     loading: () =>
                                         const Center(child: Text('')),
                                   ),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                child: rptProspekUeBP.when(
-                                  data: (dataHeader) => AppBar(
-                                    automaticallyImplyLeading: false,
-                                    centerTitle: true,
-                                    title: Column(
-                                      children: [
-                                        Text(
-                                          "Prospek Ue Bp to Ue Bp",
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: const Color.fromARGB(
-                                              255,
-                                              255,
-                                              255,
-                                              255,
-                                            ),
-                                            fontSize: ResponsiveValue<double>(
-                                              context,
-                                              conditionalValues: [
-                                                const Condition.equals(
-                                                    name: TABLET,
-                                                    value: 17.0,
-                                                    landscapeValue: 17.0),
-                                                const Condition.largerThan(
-                                                    name: TABLET,
-                                                    value: 17.0,
-                                                    landscapeValue: 17.0,
-                                                    breakpoint: 800),
-                                              ],
-                                              defaultValue: 14.5,
-                                            ).value,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                        Text(
-                                          "(${dataHeader.listRptProspekUeBp![0].title})",
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            color: const Color.fromARGB(
-                                              255,
-                                              255,
-                                              255,
-                                              255,
-                                            ),
-                                            fontSize: ResponsiveValue<double>(
-                                              context,
-                                              conditionalValues: [
-                                                const Condition.equals(
-                                                    name: TABLET,
-                                                    value: 17.0,
-                                                    landscapeValue: 17.0),
-                                                const Condition.largerThan(
-                                                    name: TABLET,
-                                                    value: 17.0,
-                                                    landscapeValue: 17.0,
-                                                    breakpoint: 800),
-                                              ],
-                                              defaultValue: 14.5,
-                                            ).value,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      33,
-                                      44,
-                                      81,
-                                    ),
-                                  ),
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
-                                ),
-                              ),
-                              SizedBox(
-                                child: rptProspekUeBP.when(
-                                  data: (dataPeriod) => AppBar(
-                                    automaticallyImplyLeading: false,
-                                    centerTitle: false,
-                                    title: Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                      child: Column(
-                                        children: [
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "Periode : ${dataPeriod.listRptProspekUeBp![0].monthID} ${dataPeriod.listRptProspekUeBp![0].year}",
-                                              style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  255,
-                                                  255,
-                                                  255,
-                                                ),
-                                                fontSize:
-                                                    ResponsiveValue<double>(
-                                                  context,
-                                                  conditionalValues: [
-                                                    const Condition.equals(
-                                                        name: TABLET,
-                                                        value: 12.5,
-                                                        landscapeValue: 12.5),
-                                                    const Condition.largerThan(
-                                                        name: TABLET,
-                                                        value: 12.5,
-                                                        landscapeValue: 12.5,
-                                                        breakpoint: 800),
-                                                  ],
-                                                  defaultValue: 11.5,
-                                                ).value,
-                                              ),
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Text(
-                                              "Tanggal Hari ini : $dateNow",
-                                              style: TextStyle(
-                                                color: const Color.fromARGB(
-                                                  255,
-                                                  255,
-                                                  255,
-                                                  255,
-                                                ),
-                                                fontSize:
-                                                    ResponsiveValue<double>(
-                                                  context,
-                                                  conditionalValues: [
-                                                    const Condition.equals(
-                                                        name: TABLET,
-                                                        value: 12.5,
-                                                        landscapeValue: 12.5),
-                                                    const Condition.largerThan(
-                                                        name: TABLET,
-                                                        value: 12.5,
-                                                        landscapeValue: 12.5,
-                                                        breakpoint: 800),
-                                                  ],
-                                                  defaultValue: 11.5,
-                                                ).value,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    backgroundColor: const Color.fromARGB(
-                                      255,
-                                      33,
-                                      44,
-                                      81,
-                                    ),
-                                  ),
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
                                 ),
                               ),
                               Expanded(
