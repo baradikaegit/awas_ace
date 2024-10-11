@@ -554,11 +554,18 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                           PopupProps.dialog(
                                                         dialogProps:
                                                             const DialogProps(
+                                                          backgroundColor:
+                                                              Color.fromARGB(
+                                                            255,
+                                                            33,
+                                                            44,
+                                                            81,
+                                                          ),
                                                           shape:
                                                               Border.symmetric(
-                                                                  vertical:
-                                                                      BorderSide
-                                                                          .none),
+                                                            vertical:
+                                                                BorderSide.none,
+                                                          ),
                                                         ),
                                                         showSearchBox: false,
                                                         searchFieldProps:
@@ -612,6 +619,8 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                           title: Text(
                                                             item.name
                                                                 .toUpperCase(),
+                                                            style:
+                                                                textStyleColorWhite,
                                                           ),
                                                         ),
                                                       ),
