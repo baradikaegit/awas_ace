@@ -1548,6 +1548,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                                           var month = dataFunneling.listRptFunneling![indexObj].month.toString();
                                                                                           var year = dataFunneling.listRptFunneling![indexObj].year.toString();
                                                                                           var periodTipe = dataFunneling.listRptFunneling![indexObj].periodTipe;
+                                                                                          var refId = dataFunneling.listRptFunneling![indexObj].refId;
                                                                                           var branchCode = dataFunneling.listRptFunneling![indexObj].title;
                                                                                           var ssCode = dataFunneling.listRptFunneling![indexObj].ssCode;
                                                                                           var salesCode = dataFunneling.listRptFunneling![indexObj].headerCode;
@@ -1555,7 +1556,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                                           Navigator.pushNamed(
                                                                                             context,
                                                                                             FunnelingSalesDetailPage.routeName,
-                                                                                            arguments: '$month/$year/$periodTipe/$branchCode/$ssCode/$salesCode',
+                                                                                            arguments: '$month/$year/$periodTipe/$refId/$branchCode/$ssCode/$salesCode',
                                                                                           );
                                                                                         }
                                                                                       : dataFunneling.listRptFunneling![indexObj].tipe == 'SS'
@@ -1563,13 +1564,14 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                                               var month = dataFunneling.listRptFunneling![indexObj].month.toString();
                                                                                               var year = dataFunneling.listRptFunneling![indexObj].year.toString();
                                                                                               var periodTipe = dataFunneling.listRptFunneling![indexObj].periodTipe;
+                                                                                              var refId = dataFunneling.listRptFunneling![indexObj].refId;
                                                                                               var branchCode = dataFunneling.listRptFunneling![indexObj].title;
                                                                                               var ssCode = dataFunneling.listRptFunneling![indexObj].headerCode;
 
                                                                                               Navigator.pushNamed(
                                                                                                 context,
                                                                                                 FunnelingSalesPage.routeName,
-                                                                                                arguments: '$month/$year/$periodTipe/$branchCode/$ssCode',
+                                                                                                arguments: '$month/$year/$periodTipe/$refId/$branchCode/$ssCode',
                                                                                               );
                                                                                             }
                                                                                           : () {
