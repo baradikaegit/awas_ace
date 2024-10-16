@@ -3,7 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsgatepasstosbimodel.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,14 +12,14 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class DOtoGatePassBySalesPage extends StatefulWidget {
+class GatePasstoSBIBySalesPage extends StatefulWidget {
   final Object? linkPageObj;
-  const DOtoGatePassBySalesPage({super.key, required this.linkPageObj});
+  const GatePasstoSBIBySalesPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/dOtoGatePassBySalesPage";
+  static const String routeName = "/gatePasstoSBIBySalesPage";
   @override
-  State<DOtoGatePassBySalesPage> createState() =>
-      _DOtoGatePassBySalesPageState();
+  State<GatePasstoSBIBySalesPage> createState() =>
+      _GatePasstoSBIBySalesPageState();
 }
 
 class ModelMonth {
@@ -28,9 +28,9 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
+class _GatePasstoSBIBySalesPageState extends State<GatePasstoSBIBySalesPage> {
   Widget titleBar = const Text(
-    "DO to Gatepass",
+    "Gatepass to SBI",
     style: TextStyle(color: Colors.white),
   );
 
@@ -59,7 +59,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
     DateFormat('yyyy').format(DateTime.utc(DateTime.now().year - 1))
   ];
 
-  List<ListRptDoToGatepassResponse> listRptDoToGatepassRes = [];
+  List<ListRptGatepassToSbiResponse> listRptGatepasstoSBIRes = [];
 
   @override
   void initState() {
@@ -162,8 +162,8 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                     final String dateNow =
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
-                    final rptdOtoGatepass =
-                        ref.watch(reportDoToGatepassBySales(linkPageObj));
+                    final rptGatepasstoSBIBySales =
+                        ref.watch(reportGatepasstoSBIBySales(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -171,42 +171,45 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                           Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 20, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                                 child: SizedBox(
-                                  child: rptdOtoGatepass.when(
+                                  child: rptGatepasstoSBIBySales.when(
                                     data: (dataSelectOpt) {
-                                      if (dataSelectOpt.listRptDoToGatepass !=
+                                      if (dataSelectOpt.listRptGatepassToSBI !=
                                           null) {
                                         String tipePeriode = dataSelectOpt
-                                                .listRptDoToGatepass!.isNotEmpty
+                                                .listRptGatepassToSBI!
+                                                .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? 'MTD'
                                                 : dataSelectOpt
-                                                    .listRptDoToGatepass![0]
+                                                    .listRptGatepassToSBI![0]
                                                     .periodTipe
                                             : '';
 
                                         String monthSelected = dataSelectOpt
-                                                .listRptDoToGatepass!.isNotEmpty
+                                                .listRptGatepassToSBI!
+                                                .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? DateFormat('M')
                                                     .format(DateTime.now())
                                                 : dataSelectOpt
-                                                    .listRptDoToGatepass![0]
+                                                    .listRptGatepassToSBI![0]
                                                     .month
                                                     .toString()
                                             : '';
 
                                         String yearSelected = dataSelectOpt
-                                                .listRptDoToGatepass!.isNotEmpty
+                                                .listRptGatepassToSBI!
+                                                .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? DateFormat('yyyy')
                                                     .format(DateTime.now())
                                                 : dataSelectOpt
-                                                    .listRptDoToGatepass![0]
+                                                    .listRptGatepassToSBI![0]
                                                     .year
                                                     .toString()
                                             : '';
@@ -250,38 +253,43 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                             }).toList(),
                                                             onChanged: (String?
                                                                 newValTp) {
-                                                              setState(() {
-                                                                tipePeriode =
-                                                                    newValTp!;
-                                                                var monthNow =
-                                                                    dataSelectOpt
-                                                                        .listRptDoToGatepass![
-                                                                            0]
-                                                                        .month;
-                                                                var yearNow =
-                                                                    dataSelectOpt
-                                                                        .listRptDoToGatepass![
-                                                                            0]
-                                                                        .year;
+                                                              setState(
+                                                                () {
+                                                                  tipePeriode =
+                                                                      newValTp!;
+                                                                  var monthNow =
+                                                                      dataSelectOpt
+                                                                          .listRptGatepassToSBI![
+                                                                              0]
+                                                                          .month;
+                                                                  var yearNow =
+                                                                      dataSelectOpt
+                                                                          .listRptGatepassToSBI![
+                                                                              0]
+                                                                          .year;
+                                                                  var branchCode =
+                                                                      dataSelectOpt
+                                                                          .listRptGatepassToSBI![
+                                                                              0]
+                                                                          .title;
+                                                                  var ssCode =
+                                                                      dataSelectOpt
+                                                                          .listRptGatepassToSBI![
+                                                                              0]
+                                                                          .headerCode2;
+                                                                  var linkResultPeriodTipe =
+                                                                      '$monthNow/$yearNow/$tipePeriode/$branchCode/$ssCode';
 
-                                                                var linkPage =
-                                                                    dataSelectOpt
-                                                                        .listRptDoToGatepass![
-                                                                            0]
-                                                                        .linkPage;
-
-                                                                var linkResultPeriodTipe =
-                                                                    '$monthNow/$yearNow/$tipePeriode/$linkPage';
-
-                                                                Navigator
-                                                                    .pushReplacementNamed(
-                                                                  context,
-                                                                  DOtoGatePassBySalesPage
-                                                                      .routeName,
-                                                                  arguments:
-                                                                      linkResultPeriodTipe,
-                                                                );
-                                                              });
+                                                                  Navigator
+                                                                      .pushReplacementNamed(
+                                                                    context,
+                                                                    GatePasstoSBIBySalesPage
+                                                                        .routeName,
+                                                                    arguments:
+                                                                        linkResultPeriodTipe,
+                                                                  );
+                                                                },
+                                                              );
                                                             },
                                                             dropdownStyleData:
                                                                 DropdownStyleData(
@@ -357,27 +365,32 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                     newValMonth!;
                                                                 var yearNow =
                                                                     dataSelectOpt
-                                                                        .listRptDoToGatepass![
+                                                                        .listRptGatepassToSBI![
                                                                             0]
                                                                         .year;
                                                                 var periodTipe =
                                                                     dataSelectOpt
-                                                                        .listRptDoToGatepass![
+                                                                        .listRptGatepassToSBI![
                                                                             0]
                                                                         .periodTipe;
-                                                                var linkPage =
+                                                                var branchCode =
                                                                     dataSelectOpt
-                                                                        .listRptDoToGatepass![
+                                                                        .listRptGatepassToSBI![
                                                                             0]
-                                                                        .linkPage;
+                                                                        .title;
+                                                                var ssCode =
+                                                                    dataSelectOpt
+                                                                        .listRptGatepassToSBI![
+                                                                            0]
+                                                                        .headerCode2;
 
                                                                 var linkResultMonth =
-                                                                    '$monthSelected/$yearNow/$periodTipe/$linkPage';
+                                                                    '$monthSelected/$yearNow/$periodTipe/$branchCode/$ssCode';
 
                                                                 Navigator
                                                                     .pushReplacementNamed(
                                                                   context,
-                                                                  DOtoGatePassBySalesPage
+                                                                  GatePasstoSBIBySalesPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultMonth,
@@ -455,27 +468,32 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                     newValYear!;
                                                                 var monthNow =
                                                                     dataSelectOpt
-                                                                        .listRptDoToGatepass![
+                                                                        .listRptGatepassToSBI![
                                                                             0]
                                                                         .month;
                                                                 var periodTipe =
                                                                     dataSelectOpt
-                                                                        .listRptDoToGatepass![
+                                                                        .listRptGatepassToSBI![
                                                                             0]
                                                                         .periodTipe;
-                                                                var linkPage =
+                                                                var branchCode =
                                                                     dataSelectOpt
-                                                                        .listRptDoToGatepass![
+                                                                        .listRptGatepassToSBI![
                                                                             0]
                                                                         .title;
+                                                                var ssCode =
+                                                                    dataSelectOpt
+                                                                        .listRptGatepassToSBI![
+                                                                            0]
+                                                                        .headerCode2;
 
                                                                 var linkResultYear =
-                                                                    '$monthNow/$yearSelected/$periodTipe/$linkPage';
+                                                                    '$monthNow/$yearSelected/$periodTipe/$branchCode/$ssCode';
 
                                                                 Navigator
                                                                     .pushNamed(
                                                                   context,
-                                                                  DOtoGatePassBySalesPage
+                                                                  GatePasstoSBIBySalesPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultYear,
@@ -562,7 +580,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "(${dataSelectOpt.listRptDoToGatepass![0].title})",
+                                                      '(${dataSelectOpt.listRptGatepassToSBI![0].title})',
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -624,7 +642,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                        "Periode : ${dataSelectOpt.listRptDoToGatepass![0].monthID} ${dataSelectOpt.listRptDoToGatepass![0].year}",
+                                                        "Periode : ${dataSelectOpt.listRptGatepassToSBI![0].monthID} ${dataSelectOpt.listRptGatepassToSBI![0].year}",
                                                         style: TextStyle(
                                                           color: const Color
                                                               .fromARGB(
@@ -722,20 +740,20 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                 child: RefreshIndicator(
                                   onRefresh: () async {
                                     return ref.refresh(
-                                        reportDoToGatepassBySales(
+                                        reportGatepasstoSBIBySales(
                                             linkPageObj.toString()));
                                   },
-                                  child: rptdOtoGatepass.when(
-                                    data: (dataDoToGatepass) {
-                                      listRptDoToGatepassRes.clear();
-                                      listRptDoToGatepassRes
-                                          .add(dataDoToGatepass);
+                                  child: rptGatepasstoSBIBySales.when(
+                                    data: (dataGatepasstoSBIBySales) {
+                                      listRptGatepasstoSBIRes.clear();
+                                      listRptGatepasstoSBIRes
+                                          .add(dataGatepasstoSBIBySales);
 
-                                      return (dataDoToGatepass
-                                                  .listRptDoToGatepass !=
+                                      return (dataGatepasstoSBIBySales
+                                                  .listRptGatepassToSBI !=
                                               null)
-                                          ? dataDoToGatepass
-                                                  .listRptDoToGatepass!
+                                          ? dataGatepasstoSBIBySales
+                                                  .listRptGatepassToSBI!
                                                   .isNotEmpty
                                               ? ListView.builder(
                                                   physics:
@@ -777,7 +795,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                             Text(
                                                                           textAlign:
                                                                               TextAlign.center,
-                                                                          "ASTRIDO \n${dataDoToGatepass.listRptDoToGatepass![0].persentase}%",
+                                                                          "ASTRIDO \n${dataGatepasstoSBIBySales.listRptGatepassToSBI![0].persentase}%",
                                                                           style:
                                                                               TextStyle(
                                                                             color:
@@ -800,22 +818,22 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                   ],
                                                                   series: <CircularSeries>[
                                                                     DoughnutSeries<
-                                                                        DataDoToGatepass,
+                                                                        DataGatepasstoSBIBySales,
                                                                         String>(
-                                                                      dataLabelMapper: (DataDoToGatepass data, _) => data
+                                                                      dataLabelMapper: (DataGatepasstoSBIBySales data, _) => data
                                                                           .datalable
                                                                           .toString(),
                                                                       dataSource:
                                                                           toDynamic(
-                                                                              listRptDoToGatepassRes[0].listRptDoToGatepass!),
+                                                                              listRptGatepasstoSBIRes[0].listRptGatepassToSBI!),
                                                                       xValueMapper:
-                                                                          (DataDoToGatepass data, _) =>
+                                                                          (DataGatepasstoSBIBySales data, _) =>
                                                                               data.x,
                                                                       yValueMapper:
-                                                                          (DataDoToGatepass data, _) =>
+                                                                          (DataGatepasstoSBIBySales data, _) =>
                                                                               data.y,
                                                                       pointColorMapper:
-                                                                          (DataDoToGatepass data, _) =>
+                                                                          (DataGatepasstoSBIBySales data, _) =>
                                                                               data.color,
                                                                       innerRadius:
                                                                           '60%',
@@ -993,7 +1011,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "DO",
+                                                                        "GATEPASS",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1016,7 +1034,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "GATEPASS",
+                                                                        "DO",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1053,13 +1071,13 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                               ],
                                                               rows: List<
                                                                   DataRow>.generate(
-                                                                dataDoToGatepass
-                                                                    .listRptDoToGatepass!
+                                                                dataGatepasstoSBIBySales
+                                                                    .listRptGatepassToSBI!
                                                                     .length,
                                                                 (indexObj) {
-                                                                  final dataRptDoToGatepass =
-                                                                      dataDoToGatepass
-                                                                              .listRptDoToGatepass![
+                                                                  final dataRptGatepasstoSBIBySales =
+                                                                      dataGatepasstoSBIBySales
+                                                                              .listRptGatepassToSBI![
                                                                           indexObj];
 
                                                                   var textStyleDataTable =
@@ -1118,7 +1136,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         Text(
-                                                                          dataRptDoToGatepass
+                                                                          dataRptGatepasstoSBIBySales
                                                                               .headerName,
                                                                           style:
                                                                               textStyleDataTable,
@@ -1130,7 +1148,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                               Alignment.center,
                                                                           child:
                                                                               Text(
-                                                                            dataRptDoToGatepass.dO.toString(),
+                                                                            dataRptGatepasstoSBIBySales.gatepass.toString(),
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -1144,7 +1162,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                               Alignment.center,
                                                                           child:
                                                                               Text(
-                                                                            dataRptDoToGatepass.gatepass.toString(),
+                                                                            dataRptGatepasstoSBIBySales.sbi.toString(),
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -1158,7 +1176,7 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
                                                                               Alignment.center,
                                                                           child:
                                                                               Text(
-                                                                            dataRptDoToGatepass.persentase.toString(),
+                                                                            dataRptGatepasstoSBIBySales.persentase.toString(),
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -1205,27 +1223,27 @@ class _DOtoGatePassBySalesPageState extends State<DOtoGatePassBySalesPage> {
   }
 }
 
-class DataDoToGatepass {
+class DataGatepasstoSBIBySales {
   String x;
   int y;
   int datalable;
   Color color;
 
-  DataDoToGatepass(this.x, this.y, this.datalable, this.color);
+  DataGatepasstoSBIBySales(this.x, this.y, this.datalable, this.color);
 }
 
-dynamic toDynamic(List<ListRptDoToGatepass> objList) {
-  List<DataDoToGatepass> chartData = <DataDoToGatepass>[
-    DataDoToGatepass(
-      "DO",
-      objList[0].dO > 0 || objList[0].gatepass > 0 ? objList[0].dO : 50,
-      objList[0].dO > 0 ? objList[0].dO : 0,
+dynamic toDynamic(List<ListRptGatepassToSBI> objList) {
+  List<DataGatepasstoSBIBySales> chartData = <DataGatepasstoSBIBySales>[
+    DataGatepasstoSBIBySales(
+      "Gatepass",
+      objList[0].gatepass > 0 || objList[0].sbi > 0 ? objList[0].gatepass : 50,
+      objList[0].gatepass > 0 ? objList[0].gatepass : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
-    DataDoToGatepass(
-      "Gatepass",
-      objList[0].gatepass > 0 || objList[0].dO > 0 ? objList[0].gatepass : 50,
-      objList[0].gatepass > 0 ? objList[0].gatepass : 0,
+    DataGatepasstoSBIBySales(
+      "SBI",
+      objList[0].sbi > 0 || objList[0].gatepass > 0 ? objList[0].sbi : 50,
+      objList[0].sbi > 0 ? objList[0].sbi : 0,
       const Color.fromARGB(155, 0, 255, 170),
     ),
   ];

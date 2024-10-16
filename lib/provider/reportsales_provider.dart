@@ -1,7 +1,8 @@
 import 'package:awas_ace/repositories/reportsales_repositories.dart';
-import 'package:awas_ace/widgets/model/reportslsdotogatepass.dart';
+import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsgatepasstosbimodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsstockmodel.dart';
@@ -159,4 +160,28 @@ final reportDoToGatepassBySales = FutureProvider.autoDispose
       ref.watch(reportSalesRepositoryProvider);
   return repositoryDoToGatepassBySales
       .fecthListDataDotoGatepassBySales(linkPageObj);
+});
+
+//list report gatepass to sbi
+final reportGatepasstoSBI = FutureProvider.autoDispose
+    .family<ListRptGatepassToSbiResponse, String>((ref, linkPageObj) async {
+  final repositoryGatepasstoSBI = ref.watch(reportSalesRepositoryProvider);
+  return repositoryGatepasstoSBI.fecthListDataGatepasstoSBI(linkPageObj);
+});
+
+//list report gatepass to sbi by ss
+final reportGatepasstoSBIBySS = FutureProvider.autoDispose
+    .family<ListRptGatepassToSbiResponse, String>((ref, linkPageObj) async {
+  final repositoryGatepasstoSBIBySS = ref.watch(reportSalesRepositoryProvider);
+  return repositoryGatepasstoSBIBySS
+      .fecthListDataGatepasstoSBIBySS(linkPageObj);
+});
+
+//list report gatepass to sbi by sales
+final reportGatepasstoSBIBySales = FutureProvider.autoDispose
+    .family<ListRptGatepassToSbiResponse, String>((ref, linkPageObj) async {
+  final repositoryGatepasstoSBIBySales =
+      ref.watch(reportSalesRepositoryProvider);
+  return repositoryGatepasstoSBIBySales
+      .fecthListDataGatepasstoSBIBySales(linkPageObj);
 });

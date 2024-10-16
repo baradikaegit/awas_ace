@@ -228,7 +228,9 @@ class _ReportPageState extends State<ReportPage> {
                                             linkPageSales[index] ==
                                                 '/targetSalesActualPage' ||
                                             linkPageSales[index] ==
-                                                '/dOtoGatePassPage'
+                                                '/dOtoGatePassPage' ||
+                                            linkPageSales[index] ==
+                                                '/gatePasstoSBIPage'
                                         ? '$_monthNow/$_yearNow/MTD'
                                         : linkPageSales[index] ==
                                                 '/funnelingPage'

@@ -16,6 +16,8 @@ import 'package:awas_ace/widgets/pages/sales/dotogatepass_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/gatepasstosbi_bysales.dart';
+import 'package:awas_ace/widgets/pages/sales/gatepasstosbi_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
@@ -153,7 +155,16 @@ class MyApp extends StatelessWidget {
         DOtoGatePassBySalesPage.routeName: (context) => DOtoGatePassBySalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
-        GatePasstoSBIPage.routeName: (context) => const GatePasstoSBIPage(),
+        GatePasstoSBIPage.routeName: (context) => GatePasstoSBIPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        GatePasstoSBIBySSPage.routeName: (context) => GatePasstoSBIBySSPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        GatePasstoSBIBySalesPage.routeName: (context) =>
+            GatePasstoSBIBySalesPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         TargetSalesActualPage.routeName: (context) => TargetSalesActualPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),

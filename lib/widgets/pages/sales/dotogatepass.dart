@@ -3,7 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportslsdotogatepass.dart';
+import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_byss.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -172,7 +172,7 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                           Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 20, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                                 child: SizedBox(
                                   child: rptdOtoGatepass.when(
                                     data: (dataSelectOpt) {

@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
-import 'package:awas_ace/widgets/model/reportslsdotogatepass.dart';
+import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
+import 'package:awas_ace/widgets/model/reportslsgatepasstosbimodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsstockmodel.dart';
@@ -48,6 +49,12 @@ abstract class IReportSalesRepository {
   Future<ListRptDoToGatepassResponse> fecthListDataDotoGatepassBySS(
       String linkPageObj);
   Future<ListRptDoToGatepassResponse> fecthListDataDotoGatepassBySales(
+      String linkPageObj);
+  Future<ListRptGatepassToSbiResponse> fecthListDataGatepasstoSBI(
+      String linkPageObj);
+  Future<ListRptGatepassToSbiResponse> fecthListDataGatepasstoSBIBySS(
+      String linkPageObj);
+  Future<ListRptGatepassToSbiResponse> fecthListDataGatepasstoSBIBySales(
       String linkPageObj);
 }
 
@@ -480,11 +487,10 @@ class ReportSalesRepositories implements IReportSalesRepository {
       HttpHeaders.authorizationHeader: "Bearer $token",
     });
 
-    final jsonObjRptStockByModelVbranch =
-        jsonDecode(resultGetRptDoToGatepass.body);
+    final jsonObjRptDoToGatepass = jsonDecode(resultGetRptDoToGatepass.body);
 
     var responseGetRptDoToGatepass =
-        ListRptDoToGatepassResponse.fromJson(jsonObjRptStockByModelVbranch);
+        ListRptDoToGatepassResponse.fromJson(jsonObjRptDoToGatepass);
     return responseGetRptDoToGatepass;
   }
 
@@ -505,11 +511,11 @@ class ReportSalesRepositories implements IReportSalesRepository {
       HttpHeaders.authorizationHeader: "Bearer $token",
     });
 
-    final jsonObjRptStockByModelVbranchBySS =
+    final jsonObjRptDoToGatepassBySS =
         jsonDecode(resultGetRptDoToGatepassBySS.body);
 
     var responseGetRptDoToGatepassBySS =
-        ListRptDoToGatepassResponse.fromJson(jsonObjRptStockByModelVbranchBySS);
+        ListRptDoToGatepassResponse.fromJson(jsonObjRptDoToGatepassBySS);
     return responseGetRptDoToGatepassBySS;
   }
 
@@ -530,12 +536,84 @@ class ReportSalesRepositories implements IReportSalesRepository {
       HttpHeaders.authorizationHeader: "Bearer $token",
     });
 
-    final jsonObjRptStockByModelVbranchBySales =
+    final jsonObjDoToGatepassBySales =
         jsonDecode(resultGetRptDoToGatepassBySales.body);
 
     var responseGetRptDoToGatepassBySales =
-        ListRptDoToGatepassResponse.fromJson(
-            jsonObjRptStockByModelVbranchBySales);
+        ListRptDoToGatepassResponse.fromJson(jsonObjDoToGatepassBySales);
     return responseGetRptDoToGatepassBySales;
+  }
+
+  //Gatepass to SBI
+  @override
+  Future<ListRptGatepassToSbiResponse> fecthListDataGatepasstoSBI(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptGatepasstoSBI = "${_host}GetReportGatepassToSBI/$linkPageObj";
+
+    var resultGetRptGatepasstoSBI =
+        await http.get(Uri.parse(urlGetRptGatepasstoSBI), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptGatepasstoSBI = jsonDecode(resultGetRptGatepasstoSBI.body);
+
+    var responseGetGatepasstoSBI =
+        ListRptGatepassToSbiResponse.fromJson(jsonObjRptGatepasstoSBI);
+    return responseGetGatepasstoSBI;
+  }
+
+  //Gatepass to SBI By SS
+  @override
+  Future<ListRptGatepassToSbiResponse> fecthListDataGatepasstoSBIBySS(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptGatepasstoSBIBySS =
+        "${_host}GetReportGatepassToSBIBySS/$linkPageObj";
+
+    var resultGetRptGatepasstoSBIBySS =
+        await http.get(Uri.parse(urlGetRptGatepasstoSBIBySS), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptGatepasstoSBIBySS =
+        jsonDecode(resultGetRptGatepasstoSBIBySS.body);
+
+    var responseGetGatepasstoSBIBySS =
+        ListRptGatepassToSbiResponse.fromJson(jsonObjRptGatepasstoSBIBySS);
+    return responseGetGatepasstoSBIBySS;
+  }
+
+  //Gatepass to SBI By Sales
+  @override
+  Future<ListRptGatepassToSbiResponse> fecthListDataGatepasstoSBIBySales(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptGatepasstoSBIBySales =
+        "${_host}GetReportGatepassToSBIBySales/$linkPageObj";
+
+    var resultGetRptGatepasstoSBIBySales =
+        await http.get(Uri.parse(urlGetRptGatepasstoSBIBySales), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptGatepasstoSBIBySales =
+        jsonDecode(resultGetRptGatepasstoSBIBySales.body);
+
+    var responseGetGatepasstoSBIBySales =
+        ListRptGatepassToSbiResponse.fromJson(jsonObjRptGatepasstoSBIBySales);
+    return responseGetGatepasstoSBIBySales;
   }
 }
