@@ -171,7 +171,7 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                           Column(
                             children: [
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 20, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                                 child: SizedBox(
                                   child: rptProspekVSpk.when(
                                     data: (dataSelectOpt) {
