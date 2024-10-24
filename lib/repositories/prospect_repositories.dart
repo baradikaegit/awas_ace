@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ abstract class IProspectRepository {
   Future<ProspectUEBPResponse> createNewProspectUEBP(
       ListEntryProspectUEBP uebp);
   Future<ListProspectUEBP> fecthListDataUEBP(String objID);
+  Future<ListGrafikProspectSalesResponse> fecthListDataGrafikProspectSales();
 }
 
 class ProspectRepositories implements IProspectRepository {
@@ -86,5 +88,29 @@ class ProspectRepositories implements IProspectRepository {
 
     var responseUEBP = ListProspectUEBP.fromJson(jsonObjectUEBP);
     return responseUEBP;
+  }
+
+  //Grafiks prospect sales
+  @override
+  Future<ListGrafikProspectSalesResponse>
+      fecthListDataGrafikProspectSales() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetGrafikProspectSales = "${_host}GetGrafikProspectSales";
+
+    var resultGetGrafikProspectSales =
+        await http.get(Uri.parse(urlGetGrafikProspectSales), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjGrafikProspectSales =
+        jsonDecode(resultGetGrafikProspectSales.body);
+
+    var responseGetGrafikProspectSales =
+        ListGrafikProspectSalesResponse.fromJson(jsonObjGrafikProspectSales);
+    return responseGetGrafikProspectSales;
   }
 }

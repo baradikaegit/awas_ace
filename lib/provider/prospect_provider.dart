@@ -1,4 +1,5 @@
 import 'package:awas_ace/repositories/prospect_repositories.dart';
+import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:flutter/material.dart';
@@ -69,4 +70,11 @@ final prospectUEBPList = FutureProvider.autoDispose
     .family<ListProspectUEBP, String>((ref, objID) async {
   final repository = ref.watch(prospectRepositoryProvider);
   return repository.fecthListDataUEBP(objID);
+});
+
+//list grafik prospect sales
+final grafikProspectSales =
+    FutureProvider.autoDispose<ListGrafikProspectSalesResponse>((ref) async {
+  final repositoryGrafikPS = ref.watch(prospectRepositoryProvider);
+  return repositoryGrafikPS.fecthListDataGrafikProspectSales();
 });
