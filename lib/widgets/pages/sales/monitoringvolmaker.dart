@@ -1,9 +1,17 @@
-import 'package:data_table_2/data_table_2.dart';
+import 'package:awas_ace/provider/reportsales_provider.dart';
+import 'package:awas_ace/support/alert_dialog.dart';
+import 'package:awas_ace/support/loading_animations.dart';
+import 'package:awas_ace/support/not_active_token.dart';
+import 'package:awas_ace/support/watermark.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class MonitAreaVolumeMakerPage extends StatefulWidget {
-  const MonitAreaVolumeMakerPage({super.key});
+  final Object? linkPageObj;
+  const MonitAreaVolumeMakerPage({super.key, required this.linkPageObj});
+
   static const String routeName = "/monitAreaVolumeMakerPage";
   @override
   State<MonitAreaVolumeMakerPage> createState() =>
@@ -29,11 +37,59 @@ class _MonitAreaVolumeMakerPageState extends State<MonitAreaVolumeMakerPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
+      ).value,
+    );
+
+    var textStyleColorWhiteB = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
+          const Condition.largerThan(
+              name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
+        ],
+        defaultValue: 11.0,
+      ).value,
+      fontWeight: FontWeight.bold,
+    );
+
+    var textStyleColorGold = TextStyle(
+      color: const Color.fromARGB(255, 250, 158, 19),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
+          const Condition.largerThan(
+              name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
+        ],
+        defaultValue: 11.0,
+      ).value,
+    );
+
+    var textStyleColorGold1 = TextStyle(
+      color: const Color.fromARGB(255, 253, 250, 41),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
+          const Condition.largerThan(
+              name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
+        ],
+        defaultValue: 11.0,
       ).value,
     );
 
@@ -49,253 +105,678 @@ class _MonitAreaVolumeMakerPageState extends State<MonitAreaVolumeMakerPage> {
           ),
           body: Container(
             decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 33, 44, 81),
+              color: Color.fromARGB(
+                255,
+                33,
+                44,
+                81,
+              ),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(25),
                 topRight: Radius.circular(25),
               ),
             ),
-            child: Center(
-              child: Stack(
-                children: [
-                  Column(
-                    children: [
-                      SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 25, 0, 25),
-                          child: Text(
-                            "Monitoring Volume Maker",
-                            style: TextStyle(
-                              color: const Color.fromARGB(
-                                255,
-                                255,
-                                255,
-                                255,
-                              ),
-                              fontSize: ResponsiveValue<double>(
-                                context,
-                                conditionalValues: [
-                                  const Condition.equals(
-                                      name: TABLET,
-                                      value: 17.0,
-                                      landscapeValue: 17.0),
-                                  const Condition.largerThan(
-                                      name: TABLET,
-                                      value: 17.0,
-                                      landscapeValue: 17.0,
-                                      breakpoint: 800),
-                                ],
-                                defaultValue: 14.5,
-                              ).value,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            maxLines: 2,
-                          ),
-                        ),
-                      ),
-                      SafeArea(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 25),
-                          child: Column(
+            child: Stack(
+              children: [
+                const Watermark(),
+                Consumer(
+                  builder: (context, ref, child) {
+                    var linkPageObj = widget.linkPageObj.toString();
+
+                    final String dateNow =
+                        DateFormat('dd MMMM yyyy').format(DateTime.now());
+                    final int yearNow =
+                        int.parse(DateFormat('yyyy').format(DateTime.now()));
+
+                    var header1 = (yearNow - 1);
+                    var header2 = (yearNow - 2);
+
+                    final rptMonitoring = ref.watch(
+                      reportMonitoringVolProfitMaker(linkPageObj),
+                    );
+
+                    return Center(
+                      child: Stack(
+                        children: [
+                          Column(
                             children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Periode : Juli 2024",
-                                  style: TextStyle(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
-                                    ),
-                                    fontSize: ResponsiveValue<double>(
-                                      context,
-                                      conditionalValues: [
-                                        const Condition.equals(
-                                            name: TABLET,
-                                            value: 12.5,
-                                            landscapeValue: 12.5),
-                                        const Condition.largerThan(
-                                            name: TABLET,
-                                            value: 12.5,
-                                            landscapeValue: 12.5,
-                                            breakpoint: 800),
-                                      ],
-                                      defaultValue: 11.5,
-                                    ).value,
-                                  ),
+                              SizedBox(
+                                child: rptMonitoring.when(
+                                  data: (dataPeriod) => (dataPeriod
+                                              .listMonitoringVolProfitMaker !=
+                                          null)
+                                      ? Column(
+                                          children: [
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
+                                              centerTitle: true,
+                                              title: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 10, 0, 0),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      "Monitoring Volume Maker",
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                              name: TABLET,
+                                                              value: 12.0,
+                                                              landscapeValue:
+                                                                  12.0,
+                                                            ),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 11,
+                                                        ).value,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "VELOZ, AVANZA, RAIZE, RUSH, AGYA & CALYA",
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                              name: TABLET,
+                                                              value: 12.0,
+                                                              landscapeValue:
+                                                                  12.0,
+                                                            ),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 11.0,
+                                                        ).value,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                255,
+                                                33,
+                                                44,
+                                                81,
+                                              ),
+                                            ),
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
+                                              centerTitle: false,
+                                              title: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        5, 0, 0, 0),
+                                                child: Column(
+                                                  children: [
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "Periode : $yearNow",
+                                                        style: TextStyle(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                          fontSize:
+                                                              ResponsiveValue<
+                                                                  double>(
+                                                            context,
+                                                            conditionalValues: [
+                                                              const Condition
+                                                                  .equals(
+                                                                  name: TABLET,
+                                                                  value: 12.5,
+                                                                  landscapeValue:
+                                                                      12.5),
+                                                              const Condition
+                                                                  .largerThan(
+                                                                  name: TABLET,
+                                                                  value: 12.5,
+                                                                  landscapeValue:
+                                                                      12.5,
+                                                                  breakpoint:
+                                                                      800),
+                                                            ],
+                                                            defaultValue: 11.5,
+                                                          ).value,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.centerLeft,
+                                                      child: Text(
+                                                        "Tanggal Hari ini : $dateNow",
+                                                        style: TextStyle(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                          fontSize:
+                                                              ResponsiveValue<
+                                                                  double>(
+                                                            context,
+                                                            conditionalValues: [
+                                                              const Condition
+                                                                  .equals(
+                                                                  name: TABLET,
+                                                                  value: 12.5,
+                                                                  landscapeValue:
+                                                                      12.5),
+                                                              const Condition
+                                                                  .largerThan(
+                                                                  name: TABLET,
+                                                                  value: 12.5,
+                                                                  landscapeValue:
+                                                                      12.5,
+                                                                  breakpoint:
+                                                                      800),
+                                                            ],
+                                                            defaultValue: 11.5,
+                                                          ).value,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                255,
+                                                33,
+                                                44,
+                                                81,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : const Column(
+                                          children: [],
+                                        ),
+                                  error: (err, stack) => Text('Error $err'),
+                                  loading: () => const Center(child: Text('')),
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: Text(
-                                  "Tanggal Hari ini : ",
-                                  style: TextStyle(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      255,
-                                      255,
-                                      255,
+                              Expanded(
+                                child: RefreshIndicator(
+                                  onRefresh: () async {
+                                    return ref.refresh(
+                                      reportMonitoringVolProfitMaker(
+                                          linkPageObj),
+                                    );
+                                  },
+                                  child: rptMonitoring.when(
+                                    data: (dataMonitoring) {
+                                      return (dataMonitoring
+                                                  .listMonitoringVolProfitMaker !=
+                                              null)
+                                          ? dataMonitoring
+                                                  .listMonitoringVolProfitMaker!
+                                                  .isNotEmpty
+                                              ? ListView.builder(
+                                                  physics:
+                                                      const AlwaysScrollableScrollPhysics(),
+                                                  itemCount: 1,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                            10,
+                                                            20,
+                                                            10,
+                                                            20,
+                                                          ),
+                                                          child: Container(
+                                                            constraints:
+                                                                const BoxConstraints(
+                                                              minHeight: 600,
+                                                              minWidth: double
+                                                                  .infinity,
+                                                            ),
+                                                            child: DataTable(
+                                                              border:
+                                                                  const TableBorder(
+                                                                horizontalInside:
+                                                                    BorderSide(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                    255,
+                                                                    27,
+                                                                    37,
+                                                                    68,
+                                                                  ),
+                                                                  width: 2.5,
+                                                                ),
+                                                              ),
+                                                              columnSpacing:
+                                                                  ResponsiveValue<
+                                                                      double>(
+                                                                context,
+                                                                conditionalValues: [
+                                                                  const Condition
+                                                                      .equals(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          20.0,
+                                                                      landscapeValue:
+                                                                          20.0),
+                                                                  const Condition
+                                                                      .largerThan(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          0.0,
+                                                                      landscapeValue:
+                                                                          0.0)
+                                                                ],
+                                                                defaultValue:
+                                                                    10,
+                                                              ).value,
+                                                              horizontalMargin: ResponsiveValue<
+                                                                          double>(
+                                                                      context,
+                                                                      conditionalValues: [
+                                                                        const Condition
+                                                                            .equals(
+                                                                            name:
+                                                                                TABLET,
+                                                                            value:
+                                                                                5.0,
+                                                                            landscapeValue:
+                                                                                5.0),
+                                                                        const Condition
+                                                                            .largerThan(
+                                                                            name:
+                                                                                TABLET,
+                                                                            value:
+                                                                                5.0,
+                                                                            landscapeValue:
+                                                                                5.0,
+                                                                            breakpoint:
+                                                                                800)
+                                                                      ],
+                                                                      defaultValue:
+                                                                          12.0)
+                                                                  .value,
+                                                              headingRowHeight:
+                                                                  ResponsiveValue<
+                                                                      double>(
+                                                                context,
+                                                                conditionalValues: [
+                                                                  const Condition
+                                                                      .equals(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          35.0,
+                                                                      landscapeValue:
+                                                                          35.0),
+                                                                  const Condition.largerThan(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          50.0,
+                                                                      landscapeValue:
+                                                                          50.0,
+                                                                      breakpoint:
+                                                                          800),
+                                                                ],
+                                                                defaultValue:
+                                                                    30.0,
+                                                              ).value,
+                                                              columns: [
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topLeft,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width:
+                                                                          100,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(
+                                                                          left:
+                                                                              10.0,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          "CABANG",
+                                                                          style:
+                                                                              textStyleColorWhiteB,
+                                                                          maxLines:
+                                                                              2,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topCenter,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width: 60,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "$header2",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topCenter,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width: 60,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "$header1",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topCenter,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width: 80,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "GROWTH",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topCenter,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width: 60,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "$yearNow",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                              rows: List<
+                                                                  DataRow>.generate(
+                                                                dataMonitoring
+                                                                    .listMonitoringVolProfitMaker!
+                                                                    .length,
+                                                                (indexObj) {
+                                                                  final dataRptMonitoring =
+                                                                      dataMonitoring
+                                                                              .listMonitoringVolProfitMaker![
+                                                                          indexObj];
+
+                                                                  var textStyleDataTable =
+                                                                      TextStyle(
+                                                                    color: Colors
+                                                                        .blue,
+                                                                    fontSize:
+                                                                        ResponsiveValue<
+                                                                            double>(
+                                                                      context,
+                                                                      conditionalValues: [
+                                                                        const Condition
+                                                                            .equals(
+                                                                            name:
+                                                                                TABLET,
+                                                                            value:
+                                                                                12.0,
+                                                                            landscapeValue:
+                                                                                12.0),
+                                                                        const Condition
+                                                                            .largerThan(
+                                                                            name:
+                                                                                TABLET,
+                                                                            value:
+                                                                                14.0,
+                                                                            landscapeValue:
+                                                                                14.0,
+                                                                            breakpoint:
+                                                                                800),
+                                                                      ],
+                                                                      defaultValue:
+                                                                          11.0,
+                                                                    ).value,
+                                                                  );
+
+                                                                  return DataRow(
+                                                                    color: MaterialStateColor
+                                                                        .resolveWith(
+                                                                      (states) => indexObj
+                                                                              .isEven
+                                                                          ? const Color
+                                                                              .fromARGB(
+                                                                              213,
+                                                                              27,
+                                                                              37,
+                                                                              68,
+                                                                            )
+                                                                          : Colors
+                                                                              .transparent,
+                                                                    ),
+                                                                    cells: <DataCell>[
+                                                                      DataCell(
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () {},
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(
+                                                                              left: 10,
+                                                                            ),
+                                                                            child:
+                                                                                Text(
+                                                                              dataRptMonitoring.headerName,
+                                                                              style: textStyleDataTable,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptMonitoring.data1.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                textStyleColorWhite,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptMonitoring.data2.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                textStyleColorWhite,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            "${dataRptMonitoring.growth.toString()}%",
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                textStyleColorGold,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.center,
+                                                                          child:
+                                                                              Text(
+                                                                            dataRptMonitoring.data3.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                textStyleColorGold1,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    );
+                                                  },
+                                                )
+                                              : const MyAlertDialog()
+                                          : const notActivetoken();
+                                    },
+                                    error: (err, stack) => Text('Error $err'),
+                                    loading: () => const Center(
+                                      child: Column(
+                                        children: [loadingAnimation()],
+                                      ),
                                     ),
-                                    fontSize: ResponsiveValue<double>(
-                                      context,
-                                      conditionalValues: [
-                                        const Condition.equals(
-                                            name: TABLET,
-                                            value: 12.5,
-                                            landscapeValue: 12.5),
-                                        const Condition.largerThan(
-                                            name: TABLET,
-                                            value: 12.5,
-                                            landscapeValue: 12.5,
-                                            breakpoint: 800),
-                                      ],
-                                      defaultValue: 11.5,
-                                    ).value,
                                   ),
                                 ),
                               ),
                             ],
-                          ),
-                        ),
+                          )
+                        ],
                       ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 25, 10, 0),
-                          child: DataTable2(
-                            border: const TableBorder(
-                              bottom: BorderSide(
-                                style: BorderStyle.solid,
-                                color: Color.fromARGB(
-                                  30,
-                                  255,
-                                  255,
-                                  255,
-                                ),
-                              ),
-                            ),
-                            columnSpacing: 5,
-                            horizontalMargin: 12,
-                            minWidth: 350,
-                            headingRowHeight: 40.0,
-                            columns: [
-                              DataColumn2(
-                                label: Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Text(
-                                    "CABANG",
-                                    style: textStyleColorWhite,
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              ),
-                              DataColumn2(
-                                  size: ColumnSize.L,
-                                  label: Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Text(
-                                      "2022",
-                                      style: textStyleColorWhite,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  )),
-                              DataColumn2(
-                                  label: Align(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  "2023",
-                                  style: textStyleColorWhite,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )),
-                              DataColumn2(
-                                  label: Align(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  "GROWTH",
-                                  style: textStyleColorWhite,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )),
-                              DataColumn2(
-                                  label: Align(
-                                alignment: Alignment.topCenter,
-                                child: Text(
-                                  "2024",
-                                  style: textStyleColorWhite,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              )),
-                            ],
-                            rows: <DataRow>[
-                              DataRow(
-                                cells: [
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Text(
-                                      "data",
-                                      style: textStyleColorWhite,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                    );
+                  },
+                ),
+              ],
             ),
           ),
         ),
       ],
     );
   }
-}
-
-class SalesData {
-  String x;
-  double y;
-
-  SalesData(this.x, this.y);
-}
-
-// isi dari grafik
-dynamic getColumnData() {
-  List<SalesData> columnData = <SalesData>[
-    SalesData("Toyota", 654),
-    SalesData("Daihatsu", 575),
-  ];
-  return columnData;
 }

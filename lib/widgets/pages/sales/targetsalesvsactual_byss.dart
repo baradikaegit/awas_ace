@@ -148,7 +148,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                       context,
                       conditionalValues: [
                         const Condition.equals(
-                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                            name: TABLET, value: 12.0, landscapeValue: 12.0),
                         const Condition.largerThan(
                             name: TABLET,
                             value: 14.0,
@@ -169,7 +169,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                       context,
                       conditionalValues: [
                         const Condition.equals(
-                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                            name: TABLET, value: 12.0, landscapeValue: 12.0),
                         const Condition.largerThan(
                             name: TABLET,
                             value: 14.0,
@@ -190,7 +190,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                       context,
                       conditionalValues: [
                         const Condition.equals(
-                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                            name: TABLET, value: 12.0, landscapeValue: 12.0),
                         const Condition.largerThan(
                             name: TABLET,
                             value: 14.0,
@@ -211,7 +211,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                       context,
                       conditionalValues: [
                         const Condition.equals(
-                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                            name: TABLET, value: 12.0, landscapeValue: 12.0),
                         const Condition.largerThan(
                             name: TABLET,
                             value: 14.0,
@@ -232,7 +232,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                       context,
                       conditionalValues: [
                         const Condition.equals(
-                            name: TABLET, value: 14.0, landscapeValue: 14.0),
+                            name: TABLET, value: 12.0, landscapeValue: 12.0),
                         const Condition.largerThan(
                             name: TABLET,
                             value: 14.0,
@@ -262,11 +262,11 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
       ).value,
     );
 
@@ -281,11 +281,11 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
       ).value,
       fontWeight: FontWeight.bold,
     );
@@ -764,9 +764,9 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                     .equals(
                                                                     name:
                                                                         TABLET,
-                                                                    value: 12.5,
+                                                                    value: 12.0,
                                                                     landscapeValue:
-                                                                        12.5),
+                                                                        12.0),
                                                                 const Condition
                                                                     .largerThan(
                                                                     name:
@@ -778,7 +778,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                         800),
                                                               ],
                                                               defaultValue:
-                                                                  11.5,
+                                                                  11.0,
                                                             ).value,
                                                           ),
                                                         ),
@@ -805,9 +805,9 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                     .equals(
                                                                     name:
                                                                         TABLET,
-                                                                    value: 12.5,
+                                                                    value: 12.0,
                                                                     landscapeValue:
-                                                                        12.5),
+                                                                        12.0),
                                                                 const Condition
                                                                     .largerThan(
                                                                     name:
@@ -819,7 +819,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                         800),
                                                               ],
                                                               defaultValue:
-                                                                  11.5,
+                                                                  11.0,
                                                             ).value,
                                                           ),
                                                         ),
@@ -916,7 +916,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                   const Condition.equals(name: TABLET, value: 14.5, landscapeValue: 14.5),
                                                                                   const Condition.largerThan(name: TABLET, value: 17.5, landscapeValue: 17.5, breakpoint: 800),
                                                                                 ],
-                                                                                defaultValue: 12.5,
+                                                                                defaultValue: 11.0,
                                                                               ).value,
                                                                               fontWeight: FontWeight.bold,
                                                                             ),
@@ -1007,7 +1007,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                   const Condition.equals(name: TABLET, value: 14.5, landscapeValue: 14.5),
                                                                                   const Condition.largerThan(name: TABLET, value: 17.5, landscapeValue: 17.5, breakpoint: 800),
                                                                                 ],
-                                                                                defaultValue: 12.5,
+                                                                                defaultValue: 11.0,
                                                                               ).value,
                                                                               fontWeight: FontWeight.bold,
                                                                             ),
@@ -1107,7 +1107,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                   const Condition.equals(name: TABLET, value: 14.5, landscapeValue: 14.5),
                                                                                   const Condition.largerThan(name: TABLET, value: 17.5, landscapeValue: 17.5, breakpoint: 800),
                                                                                 ],
-                                                                                defaultValue: 12.5,
+                                                                                defaultValue: 11.0,
                                                                               ).value,
                                                                               fontWeight: FontWeight.bold,
                                                                             ),
@@ -1198,7 +1198,7 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                   const Condition.equals(name: TABLET, value: 14.5, landscapeValue: 14.5),
                                                                                   const Condition.largerThan(name: TABLET, value: 17.5, landscapeValue: 17.5, breakpoint: 800),
                                                                                 ],
-                                                                                defaultValue: 12.5,
+                                                                                defaultValue: 11.0,
                                                                               ).value,
                                                                               fontWeight: FontWeight.bold,
                                                                             ),
@@ -1537,10 +1537,10 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                         fontSize: ResponsiveValue<double>(
                                                                                           context,
                                                                                           conditionalValues: [
-                                                                                            const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                                            const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                             const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                           ],
-                                                                                          defaultValue: 12.5,
+                                                                                          defaultValue: 11.0,
                                                                                         ).value,
                                                                                       );
 
@@ -1756,10 +1756,10 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                         fontSize: ResponsiveValue<double>(
                                                                                           context,
                                                                                           conditionalValues: [
-                                                                                            const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                                            const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                             const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                           ],
-                                                                                          defaultValue: 12.5,
+                                                                                          defaultValue: 11.0,
                                                                                         ).value,
                                                                                       );
 
@@ -1975,10 +1975,10 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                         fontSize: ResponsiveValue<double>(
                                                                                           context,
                                                                                           conditionalValues: [
-                                                                                            const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                                            const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                             const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                           ],
-                                                                                          defaultValue: 12.5,
+                                                                                          defaultValue: 11.0,
                                                                                         ).value,
                                                                                       );
 
@@ -2194,10 +2194,10 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                         fontSize: ResponsiveValue<double>(
                                                                                           context,
                                                                                           conditionalValues: [
-                                                                                            const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                                            const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                             const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                           ],
-                                                                                          defaultValue: 12.5,
+                                                                                          defaultValue: 11.0,
                                                                                         ).value,
                                                                                       );
 
@@ -2413,10 +2413,10 @@ class _TargetSalesActualBySSPageState extends State<TargetSalesActualBySSPage>
                                                                                         fontSize: ResponsiveValue<double>(
                                                                                           context,
                                                                                           conditionalValues: [
-                                                                                            const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                                            const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                             const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                           ],
-                                                                                          defaultValue: 12.5,
+                                                                                          defaultValue: 11.0,
                                                                                         ).value,
                                                                                       );
 

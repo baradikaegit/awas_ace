@@ -70,11 +70,11 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.0,
+        defaultValue: 11.0,
       ).value,
     );
 
@@ -89,7 +89,7 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -172,9 +172,9 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
                                                           const Condition
                                                               .equals(
                                                               name: TABLET,
-                                                              value: 12.5,
+                                                              value: 12.0,
                                                               landscapeValue:
-                                                                  12.5),
+                                                                  12.0),
                                                           const Condition
                                                               .largerThan(
                                                               name: TABLET,
@@ -391,9 +391,9 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
                                                                       name:
                                                                           TABLET,
                                                                       value:
-                                                                          42.0,
+                                                                          35.0,
                                                                       landscapeValue:
-                                                                          42.0),
+                                                                          35.0),
                                                                   const Condition.largerThan(
                                                                       name:
                                                                           TABLET,
@@ -405,7 +405,7 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
                                                                           800),
                                                                 ],
                                                                 defaultValue:
-                                                                    40.0,
+                                                                    30.0,
                                                               ).value,
                                                               columns: [
                                                                 DataColumn(
@@ -558,10 +558,10 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
                                                                                 fontSize: ResponsiveValue<double>(
                                                                                   context,
                                                                                   conditionalValues: [
-                                                                                    const Condition.equals(name: TABLET, value: 12.5, landscapeValue: 12.5),
+                                                                                    const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                     const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                   ],
-                                                                                  defaultValue: 12.0,
+                                                                                  defaultValue: 11.0,
                                                                                 ).value,
                                                                               ),
                                                                             ),
@@ -693,9 +693,9 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
                                                                       name:
                                                                           TABLET,
                                                                       value:
-                                                                          42.0,
+                                                                          35.0,
                                                                       landscapeValue:
-                                                                          42.0),
+                                                                          35.0),
                                                                   const Condition.largerThan(
                                                                       name:
                                                                           TABLET,
@@ -707,7 +707,7 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
                                                                           800),
                                                                 ],
                                                                 defaultValue:
-                                                                    40.0,
+                                                                    30.0,
                                                               ).value,
                                                               columns: [
                                                                 DataColumn(
@@ -882,10 +882,10 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
                                                                                 fontSize: ResponsiveValue<double>(
                                                                                   context,
                                                                                   conditionalValues: [
-                                                                                    const Condition.equals(name: TABLET, value: 12.5, landscapeValue: 12.5),
+                                                                                    const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                     const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                   ],
-                                                                                  defaultValue: 12.0,
+                                                                                  defaultValue: 11.0,
                                                                                 ).value,
                                                                               ),
                                                                             ),

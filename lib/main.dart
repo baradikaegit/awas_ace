@@ -143,7 +143,9 @@ class MyApp extends StatelessWidget {
         MonitAreaMappingPage.routeName: (context) =>
             const MonitAreaMappingPage(),
         MonitAreaVolumeMakerPage.routeName: (context) =>
-            const MonitAreaVolumeMakerPage(),
+            MonitAreaVolumeMakerPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         MonitProfitMakerPage.routeName: (context) =>
             const MonitProfitMakerPage(),
         DOtoGatePassPage.routeName: (context) => DOtoGatePassPage(

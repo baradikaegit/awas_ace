@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsgatepasstosbimodel.dart';
+import 'package:awas_ace/widgets/model/reportslsmonitoringmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsstockmodel.dart';
@@ -56,6 +57,8 @@ abstract class IReportSalesRepository {
       String linkPageObj);
   Future<ListRptGatepassToSbiResponse> fecthListDataGatepasstoSBIBySales(
       String linkPageObj);
+  Future<ListMonitroingVolProfitMakerResponse>
+      fecthListDataMonitoringVolProfitMaker(String linkPageObj);
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
@@ -615,5 +618,31 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetGatepasstoSBIBySales =
         ListRptGatepassToSbiResponse.fromJson(jsonObjRptGatepasstoSBIBySales);
     return responseGetGatepasstoSBIBySales;
+  }
+
+  //Monitoring vol & profit maker
+  @override
+  Future<ListMonitroingVolProfitMakerResponse>
+      fecthListDataMonitoringVolProfitMaker(String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitoringVolProfitMaker =
+        "${_host}GetReportMonitoringVolProfitMaker/$linkPageObj";
+
+    var resultGetRptMonitoringVolProfitMaker =
+        await http.get(Uri.parse(urlGetRptMonitoringVolProfitMaker), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitoringVolProfitMaker =
+        jsonDecode(resultGetRptMonitoringVolProfitMaker.body);
+
+    var responseGetMonitoringVolProfitMaker =
+        ListMonitroingVolProfitMakerResponse.fromJson(
+            jsonObjRptMonitoringVolProfitMaker);
+    return responseGetMonitoringVolProfitMaker;
   }
 }

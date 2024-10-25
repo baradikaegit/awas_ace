@@ -69,7 +69,7 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -88,7 +88,7 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -171,9 +171,9 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
                                                           const Condition
                                                               .equals(
                                                               name: TABLET,
-                                                              value: 12.5,
+                                                              value: 12.0,
                                                               landscapeValue:
-                                                                  12.5),
+                                                                  12.0),
                                                           const Condition
                                                               .largerThan(
                                                               name: TABLET,
@@ -317,9 +317,9 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
                                                                       name:
                                                                           TABLET,
                                                                       value:
-                                                                          42.0,
+                                                                          35.0,
                                                                       landscapeValue:
-                                                                          42.0),
+                                                                          35.0),
                                                                   const Condition.largerThan(
                                                                       name:
                                                                           TABLET,
@@ -331,7 +331,7 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
                                                                           800),
                                                                 ],
                                                                 defaultValue:
-                                                                    40.0,
+                                                                    30.0,
                                                               ).value,
                                                               columns: [
                                                                 DataColumn(
@@ -484,7 +484,7 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
                                                                                 fontSize: ResponsiveValue<double>(
                                                                                   context,
                                                                                   conditionalValues: [
-                                                                                    const Condition.equals(name: TABLET, value: 12.5, landscapeValue: 12.5),
+                                                                                    const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                     const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                   ],
                                                                                   defaultValue: 12.0,
@@ -619,9 +619,9 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
                                                                       name:
                                                                           TABLET,
                                                                       value:
-                                                                          42.0,
+                                                                          35.0,
                                                                       landscapeValue:
-                                                                          42.0),
+                                                                          35.0),
                                                                   const Condition.largerThan(
                                                                       name:
                                                                           TABLET,
@@ -633,7 +633,7 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
                                                                           800),
                                                                 ],
                                                                 defaultValue:
-                                                                    40.0,
+                                                                    30.0,
                                                               ).value,
                                                               columns: [
                                                                 DataColumn(
@@ -808,7 +808,7 @@ class _StockByModelVcolorPageState extends State<StockByModelVcolorPage> {
                                                                                 fontSize: ResponsiveValue<double>(
                                                                                   context,
                                                                                   conditionalValues: [
-                                                                                    const Condition.equals(name: TABLET, value: 12.5, landscapeValue: 12.5),
+                                                                                    const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                     const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                   ],
                                                                                   defaultValue: 12.0,

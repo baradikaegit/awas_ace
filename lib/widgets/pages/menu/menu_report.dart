@@ -18,7 +18,7 @@ class _ReportPageState extends State<ReportPage> {
     'Prospek Valid vs SPK',
     'BOC & CAI SBE By Sales',
     'Prospect UE BP vs UE BP',
-    'Monitoring Area Mapping',
+    // 'Monitoring Area Mapping',
     'Monitoring Volume Maker',
     'Monitoring Profit Maker',
     'DO to Gatepass',
@@ -33,7 +33,7 @@ class _ReportPageState extends State<ReportPage> {
     'prospek.png',
     'boccai.png',
     'prospek.png',
-    'areamapping.png',
+    // 'areamapping.png',
     'volumemaker.png',
     'profitmaker.png',
     'gatepass.png',
@@ -48,7 +48,7 @@ class _ReportPageState extends State<ReportPage> {
     '/prospekVtoSpkPage',
     '/bocCaiSBEPage',
     '/prospekUeBPPage',
-    '/monitAreaMappingPage',
+    // '/monitAreaMappingPage',
     '/monitAreaVolumeMakerPage',
     '/monitProfitMakerPage',
     '/dOtoGatePassPage',
@@ -235,7 +235,13 @@ class _ReportPageState extends State<ReportPage> {
                                         : linkPageSales[index] ==
                                                 '/funnelingPage'
                                             ? '$_monthNow/$_yearNow/MTD/00000000-0000-0000-0000-000000000000'
-                                            : null,
+                                            : linkPageSales[index] ==
+                                                    '/monitAreaVolumeMakerPage'
+                                                ? '$_yearNow/0'
+                                                : linkPageSales[index] ==
+                                                        '/monitProfitMakerPage'
+                                                    ? '$_yearNow/1'
+                                                    : null,
                                   ),
                                   child: Column(
                                     children: <Widget>[

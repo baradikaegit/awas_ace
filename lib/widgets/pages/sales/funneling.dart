@@ -102,7 +102,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -116,7 +116,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -135,7 +135,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -901,9 +901,9 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                               const Condition
                                                                   .equals(
                                                                   name: TABLET,
-                                                                  value: 12.5,
+                                                                  value: 12.0,
                                                                   landscapeValue:
-                                                                      12.5),
+                                                                      12.0),
                                                               const Condition
                                                                   .largerThan(
                                                                   name: TABLET,
@@ -939,9 +939,9 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                               const Condition
                                                                   .equals(
                                                                   name: TABLET,
-                                                                  value: 12.5,
+                                                                  value: 12.0,
                                                                   landscapeValue:
-                                                                      12.5),
+                                                                      12.0),
                                                               const Condition
                                                                   .largerThan(
                                                                   name: TABLET,
@@ -1047,7 +1047,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                               ResponsiveValue<double>(
                                                                             context,
                                                                             conditionalValues: [
-                                                                              const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                              const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                               const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                             ],
                                                                             defaultValue:
@@ -1309,9 +1309,9 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                           name:
                                                                               TABLET,
                                                                           value:
-                                                                              42.0,
+                                                                              35.0,
                                                                           landscapeValue:
-                                                                              42.0),
+                                                                              35.0),
                                                                       const Condition
                                                                           .largerThan(
                                                                           name:
@@ -1324,7 +1324,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                               800),
                                                                     ],
                                                                     defaultValue:
-                                                                        40.0,
+                                                                        30.0,
                                                                   ).value,
                                                                   columns: [
                                                                     DataColumn(
@@ -1337,20 +1337,24 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                           width:
                                                                               120,
                                                                           child:
-                                                                              Text(
-                                                                            roles == 'SALESMAN'
-                                                                                ? "TANGGAL"
-                                                                                : roles == 'SALES SUPERVISOR'
-                                                                                    ? "SALES"
-                                                                                    : roles == 'KACAB'
-                                                                                        ? "SS"
-                                                                                        : "BRANCH",
-                                                                            style:
-                                                                                textStyleColorWhiteB,
-                                                                            maxLines:
-                                                                                2,
-                                                                            overflow:
-                                                                                TextOverflow.ellipsis,
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(
+                                                                              left: 10,
+                                                                            ),
+                                                                            child:
+                                                                                Text(
+                                                                              roles == 'SALESMAN'
+                                                                                  ? "TANGGAL"
+                                                                                  : roles == 'SALES SUPERVISOR'
+                                                                                      ? "SALES"
+                                                                                      : roles == 'KACAB'
+                                                                                          ? "SS"
+                                                                                          : "BRANCH",
+                                                                              style: textStyleColorWhiteB,
+                                                                              maxLines: 2,
+                                                                              overflow: TextOverflow.ellipsis,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1422,27 +1426,27 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                       ),
                                                                     ),
                                                                     DataColumn(
-                                                                        label:
-                                                                            Align(
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .topCenter,
-                                                                      child:
-                                                                          SizedBox(
-                                                                        width:
-                                                                            40,
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.topCenter,
                                                                         child:
-                                                                            Text(
-                                                                          "SPK",
-                                                                          style:
-                                                                              textStyleColorWhiteB,
-                                                                          maxLines:
-                                                                              2,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
+                                                                            SizedBox(
+                                                                          width:
+                                                                              40,
+                                                                          child:
+                                                                              Text(
+                                                                            "SPK",
+                                                                            style:
+                                                                                textStyleColorWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
                                                                         ),
                                                                       ),
-                                                                    )),
+                                                                    ),
                                                                     DataColumn(
                                                                       label:
                                                                           Align(
@@ -1522,8 +1526,8 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                           conditionalValues: [
                                                                             const Condition.equals(
                                                                                 name: TABLET,
-                                                                                value: 14.0,
-                                                                                landscapeValue: 14.0),
+                                                                                value: 12.0,
+                                                                                landscapeValue: 12.0),
                                                                             const Condition.largerThan(
                                                                                 name: TABLET,
                                                                                 value: 14.0,
@@ -1531,7 +1535,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                                 breakpoint: 800),
                                                                           ],
                                                                           defaultValue:
-                                                                              12.5,
+                                                                              11.0,
                                                                         ).value,
                                                                       );
 
@@ -1596,9 +1600,14 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                                                 arguments: '$month/$year/$periodTipe/$refId/$branchCode',
                                                                                               );
                                                                                             },
-                                                                              child: Text(
-                                                                                roles == 'SALESMAN' || roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptFunneling.headerName : dataRptFunneling.branchCode,
-                                                                                style: textStyleDataTable,
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.only(
+                                                                                  left: 10,
+                                                                                ),
+                                                                                child: Text(
+                                                                                  roles == 'SALESMAN' || roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptFunneling.headerName : dataRptFunneling.branchCode,
+                                                                                  style: textStyleDataTable,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),

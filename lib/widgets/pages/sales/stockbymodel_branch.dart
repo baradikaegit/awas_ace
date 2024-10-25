@@ -70,11 +70,11 @@ class _StockByModelVbranchPageState extends State<StockByModelVbranchPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.0,
+        defaultValue: 11.0,
       ).value,
     );
 
@@ -89,7 +89,7 @@ class _StockByModelVbranchPageState extends State<StockByModelVbranchPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -172,9 +172,9 @@ class _StockByModelVbranchPageState extends State<StockByModelVbranchPage> {
                                                           const Condition
                                                               .equals(
                                                               name: TABLET,
-                                                              value: 12.5,
+                                                              value: 12.0,
                                                               landscapeValue:
-                                                                  12.5),
+                                                                  12.0),
                                                           const Condition
                                                               .largerThan(
                                                               name: TABLET,
@@ -543,10 +543,10 @@ class _StockByModelVbranchPageState extends State<StockByModelVbranchPage> {
                                                                               fontSize: ResponsiveValue<double>(
                                                                                 context,
                                                                                 conditionalValues: [
-                                                                                  const Condition.equals(name: TABLET, value: 12.5, landscapeValue: 12.5),
+                                                                                  const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                   const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                 ],
-                                                                                defaultValue: 12.0,
+                                                                                defaultValue: 11.0,
                                                                               ).value,
                                                                             ),
                                                                           ),
@@ -851,10 +851,10 @@ class _StockByModelVbranchPageState extends State<StockByModelVbranchPage> {
                                                                               fontSize: ResponsiveValue<double>(
                                                                                 context,
                                                                                 conditionalValues: [
-                                                                                  const Condition.equals(name: TABLET, value: 12.5, landscapeValue: 12.5),
+                                                                                  const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                                   const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                                 ],
-                                                                                defaultValue: 12.0,
+                                                                                defaultValue: 11.0,
                                                                               ).value,
                                                                             ),
                                                                           ),

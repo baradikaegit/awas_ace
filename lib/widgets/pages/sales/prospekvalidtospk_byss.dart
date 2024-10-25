@@ -90,11 +90,11 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
       ).value,
     );
 
@@ -104,11 +104,11 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
       ).value,
     );
 
@@ -123,11 +123,11 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
       ).value,
       fontWeight: FontWeight.bold,
     );
@@ -589,9 +589,9 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                     .equals(
                                                                     name:
                                                                         TABLET,
-                                                                    value: 12.5,
+                                                                    value: 12.0,
                                                                     landscapeValue:
-                                                                        12.5),
+                                                                        12.0),
                                                                 const Condition
                                                                     .largerThan(
                                                                     name:
@@ -603,7 +603,7 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                         800),
                                                               ],
                                                               defaultValue:
-                                                                  11.5,
+                                                                  11.0,
                                                             ).value,
                                                           ),
                                                         ),
@@ -630,9 +630,9 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                     .equals(
                                                                     name:
                                                                         TABLET,
-                                                                    value: 12.5,
+                                                                    value: 12.0,
                                                                     landscapeValue:
-                                                                        12.5),
+                                                                        12.0),
                                                                 const Condition
                                                                     .largerThan(
                                                                     name:
@@ -644,7 +644,7 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                         800),
                                                               ],
                                                               defaultValue:
-                                                                  11.5,
+                                                                  11.0,
                                                             ).value,
                                                           ),
                                                         ),
@@ -887,9 +887,9 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                       name:
                                                                           TABLET,
                                                                       value:
-                                                                          42.0,
+                                                                          35.0,
                                                                       landscapeValue:
-                                                                          42.0),
+                                                                          35.0),
                                                                   const Condition.largerThan(
                                                                       name:
                                                                           TABLET,
@@ -901,7 +901,7 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                           800),
                                                                 ],
                                                                 defaultValue:
-                                                                    40.0,
+                                                                    30.0,
                                                               ).value,
                                                               columns: [
                                                                 DataColumn(
@@ -913,14 +913,22 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                         SizedBox(
                                                                       width: 80,
                                                                       child:
-                                                                          Text(
-                                                                        "CABANG",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(
+                                                                          left:
+                                                                              10,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          "CABANG",
+                                                                          style:
+                                                                              textStyleColorWhiteB,
+                                                                          maxLines:
+                                                                              2,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1099,9 +1107,9 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                             name:
                                                                                 TABLET,
                                                                             value:
-                                                                                14.0,
+                                                                                12.0,
                                                                             landscapeValue:
-                                                                                14.0),
+                                                                                12.0),
                                                                         const Condition
                                                                             .largerThan(
                                                                             name:
@@ -1114,7 +1122,7 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                                 800),
                                                                       ],
                                                                       defaultValue:
-                                                                          12.5,
+                                                                          11.0,
                                                                     ).value,
                                                                   );
 
@@ -1152,10 +1160,16 @@ class _ProspekVtoSpkSsPageState extends State<ProspekVtoSpkSsPage> {
                                                                                   );
                                                                                 },
                                                                           child:
-                                                                              Text(
-                                                                            dataRptProspekVSpk.headerName,
-                                                                            style:
-                                                                                textStyleDataTable,
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(
+                                                                              left: 10,
+                                                                            ),
+                                                                            child:
+                                                                                Text(
+                                                                              dataRptProspekVSpk.headerName,
+                                                                              style: textStyleDataTable,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),

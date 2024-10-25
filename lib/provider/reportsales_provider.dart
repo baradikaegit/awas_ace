@@ -3,6 +3,7 @@ import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsgatepasstosbimodel.dart';
+import 'package:awas_ace/widgets/model/reportslsmonitoringmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsstockmodel.dart';
@@ -184,4 +185,14 @@ final reportGatepasstoSBIBySales = FutureProvider.autoDispose
       ref.watch(reportSalesRepositoryProvider);
   return repositoryGatepasstoSBIBySales
       .fecthListDataGatepasstoSBIBySales(linkPageObj);
+});
+
+//list report monitoring vol & profit maker
+final reportMonitoringVolProfitMaker = FutureProvider.autoDispose
+    .family<ListMonitroingVolProfitMakerResponse, String>(
+        (ref, linkPageObj) async {
+  final repositoryMonitoringVolProfitMaker =
+      ref.watch(reportSalesRepositoryProvider);
+  return repositoryMonitoringVolProfitMaker
+      .fecthListDataMonitoringVolProfitMaker(linkPageObj);
 });

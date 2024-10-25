@@ -91,11 +91,11 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
       ).value,
     );
 
@@ -105,11 +105,11 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
       ).value,
     );
 
@@ -124,11 +124,11 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
-        defaultValue: 12.5,
+        defaultValue: 11.0,
       ).value,
       fontWeight: FontWeight.bold,
     );
@@ -589,9 +589,9 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                       name:
                                                                           TABLET,
                                                                       value:
-                                                                          12.5,
+                                                                          12.0,
                                                                       landscapeValue:
-                                                                          12.5),
+                                                                          12.0),
                                                                   const Condition.largerThan(
                                                                       name:
                                                                           TABLET,
@@ -603,7 +603,7 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                           800),
                                                                 ],
                                                                 defaultValue:
-                                                                    11.5,
+                                                                    11.0,
                                                               ).value,
                                                             ),
                                                           ),
@@ -631,9 +631,9 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                       name:
                                                                           TABLET,
                                                                       value:
-                                                                          12.5,
+                                                                          12.0,
                                                                       landscapeValue:
-                                                                          12.5),
+                                                                          12.0),
                                                                   const Condition.largerThan(
                                                                       name:
                                                                           TABLET,
@@ -645,7 +645,7 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                           800),
                                                                 ],
                                                                 defaultValue:
-                                                                    11.5,
+                                                                    11.0,
                                                               ).value,
                                                             ),
                                                           ),
@@ -890,9 +890,9 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                       name:
                                                                           TABLET,
                                                                       value:
-                                                                          42.0,
+                                                                          35.0,
                                                                       landscapeValue:
-                                                                          42.0),
+                                                                          35.0),
                                                                   const Condition.largerThan(
                                                                       name:
                                                                           TABLET,
@@ -904,7 +904,7 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                           800),
                                                                 ],
                                                                 defaultValue:
-                                                                    40.0,
+                                                                    30.0,
                                                               ).value,
                                                               columns: [
                                                                 DataColumn(
@@ -916,14 +916,22 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                         SizedBox(
                                                                       width: 80,
                                                                       child:
-                                                                          Text(
-                                                                        "CABANG",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.only(
+                                                                          left:
+                                                                              10,
+                                                                        ),
+                                                                        child:
+                                                                            Text(
+                                                                          "CABANG",
+                                                                          style:
+                                                                              textStyleColorWhiteB,
+                                                                          maxLines:
+                                                                              2,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -1103,9 +1111,9 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                             name:
                                                                                 TABLET,
                                                                             value:
-                                                                                14.0,
+                                                                                12.0,
                                                                             landscapeValue:
-                                                                                14.0),
+                                                                                12.0),
                                                                         const Condition
                                                                             .largerThan(
                                                                             name:
@@ -1118,7 +1126,7 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                                 800),
                                                                       ],
                                                                       defaultValue:
-                                                                          12.5,
+                                                                          11.0,
                                                                     ).value,
                                                                   );
 
@@ -1169,12 +1177,16 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                                       );
                                                                                     },
                                                                           child:
-                                                                              Text(
-                                                                            roles == 'SALES SUPERVISOR' || roles == 'KACAB'
-                                                                                ? dataRptProspekVSpk.headerName
-                                                                                : dataRptProspekVSpk.headerCode,
-                                                                            style:
-                                                                                textStyleDataTable,
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(
+                                                                              left: 10,
+                                                                            ),
+                                                                            child:
+                                                                                Text(
+                                                                              roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptProspekVSpk.headerName : dataRptProspekVSpk.headerCode,
+                                                                              style: textStyleDataTable,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),

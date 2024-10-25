@@ -100,7 +100,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -114,7 +114,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -133,7 +133,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
         context,
         conditionalValues: [
           const Condition.equals(
-              name: TABLET, value: 14.0, landscapeValue: 14.0),
+              name: TABLET, value: 12.0, landscapeValue: 12.0),
           const Condition.largerThan(
               name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
         ],
@@ -900,9 +900,9 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                             const Condition
                                                                 .equals(
                                                                 name: TABLET,
-                                                                value: 12.5,
+                                                                value: 12.0,
                                                                 landscapeValue:
-                                                                    12.5),
+                                                                    12.0),
                                                             const Condition
                                                                 .largerThan(
                                                                 name: TABLET,
@@ -938,9 +938,9 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                             const Condition
                                                                 .equals(
                                                                 name: TABLET,
-                                                                value: 12.5,
+                                                                value: 12.0,
                                                                 landscapeValue:
-                                                                    12.5),
+                                                                    12.0),
                                                             const Condition
                                                                 .largerThan(
                                                                 name: TABLET,
@@ -1043,7 +1043,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                               ResponsiveValue<double>(
                                                                             context,
                                                                             conditionalValues: [
-                                                                              const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                              const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
                                                                               const Condition.largerThan(name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
                                                                             ],
                                                                             defaultValue:
@@ -1305,9 +1305,9 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                           name:
                                                                               TABLET,
                                                                           value:
-                                                                              42.0,
+                                                                              35.0,
                                                                           landscapeValue:
-                                                                              42.0),
+                                                                              35.0),
                                                                       const Condition
                                                                           .largerThan(
                                                                           name:
@@ -1320,7 +1320,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                               800),
                                                                     ],
                                                                     defaultValue:
-                                                                        40.0,
+                                                                        30.0,
                                                                   ).value,
                                                                   columns: [
                                                                     DataColumn(
@@ -1333,14 +1333,18 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                           width:
                                                                               120,
                                                                           child:
-                                                                              Text(
-                                                                            "SS",
-                                                                            style:
-                                                                                textStyleColorWhiteB,
-                                                                            maxLines:
-                                                                                2,
-                                                                            overflow:
-                                                                                TextOverflow.ellipsis,
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(
+                                                                              left: 10,
+                                                                            ),
+                                                                            child:
+                                                                                Text(
+                                                                              "SS",
+                                                                              style: textStyleColorWhiteB,
+                                                                              maxLines: 2,
+                                                                              overflow: TextOverflow.ellipsis,
+                                                                            ),
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1412,27 +1416,27 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                       ),
                                                                     ),
                                                                     DataColumn(
-                                                                        label:
-                                                                            Align(
-                                                                      alignment:
-                                                                          Alignment
-                                                                              .topCenter,
-                                                                      child:
-                                                                          SizedBox(
-                                                                        width:
-                                                                            40,
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.topCenter,
                                                                         child:
-                                                                            Text(
-                                                                          "SPK",
-                                                                          style:
-                                                                              textStyleColorWhiteB,
-                                                                          maxLines:
-                                                                              2,
-                                                                          overflow:
-                                                                              TextOverflow.ellipsis,
+                                                                            SizedBox(
+                                                                          width:
+                                                                              40,
+                                                                          child:
+                                                                              Text(
+                                                                            "SPK",
+                                                                            style:
+                                                                                textStyleColorWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
                                                                         ),
                                                                       ),
-                                                                    )),
+                                                                    ),
                                                                     DataColumn(
                                                                       label:
                                                                           Align(
@@ -1511,8 +1515,8 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                           conditionalValues: [
                                                                             const Condition.equals(
                                                                                 name: TABLET,
-                                                                                value: 14.0,
-                                                                                landscapeValue: 14.0),
+                                                                                value: 12.0,
+                                                                                landscapeValue: 12.0),
                                                                             const Condition.largerThan(
                                                                                 name: TABLET,
                                                                                 value: 14.0,
@@ -1520,7 +1524,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                                 breakpoint: 800),
                                                                           ],
                                                                           defaultValue:
-                                                                              12.5,
+                                                                              11.0,
                                                                         ).value,
                                                                       );
 
@@ -1555,9 +1559,14 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                                         arguments: '$month/$year/$periodTipe/$refId/$branchCode/$ssCode',
                                                                                       );
                                                                                     },
-                                                                              child: Text(
-                                                                                dataRptFunneling.headerName,
-                                                                                style: textStyleDataTable,
+                                                                              child: Padding(
+                                                                                padding: const EdgeInsets.only(
+                                                                                  left: 10,
+                                                                                ),
+                                                                                child: Text(
+                                                                                  dataRptFunneling.headerName,
+                                                                                  style: textStyleDataTable,
+                                                                                ),
                                                                               ),
                                                                             ),
                                                                           ),
