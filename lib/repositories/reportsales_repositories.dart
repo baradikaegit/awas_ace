@@ -59,6 +59,8 @@ abstract class IReportSalesRepository {
       String linkPageObj);
   Future<ListMonitroingVolProfitMakerResponse>
       fecthListDataMonitoringVolProfitMaker(String linkPageObj);
+  Future<ListMonitroingVolProfitMakerResponse>
+      fecthListDataMonitoringVolProfitMakerDetail(String linkPageObj);
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
@@ -644,5 +646,31 @@ class ReportSalesRepositories implements IReportSalesRepository {
         ListMonitroingVolProfitMakerResponse.fromJson(
             jsonObjRptMonitoringVolProfitMaker);
     return responseGetMonitoringVolProfitMaker;
+  }
+
+  //Monitoring vol & profit maker detail
+  @override
+  Future<ListMonitroingVolProfitMakerResponse>
+      fecthListDataMonitoringVolProfitMakerDetail(String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptVolProfitMakerDetail =
+        "${_host}GetReportMonitoringVolProfitMakerDetail/$linkPageObj";
+
+    var resultGetRptVolProfitMakerDetail =
+        await http.get(Uri.parse(urlGetRptVolProfitMakerDetail), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptVolProfitMakerDetail =
+        jsonDecode(resultGetRptVolProfitMakerDetail.body);
+
+    var responseGetVolProfitMakerDetail =
+        ListMonitroingVolProfitMakerResponse.fromJson(
+            jsonObjRptVolProfitMakerDetail);
+    return responseGetVolProfitMakerDetail;
   }
 }

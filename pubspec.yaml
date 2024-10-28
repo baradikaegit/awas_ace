@@ -78,6 +78,7 @@ flutter:
   assets:
     - assets/images/
     - assets/images/menu/
+    - assets/images/peta/
   #  - assets/images/logo.png
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

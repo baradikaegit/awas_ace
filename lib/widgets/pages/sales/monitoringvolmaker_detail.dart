@@ -3,23 +3,23 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class MonitVolProfitMakerPage extends StatefulWidget {
+class MonitVolProfitMakerDetailPage extends StatefulWidget {
   final Object? linkPageObj;
-  const MonitVolProfitMakerPage({super.key, required this.linkPageObj});
+  const MonitVolProfitMakerDetailPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/monitVolProfitMakerPage";
+  static const String routeName = "/monitVolProfitMakerDetailPage";
   @override
-  State<MonitVolProfitMakerPage> createState() =>
-      _MonitVolProfitMakerPageState();
+  State<MonitVolProfitMakerDetailPage> createState() =>
+      _MonitVolProfitMakerDetailPageState();
 }
 
-class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
+class _MonitVolProfitMakerDetailPageState
+    extends State<MonitVolProfitMakerDetailPage> {
   Widget titleBar = const Text(
     "Monitoring Volume Maker",
     style: TextStyle(color: Colors.white),
@@ -53,6 +53,21 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
         255,
         255,
       ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 14.0, landscapeValue: 14.0),
+          const Condition.largerThan(
+              name: TABLET, value: 16.0, landscapeValue: 16.0, breakpoint: 800),
+        ],
+        defaultValue: 12.0,
+      ).value,
+      fontWeight: FontWeight.bold,
+    );
+
+    var textStyleBlackWhiteB = TextStyle(
+      color: const Color.fromARGB(255, 0, 0, 0),
       fontSize: ResponsiveValue<double>(
         context,
         conditionalValues: [
@@ -133,7 +148,7 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                     var header2 = (yearNow - 2);
 
                     final rptMonitoring = ref.watch(
-                      reportMonitoringVolProfitMaker(linkPageObj),
+                      reportMonitoringVolProfitMakerDetail(linkPageObj),
                     );
 
                     return Center(
@@ -199,6 +214,46 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                     ),
                                                     Text(
                                                       "VELOZ, AVANZA, RAIZE, RUSH, AGYA & CALYA",
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                              name: TABLET,
+                                                              value: 12.0,
+                                                              landscapeValue:
+                                                                  12.0,
+                                                            ),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 11.0,
+                                                        ).value,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "Cabang ${dataPeriod.listMonitoringVolProfitMaker![0].title}",
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -357,7 +412,7 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                 child: RefreshIndicator(
                                   onRefresh: () async {
                                     return ref.refresh(
-                                      reportMonitoringVolProfitMaker(
+                                      reportMonitoringVolProfitMakerDetail(
                                           linkPageObj),
                                     );
                                   },
@@ -380,20 +435,87 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets
+                                                                  .all(0),
+                                                          child: Image.asset(
+                                                            dataMonitoring
+                                                                        .listMonitoringVolProfitMaker![
+                                                                            0]
+                                                                        .title ==
+                                                                    'TVBDG'
+                                                                ? 'assets/images/peta/ATBDG.png'
+                                                                : dataMonitoring
+                                                                            .listMonitoringVolProfitMaker![
+                                                                                0]
+                                                                            .title ==
+                                                                        'TVBKS'
+                                                                    ? 'assets/images/peta/ATBKS.png'
+                                                                    : dataMonitoring.listMonitoringVolProfitMaker![0].title ==
+                                                                            'TVBTG'
+                                                                        ? 'assets/images/peta/ATBTG.png'
+                                                                        : dataMonitoring.listMonitoringVolProfitMaker![0].title ==
+                                                                                'TVBTL'
+                                                                            ? 'assets/images/peta/ATBTL.png'
+                                                                            : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVCLI'
+                                                                                ? 'assets/images/peta/ATCLI.png'
+                                                                                : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVFWT'
+                                                                                    ? 'assets/images/peta/ATFWT.png'
+                                                                                    : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVHMN'
+                                                                                        ? 'assets/images/peta/ATHMN.png'
+                                                                                        : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVKCI'
+                                                                                            ? 'assets/images/peta/ATKCI.png'
+                                                                                            : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVKGD'
+                                                                                                ? 'assets/images/peta/ATKGD.png'
+                                                                                                : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVKGV'
+                                                                                                    ? 'assets/images/peta/ATKGV.png'
+                                                                                                    : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVGVOld'
+                                                                                                        ? 'assets/images/peta/ATGVOld.png'
+                                                                                                        : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVKJR'
+                                                                                                            ? 'assets/images/peta/ATKJR.png'
+                                                                                                            : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVKLD'
+                                                                                                                ? 'assets/images/peta/ATKLD.png'
+                                                                                                                : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVKRW'
+                                                                                                                    ? 'assets/images/peta/ATKRW.png'
+                                                                                                                    : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVPDC'
+                                                                                                                        ? 'assets/images/peta/ATPDC.png'
+                                                                                                                        : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVPDG'
+                                                                                                                            ? 'assets/images/peta/ATPDG.png'
+                                                                                                                            : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVPIN'
+                                                                                                                                ? 'assets/images/peta/ATPIN.png'
+                                                                                                                                : dataMonitoring.listMonitoringVolProfitMaker![0].title == 'TVTGR'
+                                                                                                                                    ? 'assets/images/peta/ATTGR.png'
+                                                                                                                                    : 'assets/images/peta/ATYOS.png',
+                                                            width: 600,
+                                                            height: 600,
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
                                                                   .fromLTRB(
                                                             10,
                                                             20,
                                                             10,
-                                                            20,
+                                                            0,
                                                           ),
                                                           child: Container(
                                                             constraints:
                                                                 const BoxConstraints(
-                                                              minHeight: 600,
+                                                              minHeight: 200,
                                                               minWidth: double
                                                                   .infinity,
                                                             ),
                                                             child: DataTable(
+                                                              headingRowColor:
+                                                                  MaterialStateProperty
+                                                                      .resolveWith<
+                                                                          Color?>(
+                                                                (Set<MaterialState>
+                                                                    states) {
+                                                                  return const Color(
+                                                                    0xFFFFFFFF,
+                                                                  );
+                                                                },
+                                                              ),
                                                               border:
                                                                   const TableBorder(
                                                                 horizontalInside:
@@ -490,11 +612,11 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                                   label: Align(
                                                                     alignment:
                                                                         Alignment
-                                                                            .topLeft,
+                                                                            .centerLeft,
                                                                     child:
                                                                         SizedBox(
                                                                       width:
-                                                                          100,
+                                                                          200,
                                                                       child:
                                                                           Padding(
                                                                         padding:
@@ -504,9 +626,9 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                                         ),
                                                                         child:
                                                                             Text(
-                                                                          "CABANG",
+                                                                          "TOTAL",
                                                                           style:
-                                                                              textStyleColorWhiteB,
+                                                                              textStyleBlackWhiteB,
                                                                           maxLines:
                                                                               2,
                                                                           overflow:
@@ -520,17 +642,17 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                                   label: Align(
                                                                     alignment:
                                                                         Alignment
-                                                                            .topCenter,
+                                                                            .center,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 60,
+                                                                      width: 30,
                                                                       child:
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
                                                                         "$header2",
                                                                         style:
-                                                                            textStyleColorWhiteB,
+                                                                            textStyleBlackWhiteB,
                                                                         maxLines:
                                                                             2,
                                                                         overflow:
@@ -543,17 +665,17 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                                   label: Align(
                                                                     alignment:
                                                                         Alignment
-                                                                            .topCenter,
+                                                                            .center,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 60,
+                                                                      width: 30,
                                                                       child:
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
                                                                         "$header1",
                                                                         style:
-                                                                            textStyleColorWhiteB,
+                                                                            textStyleBlackWhiteB,
                                                                         maxLines:
                                                                             2,
                                                                         overflow:
@@ -566,30 +688,7 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                                   label: Align(
                                                                     alignment:
                                                                         Alignment
-                                                                            .topCenter,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 80,
-                                                                      child:
-                                                                          Text(
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        "GROWTH",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
+                                                                            .center,
                                                                     child:
                                                                         SizedBox(
                                                                       width: 60,
@@ -597,9 +696,32 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
+                                                                        "GROWTH",
+                                                                        style:
+                                                                            textStyleBlackWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .center,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width: 30,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
                                                                         "$yearNow",
                                                                         style:
-                                                                            textStyleColorWhiteB,
+                                                                            textStyleBlackWhiteB,
                                                                         maxLines:
                                                                             2,
                                                                         overflow:
@@ -623,7 +745,7 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                                   var textStyleDataTable =
                                                                       TextStyle(
                                                                     color: Colors
-                                                                        .blue,
+                                                                        .white,
                                                                     fontSize:
                                                                         ResponsiveValue<
                                                                             double>(
@@ -670,30 +792,17 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                                     ),
                                                                     cells: <DataCell>[
                                                                       DataCell(
-                                                                        InkWell(
-                                                                          onTap:
-                                                                              () {
-                                                                            String
-                                                                                branchCode =
-                                                                                dataRptMonitoring.headerName;
-
-                                                                            Navigator.pushNamed(
-                                                                              context,
-                                                                              MonitVolProfitMakerDetailPage.routeName,
-                                                                              arguments: '$yearNow/0/$branchCode',
-                                                                            );
-                                                                          },
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets.only(
+                                                                            left:
+                                                                                10,
+                                                                          ),
                                                                           child:
-                                                                              Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.only(
-                                                                              left: 10,
-                                                                            ),
-                                                                            child:
-                                                                                Text(
-                                                                              dataRptMonitoring.headerName,
-                                                                              style: textStyleDataTable,
-                                                                            ),
+                                                                              Text(
+                                                                            dataRptMonitoring.isiHeader,
+                                                                            style:
+                                                                                textStyleDataTable,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -781,6 +890,399 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                               ),
                                                             ),
                                                           ),
+                                                        ),
+                                                        Column(
+                                                          children: [
+                                                            Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                10,
+                                                                10,
+                                                                10,
+                                                                0,
+                                                              ),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .all(10),
+                                                              alignment:
+                                                                  Alignment
+                                                                      .center,
+                                                              decoration:
+                                                                  const BoxDecoration(
+                                                                color: Colors
+                                                                    .black,
+                                                              ),
+                                                              child: Text(
+                                                                "TOP 3",
+                                                                style:
+                                                                    textStyleColorWhiteB,
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                10,
+                                                                0,
+                                                                10,
+                                                                20,
+                                                              ),
+                                                              child: Container(
+                                                                constraints:
+                                                                    const BoxConstraints(
+                                                                  minHeight:
+                                                                      600,
+                                                                  minWidth: double
+                                                                      .infinity,
+                                                                ),
+                                                                child:
+                                                                    DataTable(
+                                                                  headingRowColor:
+                                                                      MaterialStateProperty
+                                                                          .resolveWith<
+                                                                              Color?>(
+                                                                    (Set<MaterialState>
+                                                                        states) {
+                                                                      return const Color(
+                                                                        0xFFFFFFFF,
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                  border:
+                                                                      const TableBorder(
+                                                                    horizontalInside:
+                                                                        BorderSide(
+                                                                      color: Color
+                                                                          .fromARGB(
+                                                                        255,
+                                                                        27,
+                                                                        37,
+                                                                        68,
+                                                                      ),
+                                                                      width:
+                                                                          2.5,
+                                                                    ),
+                                                                  ),
+                                                                  columnSpacing:
+                                                                      ResponsiveValue<
+                                                                          double>(
+                                                                    context,
+                                                                    conditionalValues: [
+                                                                      const Condition
+                                                                          .equals(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              20.0,
+                                                                          landscapeValue:
+                                                                              20.0),
+                                                                      const Condition
+                                                                          .largerThan(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              0.0,
+                                                                          landscapeValue:
+                                                                              0.0)
+                                                                    ],
+                                                                    defaultValue:
+                                                                        10,
+                                                                  ).value,
+                                                                  horizontalMargin: ResponsiveValue<
+                                                                              double>(
+                                                                          context,
+                                                                          conditionalValues: [
+                                                                            const Condition.equals(
+                                                                                name: TABLET,
+                                                                                value: 5.0,
+                                                                                landscapeValue: 5.0),
+                                                                            const Condition.largerThan(
+                                                                                name: TABLET,
+                                                                                value: 5.0,
+                                                                                landscapeValue: 5.0,
+                                                                                breakpoint: 800)
+                                                                          ],
+                                                                          defaultValue:
+                                                                              12.0)
+                                                                      .value,
+                                                                  headingRowHeight:
+                                                                      ResponsiveValue<
+                                                                          double>(
+                                                                    context,
+                                                                    conditionalValues: [
+                                                                      const Condition
+                                                                          .equals(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              35.0,
+                                                                          landscapeValue:
+                                                                              35.0),
+                                                                      const Condition
+                                                                          .largerThan(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              50.0,
+                                                                          landscapeValue:
+                                                                              50.0,
+                                                                          breakpoint:
+                                                                              800),
+                                                                    ],
+                                                                    defaultValue:
+                                                                        30.0,
+                                                                  ).value,
+                                                                  columns: [
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.centerLeft,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              200,
+                                                                          child:
+                                                                              Padding(
+                                                                            padding:
+                                                                                const EdgeInsets.only(
+                                                                              left: 10.0,
+                                                                            ),
+                                                                            child:
+                                                                                Text(
+                                                                              "TOTAL",
+                                                                              style: textStyleBlackWhiteB,
+                                                                              maxLines: 2,
+                                                                              overflow: TextOverflow.ellipsis,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.center,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              30,
+                                                                          child:
+                                                                              Text(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            "$header2",
+                                                                            style:
+                                                                                textStyleBlackWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.center,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              30,
+                                                                          child:
+                                                                              Text(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            "$header1",
+                                                                            style:
+                                                                                textStyleBlackWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.center,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              60,
+                                                                          child:
+                                                                              Text(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            "GROWTH",
+                                                                            style:
+                                                                                textStyleBlackWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    DataColumn(
+                                                                      label:
+                                                                          Align(
+                                                                        alignment:
+                                                                            Alignment.center,
+                                                                        child:
+                                                                            SizedBox(
+                                                                          width:
+                                                                              30,
+                                                                          child:
+                                                                              Text(
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            "$yearNow",
+                                                                            style:
+                                                                                textStyleBlackWhiteB,
+                                                                            maxLines:
+                                                                                2,
+                                                                            overflow:
+                                                                                TextOverflow.ellipsis,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                  rows: List<
+                                                                      DataRow>.generate(
+                                                                    dataMonitoring
+                                                                        .listMonitoringVolProfitMaker!
+                                                                        .length,
+                                                                    (indexObj) {
+                                                                      final dataRptMonitoring =
+                                                                          dataMonitoring
+                                                                              .listMonitoringVolProfitMaker![indexObj];
+
+                                                                      var textStyleDataTable =
+                                                                          TextStyle(
+                                                                        color: Colors
+                                                                            .white,
+                                                                        fontSize:
+                                                                            ResponsiveValue<double>(
+                                                                          context,
+                                                                          conditionalValues: [
+                                                                            const Condition.equals(
+                                                                                name: TABLET,
+                                                                                value: 12.0,
+                                                                                landscapeValue: 12.0),
+                                                                            const Condition.largerThan(
+                                                                                name: TABLET,
+                                                                                value: 14.0,
+                                                                                landscapeValue: 14.0,
+                                                                                breakpoint: 800),
+                                                                          ],
+                                                                          defaultValue:
+                                                                              11.0,
+                                                                        ).value,
+                                                                      );
+
+                                                                      return DataRow(
+                                                                        color: MaterialStateColor
+                                                                            .resolveWith(
+                                                                          (states) => indexObj.isEven
+                                                                              ? const Color.fromARGB(
+                                                                                  213,
+                                                                                  27,
+                                                                                  37,
+                                                                                  68,
+                                                                                )
+                                                                              : Colors.transparent,
+                                                                        ),
+                                                                        cells: <DataCell>[
+                                                                          DataCell(
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only(
+                                                                                left: 10,
+                                                                              ),
+                                                                              child: Text(
+                                                                                dataRptMonitoring.isiHeader,
+                                                                                style: textStyleDataTable,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          DataCell(
+                                                                            Align(
+                                                                              alignment: Alignment.center,
+                                                                              child: Text(
+                                                                                dataRptMonitoring.data1.toString(),
+                                                                                textAlign: TextAlign.center,
+                                                                                style: textStyleColorWhite,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          DataCell(
+                                                                            Align(
+                                                                              alignment: Alignment.center,
+                                                                              child: Text(
+                                                                                dataRptMonitoring.data2.toString(),
+                                                                                textAlign: TextAlign.center,
+                                                                                style: textStyleColorWhite,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          DataCell(
+                                                                            Align(
+                                                                              alignment: dataRptMonitoring.growth == 0 ? Alignment.center : Alignment.centerLeft,
+                                                                              child: Row(
+                                                                                mainAxisAlignment: MainAxisAlignment.start,
+                                                                                mainAxisSize: MainAxisSize.min,
+                                                                                children: [
+                                                                                  dataRptMonitoring.growth == 0
+                                                                                      ? const Column(
+                                                                                          children: [],
+                                                                                        )
+                                                                                      : dataRptMonitoring.growth <= 0
+                                                                                          ? const Icon(
+                                                                                              Icons.arrow_drop_down,
+                                                                                              size: 25.0,
+                                                                                              color: Colors.red,
+                                                                                            )
+                                                                                          : const Icon(
+                                                                                              Icons.arrow_drop_up,
+                                                                                              size: 25.0,
+                                                                                              color: Colors.green,
+                                                                                            ),
+                                                                                  Text(
+                                                                                    textAlign: dataRptMonitoring.growth == 0 ? TextAlign.center : TextAlign.left,
+                                                                                    "${dataRptMonitoring.growth.toString()}%",
+                                                                                    style: textStyleColorGold,
+                                                                                  ),
+                                                                                ],
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          DataCell(
+                                                                            Align(
+                                                                              alignment: Alignment.center,
+                                                                              child: Text(
+                                                                                dataRptMonitoring.data3.toString(),
+                                                                                textAlign: TextAlign.center,
+                                                                                style: textStyleColorGold1,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                       ],
                                                     );

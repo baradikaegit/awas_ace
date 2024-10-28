@@ -18,6 +18,7 @@ import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/gatepasstosbi_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/gatepasstosbi_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk_bysales.dart';
@@ -33,8 +34,6 @@ import 'package:awas_ace/widgets/pages/sales/boccaisbe.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling.dart';
 import 'package:awas_ace/widgets/pages/sales/gatepasstosbi.dart';
-import 'package:awas_ace/widgets/pages/sales/monitoringareamapping.dart';
-import 'package:awas_ace/widgets/pages/sales/monitoringprofitmaker.dart';
 import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk.dart';
@@ -140,14 +139,13 @@ class MyApp extends StatelessWidget {
         ProspekUeBPSalesPage.routeName: (context) => ProspekUeBPSalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
-        MonitAreaMappingPage.routeName: (context) =>
-            const MonitAreaMappingPage(),
-        MonitAreaVolumeMakerPage.routeName: (context) =>
-            MonitAreaVolumeMakerPage(
+        MonitVolProfitMakerPage.routeName: (context) => MonitVolProfitMakerPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
-        MonitProfitMakerPage.routeName: (context) =>
-            const MonitProfitMakerPage(),
+        MonitVolProfitMakerDetailPage.routeName: (context) =>
+            MonitVolProfitMakerDetailPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         DOtoGatePassPage.routeName: (context) => DOtoGatePassPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),

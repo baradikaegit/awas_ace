@@ -196,3 +196,13 @@ final reportMonitoringVolProfitMaker = FutureProvider.autoDispose
   return repositoryMonitoringVolProfitMaker
       .fecthListDataMonitoringVolProfitMaker(linkPageObj);
 });
+
+//list report monitoring vol & profit maker detail
+final reportMonitoringVolProfitMakerDetail = FutureProvider.autoDispose
+    .family<ListMonitroingVolProfitMakerResponse, String>(
+        (ref, linkPageObj) async {
+  final repositoryMonitVolProfitMakerDetail =
+      ref.watch(reportSalesRepositoryProvider);
+  return repositoryMonitVolProfitMakerDetail
+      .fecthListDataMonitoringVolProfitMakerDetail(linkPageObj);
+});
