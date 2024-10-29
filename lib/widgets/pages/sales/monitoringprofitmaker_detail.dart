@@ -8,19 +8,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class MonitVolMakerDetailPage extends StatefulWidget {
+class MonitProfitMakerDetailPage extends StatefulWidget {
   final Object? linkPageObj;
-  const MonitVolMakerDetailPage({super.key, required this.linkPageObj});
+  const MonitProfitMakerDetailPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/monitVolMakerDetailPage";
+  static const String routeName = "/monitProfitMakerDetailPage";
   @override
-  State<MonitVolMakerDetailPage> createState() =>
-      _MonitVolMakerDetailPageState();
+  State<MonitProfitMakerDetailPage> createState() =>
+      _MonitProfitMakerDetailPageState();
 }
 
-class _MonitVolMakerDetailPageState extends State<MonitVolMakerDetailPage> {
+class _MonitProfitMakerDetailPageState
+    extends State<MonitProfitMakerDetailPage> {
   Widget titleBar = const Text(
-    "Monitoring Volume Maker",
+    "Monitoring Profit Maker",
     style: TextStyle(color: Colors.white),
   );
 
@@ -168,17 +169,136 @@ class _MonitVolMakerDetailPageState extends State<MonitVolMakerDetailPage> {
                                               title: Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
-                                                        0, 10, 0, 0),
+                                                  0,
+                                                  10,
+                                                  0,
+                                                  0,
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      "Monitoring Profit Maker",
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                              name: TABLET,
+                                                              value: 12.0,
+                                                              landscapeValue:
+                                                                  12.0,
+                                                            ),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 11,
+                                                        ).value,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Container(
+                                                      padding: const EdgeInsets
+                                                          .fromLTRB(
+                                                        100,
+                                                        0,
+                                                        100,
+                                                        0,
+                                                      ),
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          "INNOVA, FORTUNER, YARIS CROSS, VOXY, ALPHARD, VELLFIRE, HI-ACE & HILUX D-CAB",
+                                                          maxLines: 3,
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
+                                                          style: TextStyle(
+                                                            color: const Color
+                                                                .fromARGB(
+                                                              255,
+                                                              255,
+                                                              255,
+                                                              255,
+                                                            ),
+                                                            fontSize:
+                                                                ResponsiveValue<
+                                                                    double>(
+                                                              context,
+                                                              conditionalValues: [
+                                                                const Condition
+                                                                    .equals(
+                                                                  name: TABLET,
+                                                                  value: 12.0,
+                                                                  landscapeValue:
+                                                                      12.0,
+                                                                ),
+                                                                const Condition
+                                                                    .largerThan(
+                                                                    name:
+                                                                        TABLET,
+                                                                    value: 17.0,
+                                                                    landscapeValue:
+                                                                        17.0,
+                                                                    breakpoint:
+                                                                        800),
+                                                              ],
+                                                              defaultValue:
+                                                                  11.0,
+                                                            ).value,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                255,
+                                                33,
+                                                44,
+                                                81,
+                                              ),
+                                            ),
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
+                                              centerTitle: false,
+                                              title: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     Align(
                                                       alignment:
                                                           Alignment.center,
                                                       child: Text(
-                                                        "Monitoring Volume Maker",
-                                                        maxLines: 2,
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                        "Cabang : ${dataPeriod.listMonitoringVolProfitMaker![0].title}",
                                                         style: TextStyle(
                                                           color: const Color
                                                               .fromARGB(
@@ -208,113 +328,11 @@ class _MonitVolMakerDetailPageState extends State<MonitVolMakerDetailPage> {
                                                                   breakpoint:
                                                                       800),
                                                             ],
-                                                            defaultValue: 11,
+                                                            defaultValue: 11.0,
                                                           ).value,
                                                           fontWeight:
                                                               FontWeight.bold,
                                                         ),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      "VELOZ, AVANZA, RAIZE, RUSH, AGYA & CALYA",
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                          255,
-                                                          255,
-                                                          255,
-                                                          255,
-                                                        ),
-                                                        fontSize:
-                                                            ResponsiveValue<
-                                                                double>(
-                                                          context,
-                                                          conditionalValues: [
-                                                            const Condition
-                                                                .equals(
-                                                              name: TABLET,
-                                                              value: 12.0,
-                                                              landscapeValue:
-                                                                  12.0,
-                                                            ),
-                                                            const Condition
-                                                                .largerThan(
-                                                                name: TABLET,
-                                                                value: 17.0,
-                                                                landscapeValue:
-                                                                    17.0,
-                                                                breakpoint:
-                                                                    800),
-                                                          ],
-                                                          defaultValue: 11.0,
-                                                        ).value,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              backgroundColor:
-                                                  const Color.fromARGB(
-                                                255,
-                                                33,
-                                                44,
-                                                81,
-                                              ),
-                                            ),
-                                            AppBar(
-                                              automaticallyImplyLeading: false,
-                                              centerTitle: true,
-                                              title: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 0, 0),
-                                                child: Column(
-                                                  children: [
-                                                    Text(
-                                                      "Cabang ${dataPeriod.listMonitoringVolProfitMaker![0].title}",
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                          255,
-                                                          255,
-                                                          255,
-                                                          255,
-                                                        ),
-                                                        fontSize:
-                                                            ResponsiveValue<
-                                                                double>(
-                                                          context,
-                                                          conditionalValues: [
-                                                            const Condition
-                                                                .equals(
-                                                              name: TABLET,
-                                                              value: 12.0,
-                                                              landscapeValue:
-                                                                  12.0,
-                                                            ),
-                                                            const Condition
-                                                                .largerThan(
-                                                                name: TABLET,
-                                                                value: 17.0,
-                                                                landscapeValue:
-                                                                    17.0,
-                                                                breakpoint:
-                                                                    800),
-                                                          ],
-                                                          defaultValue: 11.0,
-                                                        ).value,
-                                                        fontWeight:
-                                                            FontWeight.bold,
                                                       ),
                                                     ),
                                                   ],
@@ -334,7 +352,11 @@ class _MonitVolMakerDetailPageState extends State<MonitVolMakerDetailPage> {
                                               title: Padding(
                                                 padding:
                                                     const EdgeInsets.fromLTRB(
-                                                        5, 0, 0, 0),
+                                                  5,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                ),
                                                 child: Column(
                                                   children: [
                                                     Align(

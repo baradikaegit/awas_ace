@@ -49,7 +49,7 @@ class _ReportPageState extends State<ReportPage> {
     '/bocCaiSBEPage',
     '/prospekUeBPPage',
     // '/monitAreaMappingPage',
-    '/monitVolProfitMakerPage',
+    '/monitVolMakerPage',
     '/monitProfitMakerPage',
     '/dOtoGatePassPage',
     '/gatePasstoSBIPage',
@@ -236,7 +236,7 @@ class _ReportPageState extends State<ReportPage> {
                                                 '/funnelingPage'
                                             ? '$_monthNow/$_yearNow/MTD/00000000-0000-0000-0000-000000000000'
                                             : linkPageSales[index] ==
-                                                    '/monitVolProfitMakerPage'
+                                                    '/monitVolMakerPage'
                                                 ? '$_yearNow/0'
                                                 : linkPageSales[index] ==
                                                         '/monitProfitMakerPage'

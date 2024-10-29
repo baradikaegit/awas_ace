@@ -18,6 +18,8 @@ import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/gatepasstosbi_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/gatepasstosbi_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringprofitmaker.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringprofitmaker_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp_byss.dart';
@@ -139,11 +141,17 @@ class MyApp extends StatelessWidget {
         ProspekUeBPSalesPage.routeName: (context) => ProspekUeBPSalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
-        MonitVolProfitMakerPage.routeName: (context) => MonitVolProfitMakerPage(
+        MonitVolMakerPage.routeName: (context) => MonitVolMakerPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
-        MonitVolProfitMakerDetailPage.routeName: (context) =>
-            MonitVolProfitMakerDetailPage(
+        MonitVolMakerDetailPage.routeName: (context) => MonitVolMakerDetailPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitProfitMakerPage.routeName: (context) => MonitProfitMakerPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitProfitMakerDetailPage.routeName: (context) =>
+            MonitProfitMakerDetailPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         DOtoGatePassPage.routeName: (context) => DOtoGatePassPage(

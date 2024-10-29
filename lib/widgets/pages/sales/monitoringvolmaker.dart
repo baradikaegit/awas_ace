@@ -9,17 +9,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class MonitVolProfitMakerPage extends StatefulWidget {
+class MonitVolMakerPage extends StatefulWidget {
   final Object? linkPageObj;
-  const MonitVolProfitMakerPage({super.key, required this.linkPageObj});
+  const MonitVolMakerPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/monitVolProfitMakerPage";
+  static const String routeName = "/monitVolMakerPage";
   @override
-  State<MonitVolProfitMakerPage> createState() =>
-      _MonitVolProfitMakerPageState();
+  State<MonitVolMakerPage> createState() => _MonitVolProfiPageState();
 }
 
-class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
+class _MonitVolProfiPageState extends State<MonitVolMakerPage> {
   Widget titleBar = const Text(
     "Monitoring Volume Maker",
     style: TextStyle(color: Colors.white),
@@ -157,84 +156,96 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
                                                         0, 10, 0, 0),
                                                 child: Column(
                                                   children: [
-                                                    Text(
-                                                      "Monitoring Volume Maker",
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                          255,
-                                                          255,
-                                                          255,
-                                                          255,
-                                                        ),
-                                                        fontSize:
-                                                            ResponsiveValue<
-                                                                double>(
-                                                          context,
-                                                          conditionalValues: [
-                                                            const Condition
-                                                                .equals(
-                                                              name: TABLET,
-                                                              value: 12.0,
-                                                              landscapeValue:
-                                                                  12.0,
-                                                            ),
-                                                            const Condition
-                                                                .largerThan(
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        "Monitoring Volume Maker",
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                          fontSize:
+                                                              ResponsiveValue<
+                                                                  double>(
+                                                            context,
+                                                            conditionalValues: [
+                                                              const Condition
+                                                                  .equals(
                                                                 name: TABLET,
-                                                                value: 17.0,
+                                                                value: 12.0,
                                                                 landscapeValue:
-                                                                    17.0,
-                                                                breakpoint:
-                                                                    800),
-                                                          ],
-                                                          defaultValue: 11,
-                                                        ).value,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                                    12.0,
+                                                              ),
+                                                              const Condition
+                                                                  .largerThan(
+                                                                  name: TABLET,
+                                                                  value: 17.0,
+                                                                  landscapeValue:
+                                                                      17.0,
+                                                                  breakpoint:
+                                                                      800),
+                                                            ],
+                                                            defaultValue: 11,
+                                                          ).value,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                     ),
-                                                    Text(
-                                                      "VELOZ, AVANZA, RAIZE, RUSH, AGYA & CALYA",
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: TextStyle(
-                                                        color: const Color
-                                                            .fromARGB(
-                                                          255,
-                                                          255,
-                                                          255,
-                                                          255,
-                                                        ),
-                                                        fontSize:
-                                                            ResponsiveValue<
-                                                                double>(
-                                                          context,
-                                                          conditionalValues: [
-                                                            const Condition
-                                                                .equals(
-                                                              name: TABLET,
-                                                              value: 12.0,
-                                                              landscapeValue:
-                                                                  12.0,
-                                                            ),
-                                                            const Condition
-                                                                .largerThan(
+                                                    Align(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      child: Text(
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        "VELOZ, AVANZA, RAIZE, RUSH, AGYA & CALYA",
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: TextStyle(
+                                                          color: const Color
+                                                              .fromARGB(
+                                                            255,
+                                                            255,
+                                                            255,
+                                                            255,
+                                                          ),
+                                                          fontSize:
+                                                              ResponsiveValue<
+                                                                  double>(
+                                                            context,
+                                                            conditionalValues: [
+                                                              const Condition
+                                                                  .equals(
                                                                 name: TABLET,
-                                                                value: 17.0,
+                                                                value: 12.0,
                                                                 landscapeValue:
-                                                                    17.0,
-                                                                breakpoint:
-                                                                    800),
-                                                          ],
-                                                          defaultValue: 11.0,
-                                                        ).value,
-                                                        fontWeight:
-                                                            FontWeight.bold,
+                                                                    12.0,
+                                                              ),
+                                                              const Condition
+                                                                  .largerThan(
+                                                                  name: TABLET,
+                                                                  value: 17.0,
+                                                                  landscapeValue:
+                                                                      17.0,
+                                                                  breakpoint:
+                                                                      800),
+                                                            ],
+                                                            defaultValue: 11.0,
+                                                          ).value,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -679,7 +690,7 @@ class _MonitVolProfitMakerPageState extends State<MonitVolProfitMakerPage> {
 
                                                                             Navigator.pushNamed(
                                                                               context,
-                                                                              MonitVolProfitMakerDetailPage.routeName,
+                                                                              MonitVolMakerDetailPage.routeName,
                                                                               arguments: '$yearNow/0/$branchCode',
                                                                             );
                                                                           },
