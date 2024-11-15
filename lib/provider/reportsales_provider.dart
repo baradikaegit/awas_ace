@@ -3,6 +3,7 @@ import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsgatepasstosbimodel.dart';
+import 'package:awas_ace/widgets/model/reportslsmonitoringfoapmamodel.dart';
 import 'package:awas_ace/widgets/model/reportslsmonitoringmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
@@ -205,4 +206,27 @@ final reportMonitoringVolProfitMakerDetail = FutureProvider.autoDispose
       ref.watch(reportSalesRepositoryProvider);
   return repositoryMonitVolProfitMakerDetail
       .fecthListDataMonitoringVolProfitMakerDetail(linkPageObj);
+});
+
+//list report monitoring foa pma
+final reportMonitoringFoaPMA = FutureProvider.autoDispose
+    .family<ListMonitroingFoaPMAResponse, String>((ref, linkPageObj) async {
+  final repositoryMonitFoaPMA = ref.watch(reportSalesRepositoryProvider);
+  return repositoryMonitFoaPMA.fecthListDataMonitoringFoaPMA(linkPageObj);
+});
+
+//list report monitoring foa pma by ss
+final reportMonitoringFoaPMABySS = FutureProvider.autoDispose
+    .family<ListMonitroingFoaPMAResponse, String>((ref, linkPageObj) async {
+  final repositoryMonitFoaPMABySS = ref.watch(reportSalesRepositoryProvider);
+  return repositoryMonitFoaPMABySS
+      .fecthListDataMonitoringFoaPMABySS(linkPageObj);
+});
+
+//list report monitoring foa pma by sales
+final reportMonitoringFoaPMABySls = FutureProvider.autoDispose
+    .family<ListMonitroingFoaPMAResponse, String>((ref, linkPageObj) async {
+  final repositoryMonitFoaPMABySls = ref.watch(reportSalesRepositoryProvider);
+  return repositoryMonitFoaPMABySls
+      .fecthListDataMonitoringFoaPMABySls(linkPageObj);
 });

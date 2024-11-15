@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsgatepasstosbimodel.dart';
+import 'package:awas_ace/widgets/model/reportslsmonitoringfoapmamodel.dart';
 import 'package:awas_ace/widgets/model/reportslsmonitoringmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospekvsmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsprospeuebpmodel.dart';
@@ -61,6 +62,12 @@ abstract class IReportSalesRepository {
       fecthListDataMonitoringVolProfitMaker(String linkPageObj);
   Future<ListMonitroingVolProfitMakerResponse>
       fecthListDataMonitoringVolProfitMakerDetail(String linkPageObj);
+  Future<ListMonitroingFoaPMAResponse> fecthListDataMonitoringFoaPMA(
+      String linkPageObj);
+  Future<ListMonitroingFoaPMAResponse> fecthListDataMonitoringFoaPMABySS(
+      String linkPageObj);
+  Future<ListMonitroingFoaPMAResponse> fecthListDataMonitoringFoaPMABySls(
+      String linkPageObj);
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
@@ -672,5 +679,75 @@ class ReportSalesRepositories implements IReportSalesRepository {
         ListMonitroingVolProfitMakerResponse.fromJson(
             jsonObjRptVolProfitMakerDetail);
     return responseGetVolProfitMakerDetail;
+  }
+
+  //Monitoring Foa & PMA
+  @override
+  Future<ListMonitroingFoaPMAResponse> fecthListDataMonitoringFoaPMA(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptFoaPMA = "${_host}GetMonitoringFoaPMA/$linkPageObj";
+
+    var resultGetRptFoaPMA =
+        await http.get(Uri.parse(urlGetRptFoaPMA), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptFoaPMA = jsonDecode(resultGetRptFoaPMA.body);
+
+    var responseGetRptFoaPMA =
+        ListMonitroingFoaPMAResponse.fromJson(jsonObjRptFoaPMA);
+    return responseGetRptFoaPMA;
+  }
+
+  //Monitoring Foa & PMA BySS
+  @override
+  Future<ListMonitroingFoaPMAResponse> fecthListDataMonitoringFoaPMABySS(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptFoaPMABySS = "${_host}GetMonitoringFoaPMABySS/$linkPageObj";
+
+    var resultGetRptFoaPMABySS =
+        await http.get(Uri.parse(urlGetRptFoaPMABySS), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptFoaPMABySS = jsonDecode(resultGetRptFoaPMABySS.body);
+
+    var responseGetRptFoaPMABySS =
+        ListMonitroingFoaPMAResponse.fromJson(jsonObjRptFoaPMABySS);
+    return responseGetRptFoaPMABySS;
+  }
+
+  //Monitoring Foa & PMA BySales
+  @override
+  Future<ListMonitroingFoaPMAResponse> fecthListDataMonitoringFoaPMABySls(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptFoaPMABySls =
+        "${_host}GetMonitoringFoaPMABySales/$linkPageObj";
+
+    var resultGetRptFoaPMABySls =
+        await http.get(Uri.parse(urlGetRptFoaPMABySls), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptFoaPMABySls = jsonDecode(resultGetRptFoaPMABySls.body);
+
+    var responseGetRptFoaPMABySls =
+        ListMonitroingFoaPMAResponse.fromJson(jsonObjRptFoaPMABySls);
+    return responseGetRptFoaPMABySls;
   }
 }

@@ -18,6 +18,9 @@ import 'package:awas_ace/widgets/pages/sales/funneling_bysales_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/gatepasstosbi_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/gatepasstosbi_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringfoapma.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringfoapma_bysales.dart';
+import 'package:awas_ace/widgets/pages/sales/monitoringfoapma_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/monitoringprofitmaker.dart';
 import 'package:awas_ace/widgets/pages/sales/monitoringprofitmaker_detail.dart';
 import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker_detail.dart';
@@ -185,6 +188,15 @@ class MyApp extends StatelessWidget {
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         BocCaiSBEPage.routeName: (context) => const BocCaiSBEPage(),
+        MonitFoaPMAPage.routeName: (context) => MonitFoaPMAPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitFoaPMABySSPage.routeName: (context) => MonitFoaPMABySSPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitFoaPMABySalesPage.routeName: (context) => MonitFoaPMABySalesPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         StockByModelPage.routeName: (context) => const StockByModelPage(),
         StockByModelVtypePage.routeName: (context) => StockByModelVtypePage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,

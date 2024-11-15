@@ -54,7 +54,7 @@ class _ReportPageState extends State<ReportPage> {
     '/dOtoGatePassPage',
     '/gatePasstoSBIPage',
     '/targetSalesActualPage',
-    '/',
+    '/monitFoaPMAPage',
     '/stockByModelPage',
   ];
 
@@ -241,7 +241,10 @@ class _ReportPageState extends State<ReportPage> {
                                                 : linkPageSales[index] ==
                                                         '/monitProfitMakerPage'
                                                     ? '$_yearNow/1'
-                                                    : null,
+                                                    : linkPageSales[index] ==
+                                                            '/monitFoaPMAPage'
+                                                        ? '$_monthNow/$_yearNow/MTD/Pembeli'
+                                                        : null,
                                   ),
                                   child: Column(
                                     children: <Widget>[
