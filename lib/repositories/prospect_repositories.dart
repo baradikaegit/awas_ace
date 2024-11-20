@@ -3,6 +3,8 @@ import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
+import 'package:awas_ace/widgets/model/prospectbengkeldetailmodel.dart';
+import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -14,6 +16,11 @@ abstract class IProspectRepository {
       ListEntryProspectUEBP uebp);
   Future<ListProspectUEBP> fecthListDataUEBP(String objID);
   Future<ListGrafikProspectSalesResponse> fecthListDataGrafikProspectSales();
+  Future<ListProspectDariBengkelResponse> fecthListDataProspectBengkel();
+  Future<ListProspectDariBengkelDetailResponse>
+      fecthListDataProspectBengkelDetail(String linkObj);
+  Future<UpdateProspectDariBengkelResponse> updateNewProspectBengkel(
+      ListProspectbengkelUpdate updateProspectDariBengkel);
 }
 
 class ProspectRepositories implements IProspectRepository {
@@ -112,5 +119,80 @@ class ProspectRepositories implements IProspectRepository {
     var responseGetGrafikProspectSales =
         ListGrafikProspectSalesResponse.fromJson(jsonObjGrafikProspectSales);
     return responseGetGrafikProspectSales;
+  }
+
+  //Prospect dari bengkel
+  @override
+  Future<ListProspectDariBengkelResponse> fecthListDataProspectBengkel() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetProspectBengkel = "${_host}GetProspectDariBengkel";
+
+    var resultGetProspectBengkel =
+        await http.get(Uri.parse(urlGetProspectBengkel), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjProspectBengkel = jsonDecode(resultGetProspectBengkel.body);
+
+    var responseGetProspectBengkel =
+        ListProspectDariBengkelResponse.fromJson(jsonObjProspectBengkel);
+    return responseGetProspectBengkel;
+  }
+
+  //Prospect dari bengkel detail
+  @override
+  Future<ListProspectDariBengkelDetailResponse>
+      fecthListDataProspectBengkelDetail(String linkObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetPbDetail = "${_host}GetProspectDariBengkelDetail/$linkObj";
+    var resultPbDetail = await http.get(Uri.parse(urlGetPbDetail), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjectPbDetail = jsonDecode(resultPbDetail.body);
+
+    var responsePbDetail =
+        ListProspectDariBengkelDetailResponse.fromJson(jsonObjectPbDetail);
+    return responsePbDetail;
+  }
+
+  //update prospect dari bengkel
+  @override
+  Future<UpdateProspectDariBengkelResponse> updateNewProspectBengkel(
+      ListProspectbengkelUpdate updateProspectDariBengkel) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    final Map<String, String> headers = {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    };
+
+    var urlUpdateProspectBengkel =
+        "${_host}UpdateProspectDariBengkel/${updateProspectDariBengkel.iD}";
+    var body = jsonEncode(updateProspectDariBengkel);
+
+    var resultUpdateProspectBengkel = await http.put(
+      Uri.parse(urlUpdateProspectBengkel),
+      body: body,
+      headers: headers,
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    final jsonObjectUpdateProspectBengkel =
+        json.decode(resultUpdateProspectBengkel.body);
+    var responseUpdateProspectBengkel =
+        UpdateProspectDariBengkelResponse.fromJson(
+            jsonObjectUpdateProspectBengkel);
+    return responseUpdateProspectBengkel;
   }
 }

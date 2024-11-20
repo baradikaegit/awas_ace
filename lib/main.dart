@@ -8,6 +8,8 @@ import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
+import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
+import 'package:awas_ace/widgets/pages/prospectbengkeldetail_page.dart';
 import 'package:awas_ace/widgets/pages/prospectsales_page.dart';
 import 'package:awas_ace/widgets/pages/prospectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
@@ -110,6 +112,12 @@ class MyApp extends StatelessWidget {
             ),
         EntryProspectUEbpPage.routeName: (context) => EntryProspectUEbpPage(
               objID: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ProspectDariBengkelPage.routeName: (context) =>
+            const ProspectDariBengkelPage(),
+        ProspectDariBengkeDetailPage.routeName: (context) =>
+            ProspectDariBengkeDetailPage(
+              linkObject: ModalRoute.of(context)!.settings.arguments,
             ),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),

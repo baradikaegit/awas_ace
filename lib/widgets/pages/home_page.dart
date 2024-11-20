@@ -224,7 +224,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List linkPage = [
     '/callPage',
     '/prospectSalesPage',
-    '/',
+    '/prospectDariBengkelPage',
     '/targetSalesPage',
     '/prospectUEbpPage',
     '/lainnyaPage'
@@ -669,16 +669,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               child:
                                                                   FlipAnimation(
                                                                 child: InkWell(
-                                                                  onTap: () => Navigator.pushNamed(
-                                                                      context,
-                                                                      linkPage[
-                                                                          index],
-                                                                      arguments: linkPage[index] ==
-                                                                              '/callPage'
-                                                                          ? dateNow
-                                                                          : linkPage[index] == '/prospectUEbpPage'
-                                                                              ? '1'
-                                                                              : null),
+                                                                  onTap: () =>
+                                                                      Navigator
+                                                                          .pushNamed(
+                                                                    context,
+                                                                    linkPage[
+                                                                        index],
+                                                                    arguments: linkPage[index] ==
+                                                                            '/callPage'
+                                                                        ? dateNow
+                                                                        : linkPage[index] ==
+                                                                                '/prospectUEbpPage'
+                                                                            ? '1'
+                                                                            : null,
+                                                                  ),
                                                                   child: Column(
                                                                     children: <Widget>[
                                                                       const SizedBox(
