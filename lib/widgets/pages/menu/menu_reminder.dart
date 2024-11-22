@@ -17,7 +17,11 @@ class _ReminderPageState extends State<ReminderPage> {
     'Leasing Berakhir',
   ];
   List image = ['stnk.png', 'birthday.png', 'leasingberakhir.png'];
-  List linkPage = ['/', '/', '/'];
+  List linkPage = [
+    '/',
+    '/reminderBirthdayPage',
+    '/reminderLeasingBerakhirPage',
+  ];
 
   @override
   Widget build(BuildContext context) {

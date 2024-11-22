@@ -1110,7 +1110,7 @@ class _ProspectDariBengkeDetailPageState
                                                                         await http
                                                                             .get(
                                                                       Uri.parse(
-                                                                        "${urlApi()}Prospect/GetTaskStatus",
+                                                                        "${urlApi()}Prospect/GetTaskStatus/0",
                                                                       ),
                                                                     );
                                                                     if (response

@@ -12,6 +12,10 @@ import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkeldetail_page.dart';
 import 'package:awas_ace/widgets/pages/prospectsales_page.dart';
 import 'package:awas_ace/widgets/pages/prospectuebp_page.dart';
+import 'package:awas_ace/widgets/pages/reminder/birthday_page.dart';
+import 'package:awas_ace/widgets/pages/reminder/birthdaydetail_page.dart';
+import 'package:awas_ace/widgets/pages/reminder/leasingberakhir_page.dart';
+import 'package:awas_ace/widgets/pages/reminder/leasingberakhirdetail_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_byss.dart';
@@ -121,6 +125,18 @@ class MyApp extends StatelessWidget {
             ),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),
+        ReminderBirthdayPage.routeName: (context) =>
+            const ReminderBirthdayPage(),
+        ReminderBirthdayDetailPage.routeName: (context) =>
+            ReminderBirthdayDetailPage(
+              linkObject: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ReminderLeasingBerakhirPage.routeName: (context) =>
+            const ReminderLeasingBerakhirPage(),
+        ReminderLeasingBerakhirDetailPage.routeName: (context) =>
+            ReminderLeasingBerakhirDetailPage(
+              linkObject: ModalRoute.of(context)!.settings.arguments,
+            ),
         FunnelingPage.routeName: (context) => FunnelingPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),

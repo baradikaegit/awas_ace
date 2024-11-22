@@ -88,7 +88,7 @@ final prospectDariBengkel =
   return repositoryProspectBengkel.fecthListDataProspectBengkel();
 });
 
-//list prospect uebp
+//list prospect dari bengkel detail
 final prospectDariBengkelDetail = FutureProvider.autoDispose
     .family<ListProspectDariBengkelDetailResponse, String>(
         (ref, linkObj) async {
