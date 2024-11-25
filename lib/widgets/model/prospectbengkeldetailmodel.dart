@@ -1,4 +1,6 @@
-// ignore_for_file: no_leading_underscores_for_local_identifiers
+// ignore_for_file: no_leading_underscores_for_local_identifiers, non_constant_identifier_names
+import 'dart:convert';
+
 class ListProspectDariBengkelDetailResponse {
   ListProspectDariBengkelDetailResponse({
     required this.statusCode,
@@ -49,6 +51,7 @@ class ListProspectBengkelDetail {
     required this.driverHomePhone,
     required this.driverPhone,
     required this.statusName,
+    required this.countTaskDetail,
   });
   late final String iD;
   late final String taskStatusID;
@@ -68,26 +71,32 @@ class ListProspectBengkelDetail {
   late final String driverHomePhone;
   late final String driverPhone;
   late final String statusName;
+  late final List<CountTaskDetail>? countTaskDetail;
 
-  ListProspectBengkelDetail.fromJson(Map<String, dynamic> json) {
-    iD = json['iD'];
-    taskStatusID = json['taskStatusID'];
-    taskType = json['taskType'];
-    info = json['info'];
-    vtype = json['vtype'];
-    chassisNumber = json['chassisNumber'];
-    salesCode = json['salesCode'];
-    salesName = json['salesName'];
-    ssCode = json['ssCode'];
-    ssName = json['ssName'];
-    policeNumber = json['policeNumber'];
-    custName = json['custName'];
-    custHomePhone = json['custHomePhone'];
-    custPhone = json['custPhone'];
-    driverName = json['driverName'];
-    driverHomePhone = json['driverHomePhone'];
-    driverPhone = json['driverPhone'];
-    statusName = json['statusName'];
+  ListProspectBengkelDetail.fromJson(Map<String, dynamic> djson) {
+    iD = djson['iD'];
+    taskStatusID = djson['taskStatusID'];
+    taskType = djson['taskType'];
+    info = djson['info'];
+    vtype = djson['vtype'];
+    chassisNumber = djson['chassisNumber'];
+    salesCode = djson['salesCode'];
+    salesName = djson['salesName'];
+    ssCode = djson['ssCode'];
+    ssName = djson['ssName'];
+    policeNumber = djson['policeNumber'];
+    custName = djson['custName'];
+    custHomePhone = djson['custHomePhone'];
+    custPhone = djson['custPhone'];
+    driverName = djson['driverName'];
+    driverHomePhone = djson['driverHomePhone'];
+    driverPhone = djson['driverPhone'];
+    statusName = djson['statusName'];
+    countTaskDetail = (djson['countTaskDetail'] != "")
+        ? List.from(json.decode(djson['countTaskDetail']))
+            .map((e) => CountTaskDetail.fromJson(e))
+            .toList()
+        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -110,6 +119,36 @@ class ListProspectBengkelDetail {
     _data['driverHomePhone'] = driverHomePhone;
     _data['driverPhone'] = driverPhone;
     _data['statusName'] = statusName;
+    _data['countTaskDetail'] = countTaskDetail!.map((e) => e.toJson()).toList();
+    return _data;
+  }
+}
+
+class CountTaskDetail {
+  CountTaskDetail({
+    required this.Rn,
+    required this.CreatedDate,
+    required this.Name,
+    required this.TaskNote,
+  });
+  late final int Rn;
+  late final String CreatedDate;
+  late final String Name;
+  late final String TaskNote;
+
+  CountTaskDetail.fromJson(Map<String, dynamic> json) {
+    Rn = json['Rn'];
+    CreatedDate = json['CreatedDate'];
+    Name = json['Name'];
+    TaskNote = json['TaskNote'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['Rn'] = Rn;
+    _data['CreatedDate'] = CreatedDate;
+    _data['Name'] = Name;
+    _data['TaskNote'] = TaskNote;
     return _data;
   }
 }

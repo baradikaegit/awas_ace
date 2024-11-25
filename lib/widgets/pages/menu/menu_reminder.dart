@@ -18,7 +18,7 @@ class _ReminderPageState extends State<ReminderPage> {
   ];
   List image = ['stnk.png', 'birthday.png', 'leasingberakhir.png'];
   List linkPage = [
-    '/',
+    '/reminderSTNKPage',
     '/reminderBirthdayPage',
     '/reminderLeasingBerakhirPage',
   ];

@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ReminderBirthdayDetailPage extends StatefulWidget {
   final Object? linkObject;
@@ -57,6 +58,30 @@ class _ReminderBirthdayDetailPageState
   String taskStatus = '';
   String taskStatusID = '';
   String bodyCaptureVal = 'Pilih Data Yang Sesuai';
+
+  void _custHomePhoneCall(String custHomePhone) async {
+    final Uri custHomePhoneUri = Uri(
+      scheme: 'tel',
+      path: custHomePhone,
+    );
+    if (await canLaunchUrl(custHomePhoneUri)) {
+      await launchUrl(custHomePhoneUri);
+    } else {
+      throw 'Could not launch $custHomePhone';
+    }
+  }
+
+  void _custPhoneCall(String custPhone) async {
+    final Uri custPhoneUri = Uri(
+      scheme: 'tel',
+      path: custPhone,
+    );
+    if (await canLaunchUrl(custPhoneUri)) {
+      await launchUrl(custPhoneUri);
+    } else {
+      throw 'Could not launch $custPhone';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -463,61 +488,85 @@ class _ReminderBirthdayDetailPageState
                                                                             Alignment.center,
                                                                         child: datadetail.listReminderDetail![index].custHomePhone ==
                                                                                 ''
-                                                                            ? Column(
-                                                                                children: [
-                                                                                  const Icon(
-                                                                                    Icons.phone_android,
-                                                                                    color: Colors.white,
-                                                                                    size: 35.0,
-                                                                                  ),
-                                                                                  Text(
-                                                                                    datadetail.listReminderDetail![index].custPhone,
-                                                                                    style: textStyleColorWhite,
-                                                                                  ),
-                                                                                ],
+                                                                            ? InkWell(
+                                                                                onTap: () {
+                                                                                  String custPhone = datadetail.listReminderDetail![index].custPhone;
+                                                                                  _custPhoneCall(custPhone);
+                                                                                },
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    const Icon(
+                                                                                      Icons.phone_android,
+                                                                                      color: Colors.white,
+                                                                                      size: 35.0,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      datadetail.listReminderDetail![index].custPhone,
+                                                                                      style: textStyleColorWhite,
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
                                                                               )
                                                                             : datadetail.listReminderDetail![index].custPhone == ''
-                                                                                ? Column(
-                                                                                    children: [
-                                                                                      const Icon(
-                                                                                        Icons.phone,
-                                                                                        color: Colors.white,
-                                                                                        size: 35.0,
-                                                                                      ),
-                                                                                      Text(
-                                                                                        datadetail.listReminderDetail![index].custHomePhone,
-                                                                                        style: textStyleColorWhite,
-                                                                                      ),
-                                                                                    ],
+                                                                                ? InkWell(
+                                                                                    onTap: () {
+                                                                                      String custHomePhone = datadetail.listReminderDetail![index].custHomePhone;
+                                                                                      _custHomePhoneCall(custHomePhone);
+                                                                                    },
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        const Icon(
+                                                                                          Icons.phone,
+                                                                                          color: Colors.white,
+                                                                                          size: 35.0,
+                                                                                        ),
+                                                                                        Text(
+                                                                                          datadetail.listReminderDetail![index].custHomePhone,
+                                                                                          style: textStyleColorWhite,
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
                                                                                   )
                                                                                 : Row(
                                                                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                                                     children: [
-                                                                                      Column(
-                                                                                        children: [
-                                                                                          const Icon(
-                                                                                            Icons.phone,
-                                                                                            color: Colors.white,
-                                                                                            size: 35.0,
-                                                                                          ),
-                                                                                          Text(
-                                                                                            datadetail.listReminderDetail![index].custHomePhone,
-                                                                                            style: textStyleColorWhite,
-                                                                                          ),
-                                                                                        ],
+                                                                                      InkWell(
+                                                                                        onTap: () {
+                                                                                          String custHomePhone = datadetail.listReminderDetail![index].custHomePhone;
+                                                                                          _custHomePhoneCall(custHomePhone);
+                                                                                        },
+                                                                                        child: Column(
+                                                                                          children: [
+                                                                                            const Icon(
+                                                                                              Icons.phone,
+                                                                                              color: Colors.white,
+                                                                                              size: 35.0,
+                                                                                            ),
+                                                                                            Text(
+                                                                                              datadetail.listReminderDetail![index].custHomePhone,
+                                                                                              style: textStyleColorWhite,
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
                                                                                       ),
-                                                                                      Column(
-                                                                                        children: [
-                                                                                          const Icon(
-                                                                                            Icons.phone_android,
-                                                                                            color: Colors.white,
-                                                                                            size: 35.0,
-                                                                                          ),
-                                                                                          Text(
-                                                                                            datadetail.listReminderDetail![index].custPhone,
-                                                                                            style: textStyleColorWhite,
-                                                                                          ),
-                                                                                        ],
+                                                                                      InkWell(
+                                                                                        onTap: () {
+                                                                                          String custPhone = datadetail.listReminderDetail![index].custPhone;
+                                                                                          _custPhoneCall(custPhone);
+                                                                                        },
+                                                                                        child: Column(
+                                                                                          children: [
+                                                                                            const Icon(
+                                                                                              Icons.phone_android,
+                                                                                              color: Colors.white,
+                                                                                              size: 35.0,
+                                                                                            ),
+                                                                                            Text(
+                                                                                              datadetail.listReminderDetail![index].custPhone,
+                                                                                              style: textStyleColorWhite,
+                                                                                            ),
+                                                                                          ],
+                                                                                        ),
                                                                                       ),
                                                                                     ],
                                                                                   ),

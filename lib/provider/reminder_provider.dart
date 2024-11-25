@@ -7,6 +7,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 final reminderRepositoryProvider =
     Provider(<IReminderRepository>(ref) => ReminderRepositories());
 
+//list stnk
+final stnk = FutureProvider.autoDispose<ListReminderResponse>((ref) async {
+  final repositoryStnk = ref.watch(reminderRepositoryProvider);
+  return repositoryStnk.fecthListDataStnk();
+});
+
 //list birthday
 final birthday = FutureProvider.autoDispose<ListReminderResponse>((ref) async {
   final repositoryBirthday = ref.watch(reminderRepositoryProvider);

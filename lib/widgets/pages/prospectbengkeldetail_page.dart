@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class ProspectDariBengkeDetailPage extends StatefulWidget {
   final Object? linkObject;
@@ -57,6 +58,54 @@ class _ProspectDariBengkeDetailPageState
   String taskStatus = '';
   String taskStatusID = '';
   String bodyCaptureVal = 'Pilih Data Yang Sesuai';
+
+  void _custHomePhoneCall(String custHomePhone) async {
+    final Uri custHomePhoneUri = Uri(
+      scheme: 'tel',
+      path: custHomePhone,
+    );
+    if (await canLaunchUrl(custHomePhoneUri)) {
+      await launchUrl(custHomePhoneUri);
+    } else {
+      throw 'Could not launch $custHomePhone';
+    }
+  }
+
+  void _custPhoneCall(String custPhone) async {
+    final Uri custPhoneUri = Uri(
+      scheme: 'tel',
+      path: custPhone,
+    );
+    if (await canLaunchUrl(custPhoneUri)) {
+      await launchUrl(custPhoneUri);
+    } else {
+      throw 'Could not launch $custPhone';
+    }
+  }
+
+  void _driverHomePhoneCall(String driverHomePhone) async {
+    final Uri driverHomePhoneUri = Uri(
+      scheme: 'tel',
+      path: driverHomePhone,
+    );
+    if (await canLaunchUrl(driverHomePhoneUri)) {
+      await launchUrl(driverHomePhoneUri);
+    } else {
+      throw 'Could not launch $driverHomePhone';
+    }
+  }
+
+  void _driverPhoneCall(String driverPhone) async {
+    final Uri driverPhoneUri = Uri(
+      scheme: 'tel',
+      path: driverPhone,
+    );
+    if (await canLaunchUrl(driverPhoneUri)) {
+      await launchUrl(driverPhoneUri);
+    } else {
+      throw 'Could not launch $driverPhone';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -136,6 +185,27 @@ class _ProspectDariBengkeDetailPageState
         defaultValue: 11.0,
       ).value,
       fontWeight: FontWeight.bold,
+    );
+
+    var textStyleColorWhiteBI = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 12.5, landscapeValue: 12.5),
+          const Condition.largerThan(
+              name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
+        ],
+        defaultValue: 11.0,
+      ).value,
+      fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
     );
 
     return Form(
@@ -509,62 +579,88 @@ class _ProspectDariBengkeDetailPageState
                                                                             .center,
                                                                     child: datapbdetail.listProspectBengkelDetail![index].custHomePhone ==
                                                                             ''
-                                                                        ? Column(
-                                                                            children: [
-                                                                              const Icon(
-                                                                                Icons.phone_android,
-                                                                                color: Colors.white,
-                                                                                size: 35.0,
-                                                                              ),
-                                                                              Text(
-                                                                                datapbdetail.listProspectBengkelDetail![index].custPhone,
-                                                                                style: textStyleColorWhite,
-                                                                              ),
-                                                                            ],
+                                                                        ? InkWell(
+                                                                            onTap:
+                                                                                () {
+                                                                              String custPhone = datapbdetail.listProspectBengkelDetail![index].custPhone;
+                                                                              _custPhoneCall(custPhone);
+                                                                            },
+                                                                            child:
+                                                                                Column(
+                                                                              children: [
+                                                                                const Icon(
+                                                                                  Icons.phone_android,
+                                                                                  color: Colors.white,
+                                                                                  size: 35.0,
+                                                                                ),
+                                                                                Text(
+                                                                                  datapbdetail.listProspectBengkelDetail![index].custPhone,
+                                                                                  style: textStyleColorWhite,
+                                                                                ),
+                                                                              ],
+                                                                            ),
                                                                           )
                                                                         : datapbdetail.listProspectBengkelDetail![index].custPhone ==
                                                                                 ''
-                                                                            ? Column(
-                                                                                children: [
-                                                                                  const Icon(
-                                                                                    Icons.phone,
-                                                                                    color: Colors.white,
-                                                                                    size: 35.0,
-                                                                                  ),
-                                                                                  Text(
-                                                                                    datapbdetail.listProspectBengkelDetail![index].custHomePhone,
-                                                                                    style: textStyleColorWhite,
-                                                                                  ),
-                                                                                ],
+                                                                            ? InkWell(
+                                                                                onTap: () {
+                                                                                  String custHomePhone = datapbdetail.listProspectBengkelDetail![index].custHomePhone;
+                                                                                  _custHomePhoneCall(custHomePhone);
+                                                                                },
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    const Icon(
+                                                                                      Icons.phone,
+                                                                                      color: Colors.white,
+                                                                                      size: 35.0,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      datapbdetail.listProspectBengkelDetail![index].custHomePhone,
+                                                                                      style: textStyleColorWhite,
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
                                                                               )
                                                                             : Row(
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                                                 children: [
-                                                                                  Column(
-                                                                                    children: [
-                                                                                      const Icon(
-                                                                                        Icons.phone,
-                                                                                        color: Colors.white,
-                                                                                        size: 35.0,
-                                                                                      ),
-                                                                                      Text(
-                                                                                        datapbdetail.listProspectBengkelDetail![index].custHomePhone,
-                                                                                        style: textStyleColorWhite,
-                                                                                      ),
-                                                                                    ],
+                                                                                  InkWell(
+                                                                                    onTap: () {
+                                                                                      String custHomePhone = datapbdetail.listProspectBengkelDetail![index].custHomePhone;
+                                                                                      _custHomePhoneCall(custHomePhone);
+                                                                                    },
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        const Icon(
+                                                                                          Icons.phone,
+                                                                                          color: Colors.white,
+                                                                                          size: 35.0,
+                                                                                        ),
+                                                                                        Text(
+                                                                                          datapbdetail.listProspectBengkelDetail![index].custHomePhone,
+                                                                                          style: textStyleColorWhite,
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
                                                                                   ),
-                                                                                  Column(
-                                                                                    children: [
-                                                                                      const Icon(
-                                                                                        Icons.phone_android,
-                                                                                        color: Colors.white,
-                                                                                        size: 35.0,
-                                                                                      ),
-                                                                                      Text(
-                                                                                        datapbdetail.listProspectBengkelDetail![index].custPhone,
-                                                                                        style: textStyleColorWhite,
-                                                                                      ),
-                                                                                    ],
+                                                                                  InkWell(
+                                                                                    onTap: () {
+                                                                                      String custPhone = datapbdetail.listProspectBengkelDetail![index].custPhone;
+                                                                                      _custPhoneCall(custPhone);
+                                                                                    },
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        const Icon(
+                                                                                          Icons.phone_android,
+                                                                                          color: Colors.white,
+                                                                                          size: 35.0,
+                                                                                        ),
+                                                                                        Text(
+                                                                                          datapbdetail.listProspectBengkelDetail![index].custPhone,
+                                                                                          style: textStyleColorWhite,
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
                                                                                   ),
                                                                                 ],
                                                                               ),
@@ -680,62 +776,88 @@ class _ProspectDariBengkeDetailPageState
                                                                             .center,
                                                                     child: datapbdetail.listProspectBengkelDetail![index].driverHomePhone ==
                                                                             ''
-                                                                        ? Column(
-                                                                            children: [
-                                                                              const Icon(
-                                                                                Icons.phone_android,
-                                                                                color: Colors.white,
-                                                                                size: 35.0,
-                                                                              ),
-                                                                              Text(
-                                                                                datapbdetail.listProspectBengkelDetail![index].driverPhone,
-                                                                                style: textStyleColorWhite,
-                                                                              ),
-                                                                            ],
+                                                                        ? InkWell(
+                                                                            onTap:
+                                                                                () {
+                                                                              String driverPhone = datapbdetail.listProspectBengkelDetail![index].driverPhone;
+                                                                              _driverPhoneCall(driverPhone);
+                                                                            },
+                                                                            child:
+                                                                                Column(
+                                                                              children: [
+                                                                                const Icon(
+                                                                                  Icons.phone_android,
+                                                                                  color: Colors.white,
+                                                                                  size: 35.0,
+                                                                                ),
+                                                                                Text(
+                                                                                  datapbdetail.listProspectBengkelDetail![index].driverPhone,
+                                                                                  style: textStyleColorWhite,
+                                                                                ),
+                                                                              ],
+                                                                            ),
                                                                           )
                                                                         : datapbdetail.listProspectBengkelDetail![index].driverPhone ==
                                                                                 ''
-                                                                            ? Column(
-                                                                                children: [
-                                                                                  const Icon(
-                                                                                    Icons.phone,
-                                                                                    color: Colors.white,
-                                                                                    size: 35.0,
-                                                                                  ),
-                                                                                  Text(
-                                                                                    datapbdetail.listProspectBengkelDetail![index].driverHomePhone,
-                                                                                    style: textStyleColorWhite,
-                                                                                  ),
-                                                                                ],
+                                                                            ? InkWell(
+                                                                                onTap: () {
+                                                                                  String driverHomePhone = datapbdetail.listProspectBengkelDetail![index].driverHomePhone;
+                                                                                  _driverHomePhoneCall(driverHomePhone);
+                                                                                },
+                                                                                child: Column(
+                                                                                  children: [
+                                                                                    const Icon(
+                                                                                      Icons.phone,
+                                                                                      color: Colors.white,
+                                                                                      size: 35.0,
+                                                                                    ),
+                                                                                    Text(
+                                                                                      datapbdetail.listProspectBengkelDetail![index].driverHomePhone,
+                                                                                      style: textStyleColorWhite,
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
                                                                               )
                                                                             : Row(
                                                                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                                                 children: [
-                                                                                  Column(
-                                                                                    children: [
-                                                                                      const Icon(
-                                                                                        Icons.phone,
-                                                                                        color: Colors.white,
-                                                                                        size: 35.0,
-                                                                                      ),
-                                                                                      Text(
-                                                                                        datapbdetail.listProspectBengkelDetail![index].driverHomePhone,
-                                                                                        style: textStyleColorWhite,
-                                                                                      ),
-                                                                                    ],
+                                                                                  InkWell(
+                                                                                    onTap: () {
+                                                                                      String driverHomePhone = datapbdetail.listProspectBengkelDetail![index].driverHomePhone;
+                                                                                      _driverHomePhoneCall(driverHomePhone);
+                                                                                    },
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        const Icon(
+                                                                                          Icons.phone,
+                                                                                          color: Colors.white,
+                                                                                          size: 35.0,
+                                                                                        ),
+                                                                                        Text(
+                                                                                          datapbdetail.listProspectBengkelDetail![index].driverHomePhone,
+                                                                                          style: textStyleColorWhite,
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
                                                                                   ),
-                                                                                  Column(
-                                                                                    children: [
-                                                                                      const Icon(
-                                                                                        Icons.phone_android,
-                                                                                        color: Colors.white,
-                                                                                        size: 35.0,
-                                                                                      ),
-                                                                                      Text(
-                                                                                        datapbdetail.listProspectBengkelDetail![index].driverPhone,
-                                                                                        style: textStyleColorWhite,
-                                                                                      ),
-                                                                                    ],
+                                                                                  InkWell(
+                                                                                    onTap: () {
+                                                                                      String driverPhone = datapbdetail.listProspectBengkelDetail![index].driverPhone;
+                                                                                      _driverPhoneCall(driverPhone);
+                                                                                    },
+                                                                                    child: Column(
+                                                                                      children: [
+                                                                                        const Icon(
+                                                                                          Icons.phone_android,
+                                                                                          color: Colors.white,
+                                                                                          size: 35.0,
+                                                                                        ),
+                                                                                        Text(
+                                                                                          datapbdetail.listProspectBengkelDetail![index].driverPhone,
+                                                                                          style: textStyleColorWhite,
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
                                                                                   ),
                                                                                 ],
                                                                               ),
@@ -909,6 +1031,131 @@ class _ProspectDariBengkeDetailPageState
                                                             ],
                                                           ),
                                                         ),
+                                                        if (datapbdetail
+                                                                .listProspectBengkelDetail![
+                                                                    index]
+                                                                .countTaskDetail !=
+                                                            null)
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                              0,
+                                                              10,
+                                                              0,
+                                                              10,
+                                                            ),
+                                                            child: Container(
+                                                              constraints:
+                                                                  const BoxConstraints(
+                                                                minHeight: 10,
+                                                                minWidth: double
+                                                                    .infinity,
+                                                              ),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                boxShadow: const [
+                                                                  BoxShadow(
+                                                                    color: Color
+                                                                        .fromARGB(
+                                                                      197,
+                                                                      3,
+                                                                      116,
+                                                                      18,
+                                                                    ),
+                                                                    blurRadius:
+                                                                        3.0,
+                                                                    offset:
+                                                                        Offset(
+                                                                      0,
+                                                                      0,
+                                                                    ),
+                                                                    spreadRadius:
+                                                                        1.1,
+                                                                  ),
+                                                                ],
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .transparent,
+                                                                  width: 2,
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                  10.0,
+                                                                ),
+                                                                color: const Color
+                                                                    .fromARGB(
+                                                                  167,
+                                                                  19,
+                                                                  160,
+                                                                  0,
+                                                                ),
+                                                              ),
+                                                              child:
+                                                                  ExpansionTile(
+                                                                trailing:
+                                                                    const Icon(
+                                                                  Icons.add,
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                    255,
+                                                                    255,
+                                                                    255,
+                                                                    255,
+                                                                  ),
+                                                                  size: 15.0,
+                                                                ),
+                                                                title: Text(
+                                                                  "History ",
+                                                                  style:
+                                                                      textStyleColorWhiteB,
+                                                                ),
+                                                                children: [
+                                                                  for (int x =
+                                                                          0;
+                                                                      datapbdetail.listProspectBengkelDetail![index].countTaskDetail !=
+                                                                              null
+                                                                          ? x <
+                                                                              datapbdetail.listProspectBengkelDetail![index].countTaskDetail!.length
+                                                                          : x < 0;
+                                                                      x++)
+                                                                    Center(
+                                                                      child:
+                                                                          Padding(
+                                                                        padding:
+                                                                            const EdgeInsets.fromLTRB(
+                                                                          25,
+                                                                          0,
+                                                                          20,
+                                                                          15,
+                                                                        ),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Align(
+                                                                              alignment: Alignment.centerLeft,
+                                                                              child: Text(
+                                                                                "${datapbdetail.listProspectBengkelDetail![index].countTaskDetail![x].CreatedDate} - ${datapbdetail.listProspectBengkelDetail![index].countTaskDetail![x].Name}",
+                                                                                style: textStyleColorWhiteBI,
+                                                                              ),
+                                                                            ),
+                                                                            Align(
+                                                                              alignment: Alignment.centerLeft,
+                                                                              child: Text(
+                                                                                datapbdetail.listProspectBengkelDetail![index].countTaskDetail![x].TaskNote,
+                                                                                style: textStyleColorWhiteB,
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
                                                         Padding(
                                                           padding:
                                                               const EdgeInsets

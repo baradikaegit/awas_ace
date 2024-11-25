@@ -19,17 +19,15 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-class ReminderLeasingBerakhirDetailPage extends StatefulWidget {
+class ReminderSTNKDetailPage extends StatefulWidget {
   final Object? linkObject;
 
-  const ReminderLeasingBerakhirDetailPage(
-      {super.key, required this.linkObject});
+  const ReminderSTNKDetailPage({super.key, required this.linkObject});
 
-  static const String routeName = "/reminderLeasingBerakhirDetailPage";
+  static const String routeName = "/reminderSTNKDetailPage";
 
   @override
-  State<ReminderLeasingBerakhirDetailPage> createState() =>
-      _ReminderLeasingBerakhirDetailPageState();
+  State<ReminderSTNKDetailPage> createState() => _ReminderSTNKDetailPageState();
 }
 
 class ModelSelect {
@@ -38,8 +36,7 @@ class ModelSelect {
   ModelSelect(this.value, this.id);
 }
 
-class _ReminderLeasingBerakhirDetailPageState
-    extends State<ReminderLeasingBerakhirDetailPage> {
+class _ReminderSTNKDetailPageState extends State<ReminderSTNKDetailPage> {
   Widget titleBar = const Text(
     "Task Detail",
     style: TextStyle(color: Colors.white),
@@ -957,7 +954,7 @@ class _ReminderLeasingBerakhirDetailPageState
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Reminder/GetTaskStatusReminder/2",
+                                                                            "${urlApi()}Reminder/GetTaskStatusReminder/3",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=

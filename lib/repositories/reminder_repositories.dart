@@ -8,6 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 abstract class IReminderRepository {
+  Future<ListReminderResponse> fecthListDataStnk();
   Future<ListReminderResponse> fecthListDataBirthday();
   Future<ListReminderResponse> fecthListDataLeasingBerakhir();
   Future<ListReminderDetailResponse> fecthListDataReminderDetail(
@@ -20,6 +21,26 @@ abstract class IReminderRepository {
 
 class ReminderRepositories implements IReminderRepository {
   final _host = "${urlApi()}Reminder/";
+
+  //STNK
+  @override
+  Future<ListReminderResponse> fecthListDataStnk() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetSTNK = "${_host}GetSTNK";
+
+    var resultGetSTNK = await http.get(Uri.parse(urlGetSTNK), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjSTNK = jsonDecode(resultGetSTNK.body);
+
+    var responseGetSTNK = ListReminderResponse.fromJson(jsonObjSTNK);
+    return responseGetSTNK;
+  }
 
   //Birthday
   @override
