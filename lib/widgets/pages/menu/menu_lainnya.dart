@@ -46,9 +46,9 @@ class widgetBody extends StatefulWidget {
 }
 
 class _widgetBodyState extends State<widgetBody> {
-  List menuRolesSVC = ['SVC Kendaraan Pelanggan'];
-  List imageSVC = ['svc.png'];
-  List linkPageSVC = ['/svcKendaraanPelanggan'];
+  List menuRolesSVC = ['SVC Kendaraan Pelanggan', 'Body Repair (GR)'];
+  List imageSVC = ['svc.png', 'svc.png'];
+  List linkPageSVC = ['/svcKendaraanPelangganPage', '/bodyRepairGRPage'];
 
   // List menuRolesSurvey = [
   //   'Survey PSP SPK',

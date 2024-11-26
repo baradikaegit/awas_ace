@@ -5,7 +5,6 @@ import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/pages/call_page.dart';
 import 'package:awas_ace/widgets/pages/changepass_page.dart';
 import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
-import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
@@ -51,6 +50,10 @@ import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual.dart';
+import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairgr_page.dart';
+import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairgrdetail_page.dart';
+import 'package:awas_ace/widgets/pages/svckendaraan/svckendaaraanpelanggan_page.dart';
+import 'package:awas_ace/widgets/pages/svckendaraan/svckendaraanpelanggandetail_page.dart';
 import 'package:awas_ace/widgets/pages/targetsales_page.dart';
 import 'package:awas_ace/widgets/pages/targetsalesentry_page.dart';
 import 'package:flutter/material.dart';
@@ -141,6 +144,16 @@ class MyApp extends StatelessWidget {
             ),
         ReminderSTNKPage.routeName: (context) => const ReminderSTNKPage(),
         ReminderSTNKDetailPage.routeName: (context) => ReminderSTNKDetailPage(
+              linkObject: ModalRoute.of(context)!.settings.arguments,
+            ),
+        SvcKendaraanPelangganPage.routeName: (context) =>
+            const SvcKendaraanPelangganPage(),
+        SvcKendaraanPelangganDetailPage.routeName: (context) =>
+            SvcKendaraanPelangganDetailPage(
+              linkObject: ModalRoute.of(context)!.settings.arguments,
+            ),
+        BodyRepairGRPage.routeName: (context) => const BodyRepairGRPage(),
+        BodyRepariGRDetailPage.routeName: (context) => BodyRepariGRDetailPage(
               linkObject: ModalRoute.of(context)!.settings.arguments,
             ),
         FunnelingPage.routeName: (context) => FunnelingPage(
