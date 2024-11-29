@@ -1,4 +1,5 @@
 import 'package:awas_ace/repositories/svckendaraan_repositories.dart';
+import 'package:awas_ace/widgets/model/svccountmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraandetailmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraanmodel.dart';
 import 'package:flutter/material.dart';
@@ -15,11 +16,18 @@ final svckendaraanpelanggan =
   return repositorySvcKendaraanPelanggan.fecthListDataSvcKendaraanPelanggan();
 });
 
-//list body repair
+//list body repair GR
 final bodyRepairGR =
     FutureProvider.autoDispose<ListSvcKendaraanResponse>((ref) async {
   final repositoryBodyRepairGR = ref.watch(svcKendaraanRepositoryProvider);
   return repositoryBodyRepairGR.fecthListDataBodyRepairGR();
+});
+
+//list body repair Sales
+final bodyRepairSls =
+    FutureProvider.autoDispose<ListSvcKendaraanResponse>((ref) async {
+  final repositoryBodyRepairSls = ref.watch(svcKendaraanRepositoryProvider);
+  return repositoryBodyRepairSls.fecthListDataBodyRepairSls();
 });
 
 //list svc kendaraan detail
@@ -50,4 +58,10 @@ class UpdateReminderFormNotifier extends ChangeNotifier {
 final updateSvcKendaraanFormProviderDetail =
     ChangeNotifierProvider.autoDispose<UpdateReminderFormNotifier>((ref) {
   return UpdateReminderFormNotifier(ref as ProviderElementBase);
+});
+
+//list svc count
+final svcCount = FutureProvider.autoDispose<ListSVCCountResponse>((ref) async {
+  final repositorySvcCount = ref.watch(svcKendaraanRepositoryProvider);
+  return repositorySvcCount.fecthListDataCount();
 });

@@ -52,6 +52,8 @@ import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual.dart';
 import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairgr_page.dart';
 import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairgrdetail_page.dart';
+import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairsls_page.dart';
+import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairslsdetail_page.dart';
 import 'package:awas_ace/widgets/pages/svckendaraan/svckendaaraanpelanggan_page.dart';
 import 'package:awas_ace/widgets/pages/svckendaraan/svckendaraanpelanggandetail_page.dart';
 import 'package:awas_ace/widgets/pages/targetsales_page.dart';
@@ -154,6 +156,10 @@ class MyApp extends StatelessWidget {
             ),
         BodyRepairGRPage.routeName: (context) => const BodyRepairGRPage(),
         BodyRepariGRDetailPage.routeName: (context) => BodyRepariGRDetailPage(
+              linkObject: ModalRoute.of(context)!.settings.arguments,
+            ),
+        BodyRepairSlsPage.routeName: (context) => const BodyRepairSlsPage(),
+        BodyRepariSlsDetailPage.routeName: (context) => BodyRepariSlsDetailPage(
               linkObject: ModalRoute.of(context)!.settings.arguments,
             ),
         FunnelingPage.routeName: (context) => FunnelingPage(

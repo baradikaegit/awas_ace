@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/svccountmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraandetailmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraanmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -10,12 +11,14 @@ import 'package:http/http.dart' as http;
 abstract class ISvcKendaraanRepository {
   Future<ListSvcKendaraanResponse> fecthListDataSvcKendaraanPelanggan();
   Future<ListSvcKendaraanResponse> fecthListDataBodyRepairGR();
+  Future<ListSvcKendaraanResponse> fecthListDataBodyRepairSls();
   Future<ListSvcKendaraanDetailResponse> fecthListDataSvcKendaraanDetail(
     String linkObj,
   );
   Future<UpdateSvcKendaraanResponse> updateNewSvcKendaraan(
     ListSvcKendaraanUpdate updateSvcKendaraan,
   );
+  Future<ListSVCCountResponse> fecthListDataCount();
 }
 
 class SvckendaraanRepositories implements ISvcKendaraanRepository {
@@ -64,6 +67,28 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
     var responseGetBodyRepairGR =
         ListSvcKendaraanResponse.fromJson(jsonObjBodyRepairGR);
     return responseGetBodyRepairGR;
+  }
+
+  //Body Repair Sls
+  @override
+  Future<ListSvcKendaraanResponse> fecthListDataBodyRepairSls() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetBodyRepairSls = "${_host}GetBodyRepairGR";
+
+    var resultGetBodyRepairSls =
+        await http.get(Uri.parse(urlGetBodyRepairSls), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjBodyRepairSls = jsonDecode(resultGetBodyRepairSls.body);
+
+    var responseGetBodyRepairSls =
+        ListSvcKendaraanResponse.fromJson(jsonObjBodyRepairSls);
+    return responseGetBodyRepairSls;
   }
 
   //Svc Kendaraan detail
@@ -119,5 +144,25 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
     var responseUpdateSvcKendaraan =
         UpdateSvcKendaraanResponse.fromJson(jsonObjectUpdateSvcKendaraan);
     return responseUpdateSvcKendaraan;
+  }
+
+  //SVC COunt
+  @override
+  Future<ListSVCCountResponse> fecthListDataCount() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetSvcCount = "${_host}GetSvcCount";
+
+    var resultGetSvcCount = await http.get(Uri.parse(urlGetSvcCount), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjSvcCount = jsonDecode(resultGetSvcCount.body);
+
+    var responseGetSvcCount = ListSVCCountResponse.fromJson(jsonObjSvcCount);
+    return responseGetSvcCount;
   }
 }

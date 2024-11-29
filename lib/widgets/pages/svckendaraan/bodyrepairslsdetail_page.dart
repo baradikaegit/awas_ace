@@ -20,15 +20,16 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 
-class BodyRepariGRDetailPage extends StatefulWidget {
+class BodyRepariSlsDetailPage extends StatefulWidget {
   final Object? linkObject;
 
-  const BodyRepariGRDetailPage({super.key, required this.linkObject});
+  const BodyRepariSlsDetailPage({super.key, required this.linkObject});
 
-  static const String routeName = "/bodyRepariGRDetailPage";
+  static const String routeName = "/bodyRepariSlsDetailPage";
 
   @override
-  State<BodyRepariGRDetailPage> createState() => _BodyRepariGRDetailPageState();
+  State<BodyRepariSlsDetailPage> createState() =>
+      _BodyRepariSlsDetailPageState();
 }
 
 class ModelSelect {
@@ -37,7 +38,7 @@ class ModelSelect {
   ModelSelect(this.value, this.id);
 }
 
-class _BodyRepariGRDetailPageState extends State<BodyRepariGRDetailPage> {
+class _BodyRepariSlsDetailPageState extends State<BodyRepariSlsDetailPage> {
   Widget titleBar = const Text(
     "Task Detail",
     style: TextStyle(color: Colors.white),
