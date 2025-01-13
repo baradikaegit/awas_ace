@@ -77,8 +77,6 @@ class _ProspectSalesPageState extends ConsumerState<ProspectSalesPage>
 
     double screenWidth = MediaQuery.of(context).size.width;
 
-    print(screenWidth);
-
     return Form(
       key: formkey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -181,9 +179,9 @@ class _ProspectSalesPageState extends ConsumerState<ProspectSalesPage>
                             tabs: [
                               _customTab("PELANGGAN \nHOT \nPROSPECT",
                                   const Color.fromARGB(255, 40, 208, 37)),
-                              _customTab("MEDIUM PROSPECT",
+                              _customTab("PELANGGAN \nMEDIUM \nPROSPECT",
                                   const Color.fromARGB(255, 106, 185, 44)),
-                              _customTab("LOW PROSPECT",
+                              _customTab("PELANGGAN \nLOW \nPROSPECT",
                                   const Color.fromARGB(255, 175, 231, 44)),
                             ],
                           ),
