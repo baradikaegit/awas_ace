@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkeldetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
+import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -21,6 +22,7 @@ abstract class IProspectRepository {
       fecthListDataProspectBengkelDetail(String linkObj);
   Future<UpdateProspectDariBengkelResponse> updateNewProspectBengkel(
       ListProspectbengkelUpdate updateProspectDariBengkel);
+  Future<ProspectSalesListResponse> fecthListDataProspectSales();
 }
 
 class ProspectRepositories implements IProspectRepository {
@@ -194,5 +196,27 @@ class ProspectRepositories implements IProspectRepository {
         UpdateProspectDariBengkelResponse.fromJson(
             jsonObjectUpdateProspectBengkel);
     return responseUpdateProspectBengkel;
+  }
+
+  //Prospect sales
+  @override
+  Future<ProspectSalesListResponse> fecthListDataProspectSales() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetProspectSales = "${_host}GetProspectSales";
+
+    var resultGetProspectSales =
+        await http.get(Uri.parse(urlGetProspectSales), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjProspectSales = jsonDecode(resultGetProspectSales.body);
+
+    var responseGetProspectSales =
+        ProspectSalesListResponse.fromJson(jsonObjProspectSales);
+    return responseGetProspectSales;
   }
 }

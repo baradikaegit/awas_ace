@@ -3,6 +3,7 @@ import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkeldetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
+import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -118,4 +119,11 @@ final updateProspectDariBengkelFormProviderDetail =
     ChangeNotifierProvider.autoDispose<UpdateProspectBengkelFormNotifier>(
         (ref) {
   return UpdateProspectBengkelFormNotifier(ref as ProviderElementBase);
+});
+
+//list prospect sales
+final prospectSales =
+    FutureProvider.autoDispose<ProspectSalesListResponse>((ref) async {
+  final repositoryProspectSales = ref.watch(prospectRepositoryProvider);
+  return repositoryProspectSales.fecthListDataProspectSales();
 });
