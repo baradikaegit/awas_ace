@@ -1,12 +1,16 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'package:awas_ace/provider/prospect_provider.dart';
+import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
+import 'package:awas_ace/support/not_active_token.dart';
+import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:intl/intl.dart';
+import 'package:searchable_listview/searchable_listview.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
@@ -30,11 +34,13 @@ class _ProspectSalesPageState extends ConsumerState<ProspectSalesPage>
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   late TabController _tabController;
+  bool isDisabled = true;
 
   String dateNow = DateFormat('MM/dd/yyyy').format(DateTime.now());
   String? userName;
   String? sid;
   String? branchID;
+  String? roles;
 
   @override
   void initState() {
@@ -44,17 +50,25 @@ class _ProspectSalesPageState extends ConsumerState<ProspectSalesPage>
     loadSharedPreference();
   }
 
-  void _handleTabSelection() {
-    setState(() {});
-  }
-
   loadSharedPreference() async {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       userName = prefs.getString('Username');
       sid = prefs.getString('SID');
       branchID = prefs.getString('BranchID');
+      roles = prefs.getString('Roles');
     });
+  }
+
+  void _handleTabSelection() {
+    roles == 'SALES SUPERVISOR'
+        ? setState(() {
+            if (isDisabled && _tabController.index == 1 ||
+                _tabController.index == 2) {
+              _tabController.index = _tabController.previousIndex;
+            }
+          })
+        : setState(() {});
   }
 
   @override
@@ -111,6 +125,7 @@ class _ProspectSalesPageState extends ConsumerState<ProspectSalesPage>
           body: Center(
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     final rptProspectSales = ref.watch(prospectSales);
@@ -129,190 +144,207 @@ class _ProspectSalesPageState extends ConsumerState<ProspectSalesPage>
                                   },
                                   child: rptProspectSales.when(
                                     data: (dataProspectSales) {
-                                      return ListView.builder(
-                                        physics:
-                                            const AlwaysScrollableScrollPhysics(),
-                                        itemCount: 1,
-                                        itemBuilder: (context, index) {
-                                          return Column(
-                                            children: [
-                                              ResponsiveRowColumnItem(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Container(
-                                                      width: ResponsiveValue<
-                                                          double>(
-                                                        context,
-                                                        conditionalValues: [
-                                                          const Condition
-                                                              .largerThan(
-                                                            name: TABLET,
-                                                            value: 20.0,
-                                                            landscapeValue:
-                                                                20.0,
-                                                            breakpoint: 500,
-                                                          ),
-                                                          const Condition
-                                                              .largerThan(
-                                                              name: TABLET,
-                                                              value: 32.0,
-                                                              landscapeValue:
-                                                                  32.0,
-                                                              breakpoint: 800),
-                                                        ],
-                                                        defaultValue: 19,
-                                                      ).value,
-                                                      height: 35,
-                                                      decoration: BoxDecoration(
-                                                        color:
-                                                            Colors.orange[400],
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      width: screenWidth * 0.96,
-                                                      height: 35,
-                                                      decoration:
-                                                          const BoxDecoration(
-                                                        gradient:
-                                                            LinearGradient(
-                                                          colors: [
-                                                            Color.fromARGB(255,
-                                                                40, 208, 37),
-                                                            Color.fromARGB(255,
-                                                                106, 185, 44),
-                                                            Color.fromARGB(255,
-                                                                175, 231, 44),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                      child: Center(
-                                                        child: Text(
-                                                          "ON PROGRESS",
-                                                          style:
-                                                              textStyleColorWhite,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              Container(
-                                                color: Colors.green[700],
-                                                child: Column(
-                                                  children: [
-                                                    TabBar(
-                                                      controller:
-                                                          _tabController,
-                                                      dividerHeight: 0,
-                                                      indicatorColor:
-                                                          Colors.orange,
-                                                      labelColor: Colors.white,
-                                                      unselectedLabelColor:
-                                                          Colors.white70,
-                                                      isScrollable: false,
-                                                      indicatorPadding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                        horizontal: 0,
-                                                      ),
-                                                      labelPadding:
-                                                          const EdgeInsets
-                                                              .symmetric(
-                                                        horizontal: 0,
-                                                      ),
-                                                      tabs: [
-                                                        for (int i = 0;
-                                                            i < 3;
-                                                            i++)
-                                                          dataProspectSales
-                                                                      .listProspectSales![
-                                                                          i]
-                                                                      .prospectStatusName ==
-                                                                  'HOT'
-                                                              ? _customTab(
-                                                                  dataProspectSales
-                                                                      .listProspectSales![
-                                                                          i]
-                                                                      .prospectStatus,
-                                                                  " \nPELANGGAN \nHOT \nPROSPECT",
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                    255,
-                                                                    40,
-                                                                    208,
-                                                                    37,
-                                                                  ),
-                                                                )
-                                                              : dataProspectSales
-                                                                          .listProspectSales![
-                                                                              i]
-                                                                          .prospectStatusName ==
-                                                                      'MEDIUM'
-                                                                  ? _customTab(
-                                                                      dataProspectSales
-                                                                          .listProspectSales![
-                                                                              i]
-                                                                          .prospectStatus,
-                                                                      " \nPELANGGAN \nMEDIUM \nPROSPECT",
-                                                                      const Color
-                                                                          .fromARGB(
-                                                                        255,
-                                                                        106,
-                                                                        185,
-                                                                        44,
-                                                                      ),
-                                                                    )
-                                                                  : _customTab(
-                                                                      dataProspectSales
-                                                                          .listProspectSales![
-                                                                              i]
-                                                                          .prospectStatus,
-                                                                      " \nPELANGGAN \nLOW \nPROSPECT",
-                                                                      const Color
-                                                                          .fromARGB(
-                                                                        255,
-                                                                        175,
-                                                                        231,
-                                                                        44,
-                                                                      ),
+                                      return (dataProspectSales
+                                                  .listProspectSales !=
+                                              null)
+                                          ? dataProspectSales
+                                                  .listProspectSales!.isNotEmpty
+                                              ? ListView.builder(
+                                                  physics:
+                                                      const AlwaysScrollableScrollPhysics(),
+                                                  itemCount: 1,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return Column(
+                                                      children: [
+                                                        ResponsiveRowColumnItem(
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .max,
+                                                            children: [
+                                                              Container(
+                                                                width:
+                                                                    ResponsiveValue<
+                                                                        double>(
+                                                                  context,
+                                                                  conditionalValues: [
+                                                                    const Condition
+                                                                        .largerThan(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          20.0,
+                                                                      landscapeValue:
+                                                                          20.0,
+                                                                      breakpoint:
+                                                                          500,
                                                                     ),
+                                                                    const Condition
+                                                                        .largerThan(
+                                                                        name:
+                                                                            TABLET,
+                                                                        value:
+                                                                            32.0,
+                                                                        landscapeValue:
+                                                                            32.0,
+                                                                        breakpoint:
+                                                                            800),
+                                                                  ],
+                                                                  defaultValue:
+                                                                      19,
+                                                                ).value,
+                                                                height: 35,
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  color: Colors
+                                                                          .orange[
+                                                                      400],
+                                                                ),
+                                                              ),
+                                                              Container(
+                                                                width:
+                                                                    screenWidth *
+                                                                        0.96,
+                                                                height: 35,
+                                                                decoration:
+                                                                    const BoxDecoration(
+                                                                  gradient:
+                                                                      LinearGradient(
+                                                                    colors: [
+                                                                      Color.fromARGB(
+                                                                          255,
+                                                                          40,
+                                                                          208,
+                                                                          37),
+                                                                      Color.fromARGB(
+                                                                          255,
+                                                                          106,
+                                                                          185,
+                                                                          44),
+                                                                      Color.fromARGB(
+                                                                          255,
+                                                                          175,
+                                                                          231,
+                                                                          44),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                                child: Center(
+                                                                  child: Text(
+                                                                    "ON PROGRESS",
+                                                                    style:
+                                                                        textStyleColorWhite,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                          color:
+                                                              Colors.green[700],
+                                                          child: Column(
+                                                            children: [
+                                                              TabBar(
+                                                                controller:
+                                                                    _tabController,
+                                                                dividerHeight:
+                                                                    0,
+                                                                indicatorColor:
+                                                                    Colors
+                                                                        .orange,
+                                                                labelColor:
+                                                                    Colors
+                                                                        .white,
+                                                                unselectedLabelColor:
+                                                                    Colors
+                                                                        .white70,
+                                                                isScrollable:
+                                                                    false,
+                                                                indicatorPadding:
+                                                                    const EdgeInsets
+                                                                        .symmetric(
+                                                                  horizontal: 0,
+                                                                ),
+                                                                labelPadding:
+                                                                    const EdgeInsets
+                                                                        .symmetric(
+                                                                  horizontal: 0,
+                                                                ),
+                                                                tabs: [
+                                                                  for (int i =
+                                                                          0;
+                                                                      i < 3;
+                                                                      i++)
+                                                                    dataProspectSales.listProspectSales![i].prospectStatusName ==
+                                                                            'HOT'
+                                                                        ? _customTab(
+                                                                            dataProspectSales.listProspectSales![i].prospectStatus,
+                                                                            " \nPELANGGAN \nHOT \nPROSPECT",
+                                                                            const Color.fromARGB(
+                                                                              255,
+                                                                              40,
+                                                                              208,
+                                                                              37,
+                                                                            ),
+                                                                          )
+                                                                        : dataProspectSales.listProspectSales![i].prospectStatusName ==
+                                                                                'MEDIUM'
+                                                                            ? _customTab(
+                                                                                dataProspectSales.listProspectSales![i].prospectStatus,
+                                                                                " \nPELANGGAN \nMEDIUM \nPROSPECT",
+                                                                                const Color.fromARGB(
+                                                                                  255,
+                                                                                  106,
+                                                                                  185,
+                                                                                  44,
+                                                                                ),
+                                                                              )
+                                                                            : _customTab(
+                                                                                dataProspectSales.listProspectSales![i].prospectStatus,
+                                                                                " \nPELANGGAN \nLOW \nPROSPECT",
+                                                                                const Color.fromARGB(
+                                                                                  255,
+                                                                                  175,
+                                                                                  231,
+                                                                                  44,
+                                                                                ),
+                                                                              ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          height: MediaQuery.of(
+                                                                      context)
+                                                                  .size
+                                                                  .height -
+                                                              Scaffold.of(
+                                                                      context)
+                                                                  .appBarMaxHeight! -
+                                                              kToolbarHeight -
+                                                              16,
+                                                          child: TabBarView(
+                                                            controller:
+                                                                _tabController,
+                                                            children: const <Widget>[
+                                                              HotProspectTab(),
+                                                              MediumProspectTab(),
+                                                              LowProspectTab(),
+                                                            ],
+                                                          ),
+                                                        ),
                                                       ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: MediaQuery.of(context)
-                                                        .size
-                                                        .height -
-                                                    Scaffold.of(context)
-                                                        .appBarMaxHeight! -
-                                                    kToolbarHeight -
-                                                    16,
-                                                child: TabBarView(
-                                                  controller: _tabController,
-                                                  children: const <Widget>[
-                                                    HotProspectTab(),
-
-                                                    // MediumProspectTab(),
-                                                    Center(
-                                                      child: Text("data"),
-                                                    ),
-                                                    Center(
-                                                      child: Text("data1"),
-                                                    ),
-                                                    // LowProspectTab(),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          );
-                                        },
-                                      );
+                                                    );
+                                                  },
+                                                )
+                                              : const MyAlertDialog()
+                                          : const notActivetoken();
                                     },
                                     error: (err, stack) => Text('Error $err'),
                                     loading: () => const Center(
@@ -336,6 +368,12 @@ class _ProspectSalesPageState extends ConsumerState<ProspectSalesPage>
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   Widget _customTab(String labelH, String label, Color backgroundColor) {
@@ -370,15 +408,6 @@ class _ProspectSalesPageState extends ConsumerState<ProspectSalesPage>
                 ],
               ),
             ),
-            //  Text(
-            //   textAlign: TextAlign.center,
-            //   label,
-            //   style: const TextStyle(
-            //     fontSize: 12,
-            //     fontWeight: FontWeight.bold,
-            //   ),
-            //   maxLines: 3,
-            // ),
           ),
         ),
       ),
@@ -395,9 +424,64 @@ class HotProspectTab extends StatefulWidget {
 
 class _HotProspectTabState extends State<HotProspectTab> {
   List<ProspectSalesListResponse> listProspectSalesRes = [];
+  TextEditingController searchController = TextEditingController();
+
+  String? roles;
+
+  @override
+  void initState() {
+    super.initState();
+    loadSharedPreference();
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      roles = prefs.getString('Roles');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    var textStyleColorWhiteBI = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 17.5, landscapeValue: 17.5),
+          const Condition.largerThan(
+              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+        ],
+        defaultValue: 10.5,
+      ).value,
+      fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
+    );
+
+    var textStyleColorWhite = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 12.5, landscapeValue: 12.5),
+          const Condition.largerThan(
+              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+        ],
+        defaultValue: 10.5,
+      ).value,
+    );
     return Consumer(
       builder: (context, ref, child) {
         final rptProspectSalesGrafik = ref.watch(prospectSales);
@@ -433,7 +517,7 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                       CircularChartAnnotation(
                                         widget: Text(
                                           textAlign: TextAlign.center,
-                                          "4 \nPROSPECT",
+                                          "${dataGrafik.listProspectSales![4].prospectStatusName} \nPROSPECT",
                                           style: TextStyle(
                                             color: Colors.white,
                                             fontSize: ResponsiveValue<double>(
@@ -483,7 +567,7 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                             ? data.colorCommunity
                                             : data.x == 'Walk In Customer'
                                                 ? data.colorWalkIn
-                                                : data.x == 'Mobile/Canvasing'
+                                                : data.x == 'Mobile/canvasing'
                                                     ? data.colorMobileCanvasing
                                                     : data.x == 'Reference'
                                                         ? data.colorReference
@@ -526,6 +610,333 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                     ],
                                   ),
                                 ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height -
+                                      Scaffold.of(context).appBarMaxHeight! -
+                                      kToolbarHeight -
+                                      16,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 0, 20, 130),
+                                    child: SearchableList(
+                                      initialList:
+                                          dataGrafik.listProspectSales!,
+                                      itemBuilder: (item) {
+                                        return roles == 'SALES SUPERVISOR'
+                                            ? item.type == 'List'
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(
+                                                      0,
+                                                      10,
+                                                      0,
+                                                      10,
+                                                    ),
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                        minHeight: 85,
+                                                        minWidth:
+                                                            double.infinity,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    176,
+                                                                    115,
+                                                                    184,
+                                                                    51),
+                                                            blurRadius: 3.0,
+                                                            offset:
+                                                                Offset(0, 0),
+                                                            spreadRadius: 1.1,
+                                                          ),
+                                                        ],
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .transparent,
+                                                            width: 2),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        // color: const Color.fromARGB(
+                                                        //     176, 130, 131, 128),
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    item.salesman,
+                                                                    style:
+                                                                        textStyleColorWhiteBI,
+                                                                  ),
+                                                                  item.prospectStatus ==
+                                                                          '0'
+                                                                      ? const Center()
+                                                                      : Container(
+                                                                          decoration:
+                                                                              BoxDecoration(
+                                                                            color:
+                                                                                Colors.grey,
+                                                                            border:
+                                                                                Border.all(color: Colors.grey),
+                                                                            borderRadius:
+                                                                                const BorderRadius.all(
+                                                                              Radius.circular(10.0),
+                                                                            ),
+                                                                          ),
+                                                                          child:
+                                                                              Padding(
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                5,
+                                                                                0,
+                                                                                5,
+                                                                                0),
+                                                                            child:
+                                                                                Text(
+                                                                              item.prospectStatus,
+                                                                              style: textStyleColorWhite,
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.prospectStatusName,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const Center()
+                                            : item.type == 'List' &&
+                                                    item.prospectStatusName ==
+                                                        'HOT'
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(
+                                                      0,
+                                                      10,
+                                                      0,
+                                                      10,
+                                                    ),
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                        minHeight: 110,
+                                                        minWidth:
+                                                            double.infinity,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    176,
+                                                                    115,
+                                                                    184,
+                                                                    51),
+                                                            blurRadius: 3.0,
+                                                            offset:
+                                                                Offset(0, 0),
+                                                            spreadRadius: 1.1,
+                                                          ),
+                                                        ],
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .transparent,
+                                                            width: 2),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        // color: const Color.fromARGB(
+                                                        //     176, 130, 131, 128),
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    item.prospectCode,
+                                                                    style:
+                                                                        textStyleColorWhiteBI,
+                                                                  ),
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              Colors.grey),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .all(
+                                                                        Radius.circular(
+                                                                            10.0),
+                                                                      ),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                      child:
+                                                                          Text(
+                                                                        item.prospectDate,
+                                                                        style:
+                                                                            textStyleColorWhite,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.customerName,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.meetingPoint,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const Center();
+                                      },
+                                      searchTextController: searchController,
+                                      filter: (searchController) {
+                                        return dataGrafik.listProspectSales!
+                                            .where(
+                                              (element) =>
+                                                  element.salesman
+                                                      .toLowerCase()
+                                                      .contains(
+                                                        searchController
+                                                            .toString()
+                                                            .toLowerCase(),
+                                                      ) ||
+                                                  element.prospectStatusName
+                                                      .toLowerCase()
+                                                      .contains(
+                                                        searchController
+                                                            .toString()
+                                                            .toLowerCase(),
+                                                      ),
+                                            )
+                                            .toList();
+                                      },
+                                      keyboardAction: TextInputAction.search,
+                                      emptyWidget: const EmptyView(),
+                                      inputDecoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                        labelText: "Search..",
+                                        labelStyle: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 102, 107, 94),
+                                        ),
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                          gapPadding: 15.0,
+                                          borderSide: const BorderSide(
+                                            color:
+                                                Color.fromARGB(255, 91, 97, 83),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
                               ],
                             );
                           },
@@ -549,193 +960,1099 @@ class _HotProspectTabState extends State<HotProspectTab> {
   }
 }
 
-// class MediumProspectTab extends StatelessWidget {
-//   const MediumProspectTab({super.key});
+class MediumProspectTab extends StatefulWidget {
+  const MediumProspectTab({super.key});
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: const Color.fromARGB(255, 134, 206, 68),
-//       child: Column(
-//         children: [
-//           Expanded(
-//             child: ListView.builder(
-//               physics: const AlwaysScrollableScrollPhysics(),
-//               itemCount: 1,
-//               itemBuilder: (context, index) {
-//                 return Column(
-//                   children: [
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       mainAxisSize: MainAxisSize.max,
-//                       children: [
-//                         Padding(
-//                           padding: const EdgeInsets.only(
-//                             left: 20,
-//                           ),
-//                           child: SfCircularChart(
-//                             tooltipBehavior: TooltipBehavior(
-//                               enable: true,
-//                             ),
-//                             annotations: [
-//                               CircularChartAnnotation(
-//                                 widget: Text(
-//                                   textAlign: TextAlign.center,
-//                                   "4 \nPROSPECT",
-//                                   style: TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: ResponsiveValue<double>(
-//                                       context,
-//                                       conditionalValues: [
-//                                         const Condition.equals(
-//                                             name: TABLET,
-//                                             value: 12.0,
-//                                             landscapeValue: 12.0),
-//                                         const Condition.largerThan(
-//                                             name: TABLET,
-//                                             value: 25.0,
-//                                             landscapeValue: 25.0,
-//                                             breakpoint: 800),
-//                                       ],
-//                                       defaultValue: 10.0,
-//                                     ).value,
-//                                     fontWeight: FontWeight.bold,
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                             legend: Legend(isVisible: true),
-//                             series: <CircularSeries>[
-//                               DoughnutSeries<ChartData, String>(
-//                                 dataSource: chartData,
-//                                 legendIconType: LegendIconType.rectangle,
-//                                 xValueMapper: (ChartData data, _) => data.x,
-//                                 yValueMapper: (ChartData data, _) => data.y,
-//                                 pointColorMapper: (ChartData data, _) =>
-//                                     data.color,
-//                                 innerRadius: '60%',
-//                                 radius: '110%',
-//                                 explode: true,
-//                                 explodeGesture: ActivationMode.singleTap,
-//                                 explodeOffset: '5',
-//                                 dataLabelSettings: const DataLabelSettings(
-//                                   showZeroValue: false,
-//                                   isVisible: true,
-//                                   labelAlignment:
-//                                       ChartDataLabelAlignment.middle,
-//                                   overflowMode: OverflowMode.trim,
-//                                   textStyle: TextStyle(color: Colors.white),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ],
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  @override
+  State<MediumProspectTab> createState() => _MediumProspectTabState();
+}
 
-// class LowProspectTab extends StatelessWidget {
-//   const LowProspectTab({super.key});
+class _MediumProspectTabState extends State<MediumProspectTab> {
+  List<ProspectSalesListResponse> listProspectSalesRes = [];
+  TextEditingController searchController = TextEditingController();
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       color: const Color.fromARGB(255, 134, 206, 68),
-//       child: Column(
-//         children: [
-//           Expanded(
-//             child: ListView.builder(
-//               physics: const AlwaysScrollableScrollPhysics(),
-//               itemCount: 1,
-//               itemBuilder: (context, index) {
-//                 return Column(
-//                   children: [
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.start,
-//                       mainAxisSize: MainAxisSize.max,
-//                       children: [
-//                         Padding(
-//                           padding: const EdgeInsets.only(
-//                             left: 20,
-//                           ),
-//                           child: SfCircularChart(
-//                             tooltipBehavior: TooltipBehavior(
-//                               enable: true,
-//                             ),
-//                             annotations: [
-//                               CircularChartAnnotation(
-//                                 widget: Text(
-//                                   textAlign: TextAlign.center,
-//                                   "4 \nPROSPECT",
-//                                   style: TextStyle(
-//                                     color: Colors.white,
-//                                     fontSize: ResponsiveValue<double>(
-//                                       context,
-//                                       conditionalValues: [
-//                                         const Condition.equals(
-//                                             name: TABLET,
-//                                             value: 12.0,
-//                                             landscapeValue: 12.0),
-//                                         const Condition.largerThan(
-//                                             name: TABLET,
-//                                             value: 25.0,
-//                                             landscapeValue: 25.0,
-//                                             breakpoint: 800),
-//                                       ],
-//                                       defaultValue: 10.0,
-//                                     ).value,
-//                                     fontWeight: FontWeight.bold,
-//                                   ),
-//                                 ),
-//                               ),
-//                             ],
-//                             legend: Legend(isVisible: true),
-//                             series: <CircularSeries>[
-//                               DoughnutSeries<ChartData, String>(
-//                                 dataSource: chartData,
-//                                 legendIconType: LegendIconType.rectangle,
-//                                 xValueMapper: (ChartData data, _) => data.x,
-//                                 yValueMapper: (ChartData data, _) => data.y,
-//                                 pointColorMapper: (ChartData data, _) =>
-//                                     data.color,
-//                                 innerRadius: '60%',
-//                                 radius: '110%',
-//                                 explode: true,
-//                                 explodeGesture: ActivationMode.singleTap,
-//                                 explodeOffset: '5',
-//                                 dataLabelSettings: const DataLabelSettings(
-//                                   showZeroValue: false,
-//                                   isVisible: true,
-//                                   labelAlignment:
-//                                       ChartDataLabelAlignment.middle,
-//                                   overflowMode: OverflowMode.trim,
-//                                   textStyle: TextStyle(color: Colors.white),
-//                                 ),
-//                               ),
-//                             ],
-//                           ),
-//                         ),
-//                       ],
-//                     ),
-//                   ],
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+  String? roles;
+
+  @override
+  void initState() {
+    super.initState();
+    loadSharedPreference();
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      roles = prefs.getString('Roles');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var textStyleColorWhiteBI = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 17.5, landscapeValue: 17.5),
+          const Condition.largerThan(
+              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+        ],
+        defaultValue: 10.5,
+      ).value,
+      fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
+    );
+
+    var textStyleColorWhite = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 12.5, landscapeValue: 12.5),
+          const Condition.largerThan(
+              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+        ],
+        defaultValue: 10.5,
+      ).value,
+    );
+    return Consumer(
+      builder: (context, ref, child) {
+        final rptProspectSalesGrafik = ref.watch(prospectSales);
+        return Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: rptProspectSalesGrafik.when(
+                      data: (dataGrafik) {
+                        listProspectSalesRes.clear();
+                        listProspectSalesRes.add(dataGrafik);
+
+                        return ListView.builder(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    0,
+                                    0,
+                                    50,
+                                    0,
+                                  ),
+                                  child: SfCircularChart(
+                                    tooltipBehavior: TooltipBehavior(
+                                      enable: true,
+                                    ),
+                                    annotations: [
+                                      CircularChartAnnotation(
+                                        widget: Text(
+                                          textAlign: TextAlign.center,
+                                          "${dataGrafik.listProspectSales![4].prospectStatusName} \nPROSPECT",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: ResponsiveValue<double>(
+                                              context,
+                                              conditionalValues: [
+                                                const Condition.equals(
+                                                    name: TABLET,
+                                                    value: 12.0,
+                                                    landscapeValue: 12.0),
+                                                const Condition.largerThan(
+                                                    name: TABLET,
+                                                    value: 25.0,
+                                                    landscapeValue: 25.0,
+                                                    breakpoint: 800),
+                                              ],
+                                              defaultValue: 10.0,
+                                            ).value,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                    legend: Legend(
+                                      isVisible: true,
+                                      width: '300%',
+                                      itemPadding: 0,
+                                      position: LegendPosition.right,
+                                      overflowMode:
+                                          LegendItemOverflowMode.scroll,
+                                      textStyle:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                    series: <CircularSeries>[
+                                      DoughnutSeries<ChartData, String>(
+                                        dataSource: toDynamic(
+                                            listProspectSalesRes[0]
+                                                .listProspectSales!),
+                                        legendIconType:
+                                            LegendIconType.rectangle,
+                                        xValueMapper: (ChartData data, _) =>
+                                            data.x,
+                                        yValueMapper: (ChartData data, _) =>
+                                            data.y,
+                                        pointColorMapper: (ChartData data, _) => data
+                                                    .x ==
+                                                'Comunnity'
+                                            ? data.colorCommunity
+                                            : data.x == 'Walk In Customer'
+                                                ? data.colorWalkIn
+                                                : data.x == 'Mobile/canvasing'
+                                                    ? data.colorMobileCanvasing
+                                                    : data.x == 'Reference'
+                                                        ? data.colorReference
+                                                        : data.x ==
+                                                                'Moving Exhibition'
+                                                            ? data.colorMovingEx
+                                                            : data.x ==
+                                                                    'Call In'
+                                                                ? data
+                                                                    .colorCallin
+                                                                : data.x ==
+                                                                        'Database'
+                                                                    ? data
+                                                                        .colorDatabase
+                                                                    : data.x ==
+                                                                            'Iklan & Media Sosial'
+                                                                        ? data
+                                                                            .colorIklanMedia
+                                                                        : data.x ==
+                                                                                'Repeat Order Retail'
+                                                                            ? data.colorRepeatOrderRetail
+                                                                            : data.colorRepeatOrderFleet,
+                                        innerRadius: '60%',
+                                        radius: '70%',
+                                        explode: true,
+                                        explodeGesture:
+                                            ActivationMode.singleTap,
+                                        explodeOffset: '5',
+                                        dataLabelSettings:
+                                            const DataLabelSettings(
+                                          showZeroValue: false,
+                                          isVisible: true,
+                                          labelAlignment:
+                                              ChartDataLabelAlignment.middle,
+                                          overflowMode: OverflowMode.trim,
+                                          textStyle:
+                                              TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height -
+                                      Scaffold.of(context).appBarMaxHeight! -
+                                      kToolbarHeight -
+                                      16,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 0, 20, 130),
+                                    child: SearchableList(
+                                      initialList:
+                                          dataGrafik.listProspectSales!,
+                                      itemBuilder: (item) {
+                                        return roles == 'SALES SUPERVISOR'
+                                            ? item.type == 'List'
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(
+                                                      0,
+                                                      10,
+                                                      0,
+                                                      10,
+                                                    ),
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                        minHeight: 85,
+                                                        minWidth:
+                                                            double.infinity,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    176,
+                                                                    115,
+                                                                    184,
+                                                                    51),
+                                                            blurRadius: 3.0,
+                                                            offset:
+                                                                Offset(0, 0),
+                                                            spreadRadius: 1.1,
+                                                          ),
+                                                        ],
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .transparent,
+                                                            width: 2),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        // color: const Color.fromARGB(
+                                                        //     176, 130, 131, 128),
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    item.salesman,
+                                                                    style:
+                                                                        textStyleColorWhiteBI,
+                                                                  ),
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              Colors.grey),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .all(
+                                                                        Radius.circular(
+                                                                            10.0),
+                                                                      ),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                      child:
+                                                                          Text(
+                                                                        item.prospectStatus,
+                                                                        style:
+                                                                            textStyleColorWhite,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.prospectStatusName,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const Center()
+                                            : item.type == 'List' &&
+                                                    item.prospectStatusName ==
+                                                        'MEDIUM'
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(
+                                                      0,
+                                                      10,
+                                                      0,
+                                                      10,
+                                                    ),
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                        minHeight: 110,
+                                                        minWidth:
+                                                            double.infinity,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    176,
+                                                                    115,
+                                                                    184,
+                                                                    51),
+                                                            blurRadius: 3.0,
+                                                            offset:
+                                                                Offset(0, 0),
+                                                            spreadRadius: 1.1,
+                                                          ),
+                                                        ],
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .transparent,
+                                                            width: 2),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        // color: const Color.fromARGB(
+                                                        //     176, 130, 131, 128),
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    item.prospectCode,
+                                                                    style:
+                                                                        textStyleColorWhiteBI,
+                                                                  ),
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              Colors.grey),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .all(
+                                                                        Radius.circular(
+                                                                            10.0),
+                                                                      ),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                      child:
+                                                                          Text(
+                                                                        item.prospectDate,
+                                                                        style:
+                                                                            textStyleColorWhite,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.customerName,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.meetingPoint,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const Center();
+                                      },
+                                      searchTextController: searchController,
+                                      filter: (searchController) {
+                                        return dataGrafik.listProspectSales!
+                                            .where(
+                                              (element) =>
+                                                  element.customerName
+                                                      .toLowerCase()
+                                                      .contains(
+                                                        searchController
+                                                            .toString()
+                                                            .toLowerCase(),
+                                                      ) ||
+                                                  element.prospectCode
+                                                      .toLowerCase()
+                                                      .contains(
+                                                        searchController
+                                                            .toString()
+                                                            .toLowerCase(),
+                                                      ),
+                                            )
+                                            .toList();
+                                      },
+                                      keyboardAction: TextInputAction.search,
+                                      emptyWidget: const EmptyView(),
+                                      inputDecoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                        labelText: "Search..",
+                                        labelStyle: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 102, 107, 94),
+                                        ),
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                          gapPadding: 15.0,
+                                          borderSide: const BorderSide(
+                                            color:
+                                                Color.fromARGB(255, 91, 97, 83),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      error: (err, stack) => Text('Error $err'),
+                      loading: () => const Center(
+                        child: Column(
+                          children: [loadingAnimation()],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class LowProspectTab extends StatefulWidget {
+  const LowProspectTab({super.key});
+
+  @override
+  State<LowProspectTab> createState() => _LowProspectTabState();
+}
+
+class _LowProspectTabState extends State<LowProspectTab> {
+  List<ProspectSalesListResponse> listProspectSalesRes = [];
+  TextEditingController searchController = TextEditingController();
+
+  String? roles;
+
+  @override
+  void initState() {
+    super.initState();
+    loadSharedPreference();
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      roles = prefs.getString('Roles');
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var textStyleColorWhiteBI = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 17.5, landscapeValue: 17.5),
+          const Condition.largerThan(
+              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+        ],
+        defaultValue: 10.5,
+      ).value,
+      fontWeight: FontWeight.bold,
+      fontStyle: FontStyle.italic,
+    );
+
+    var textStyleColorWhite = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 12.5, landscapeValue: 12.5),
+          const Condition.largerThan(
+              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+        ],
+        defaultValue: 10.5,
+      ).value,
+    );
+    return Consumer(
+      builder: (context, ref, child) {
+        final rptProspectSalesGrafik = ref.watch(prospectSales);
+        return Stack(
+          children: [
+            Center(
+              child: Column(
+                children: [
+                  Expanded(
+                    child: rptProspectSalesGrafik.when(
+                      data: (dataGrafik) {
+                        listProspectSalesRes.clear();
+                        listProspectSalesRes.add(dataGrafik);
+
+                        return ListView.builder(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: 1,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(
+                                    0,
+                                    0,
+                                    50,
+                                    0,
+                                  ),
+                                  child: SfCircularChart(
+                                    tooltipBehavior: TooltipBehavior(
+                                      enable: true,
+                                    ),
+                                    annotations: [
+                                      CircularChartAnnotation(
+                                        widget: Text(
+                                          textAlign: TextAlign.center,
+                                          "${dataGrafik.listProspectSales![4].prospectStatusName} \nPROSPECT",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: ResponsiveValue<double>(
+                                              context,
+                                              conditionalValues: [
+                                                const Condition.equals(
+                                                    name: TABLET,
+                                                    value: 12.0,
+                                                    landscapeValue: 12.0),
+                                                const Condition.largerThan(
+                                                    name: TABLET,
+                                                    value: 25.0,
+                                                    landscapeValue: 25.0,
+                                                    breakpoint: 800),
+                                              ],
+                                              defaultValue: 10.0,
+                                            ).value,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                    legend: Legend(
+                                      isVisible: true,
+                                      width: '300%',
+                                      itemPadding: 0,
+                                      position: LegendPosition.right,
+                                      overflowMode:
+                                          LegendItemOverflowMode.scroll,
+                                      textStyle:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                    series: <CircularSeries>[
+                                      DoughnutSeries<ChartData, String>(
+                                        dataSource: toDynamic(
+                                            listProspectSalesRes[0]
+                                                .listProspectSales!),
+                                        legendIconType:
+                                            LegendIconType.rectangle,
+                                        xValueMapper: (ChartData data, _) =>
+                                            data.x,
+                                        yValueMapper: (ChartData data, _) =>
+                                            data.y,
+                                        pointColorMapper: (ChartData data, _) => data
+                                                    .x ==
+                                                'Comunnity'
+                                            ? data.colorCommunity
+                                            : data.x == 'Walk In Customer'
+                                                ? data.colorWalkIn
+                                                : data.x == 'Mobile/canvasing'
+                                                    ? data.colorMobileCanvasing
+                                                    : data.x == 'Reference'
+                                                        ? data.colorReference
+                                                        : data.x ==
+                                                                'Moving Exhibition'
+                                                            ? data.colorMovingEx
+                                                            : data.x ==
+                                                                    'Call In'
+                                                                ? data
+                                                                    .colorCallin
+                                                                : data.x ==
+                                                                        'Database'
+                                                                    ? data
+                                                                        .colorDatabase
+                                                                    : data.x ==
+                                                                            'Iklan & Media Sosial'
+                                                                        ? data
+                                                                            .colorIklanMedia
+                                                                        : data.x ==
+                                                                                'Repeat Order Retail'
+                                                                            ? data.colorRepeatOrderRetail
+                                                                            : data.colorRepeatOrderFleet,
+                                        innerRadius: '60%',
+                                        radius: '70%',
+                                        explode: true,
+                                        explodeGesture:
+                                            ActivationMode.singleTap,
+                                        explodeOffset: '5',
+                                        dataLabelSettings:
+                                            const DataLabelSettings(
+                                          showZeroValue: false,
+                                          isVisible: true,
+                                          labelAlignment:
+                                              ChartDataLabelAlignment.middle,
+                                          overflowMode: OverflowMode.trim,
+                                          textStyle:
+                                              TextStyle(color: Colors.white),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: MediaQuery.of(context).size.height -
+                                      Scaffold.of(context).appBarMaxHeight! -
+                                      kToolbarHeight -
+                                      16,
+                                  child: Padding(
+                                    padding: const EdgeInsets.fromLTRB(
+                                        20, 0, 20, 130),
+                                    child: SearchableList(
+                                      initialList:
+                                          dataGrafik.listProspectSales!,
+                                      itemBuilder: (item) {
+                                        return roles == 'SALES SUPERVISOR'
+                                            ? item.type == 'List'
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(
+                                                      0,
+                                                      10,
+                                                      0,
+                                                      10,
+                                                    ),
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                        minHeight: 85,
+                                                        minWidth:
+                                                            double.infinity,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    176,
+                                                                    115,
+                                                                    184,
+                                                                    51),
+                                                            blurRadius: 3.0,
+                                                            offset:
+                                                                Offset(0, 0),
+                                                            spreadRadius: 1.1,
+                                                          ),
+                                                        ],
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .transparent,
+                                                            width: 2),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        // color: const Color.fromARGB(
+                                                        //     176, 130, 131, 128),
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    item.salesman,
+                                                                    style:
+                                                                        textStyleColorWhiteBI,
+                                                                  ),
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              Colors.grey),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .all(
+                                                                        Radius.circular(
+                                                                            10.0),
+                                                                      ),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                      child:
+                                                                          Text(
+                                                                        item.prospectStatus,
+                                                                        style:
+                                                                            textStyleColorWhite,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.prospectStatusName,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const Center()
+                                            : item.type == 'List' &&
+                                                    item.prospectStatusName ==
+                                                        'LOW'
+                                                ? Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(
+                                                      0,
+                                                      10,
+                                                      0,
+                                                      10,
+                                                    ),
+                                                    child: Container(
+                                                      constraints:
+                                                          const BoxConstraints(
+                                                        minHeight: 110,
+                                                        minWidth:
+                                                            double.infinity,
+                                                      ),
+                                                      decoration: BoxDecoration(
+                                                        boxShadow: const [
+                                                          BoxShadow(
+                                                            color:
+                                                                Color.fromARGB(
+                                                                    176,
+                                                                    115,
+                                                                    184,
+                                                                    51),
+                                                            blurRadius: 3.0,
+                                                            offset:
+                                                                Offset(0, 0),
+                                                            spreadRadius: 1.1,
+                                                          ),
+                                                        ],
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .transparent,
+                                                            width: 2),
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        // color: const Color.fromARGB(
+                                                        //     176, 130, 131, 128),
+                                                      ),
+                                                      child: Column(
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceBetween,
+                                                                children: [
+                                                                  Text(
+                                                                    item.prospectCode,
+                                                                    style:
+                                                                        textStyleColorWhiteBI,
+                                                                  ),
+                                                                  Container(
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      color: Colors
+                                                                          .grey,
+                                                                      border: Border.all(
+                                                                          color:
+                                                                              Colors.grey),
+                                                                      borderRadius:
+                                                                          const BorderRadius
+                                                                              .all(
+                                                                        Radius.circular(
+                                                                            10.0),
+                                                                      ),
+                                                                    ),
+                                                                    child:
+                                                                        Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .fromLTRB(
+                                                                          5,
+                                                                          0,
+                                                                          5,
+                                                                          0),
+                                                                      child:
+                                                                          Text(
+                                                                        item.prospectDate,
+                                                                        style:
+                                                                            textStyleColorWhite,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.customerName,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .fromLTRB(
+                                                                    10,
+                                                                    10,
+                                                                    10,
+                                                                    0),
+                                                            child: Align(
+                                                              alignment: Alignment
+                                                                  .centerLeft,
+                                                              child: Text(
+                                                                item.meetingPoint,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  )
+                                                : const Center();
+                                      },
+                                      searchTextController: searchController,
+                                      filter: (searchController) {
+                                        return dataGrafik.listProspectSales!
+                                            .where(
+                                              (element) =>
+                                                  element.customerName
+                                                      .toLowerCase()
+                                                      .contains(
+                                                        searchController
+                                                            .toString()
+                                                            .toLowerCase(),
+                                                      ) ||
+                                                  element.prospectCode
+                                                      .toLowerCase()
+                                                      .contains(
+                                                        searchController
+                                                            .toString()
+                                                            .toLowerCase(),
+                                                      ),
+                                            )
+                                            .toList();
+                                      },
+                                      keyboardAction: TextInputAction.search,
+                                      emptyWidget: const EmptyView(),
+                                      inputDecoration: InputDecoration(
+                                        contentPadding:
+                                            const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                        labelText: "Search..",
+                                        labelStyle: const TextStyle(
+                                          color:
+                                              Color.fromARGB(255, 102, 107, 94),
+                                        ),
+                                        fillColor: Colors.white,
+                                        focusedBorder: OutlineInputBorder(
+                                          gapPadding: 15.0,
+                                          borderSide: const BorderSide(
+                                            color:
+                                                Color.fromARGB(255, 91, 97, 83),
+                                            width: 1.0,
+                                          ),
+                                          borderRadius:
+                                              BorderRadius.circular(10.0),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                      error: (err, stack) => Text('Error $err'),
+                      loading: () => const Center(
+                        child: Column(
+                          children: [loadingAnimation()],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 
 class ChartData {
   String x;
@@ -793,9 +2110,23 @@ dynamic toDynamic(List<ListProspectSales> objList) {
   return doughnutData;
 }
 
-// final List<ChartData> chartData = [
-//   ChartData('David', 25, const Color.fromRGBO(9, 0, 136, 1)),
-//   ChartData('Steve', 38, const Color.fromRGBO(147, 0, 119, 1)),
-//   ChartData('Jack', 34, const Color.fromRGBO(228, 0, 124, 1)),
-//   ChartData('Others', 52, const Color.fromRGBO(255, 189, 57, 1))
-// ];
+class EmptyView extends StatelessWidget {
+  const EmptyView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        verticalDirection: VerticalDirection.up,
+        children: [
+          Icon(
+            Icons.error,
+            color: Colors.red,
+          ),
+          Align(alignment: Alignment.center, child: Text('Data Not Found.!')),
+        ],
+      ),
+    );
+  }
+}
