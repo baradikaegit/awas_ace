@@ -127,3 +127,10 @@ final prospectSales =
   final repositoryProspectSales = ref.watch(prospectRepositoryProvider);
   return repositoryProspectSales.fecthListDataProspectSales();
 });
+
+//list prospect dari bengkel detail
+final prospectSalesBySls = FutureProvider.autoDispose
+    .family<ProspectSalesListResponse, String>((ref, linkObj) async {
+  final repositoryProspectSalesBySls = ref.watch(prospectRepositoryProvider);
+  return repositoryProspectSalesBySls.fecthListDataProspectSalesBySls(linkObj);
+});

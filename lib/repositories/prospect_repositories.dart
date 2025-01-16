@@ -23,6 +23,8 @@ abstract class IProspectRepository {
   Future<UpdateProspectDariBengkelResponse> updateNewProspectBengkel(
       ListProspectbengkelUpdate updateProspectDariBengkel);
   Future<ProspectSalesListResponse> fecthListDataProspectSales();
+  Future<ProspectSalesListResponse> fecthListDataProspectSalesBySls(
+      String linkObj);
 }
 
 class ProspectRepositories implements IProspectRepository {
@@ -218,5 +220,29 @@ class ProspectRepositories implements IProspectRepository {
     var responseGetProspectSales =
         ProspectSalesListResponse.fromJson(jsonObjProspectSales);
     return responseGetProspectSales;
+  }
+
+  //Prospect sales by sls
+  @override
+  Future<ProspectSalesListResponse> fecthListDataProspectSalesBySls(
+      String linkObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetProspectSalesBySls = "${_host}GetProspectSalesBySales/$linkObj";
+
+    var resultGetProspectSalesBySls =
+        await http.get(Uri.parse(urlGetProspectSalesBySls), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjProspectSalesBySls =
+        jsonDecode(resultGetProspectSalesBySls.body);
+
+    var responseGetProspectSalesBySls =
+        ProspectSalesListResponse.fromJson(jsonObjProspectSalesBySls);
+    return responseGetProspectSalesBySls;
   }
 }

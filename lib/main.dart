@@ -10,6 +10,7 @@ import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkeldetail_page.dart';
 import 'package:awas_ace/widgets/pages/prospectsales_page.dart';
+import 'package:awas_ace/widgets/pages/prospectsalesbysls_page.dart';
 import 'package:awas_ace/widgets/pages/prospectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/reminder/birthday_page.dart';
 import 'package:awas_ace/widgets/pages/reminder/birthdaydetail_page.dart';
@@ -114,6 +115,8 @@ class MyApp extends StatelessWidget {
         CallPage.routeName: (context) => CallPage(
             callDateObject: ModalRoute.of(context)!.settings.arguments),
         ProspectSalesPage.routeName: (context) => const ProspectSalesPage(),
+        ProspectSalesBySlsPage.routeName: (context) => ProspectSalesBySlsPage(
+            linkPageObj: ModalRoute.of(context)!.settings.arguments),
         TargetsalesPage.routeName: (context) => const TargetsalesPage(),
         TargetsalesEntryPage.routeName: (context) => TargetsalesEntryPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
