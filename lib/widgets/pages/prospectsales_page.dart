@@ -906,21 +906,35 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                       filter: (searchController) {
                                         return dataGrafik.listProspectSales!
                                             .where(
-                                              (element) =>
-                                                  element.salesman
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ) ||
-                                                  element.prospectStatusName
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ),
+                                              (element) => roles == 'SALESMAN'
+                                                  ? element.prospectCode
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ) ||
+                                                      element.customerName
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          )
+                                                  : element.salesman
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ) ||
+                                                      element.prospectStatusName
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ),
                                             )
                                             .toList();
                                       },
@@ -1453,21 +1467,35 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
                                       filter: (searchController) {
                                         return dataGrafik.listProspectSales!
                                             .where(
-                                              (element) =>
-                                                  element.customerName
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ) ||
-                                                  element.prospectCode
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ),
+                                              (element) => roles == 'SALESMAN'
+                                                  ? element.customerName
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ) ||
+                                                      element.salesman
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          )
+                                                  : element.customerName
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ) ||
+                                                      element.prospectStatusName
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ),
                                             )
                                             .toList();
                                       },
@@ -2000,21 +2028,35 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                       filter: (searchController) {
                                         return dataGrafik.listProspectSales!
                                             .where(
-                                              (element) =>
-                                                  element.customerName
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ) ||
-                                                  element.prospectCode
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ),
+                                              (element) => roles == 'SALESMAN'
+                                                  ? element.customerName
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ) ||
+                                                      element.prospectCode
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          )
+                                                  : element.salesman
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ) ||
+                                                      element.prospectStatusName
+                                                          .toLowerCase()
+                                                          .contains(
+                                                            searchController
+                                                                .toString()
+                                                                .toLowerCase(),
+                                                          ),
                                             )
                                             .toList();
                                       },
