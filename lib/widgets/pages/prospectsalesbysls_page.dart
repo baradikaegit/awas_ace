@@ -556,6 +556,7 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                       ),
                                     ],
                                     legend: Legend(
+                                      iconWidth: 25,
                                       isVisible: true,
                                       width: '300%',
                                       itemPadding: 0,
@@ -967,6 +968,7 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
                                       ),
                                     ],
                                     legend: Legend(
+                                      iconWidth: 25,
                                       isVisible: true,
                                       width: '300%',
                                       itemPadding: 0,
@@ -1379,6 +1381,7 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                       ),
                                     ],
                                     legend: Legend(
+                                      iconWidth: 25,
                                       isVisible: true,
                                       width: '300%',
                                       itemPadding: 0,
