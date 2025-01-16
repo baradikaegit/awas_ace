@@ -118,7 +118,6 @@ class _MonitProfitMakerPageState extends State<MonitProfitMakerPage> {
             ),
             child: Stack(
               children: [
-                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -829,6 +828,7 @@ class _MonitProfitMakerPageState extends State<MonitProfitMakerPage> {
                     );
                   },
                 ),
+                const Watermark(),
               ],
             ),
           ),

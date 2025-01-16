@@ -82,7 +82,6 @@ class _TargetsalesPageState extends State<TargetsalesPage> {
         ),
         child: Stack(
           children: [
-            const Watermark(),
             Consumer(
               builder: (context, ref, child) {
                 final datatargetsales = ref.watch(targetSalesList);
@@ -349,6 +348,7 @@ class _TargetsalesPageState extends State<TargetsalesPage> {
                 );
               },
             ),
+            const Watermark(),
           ],
         ),
       ),

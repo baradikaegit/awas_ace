@@ -83,7 +83,6 @@ class _BodyRepairGRPageState extends State<BodyRepairGRPage> {
           ),
           child: Stack(
             children: [
-              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   final dataBodyRepair = ref.watch(bodyRepairGR);
@@ -358,6 +357,7 @@ class _BodyRepairGRPageState extends State<BodyRepairGRPage> {
                   );
                 },
               ),
+              const Watermark(),
             ],
           ),
         ),

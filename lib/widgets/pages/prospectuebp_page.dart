@@ -85,7 +85,6 @@ class _ProspectUEbpPageState extends State<ProspectUEbpPage> {
           ),
           child: Stack(
             children: [
-              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   var objID = widget.objID.toString();
@@ -280,6 +279,7 @@ class _ProspectUEbpPageState extends State<ProspectUEbpPage> {
                   );
                 },
               ),
+              const Watermark(),
             ],
           ),
         ),

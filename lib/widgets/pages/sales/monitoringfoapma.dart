@@ -154,7 +154,6 @@ class _MonitFoaPMAPageState extends State<MonitFoaPMAPage> {
             ),
             child: Stack(
               children: [
-                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -1409,7 +1408,8 @@ class _MonitFoaPMAPageState extends State<MonitFoaPMAPage> {
                       ),
                     );
                   },
-                )
+                ),
+                const Watermark(),
               ],
             ),
           ),

@@ -251,7 +251,6 @@ class _BodyRepariGRDetailPageState extends State<BodyRepariGRDetailPage> {
           ),
           child: Stack(
             children: [
-              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   var linkObj = widget.linkObject.toString();
@@ -1626,6 +1625,7 @@ class _BodyRepariGRDetailPageState extends State<BodyRepariGRDetailPage> {
                   );
                 },
               ),
+              const Watermark(),
             ],
           ),
         ),

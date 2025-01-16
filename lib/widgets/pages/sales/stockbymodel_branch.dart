@@ -123,7 +123,6 @@ class _StockByModelVbranchPageState extends State<StockByModelVbranchPage> {
             ),
             child: Stack(
               children: [
-                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -948,6 +947,7 @@ class _StockByModelVbranchPageState extends State<StockByModelVbranchPage> {
                     );
                   },
                 ),
+                const Watermark(),
               ],
             ),
           ),

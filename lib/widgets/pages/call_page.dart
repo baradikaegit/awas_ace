@@ -152,7 +152,6 @@ class _CallPageState extends ConsumerState<CallPage>
               ),
               child: Stack(
                 children: [
-                  const Watermark(),
                   Consumer(
                     builder: (context, WidgetRef ref, child) {
                       var callDate = widget.callDateObject.toString();
@@ -1147,6 +1146,7 @@ class _CallPageState extends ConsumerState<CallPage>
                       );
                     },
                   ),
+                  const Watermark(),
                 ],
               ),
             ),

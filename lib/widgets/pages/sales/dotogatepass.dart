@@ -153,7 +153,6 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
             ),
             child: Stack(
               children: [
-                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -1229,7 +1228,8 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                       ),
                     );
                   },
-                )
+                ),
+                const Watermark(),
               ],
             ),
           ),

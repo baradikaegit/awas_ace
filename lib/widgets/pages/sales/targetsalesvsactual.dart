@@ -310,7 +310,6 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
             ),
             child: Stack(
               children: [
-                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -2559,6 +2558,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                     );
                   },
                 ),
+                const Watermark(),
               ],
             ),
           ),
