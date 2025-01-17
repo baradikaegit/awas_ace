@@ -9,6 +9,7 @@ import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkeldetail_page.dart';
+import 'package:awas_ace/widgets/pages/prospectedit_page.dart';
 import 'package:awas_ace/widgets/pages/prospectsales_page.dart';
 import 'package:awas_ace/widgets/pages/prospectsalesbysls_page.dart';
 import 'package:awas_ace/widgets/pages/prospectuebp_page.dart';
@@ -135,6 +136,9 @@ class MyApp extends StatelessWidget {
             ),
         LainnyaPage.routeName: (context) => const LainnyaPage(),
         ProspectPage.routeName: (context) => const ProspectPage(),
+        ProspectEditPage.routeName: (context) => ProspectEditPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         ReminderBirthdayPage.routeName: (context) =>
             const ReminderBirthdayPage(),
         ReminderBirthdayDetailPage.routeName: (context) =>

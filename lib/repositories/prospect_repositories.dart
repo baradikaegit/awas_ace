@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkeldetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
+import 'package:awas_ace/widgets/model/prospectsalesdetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +25,8 @@ abstract class IProspectRepository {
       ListProspectbengkelUpdate updateProspectDariBengkel);
   Future<ProspectSalesListResponse> fecthListDataProspectSales();
   Future<ProspectSalesListResponse> fecthListDataProspectSalesBySls(
+      String linkObj);
+  Future<ProspectSalesDetailResponse> fecthListDataProspectSalesDetail(
       String linkObj);
 }
 
@@ -244,5 +247,29 @@ class ProspectRepositories implements IProspectRepository {
     var responseGetProspectSalesBySls =
         ProspectSalesListResponse.fromJson(jsonObjProspectSalesBySls);
     return responseGetProspectSalesBySls;
+  }
+
+  //Prospect sales detail
+  @override
+  Future<ProspectSalesDetailResponse> fecthListDataProspectSalesDetail(
+      String linkObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetProspectSalesDetail = "${_host}GetProspectSalesDetail/$linkObj";
+
+    var resultGetProspectSalesDetail =
+        await http.get(Uri.parse(urlGetProspectSalesDetail), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjProspectSalesDetail =
+        jsonDecode(resultGetProspectSalesDetail.body);
+
+    var responseGetProspectSalesDetail =
+        ProspectSalesDetailResponse.fromJson(jsonObjProspectSalesDetail);
+    return responseGetProspectSalesDetail;
   }
 }

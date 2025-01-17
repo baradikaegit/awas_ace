@@ -3,6 +3,7 @@ import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkeldetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
+import 'package:awas_ace/widgets/model/prospectsalesdetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:flutter/material.dart';
@@ -128,9 +129,17 @@ final prospectSales =
   return repositoryProspectSales.fecthListDataProspectSales();
 });
 
-//list prospect dari bengkel detail
+//list prospect sales by sls
 final prospectSalesBySls = FutureProvider.autoDispose
     .family<ProspectSalesListResponse, String>((ref, linkObj) async {
   final repositoryProspectSalesBySls = ref.watch(prospectRepositoryProvider);
   return repositoryProspectSalesBySls.fecthListDataProspectSalesBySls(linkObj);
+});
+
+//list prospect sales detail
+final prospectSalesdetail = FutureProvider.autoDispose
+    .family<ProspectSalesDetailResponse, String>((ref, linkObj) async {
+  final repositoryProspectSalesDetail = ref.watch(prospectRepositoryProvider);
+  return repositoryProspectSalesDetail
+      .fecthListDataProspectSalesDetail(linkObj);
 });
