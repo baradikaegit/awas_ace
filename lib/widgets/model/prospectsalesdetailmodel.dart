@@ -44,10 +44,13 @@ class ListProspectSalesDetail {
     required this.trackingInfo,
     required this.dateContact,
     required this.meetingPoint,
+    required this.referensiId,
     required this.codeRef,
     required this.referensi,
     required this.rencanaPembelian,
     required this.ringArea,
+    required this.ringKet,
+    required this.postalCodeId,
     required this.postalCode,
     required this.kelurahan,
     required this.kecamatan,
@@ -61,12 +64,14 @@ class ListProspectSalesDetail {
     required this.email,
     required this.pekerjaan,
     required this.customerAddres,
+    required this.postalCodeId2,
     required this.postalCode2,
     required this.kelurahan2,
     required this.kecamatan2,
     required this.kota2,
     required this.provinsi2,
     required this.area,
+    required this.ringKet2,
     required this.vgCode1,
     required this.vgroup1,
     required this.vehicleYear1,
@@ -102,10 +107,13 @@ class ListProspectSalesDetail {
   late final String trackingInfo;
   late final String dateContact;
   late final String meetingPoint;
+  late final String referensiId;
   late final String codeRef;
   late final String referensi;
   late final int rencanaPembelian;
   late final int ringArea;
+  late final String ringKet;
+  late final String postalCodeId;
   late final String postalCode;
   late final String kelurahan;
   late final String kecamatan;
@@ -119,12 +127,14 @@ class ListProspectSalesDetail {
   late final String email;
   late final String pekerjaan;
   late final String customerAddres;
+  late final String postalCodeId2;
   late final String postalCode2;
   late final String kelurahan2;
   late final String kecamatan2;
   late final String kota2;
   late final String provinsi2;
   late final int area;
+  late final String ringKet2;
   late final String vgCode1;
   late final String vgroup1;
   late final String vehicleYear1;
@@ -161,10 +171,13 @@ class ListProspectSalesDetail {
     trackingInfo = json['trackingInfo'];
     dateContact = json['dateContact'];
     meetingPoint = json['meetingPoint'];
+    referensiId = json['referensiId'];
     codeRef = json['codeRef'];
     referensi = json['referensi'];
     rencanaPembelian = json['rencanaPembelian'];
     ringArea = json['ringArea'];
+    ringKet = json['ringKet'];
+    postalCodeId = json['postalCodeId'];
     postalCode = json['postalCode'];
     kelurahan = json['kelurahan'];
     kecamatan = json['kecamatan'];
@@ -178,12 +191,14 @@ class ListProspectSalesDetail {
     email = json['email'];
     pekerjaan = json['pekerjaan'];
     customerAddres = json['customerAddres'];
+    postalCodeId2 = json['postalCodeId2'];
     postalCode2 = json['postalCode2'];
     kelurahan2 = json['kelurahan2'];
     kecamatan2 = json['kecamatan2'];
     kota2 = json['kota2'];
     provinsi2 = json['provinsi2'];
     area = json['area'];
+    ringKet2 = json['ringKet2'];
     vgCode1 = json['vgCode1'];
     vgroup1 = json['vgroup1'];
     vehicleYear1 = json['vehicleYear1'];
@@ -222,10 +237,13 @@ class ListProspectSalesDetail {
     _data['trackingInfo'] = trackingInfo;
     _data['dateContact'] = dateContact;
     _data['meetingPoint'] = meetingPoint;
+    _data['referensiId'] = referensiId;
     _data['codeRef'] = codeRef;
     _data['referensi'] = referensi;
     _data['rencanaPembelian'] = rencanaPembelian;
     _data['ringArea'] = ringArea;
+    _data['ringKet'] = ringKet;
+    _data['postalCodeId'] = postalCodeId;
     _data['postalCode'] = postalCode;
     _data['kelurahan'] = kelurahan;
     _data['kecamatan'] = kecamatan;
@@ -239,12 +257,14 @@ class ListProspectSalesDetail {
     _data['email'] = email;
     _data['pekerjaan'] = pekerjaan;
     _data['customerAddres'] = customerAddres;
+    _data['postalCodeId2'] = postalCodeId2;
     _data['postalCode2'] = postalCode2;
     _data['kelurahan2'] = kelurahan2;
     _data['kecamatan2'] = kecamatan2;
     _data['kota2'] = kota2;
     _data['provinsi2'] = provinsi2;
     _data['area'] = area;
+    _data['ringKet2'] = ringKet2;
     _data['vgCode1'] = vgCode1;
     _data['vgroup1'] = vgroup1;
     _data['vehicleYear1'] = vehicleYear1;

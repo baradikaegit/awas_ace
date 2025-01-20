@@ -55,21 +55,19 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
       TextEditingController();
   final TextEditingController salesmanIDController = TextEditingController();
   TextEditingController lokasiBertemuController = TextEditingController();
-  final TextEditingController idKodePosController = TextEditingController();
-  final TextEditingController kodePosController = TextEditingController();
-  final TextEditingController idAreaController = TextEditingController();
-  final TextEditingController areaController = TextEditingController();
-  final TextEditingController sumberDataController = TextEditingController();
-  final TextEditingController rencanaPembelianController =
-      TextEditingController();
-  final TextEditingController prospectStatusController =
-      TextEditingController();
+  TextEditingController idKodePosController = TextEditingController();
+  TextEditingController kodePosController = TextEditingController();
+  TextEditingController idAreaController = TextEditingController();
+  TextEditingController areaController = TextEditingController();
+  TextEditingController sumberDataController = TextEditingController();
+  TextEditingController rencanaPembelianController = TextEditingController();
+  TextEditingController prospectStatusController = TextEditingController();
 
   //STEP 2
   TextEditingController nameContactContactController = TextEditingController();
   TextEditingController noHP1ContactController = TextEditingController();
   TextEditingController noHP2ContactController = TextEditingController();
-  final TextEditingController jKController = TextEditingController();
+  TextEditingController jKController = TextEditingController();
   TextEditingController alamatController = TextEditingController();
   final TextEditingController idKodePosS2Controller = TextEditingController();
   final TextEditingController kodePosS2Controller = TextEditingController();
@@ -110,30 +108,54 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
   late TabController _tabController;
 
   //STEP 1
+  String dateContact = '';
+  String tglKontak = '';
   String nameProv = '';
+  String nameProvEdit = '';
   String nameKab = '';
+  String nameKabEdit = '';
   String nameKec = '';
+  String nameKecEdit = '';
   String nameKel = '';
+  String nameKelEdit = '';
   String idKodePos = '';
+  String idKodePosEdit = '';
   String kodePos = '';
+  String kodePosEdit = '';
   String idArea = '';
+  String idAreaEdit = '';
   String area = '';
+  String areaEdit = '';
   String iDSumberData = '';
+  String iDSumberDataEdit = '';
   String sumberData = '';
+  String sumberDataEdit = '';
   int? iDRencanaPembelian;
+  int? iDRencanaPembelianEdit;
   String rencanaPembelian = '';
+  String rencanaPembelianEdit = '';
 
   //STEP 2
   String jkValue = '';
+  String jkValueEdit = '';
   int jkId = 0;
+  int jkIdEdit = 0;
   String nameProvS2 = '';
+  String nameProvS2Edit = '';
   String nameKabS2 = '';
+  String nameKabS2Edit = '';
   String nameKecS2 = '';
+  String nameKecS2Edit = '';
   String nameKelS2 = '';
+  String nameKelS2Edit = '';
   String idKodePosS2 = '';
+  String idKodePosS2Edit = '';
   String kodePosS2 = '';
+  String kodePosS2Edit = '';
   String idAreaS2 = '';
+  String idAreaS2Edit = '';
   String areaS2 = '';
+  String areaS2Edit = '';
   String idTipeCustS2 = '';
   String tipeCustS2 = '';
   int? valTipeCutS2;
@@ -903,28 +925,132 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                             data.listProspectSalesDetail!
                                                 .length;
                                         i++) {
-                                      tglContactController.text = data
-                                          .listProspectSalesDetail![i]
-                                          .dateContact;
+                                      // tglContactController.text = data
+                                      //     .listProspectSalesDetail![i]
+                                      //     .dateContact;
+
+                                      dateContact = DateFormat('MM/dd/yyyy')
+                                          .format(DateTime.now());
+
+                                      tglContactController.text = dateContact;
 
                                       lokasiBertemuController.text = data
                                           .listProspectSalesDetail![i]
                                           .meetingPoint;
 
-                                      nameProv = data
+                                      nameProvEdit = data
                                           .listProspectSalesDetail![i].provinsi;
 
-                                      // nameKab =
-                                      //     data.listProspectSalesDetail![i].kota;
+                                      if (nameProv == '') {
+                                        nameKabEdit = data
+                                            .listProspectSalesDetail![i].kota;
+                                        nameKecEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .kecamatan;
+                                        nameKelEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .kelurahan;
+                                        kodePosEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .postalCode;
+                                        idKodePosEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .postalCodeId;
+                                        idAreaEdit = data
+                                            .listProspectSalesDetail![i].area
+                                            .toString();
+                                        areaEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .ringKet;
+
+                                        kodePosController.text = kodePosEdit;
+                                        idKodePosController.text =
+                                            idKodePosEdit;
+                                        idAreaController.text = idAreaEdit;
+                                        areaController.text = areaEdit;
+                                      } else {
+                                        nameKabEdit = "Belum memilih kota";
+                                        nameKecEdit = "Belum memilih kecamatan";
+                                        nameKelEdit = "Belum memilih kelurahan";
+                                        kodePosEdit = "Belum memilih Kode Pos";
+                                      }
+
+                                      if (sumberData == '') {
+                                        sumberDataEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .referensi;
+                                        iDSumberDataEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .referensiId;
+
+                                        sumberDataController.text =
+                                            iDSumberDataEdit;
+                                      }
+
+                                      if (rencanaPembelian == '') {
+                                        iDRencanaPembelianEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .rencanaPembelian;
+
+                                        rencanaPembelianController.text =
+                                            iDRencanaPembelianEdit.toString();
+
+                                        prospectStatusController.text = data
+                                            .listProspectSalesDetail![i]
+                                            .prospectStatus
+                                            .toString();
+
+                                        if (iDRencanaPembelianEdit == 1) {
+                                          rencanaPembelianEdit =
+                                              '1 Minggu Kedepan';
+                                        } else if (iDRencanaPembelianEdit ==
+                                            2) {
+                                          rencanaPembelianEdit =
+                                              '2 Minggu Kedepan';
+                                        } else if (iDRencanaPembelianEdit ==
+                                            3) {
+                                          rencanaPembelianEdit =
+                                              '3 Minggu Kedepan';
+                                        } else if (iDRencanaPembelianEdit ==
+                                            4) {
+                                          rencanaPembelianEdit =
+                                              '1 Bulan Kedepan';
+                                        } else {
+                                          rencanaPembelianEdit =
+                                              'Lebih Dari 1 Bulan Kedepan';
+                                        }
+                                      }
+
+                                      nameContactContactController.text = data
+                                          .listProspectSalesDetail![i]
+                                          .customerName;
+
+                                      noHP1ContactController.text = data
+                                          .listProspectSalesDetail![i]
+                                          .handphone1;
+                                      noHP2ContactController.text = data
+                                          .listProspectSalesDetail![i]
+                                          .handphone2;
+
+                                      if (jkValue == '') {
+                                        jkIdEdit = data
+                                            .listProspectSalesDetail![i].gender;
+
+                                        if (jkIdEdit == 1) {
+                                          jkValueEdit = 'Laki-Laki';
+                                        } else {
+                                          jkValueEdit = 'Perempuan';
+                                        }
+                                        jKController.text = jkIdEdit.toString();
+                                      }
+
+                                      alamatController.text = data
+                                          .listProspectSalesDetail![i]
+                                          .customerAddres;
                                     }
                                     return TabBarView(
                                       controller: _tabController,
                                       children: [
-                                        // for (int i = 0;
-                                        //     i <
-                                        //         data.listProspectSalesDetail!
-                                        //             .length;
-                                        //     i++)
                                         Container(
                                           decoration: const BoxDecoration(
                                             color: Color.fromARGB(
@@ -1123,14 +1249,16 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                             //print("Tanggal tidak dipilih");
 
                                                                             tglContactController.text =
-                                                                                dateNow;
+                                                                                dateContact;
+
+                                                                            print(dateContact);
                                                                           }
                                                                         },
                                                                       ),
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -1162,7 +1290,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -1359,9 +1487,12 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           Wilayah>(
                                                                         validator:
                                                                             (val) {
-                                                                          if (val == null ||
-                                                                              val.text == '') {
-                                                                            return "Provinsi tidak boleh kosong";
+                                                                          if (nameProvEdit ==
+                                                                              '') {
+                                                                            if (val == null ||
+                                                                                val.text == '') {
+                                                                              return "Provinsi tidak boleh kosong";
+                                                                            }
                                                                           }
                                                                           return null;
                                                                         },
@@ -1484,6 +1615,8 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 value!.text;
                                                                             nameKab =
                                                                                 '';
+                                                                            nameKabEdit =
+                                                                                '';
                                                                             nameKec =
                                                                                 '';
                                                                             nameKel =
@@ -1492,7 +1625,6 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                             idKodePosController.clear();
                                                                             idAreaController.clear();
                                                                             areaController.clear();
-                                                                            print("idProvinsi : $nameProv");
                                                                           });
                                                                         },
                                                                         dropdownBuilder:
@@ -1500,7 +1632,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           nameProv != ''
                                                                               ? nameProv.toUpperCase()
-                                                                              : "Belum memilih provinsi",
+                                                                              : nameProvEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -1575,9 +1707,12 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           Wilayah>(
                                                                         validator:
                                                                             (val) {
-                                                                          if (val == null ||
-                                                                              val.text == '') {
-                                                                            return "Kota tidak boleh kosong";
+                                                                          if (nameKabEdit ==
+                                                                              '') {
+                                                                            if (val == null ||
+                                                                                val.text == '') {
+                                                                              return "Kota tidak boleh kosong";
+                                                                            }
                                                                           }
                                                                           return null;
                                                                         },
@@ -1704,7 +1839,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           nameKab != ''
                                                                               ? nameKab.toUpperCase()
-                                                                              : "Belum memilih kota",
+                                                                              : nameKabEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -1783,9 +1918,12 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           Wilayah>(
                                                                         validator:
                                                                             (val) {
-                                                                          if (val == null ||
-                                                                              val.text == '') {
-                                                                            return "Kecamatan tidak boleh kosong";
+                                                                          if (nameKecEdit ==
+                                                                              '') {
+                                                                            if (val == null ||
+                                                                                val.text == '') {
+                                                                              return "Kecamatan tidak boleh kosong";
+                                                                            }
                                                                           }
                                                                           return null;
                                                                         },
@@ -1912,7 +2050,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           nameKec != ''
                                                                               ? nameKec.toUpperCase()
-                                                                              : "Belum memilih kecamatan",
+                                                                              : nameKecEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -1987,9 +2125,12 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           Wilayah>(
                                                                         validator:
                                                                             (val) {
-                                                                          if (val == null ||
-                                                                              val.text == '') {
-                                                                            return "Kelurahan tidak boleh kosong";
+                                                                          if (nameKelEdit ==
+                                                                              '') {
+                                                                            if (val == null ||
+                                                                                val.text == '') {
+                                                                              return "Kelurahan tidak boleh kosong";
+                                                                            }
                                                                           }
                                                                           return null;
                                                                         },
@@ -2121,7 +2262,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           nameKel != ''
                                                                               ? nameKel.toUpperCase()
-                                                                              : "Belum memilih kelurahan",
+                                                                              : nameKelEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -2522,9 +2663,12 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           SumberData>(
                                                                         validator:
                                                                             (val) {
-                                                                          if (val == null ||
-                                                                              val.name == '') {
-                                                                            return "Sumber data tidak boleh kosong.";
+                                                                          if (sumberDataEdit ==
+                                                                              '') {
+                                                                            if (val == null ||
+                                                                                val.name == '') {
+                                                                              return "Sumber data tidak boleh kosong.";
+                                                                            }
                                                                           }
                                                                           return null;
                                                                         },
@@ -2658,7 +2802,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           sumberData != ''
                                                                               ? sumberData.toUpperCase()
-                                                                              : "Belum memilih sumber data",
+                                                                              : sumberDataEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -2769,9 +2913,12 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           ModelSelect>(
                                                                         validator:
                                                                             (val) {
-                                                                          if (val == null ||
-                                                                              val.value == '') {
-                                                                            return "Rencana pembelian tidak boleh kosong.";
+                                                                          if (rencanaPembelianEdit ==
+                                                                              '') {
+                                                                            if (val == null ||
+                                                                                val.value == '') {
+                                                                              return "Rencana pembelian tidak boleh kosong.";
+                                                                            }
                                                                           }
                                                                           return null;
                                                                         },
@@ -2911,7 +3058,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           rencanaPembelian != ''
                                                                               ? rencanaPembelian.toUpperCase()
-                                                                              : "Belum memilih rencana pembelian",
+                                                                              : rencanaPembelianEdit,
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -3630,7 +3777,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                   child: Padding(
                                                                                     padding: const EdgeInsets.fromLTRB(80, 5, 80, 5),
                                                                                     child: Text(
-                                                                                      jkValue != '' ? jkValue : "CHOOSE",
+                                                                                      jkValue != '' ? jkValue : jkValueEdit,
                                                                                       style: textStyleColorWhite,
                                                                                     ),
                                                                                   ),
@@ -3643,7 +3790,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
