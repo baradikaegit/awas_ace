@@ -74,11 +74,11 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
   final TextEditingController idAreaS2Controller = TextEditingController();
   final TextEditingController areaS2Controller = TextEditingController();
   TextEditingController emailController = TextEditingController();
-  final TextEditingController idCustTypeS2Controller = TextEditingController();
-  final TextEditingController custTypeS2Controller = TextEditingController();
+  TextEditingController idCustTypeS2Controller = TextEditingController();
+  TextEditingController custTypeS2Controller = TextEditingController();
   TextEditingController jabatanController = TextEditingController();
-  final TextEditingController hKendaraanController = TextEditingController();
-  final TextEditingController tipePelangganController = TextEditingController();
+  TextEditingController hKendaraanController = TextEditingController();
+  TextEditingController tipePelangganController = TextEditingController();
 
   //STEP 3
   TextEditingController vGroupController = TextEditingController();
@@ -157,34 +157,53 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
   String areaS2 = '';
   String areaS2Edit = '';
   String idTipeCustS2 = '';
+  String idTipeCustS2Edit = '';
   String tipeCustS2 = '';
+  String tipeCustS2Edit = '';
   int? valTipeCutS2;
+  int? valTipeCustS2Edit;
   String jabatanVal = '';
+  String jabatanValEdit = '';
   String hargaKendaraan = '';
+  String hargaKendaraanEdit = '';
   String idHargaKendaraan = '';
+  String idHargaKendaraanEdit = '';
   String idTipePelanggan = '';
+  String idTipePelangganEdit = '';
   String tipePelanggan = '';
+  String tipePelangganEdit = '';
 
   //STEP 3
   String idVGroup = '';
   String vGroup = '';
+  String vGroupEdit = '';
   String tahunVal = '';
+  String tahunValEdit = '';
   String idVfuel = '';
   String vFuel = '';
+  String vFuelEdit = '';
   String idVtransmisi = '';
   String vTransmisi = '';
+  String vTransmisiEdit = '';
   String idVGroup2 = '';
   String vGroup2 = '';
+  String vGroup2Edit = '';
   String tahunVal2 = '';
+  String tahunVal2Edit = '';
   String idVfuel2 = '';
   String vFuel2 = '';
+  String vFuel2Edit = '';
   String idVtransmisi2 = '';
   String vTransmisi2 = '';
+  String vTransmisi2Edit = '';
 
   //STEP 4
   String cashLeasingVal = '';
+  String cashLeasingValEdit = '';
   String dPVal = '';
+  String dPValEdit = '';
   String tenorVal = '';
+  String tenorValEdit = '';
   bool checkQ1 = false;
   bool checkQ2 = false;
   bool checkQ3 = false;
@@ -1047,6 +1066,194 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                       alamatController.text = data
                                           .listProspectSalesDetail![i]
                                           .customerAddres;
+
+                                      nameProvS2Edit = data
+                                          .listProspectSalesDetail![i]
+                                          .provinsi2;
+
+                                      if (nameProvS2 == '') {
+                                        nameKabS2Edit = data
+                                            .listProspectSalesDetail![i].kota2;
+                                        nameKecS2Edit = data
+                                            .listProspectSalesDetail![i]
+                                            .kecamatan2;
+                                        nameKelS2Edit = data
+                                            .listProspectSalesDetail![i]
+                                            .kelurahan2;
+                                        kodePosS2Edit = data
+                                            .listProspectSalesDetail![i]
+                                            .postalCode2;
+                                        idKodePosS2Edit = data
+                                            .listProspectSalesDetail![i]
+                                            .postalCodeId2;
+                                        idAreaS2Edit = data
+                                            .listProspectSalesDetail![i].area
+                                            .toString();
+                                        areaS2Edit = data
+                                            .listProspectSalesDetail![i]
+                                            .ringKet2;
+
+                                        kodePosS2Controller.text =
+                                            kodePosS2Edit;
+                                        idKodePosS2Controller.text =
+                                            idKodePosEdit;
+                                        idAreaController.text = idAreaS2Edit;
+                                        areaS2Controller.text = areaS2Edit;
+                                      } else {
+                                        nameKabS2Edit = "Belum memilih kota";
+                                        nameKecS2Edit =
+                                            "Belum memilih kecamatan";
+                                        nameKelS2Edit =
+                                            "Belum memilih kelurahan";
+                                        kodePosS2Edit =
+                                            "Belum memilih Kode Pos";
+                                      }
+
+                                      emailController.text = data
+                                          .listProspectSalesDetail![i].email;
+
+                                      if (tipeCustS2 == '') {
+                                        tipeCustS2Edit = data
+                                            .listProspectSalesDetail![i]
+                                            .customerType;
+
+                                        custTypeS2Controller.text =
+                                            tipeCustS2Edit;
+
+                                        idTipeCustS2Edit = data
+                                            .listProspectSalesDetail![i]
+                                            .custTypeId;
+                                        idCustTypeS2Controller.text =
+                                            idTipeCustS2Edit;
+
+                                        valTipeCutS2 = data
+                                            .listProspectSalesDetail![i]
+                                            .customerVal;
+                                      } else {
+                                        tipeCustS2Edit =
+                                            "Belum memilih tipe customer";
+                                      }
+
+                                      if (jabatanVal == '') {
+                                        jabatanValEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .pekerjaan;
+
+                                        jabatanController.text = jabatanValEdit;
+                                      } else {
+                                        jabatanValEdit =
+                                            "Belum memilih jabatan";
+                                      }
+
+                                      if (hargaKendaraan == '') {
+                                        hargaKendaraanEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .kisaranHarga;
+
+                                        hKendaraanController.text = data
+                                            .listProspectSalesDetail![i]
+                                            .kisaranHargaId;
+                                      } else {
+                                        tipePelangganEdit =
+                                            "Belum memilih kisaran harga kendaraan";
+                                      }
+
+                                      if (tipePelanggan == '') {
+                                        tipePelangganEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .customerStatus;
+
+                                        tipePelangganController.text = data
+                                            .listProspectSalesDetail![i]
+                                            .custStatusId;
+                                      } else {
+                                        tipePelangganEdit =
+                                            "Belum memilih tipe pelanggan";
+                                      }
+
+                                      //CUSTOMER REQUEST
+                                      if (vGroup == '') {
+                                        vGroupEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .vgroup1;
+
+                                        vGroupController.text = data
+                                            .listProspectSalesDetail![i]
+                                            .vgroup1Id;
+                                      } else {
+                                        vGroupEdit = "Belum memilih model";
+                                      }
+
+                                      if (tahunVal == '') {
+                                        tahunValEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .vehicleYear1;
+                                        tahunController.text = tahunValEdit;
+                                      } else {
+                                        tahunValEdit = "Belum memilih tahun";
+                                      }
+
+                                      if (vFuel == '') {
+                                        vFuelEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .vehicleFuel1;
+
+                                        vFuelController.text = data
+                                            .listProspectSalesDetail![i]
+                                            .vehicleFuel1Id;
+                                      } else {
+                                        vFuelEdit = "Belum memilih bahan bakar";
+                                      }
+
+                                      if (vTransmisi == '') {
+                                        vTransmisiEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .transmisiV1;
+
+                                        vTransmisiController.text = data
+                                            .listProspectSalesDetail![i]
+                                            .transmisiV1Id;
+                                      } else {
+                                        vTransmisiEdit =
+                                            "Belum memilih transmisi";
+                                      }
+                                      //CUSTOMER REQUEST
+
+                                      //ALTERNATIVE
+                                      print(data
+                                          .listProspectSalesDetail![i].vgroup2);
+                                      //ALTERNATIVE
+
+                                      if (cashLeasingVal == '') {
+                                        cashLeasingValEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .payment;
+
+                                        cashLeasingController.text =
+                                            cashLeasingValEdit;
+                                      } else {
+                                        cashLeasingValEdit = "Choose";
+                                      }
+
+                                      if (dPVal == '') {
+                                        dPValEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .downPayment;
+
+                                        dPController.text = dPValEdit;
+                                      } else {
+                                        dPValEdit =
+                                            "Belum memilih Down Payment";
+                                      }
+
+                                      if (tenorVal == '') {
+                                        tenorValEdit = data
+                                            .listProspectSalesDetail![i].tenor;
+
+                                        tenorController.text = tenorValEdit;
+                                      } else {
+                                        tenorValEdit = "Belum memilih tenor";
+                                      }
                                     }
                                     return TabBarView(
                                       controller: _tabController,
@@ -1258,7 +1465,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -1290,7 +1497,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -3790,7 +3997,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -4126,7 +4333,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           nameProvS2 != ''
                                                                               ? nameProvS2.toUpperCase()
-                                                                              : "Belum memilih provinsi",
+                                                                              : nameProvS2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -4334,7 +4541,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           nameKabS2 != ''
                                                                               ? nameKabS2.toUpperCase()
-                                                                              : "Belum memilih kota",
+                                                                              : nameKabS2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -4538,7 +4745,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           nameKecS2 != ''
                                                                               ? nameKecS2.toUpperCase()
-                                                                              : "Belum memilih kecamatan",
+                                                                              : nameKecS2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -4752,7 +4959,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           nameKelS2 != ''
                                                                               ? nameKelS2.toUpperCase()
-                                                                              : "Belum memilih kelurahan",
+                                                                              : nameKelS2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -5433,8 +5640,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                               checkQ11 = false;
                                                                               checkQ12 = false;
                                                                             }
-                                                                            // print(
-                                                                            //     "idProvinsi : $nameProvS2");
+                                                                            print("ValTipe : $valTipeCutS2");
                                                                           });
                                                                         },
                                                                         dropdownBuilder:
@@ -5442,7 +5648,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           tipeCustS2 != ''
                                                                               ? tipeCustS2.toUpperCase()
-                                                                              : "Belum memilih tipe customer",
+                                                                              : tipeCustS2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -5680,7 +5886,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           jabatanVal != ''
                                                                               ? jabatanVal.toUpperCase()
-                                                                              : "Belum memilih Jabatan",
+                                                                              : jabatanValEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -5894,7 +6100,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           hargaKendaraan != ''
                                                                               ? hargaKendaraan
-                                                                              : "Belum memilih kisaran harga kendaraan",
+                                                                              : hargaKendaraanEdit,
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -6135,7 +6341,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           tipePelanggan != ''
                                                                               ? tipePelanggan
-                                                                              : "Belum memilih tipe pelanggan",
+                                                                              : tipePelangganEdit,
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -6528,7 +6734,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           vGroup != ''
                                                                               ? vGroup.toUpperCase()
-                                                                              : "Belum memilih model",
+                                                                              : vGroupEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -6567,7 +6773,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -6773,7 +6979,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           tahunVal != ''
                                                                               ? tahunVal.toString()
-                                                                              : "Belum memilih Tahun",
+                                                                              : tahunValEdit,
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -6781,7 +6987,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         style: const TextStyle(
@@ -6870,7 +7076,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                             (val) {
                                                                           if (val == null ||
                                                                               val.name == '') {
-                                                                            return "Tahun tidak boleh kosong";
+                                                                            return "Bahan bakar tidak boleh kosong";
                                                                           }
                                                                           return null;
                                                                         },
@@ -7002,7 +7208,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           vFuel != ''
                                                                               ? vFuel.toUpperCase()
-                                                                              : "Belum memilih bahan bakar",
+                                                                              : vFuelEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -7041,7 +7247,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         style: const TextStyle(
@@ -7261,7 +7467,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           vTransmisi != ''
                                                                               ? vTransmisi.toUpperCase()
-                                                                              : "Belum memilih transmisi",
+                                                                              : vTransmisiEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -7300,7 +7506,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -7548,7 +7754,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           vGroup2 != ''
                                                                               ? vGroup2.toUpperCase()
-                                                                              : "Belum memilih model",
+                                                                              : vGroup2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -7587,7 +7793,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -8511,7 +8717,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                   child: Padding(
                                                                                     padding: const EdgeInsets.fromLTRB(80, 5, 80, 5),
                                                                                     child: Text(
-                                                                                      cashLeasingVal != '' ? cashLeasingVal : "CHOOSE",
+                                                                                      cashLeasingVal != '' ? cashLeasingVal : cashLeasingValEdit,
                                                                                       style: textStyleColorWhite,
                                                                                     ),
                                                                                   ),
@@ -8524,7 +8730,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -8700,7 +8906,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           dPVal != ''
                                                                               ? dPVal
-                                                                              : "Belum memilih Down Payment",
+                                                                              : dPValEdit,
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -8708,7 +8914,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -8888,7 +9094,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           tenorVal != ''
                                                                               ? tenorVal.toUpperCase()
-                                                                              : "Belum memilih Tenor",
+                                                                              : tenorValEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -8896,7 +9102,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -9021,7 +9227,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                             Alignment.centerLeft,
                                                                         child:
                                                                             Text(
-                                                                          "Tipe Customer :",
+                                                                          "Tipe Customer 2 :",
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),

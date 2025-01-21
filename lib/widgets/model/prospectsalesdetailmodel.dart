@@ -72,21 +72,31 @@ class ListProspectSalesDetail {
     required this.provinsi2,
     required this.area,
     required this.ringKet2,
+    required this.vgroup1Id,
     required this.vgCode1,
     required this.vgroup1,
     required this.vehicleYear1,
+    required this.vehicleFuel1Id,
     required this.vehicleFuel1,
+    required this.transmisiV1Id,
     required this.transmisiV1,
+    required this.vgroup2Id,
     required this.vgCode2,
     required this.vgroup2,
     required this.vehicleYear2,
+    required this.vehicleFuel2Id,
     required this.vehicleFuel2,
+    required this.transmisiV2Id,
     required this.transmisiV2,
     required this.payment,
     required this.downPayment,
     required this.tenor,
+    required this.kisaranHargaId,
     required this.kisaranHarga,
+    required this.custTypeId,
     required this.customerType,
+    required this.customerVal,
+    required this.custStatusId,
     required this.customerStatus,
     required this.q1,
     required this.q2,
@@ -135,21 +145,31 @@ class ListProspectSalesDetail {
   late final String provinsi2;
   late final int area;
   late final String ringKet2;
+  late final String vgroup1Id;
   late final String vgCode1;
   late final String vgroup1;
   late final String vehicleYear1;
+  late final String vehicleFuel1Id;
   late final String vehicleFuel1;
+  late final String transmisiV1Id;
   late final String transmisiV1;
+  late final String vgroup2Id;
   late final String vgCode2;
   late final String vgroup2;
   late final String vehicleYear2;
+  late final String vehicleFuel2Id;
   late final String vehicleFuel2;
+  late final String transmisiV2Id;
   late final String transmisiV2;
   late final String payment;
   late final String downPayment;
   late final String tenor;
+  late final String kisaranHargaId;
   late final String kisaranHarga;
+  late final String custTypeId;
   late final String customerType;
+  late final int customerVal;
+  late final String custStatusId;
   late final String customerStatus;
   late final String q1;
   late final String q2;
@@ -199,21 +219,31 @@ class ListProspectSalesDetail {
     provinsi2 = json['provinsi2'];
     area = json['area'];
     ringKet2 = json['ringKet2'];
+    vgroup1Id = json['vgroup1Id'];
     vgCode1 = json['vgCode1'];
     vgroup1 = json['vgroup1'];
     vehicleYear1 = json['vehicleYear1'];
+    vehicleFuel1Id = json['vehicleFuel1Id'];
     vehicleFuel1 = json['vehicleFuel1'];
+    transmisiV1Id = json['transmisiV1Id'];
     transmisiV1 = json['transmisiV1'];
+    vgroup2Id = json['vgroup2Id'];
     vgCode2 = json['vgCode2'];
     vgroup2 = json['vgroup2'];
     vehicleYear2 = json['vehicleYear2'];
+    vehicleFuel2Id = json['vehicleFuel2Id'];
     vehicleFuel2 = json['vehicleFuel2'];
+    transmisiV2Id = json['transmisiV2Id'];
     transmisiV2 = json['transmisiV2'];
     payment = json['payment'];
     downPayment = json['downPayment'];
     tenor = json['tenor'];
+    kisaranHargaId = json['kisaranHargaId'];
     kisaranHarga = json['kisaranHarga'];
+    custTypeId = json['custTypeId'];
     customerType = json['customerType'];
+    customerVal = json['customerVal'];
+    custStatusId = json['custStatusId'];
     customerStatus = json['customerStatus'];
     q1 = json['q1'];
     q2 = json['q2'];
@@ -265,21 +295,31 @@ class ListProspectSalesDetail {
     _data['provinsi2'] = provinsi2;
     _data['area'] = area;
     _data['ringKet2'] = ringKet2;
+    _data['vgroup1Id'] = vgroup1Id;
     _data['vgCode1'] = vgCode1;
     _data['vgroup1'] = vgroup1;
     _data['vehicleYear1'] = vehicleYear1;
+    _data['vehicleFuel1Id'] = vehicleFuel1Id;
     _data['vehicleFuel1'] = vehicleFuel1;
+    _data['transmisiV1Id'] = transmisiV1Id;
     _data['transmisiV1'] = transmisiV1;
+    _data['vgroup2Id'] = vgroup2Id;
     _data['vgCode2'] = vgCode2;
     _data['vgroup2'] = vgroup2;
     _data['vehicleYear2'] = vehicleYear2;
+    _data['vehicleFuel2Id'] = vehicleFuel2Id;
     _data['vehicleFuel2'] = vehicleFuel2;
+    _data['transmisiV2Id'] = transmisiV2Id;
     _data['transmisiV2'] = transmisiV2;
     _data['payment'] = payment;
     _data['downPayment'] = downPayment;
     _data['tenor'] = tenor;
+    _data['kisaranHargaId'] = kisaranHargaId;
     _data['kisaranHarga'] = kisaranHarga;
+    _data['custTypeId'] = custTypeId;
     _data['customerType'] = customerType;
+    _data['customerVal'] = customerVal;
+    _data['custStatusId'] = custStatusId;
     _data['customerStatus'] = customerStatus;
     _data['q1'] = q1;
     _data['q2'] = q2;
