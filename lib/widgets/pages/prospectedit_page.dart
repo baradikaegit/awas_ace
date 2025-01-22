@@ -1220,8 +1220,78 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                       //CUSTOMER REQUEST
 
                                       //ALTERNATIVE
-                                      print(data
-                                          .listProspectSalesDetail![i].vgroup2);
+                                      if (vGroup2 == '') {
+                                        if (data.listProspectSalesDetail![i]
+                                                .vgroup2 ==
+                                            '') {
+                                          vGroup2Edit = "Belum memilih model";
+                                        } else {
+                                          vGroup2Edit = data
+                                              .listProspectSalesDetail![i]
+                                              .vgroup2;
+
+                                          vGroup2Controller.text = data
+                                              .listProspectSalesDetail![i]
+                                              .vgroup2Id;
+                                        }
+                                      } else {
+                                        vGroup2Edit = "Belum memilih model";
+                                      }
+
+                                      if (tahunVal2 == '') {
+                                        if (data.listProspectSalesDetail![i]
+                                                .vehicleYear2 ==
+                                            '') {
+                                          tahunVal2Edit = "Belum memilih tahun";
+                                        } else {
+                                          tahunVal2Edit = data
+                                              .listProspectSalesDetail![i]
+                                              .vehicleYear2;
+                                          tahun2Controller.text = tahunVal2Edit;
+                                        }
+                                      } else {
+                                        tahunVal2Edit = "Belum memilih tahun";
+                                      }
+
+                                      if (vFuel2 == '') {
+                                        if (data.listProspectSalesDetail![i]
+                                                .vehicleFuel2 ==
+                                            '') {
+                                          vFuel2Edit =
+                                              "Belum memilih bahan bakar";
+                                        } else {
+                                          vFuel2Edit = data
+                                              .listProspectSalesDetail![i]
+                                              .vehicleFuel2;
+
+                                          vFuel2Controller.text = data
+                                              .listProspectSalesDetail![i]
+                                              .vehicleFuel2Id;
+                                        }
+                                      } else {
+                                        vFuel2Edit =
+                                            "Belum memilih bahan bakar";
+                                      }
+
+                                      if (vTransmisi2 == '') {
+                                        if (data.listProspectSalesDetail![i]
+                                                .transmisiV2 ==
+                                            '') {
+                                          vTransmisi2Edit =
+                                              "Belum memilih transmisi";
+                                        } else {
+                                          vTransmisi2Edit = data
+                                              .listProspectSalesDetail![i]
+                                              .transmisiV2;
+
+                                          vTransmisi2Controller.text = data
+                                              .listProspectSalesDetail![i]
+                                              .transmisiV2Id;
+                                        }
+                                      } else {
+                                        vTransmisi2Edit =
+                                            "Belum memilih transmisi";
+                                      }
                                       //ALTERNATIVE
 
                                       if (cashLeasingVal == '') {
@@ -6773,7 +6843,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -6987,7 +7057,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         style: const TextStyle(
@@ -7247,7 +7317,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         style: const TextStyle(
@@ -7506,7 +7576,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -7754,7 +7824,9 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           vGroup2 != ''
                                                                               ? vGroup2.toUpperCase()
-                                                                              : vGroup2Edit.toUpperCase(),
+                                                                              : data.listProspectSalesDetail![0].vgroup2 == ''
+                                                                                  ? vGroup2Edit
+                                                                                  : vGroup2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -7793,7 +7865,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -7971,7 +8043,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           tahunVal2 != ''
                                                                               ? tahunVal2.toString()
-                                                                              : "Belum memilih Tahun",
+                                                                              : tahunVal2Edit,
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -8160,7 +8232,9 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           vFuel2 != ''
                                                                               ? vFuel2.toUpperCase()
-                                                                              : "Belum memilih bahan bakar",
+                                                                              : data.listProspectSalesDetail![0].vehicleFuel2 == ''
+                                                                                  ? vFuel2Edit
+                                                                                  : vFuel2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -8376,7 +8450,9 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           vTransmisi2 != ''
                                                                               ? vTransmisi2.toUpperCase()
-                                                                              : "Belum memilih transmisi",
+                                                                              : data.listProspectSalesDetail![0].transmisiV2 == ''
+                                                                                  ? vTransmisi2Edit
+                                                                                  : vTransmisi2Edit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -8730,7 +8806,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -8914,7 +8990,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -9102,7 +9178,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          true,
+                                                                          false,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -10348,91 +10424,62 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                               ? BootstrapRow(
                                                                   children: <BootstrapCol>[
                                                                     BootstrapCol(
-                                                                        sizes:
-                                                                            'col-md-6 col-12',
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                                                                              child: Align(
-                                                                                alignment: Alignment.centerLeft,
-                                                                                child: Text(
-                                                                                  "Alasan Lost Prospect :",
-                                                                                  style: textStyleColorWhite,
-                                                                                ),
+                                                                      sizes:
+                                                                          'col-md-6 col-12',
+                                                                      child:
+                                                                          Column(
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                15),
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: Alignment.centerLeft,
+                                                                              child: Text(
+                                                                                "Alasan Lost Prospect :",
+                                                                                style: textStyleColorWhite,
                                                                               ),
                                                                             ),
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                                                                              child: DropdownSearch<ModelSelect>(
-                                                                                popupProps: PopupProps.dialog(
-                                                                                  // showSelectedItems: true,
-                                                                                  dialogProps: const DialogProps(
-                                                                                    shape: Border.symmetric(vertical: BorderSide.none),
-                                                                                  ),
-                                                                                  showSearchBox: true,
-                                                                                  searchFieldProps: TextFieldProps(
-                                                                                    decoration: InputDecoration(
-                                                                                      hintText: "Search..",
-                                                                                      enabledBorder: OutlineInputBorder(
-                                                                                        borderSide: const BorderSide(
-                                                                                          color: Color.fromARGB(
-                                                                                            255,
-                                                                                            134,
-                                                                                            134,
-                                                                                            134,
-                                                                                          ),
-                                                                                          width: 2,
-                                                                                        ),
-                                                                                        borderRadius: BorderRadius.circular(10.0),
-                                                                                      ),
-                                                                                      focusedBorder: OutlineInputBorder(
-                                                                                        borderSide: const BorderSide(
-                                                                                          color: Color.fromARGB(
-                                                                                            255,
-                                                                                            146,
-                                                                                            2,
-                                                                                            2,
-                                                                                          ),
-                                                                                          width: 2,
-                                                                                        ),
-                                                                                        borderRadius: BorderRadius.circular(10.0),
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                20),
+                                                                            child:
+                                                                                DropdownSearch<ModelSelect>(
+                                                                              popupProps: PopupProps.dialog(
+                                                                                // showSelectedItems: true,
+                                                                                dialogProps: const DialogProps(
+                                                                                  shape: Border.symmetric(vertical: BorderSide.none),
                                                                                 ),
-                                                                                items: alasanLpOptions,
-                                                                                itemAsString: (ModelSelect alasanLp) => alasanLp.value.toUpperCase(),
-                                                                                dropdownDecoratorProps: DropDownDecoratorProps(
-                                                                                  dropdownSearchDecoration: InputDecoration(
-                                                                                    hintStyle: textStyleColorWhite,
-                                                                                    labelText: 'Alasan Lost Prospect',
-                                                                                    labelStyle: const TextStyle(
-                                                                                      color: Color.fromARGB(
-                                                                                        255,
-                                                                                        255,
-                                                                                        255,
-                                                                                        255,
-                                                                                      ),
-                                                                                    ),
-                                                                                    enabledBorder: const OutlineInputBorder(
-                                                                                      borderSide: BorderSide(
+                                                                                showSearchBox: true,
+                                                                                searchFieldProps: TextFieldProps(
+                                                                                  decoration: InputDecoration(
+                                                                                    hintText: "Search..",
+                                                                                    enabledBorder: OutlineInputBorder(
+                                                                                      borderSide: const BorderSide(
                                                                                         color: Color.fromARGB(
                                                                                           255,
-                                                                                          255,
-                                                                                          255,
-                                                                                          255,
+                                                                                          134,
+                                                                                          134,
+                                                                                          134,
                                                                                         ),
+                                                                                        width: 2,
                                                                                       ),
+                                                                                      borderRadius: BorderRadius.circular(10.0),
                                                                                     ),
                                                                                     focusedBorder: OutlineInputBorder(
                                                                                       borderSide: const BorderSide(
                                                                                         color: Color.fromARGB(
                                                                                           255,
-                                                                                          255,
-                                                                                          255,
-                                                                                          255,
+                                                                                          146,
+                                                                                          2,
+                                                                                          2,
                                                                                         ),
                                                                                         width: 2,
                                                                                       ),
@@ -10440,29 +10487,21 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                     ),
                                                                                   ),
                                                                                 ),
-                                                                                onChanged: (ModelSelect? value) {
-                                                                                  setState(() {
-                                                                                    idAlasanLp = value!.id;
-                                                                                    alasanLp = value.value;
-                                                                                    alasanLostProspectController.text = idAlasanLp.toString();
-                                                                                  });
-                                                                                },
-                                                                                dropdownBuilder: (context, selectedItem) => Text(
-                                                                                  alasanLp != '' ? alasanLp.toUpperCase() : "Alasan lost prospect",
-                                                                                  style: textStyleColorWhite,
-                                                                                ),
                                                                               ),
-                                                                            ),
-                                                                            Visibility(
-                                                                              visible: false,
-                                                                              child: TextFormField(
-                                                                                controller: alasanLostProspectController,
-                                                                                autocorrect: false,
-                                                                                style: const TextStyle(color: Colors.white),
-                                                                                textInputAction: TextInputAction.next,
-                                                                                decoration: InputDecoration(
-                                                                                  hintText: 'Alasan Lost Prospect',
+                                                                              items: alasanLpOptions,
+                                                                              itemAsString: (ModelSelect alasanLp) => alasanLp.value.toUpperCase(),
+                                                                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                                                                dropdownSearchDecoration: InputDecoration(
                                                                                   hintStyle: textStyleColorWhite,
+                                                                                  labelText: 'Alasan Lost Prospect',
+                                                                                  labelStyle: const TextStyle(
+                                                                                    color: Color.fromARGB(
+                                                                                      255,
+                                                                                      255,
+                                                                                      255,
+                                                                                      255,
+                                                                                    ),
+                                                                                  ),
                                                                                   enabledBorder: const OutlineInputBorder(
                                                                                     borderSide: BorderSide(
                                                                                       color: Color.fromARGB(
@@ -10473,11 +10512,61 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                       ),
                                                                                     ),
                                                                                   ),
+                                                                                  focusedBorder: OutlineInputBorder(
+                                                                                    borderSide: const BorderSide(
+                                                                                      color: Color.fromARGB(
+                                                                                        255,
+                                                                                        255,
+                                                                                        255,
+                                                                                        255,
+                                                                                      ),
+                                                                                      width: 2,
+                                                                                    ),
+                                                                                    borderRadius: BorderRadius.circular(10.0),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              onChanged: (ModelSelect? value) {
+                                                                                setState(() {
+                                                                                  idAlasanLp = value!.id;
+                                                                                  alasanLp = value.value;
+                                                                                  alasanLostProspectController.text = idAlasanLp.toString();
+                                                                                });
+                                                                              },
+                                                                              dropdownBuilder: (context, selectedItem) => Text(
+                                                                                alasanLp != '' ? alasanLp.toUpperCase() : "Alasan lost prospect",
+                                                                                style: textStyleColorWhite,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                          Visibility(
+                                                                            visible:
+                                                                                false,
+                                                                            child:
+                                                                                TextFormField(
+                                                                              controller: alasanLostProspectController,
+                                                                              autocorrect: false,
+                                                                              style: const TextStyle(color: Colors.white),
+                                                                              textInputAction: TextInputAction.next,
+                                                                              decoration: InputDecoration(
+                                                                                hintText: 'Alasan Lost Prospect',
+                                                                                hintStyle: textStyleColorWhite,
+                                                                                enabledBorder: const OutlineInputBorder(
+                                                                                  borderSide: BorderSide(
+                                                                                    color: Color.fromARGB(
+                                                                                      255,
+                                                                                      255,
+                                                                                      255,
+                                                                                      255,
+                                                                                    ),
+                                                                                  ),
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          ],
-                                                                        )),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
                                                                     BootstrapCol(
                                                                         sizes:
                                                                             'col-md-6 col-12',
