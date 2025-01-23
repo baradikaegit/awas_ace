@@ -54,6 +54,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
   final TextEditingController branchBusinessIDController =
       TextEditingController();
   final TextEditingController salesmanIDController = TextEditingController();
+  final TextEditingController prospectCodeController = TextEditingController();
   TextEditingController lokasiBertemuController = TextEditingController();
   TextEditingController idKodePosController = TextEditingController();
   TextEditingController kodePosController = TextEditingController();
@@ -205,6 +206,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
   String tenorVal = '';
   String tenorValEdit = '';
   bool checkQ1 = false;
+  bool checkQ1Edit = true;
   bool checkQ2 = false;
   bool checkQ3 = false;
   bool checkQ4 = false;
@@ -217,9 +219,13 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
   bool checkQ11 = false;
   bool checkQ12 = false;
   int? idStatus;
+  int? idStatusEdit;
   String status = '';
+  String statusEdit = '';
   int? idAlasanLp;
+  int? idAlasanLpEdit;
   String alasanLp = '';
+  String alasanLpEdit = '';
 
   final List _dataFromApi = [];
   final List _dataFromApiArea = [];
@@ -487,7 +493,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
     super.initState();
     // tglContactController.text = dateNow;
 
-    q1Controller.text = '0';
+    // q1Controller.text = '0';
     q2Controller.text = '0';
     q3Controller.text = '0';
     q4Controller.text = '0';
@@ -957,6 +963,10 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                           .listProspectSalesDetail![i]
                                           .meetingPoint;
 
+                                      prospectCodeController.text = data
+                                          .listProspectSalesDetail![i]
+                                          .prospectCode;
+
                                       nameProvEdit = data
                                           .listProspectSalesDetail![i].provinsi;
 
@@ -1324,7 +1334,69 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                       } else {
                                         tenorValEdit = "Belum memilih tenor";
                                       }
+
+                                      if (status == '') {
+                                        idStatusEdit = data
+                                            .listProspectSalesDetail![i]
+                                            .trackingStatus;
+
+                                        idStatusEdit == 1
+                                            ? statusEdit = 'Prospect'
+                                            : statusEdit = 'Lost Prospect';
+
+                                        statusController.text =
+                                            idStatusEdit.toString();
+                                      }
+
+                                      if (alasanLp == '') {
+                                        data.listProspectSalesDetail![i]
+                                                    .trackingReason ==
+                                                0
+                                            ? alasanLpEdit =
+                                                'Alasan lost prospect'
+                                            : idAlasanLpEdit = data
+                                                .listProspectSalesDetail![i]
+                                                .trackingReason;
+
+                                        idAlasanLpEdit == 1
+                                            ? alasanLpEdit = 'Discount'
+                                            : idAlasanLpEdit == 2
+                                                ? alasanLpEdit =
+                                                    'Stock Tidak Tersedia'
+                                                : idAlasanLpEdit == 3
+                                                    ? alasanLpEdit =
+                                                        'Beli Brand Lain'
+                                                    : idAlasanLpEdit == 4
+                                                        ? alasanLpEdit =
+                                                            'Leasing'
+                                                        : idAlasanLpEdit == 5
+                                                            ? alasanLpEdit =
+                                                                'Force Major'
+                                                            : alasanLpEdit =
+                                                                'Alasan lost prospect';
+                                        alasanLostProspectController.text =
+                                            idAlasanLpEdit.toString();
+                                        keteranganController.text = data
+                                            .listProspectSalesDetail![i]
+                                            .trackingInfo;
+                                      } else {
+                                        alasanLpEdit = 'Alasan lost prospect';
+                                      }
+
+                                      // if (checkQ1 == false) {
+                                      // if (data.listProspectSalesDetail![i].q1 ==
+                                      //     '1') {
+                                      //   checkQ1 = true;
+                                      // } else if (data
+                                      //         .listProspectSalesDetail![i].q1 ==
+                                      //     '0') {
+                                      //   checkQ1 = false;
+                                      // }
+                                      // } else {
+                                      //   checkQ1 = false;
+                                      // }
                                     }
+
                                     return TabBarView(
                                       controller: _tabController,
                                       children: [
@@ -1572,6 +1644,38 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           TextFormField(
                                                                         controller:
                                                                             salesmanIDController,
+                                                                        autocorrect:
+                                                                            false,
+                                                                        textInputAction:
+                                                                            TextInputAction.next,
+                                                                        decoration:
+                                                                            InputDecoration(
+                                                                          hintText:
+                                                                              'SalesmanID',
+                                                                          hintStyle:
+                                                                              textStyleColorWhite,
+                                                                          enabledBorder:
+                                                                              const OutlineInputBorder(
+                                                                            borderSide:
+                                                                                BorderSide(
+                                                                              color: Color.fromARGB(
+                                                                                255,
+                                                                                255,
+                                                                                255,
+                                                                                255,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Visibility(
+                                                                      visible:
+                                                                          true,
+                                                                      child:
+                                                                          TextFormField(
+                                                                        controller:
+                                                                            prospectCodeController,
                                                                         autocorrect:
                                                                             false,
                                                                         textInputAction:
@@ -9433,7 +9537,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                     2,
                                                                                   ),
                                                                                   side: const BorderSide(color: Colors.white),
-                                                                                  value: checkQ1,
+                                                                                  value: data.listProspectSalesDetail![0].q1 == '1' ? checkQ1Edit : checkQ1,
                                                                                   onChanged: (bool? value) {
                                                                                     setState(() {
                                                                                       checkQ1 = value!;
@@ -9458,7 +9562,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           ),
                                                                           Visibility(
                                                                             visible:
-                                                                                false,
+                                                                                true,
                                                                             child:
                                                                                 TextFormField(
                                                                               controller: q1Controller,
@@ -9524,7 +9628,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           ),
                                                                           Visibility(
                                                                             visible:
-                                                                                false,
+                                                                                true,
                                                                             child:
                                                                                 TextFormField(
                                                                               controller: q2Controller,
@@ -9590,7 +9694,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           ),
                                                                           Visibility(
                                                                             visible:
-                                                                                false,
+                                                                                true,
                                                                             child:
                                                                                 TextFormField(
                                                                               controller: q3Controller,
@@ -9656,7 +9760,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           ),
                                                                           Visibility(
                                                                             visible:
-                                                                                false,
+                                                                                true,
                                                                             child:
                                                                                 TextFormField(
                                                                               controller: q4Controller,
@@ -9722,7 +9826,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           ),
                                                                           Visibility(
                                                                             visible:
-                                                                                false,
+                                                                                true,
                                                                             child:
                                                                                 TextFormField(
                                                                               controller: q5Controller,
@@ -9788,7 +9892,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                           ),
                                                                           Visibility(
                                                                             visible:
-                                                                                false,
+                                                                                true,
                                                                             child:
                                                                                 TextFormField(
                                                                               controller: q6Controller,
@@ -10374,7 +10478,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 Text(
                                                                           status != ''
                                                                               ? status.toUpperCase()
-                                                                              : "Belum memilih status",
+                                                                              : statusEdit.toUpperCase(),
                                                                           style:
                                                                               textStyleColorWhite,
                                                                         ),
@@ -10382,7 +10486,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -10420,7 +10524,9 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                               ),
                                                             ],
                                                           ),
-                                                          idStatus == 2
+                                                          idStatus == null &&
+                                                                  idStatusEdit ==
+                                                                      2
                                                               ? BootstrapRow(
                                                                   children: <BootstrapCol>[
                                                                     BootstrapCol(
@@ -10534,14 +10640,14 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                 });
                                                                               },
                                                                               dropdownBuilder: (context, selectedItem) => Text(
-                                                                                alasanLp != '' ? alasanLp.toUpperCase() : "Alasan lost prospect",
+                                                                                alasanLp != '' ? alasanLp.toUpperCase() : alasanLpEdit.toUpperCase(),
                                                                                 style: textStyleColorWhite,
                                                                               ),
                                                                             ),
                                                                           ),
                                                                           Visibility(
                                                                             visible:
-                                                                                false,
+                                                                                true,
                                                                             child:
                                                                                 TextFormField(
                                                                               controller: alasanLostProspectController,
@@ -10568,35 +10674,54 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                       ),
                                                                     ),
                                                                     BootstrapCol(
-                                                                        sizes:
-                                                                            'col-md-6 col-12',
-                                                                        child:
-                                                                            Column(
-                                                                          children: [
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
-                                                                              child: Align(
-                                                                                alignment: Alignment.centerLeft,
-                                                                                child: Text(
-                                                                                  "keterangan :",
-                                                                                  style: textStyleColorWhite,
-                                                                                ),
+                                                                      sizes:
+                                                                          'col-md-6 col-12',
+                                                                      child:
+                                                                          Column(
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                15),
+                                                                            child:
+                                                                                Align(
+                                                                              alignment: Alignment.centerLeft,
+                                                                              child: Text(
+                                                                                "keterangan :",
+                                                                                style: textStyleColorWhite,
                                                                               ),
                                                                             ),
-                                                                            Padding(
-                                                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                                                                              child: TextFormField(
-                                                                                style: const TextStyle(
-                                                                                  color: Colors.white,
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                20),
+                                                                            child:
+                                                                                TextFormField(
+                                                                              style: const TextStyle(
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                              autocorrect: false,
+                                                                              controller: keteranganController,
+                                                                              textInputAction: TextInputAction.next,
+                                                                              decoration: InputDecoration(
+                                                                                hintText: 'Keterangan',
+                                                                                hintStyle: textStyleColorWhite,
+                                                                                labelText: 'Keterangan',
+                                                                                labelStyle: const TextStyle(
+                                                                                  color: Color.fromARGB(
+                                                                                    255,
+                                                                                    255,
+                                                                                    255,
+                                                                                    255,
+                                                                                  ),
                                                                                 ),
-                                                                                autocorrect: false,
-                                                                                controller: keteranganController,
-                                                                                textInputAction: TextInputAction.next,
-                                                                                decoration: InputDecoration(
-                                                                                  hintText: 'Keterangan',
-                                                                                  hintStyle: textStyleColorWhite,
-                                                                                  labelText: 'Keterangan',
-                                                                                  labelStyle: const TextStyle(
+                                                                                enabledBorder: const OutlineInputBorder(
+                                                                                  borderSide: BorderSide(
                                                                                     color: Color.fromARGB(
                                                                                       255,
                                                                                       255,
@@ -10604,41 +10729,237 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                       255,
                                                                                     ),
                                                                                   ),
-                                                                                  enabledBorder: const OutlineInputBorder(
-                                                                                    borderSide: BorderSide(
-                                                                                      color: Color.fromARGB(
-                                                                                        255,
-                                                                                        255,
-                                                                                        255,
-                                                                                        255,
-                                                                                      ),
+                                                                                ),
+                                                                                focusedBorder: OutlineInputBorder(
+                                                                                  borderSide: const BorderSide(
+                                                                                    color: Color.fromARGB(
+                                                                                      255,
+                                                                                      255,
+                                                                                      255,
+                                                                                      255,
                                                                                     ),
+                                                                                    width: 2,
                                                                                   ),
-                                                                                  focusedBorder: OutlineInputBorder(
-                                                                                    borderSide: const BorderSide(
-                                                                                      color: Color.fromARGB(
-                                                                                        255,
-                                                                                        255,
-                                                                                        255,
-                                                                                        255,
-                                                                                      ),
-                                                                                      width: 2,
-                                                                                    ),
-                                                                                    borderRadius: BorderRadius.circular(10.0),
-                                                                                  ),
+                                                                                  borderRadius: BorderRadius.circular(10.0),
                                                                                 ),
                                                                               ),
                                                                             ),
-                                                                          ],
-                                                                        )),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
                                                                   ],
                                                                 )
-                                                              : BootstrapRow(
-                                                                  children: <BootstrapCol>[
-                                                                      BootstrapCol(
+                                                              : idStatus == 2
+                                                                  ? BootstrapRow(
+                                                                      children: <BootstrapCol>[
+                                                                        BootstrapCol(
+                                                                          sizes:
+                                                                              'col-md-6 col-12',
                                                                           child:
-                                                                              const Text("")),
-                                                                    ]),
+                                                                              Column(
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                                                                child: Align(
+                                                                                  alignment: Alignment.centerLeft,
+                                                                                  child: Text(
+                                                                                    "Alasan Lost Prospect :",
+                                                                                    style: textStyleColorWhite,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                                                                child: DropdownSearch<ModelSelect>(
+                                                                                  popupProps: PopupProps.dialog(
+                                                                                    // showSelectedItems: true,
+                                                                                    dialogProps: const DialogProps(
+                                                                                      shape: Border.symmetric(vertical: BorderSide.none),
+                                                                                    ),
+                                                                                    showSearchBox: true,
+                                                                                    searchFieldProps: TextFieldProps(
+                                                                                      decoration: InputDecoration(
+                                                                                        hintText: "Search..",
+                                                                                        enabledBorder: OutlineInputBorder(
+                                                                                          borderSide: const BorderSide(
+                                                                                            color: Color.fromARGB(
+                                                                                              255,
+                                                                                              134,
+                                                                                              134,
+                                                                                              134,
+                                                                                            ),
+                                                                                            width: 2,
+                                                                                          ),
+                                                                                          borderRadius: BorderRadius.circular(10.0),
+                                                                                        ),
+                                                                                        focusedBorder: OutlineInputBorder(
+                                                                                          borderSide: const BorderSide(
+                                                                                            color: Color.fromARGB(
+                                                                                              255,
+                                                                                              146,
+                                                                                              2,
+                                                                                              2,
+                                                                                            ),
+                                                                                            width: 2,
+                                                                                          ),
+                                                                                          borderRadius: BorderRadius.circular(10.0),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  items: alasanLpOptions,
+                                                                                  itemAsString: (ModelSelect alasanLp) => alasanLp.value.toUpperCase(),
+                                                                                  dropdownDecoratorProps: DropDownDecoratorProps(
+                                                                                    dropdownSearchDecoration: InputDecoration(
+                                                                                      hintStyle: textStyleColorWhite,
+                                                                                      labelText: 'Alasan Lost Prospect',
+                                                                                      labelStyle: const TextStyle(
+                                                                                        color: Color.fromARGB(
+                                                                                          255,
+                                                                                          255,
+                                                                                          255,
+                                                                                          255,
+                                                                                        ),
+                                                                                      ),
+                                                                                      enabledBorder: const OutlineInputBorder(
+                                                                                        borderSide: BorderSide(
+                                                                                          color: Color.fromARGB(
+                                                                                            255,
+                                                                                            255,
+                                                                                            255,
+                                                                                            255,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                      focusedBorder: OutlineInputBorder(
+                                                                                        borderSide: const BorderSide(
+                                                                                          color: Color.fromARGB(
+                                                                                            255,
+                                                                                            255,
+                                                                                            255,
+                                                                                            255,
+                                                                                          ),
+                                                                                          width: 2,
+                                                                                        ),
+                                                                                        borderRadius: BorderRadius.circular(10.0),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  onChanged: (ModelSelect? value) {
+                                                                                    setState(() {
+                                                                                      idAlasanLp = value!.id;
+                                                                                      alasanLp = value.value;
+                                                                                      alasanLostProspectController.text = idAlasanLp.toString();
+                                                                                    });
+                                                                                  },
+                                                                                  dropdownBuilder: (context, selectedItem) => Text(
+                                                                                    alasanLp != '' ? alasanLp.toUpperCase() : alasanLpEdit.toUpperCase(),
+                                                                                    style: textStyleColorWhite,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Visibility(
+                                                                                visible: true,
+                                                                                child: TextFormField(
+                                                                                  controller: alasanLostProspectController,
+                                                                                  autocorrect: false,
+                                                                                  style: const TextStyle(color: Colors.white),
+                                                                                  textInputAction: TextInputAction.next,
+                                                                                  decoration: InputDecoration(
+                                                                                    hintText: 'Alasan Lost Prospect',
+                                                                                    hintStyle: textStyleColorWhite,
+                                                                                    enabledBorder: const OutlineInputBorder(
+                                                                                      borderSide: BorderSide(
+                                                                                        color: Color.fromARGB(
+                                                                                          255,
+                                                                                          255,
+                                                                                          255,
+                                                                                          255,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                        BootstrapCol(
+                                                                          sizes:
+                                                                              'col-md-6 col-12',
+                                                                          child:
+                                                                              Column(
+                                                                            children: [
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 15),
+                                                                                child: Align(
+                                                                                  alignment: Alignment.centerLeft,
+                                                                                  child: Text(
+                                                                                    "keterangan :",
+                                                                                    style: textStyleColorWhite,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              Padding(
+                                                                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                                                                child: TextFormField(
+                                                                                  style: const TextStyle(
+                                                                                    color: Colors.white,
+                                                                                  ),
+                                                                                  autocorrect: false,
+                                                                                  controller: keteranganController,
+                                                                                  textInputAction: TextInputAction.next,
+                                                                                  decoration: InputDecoration(
+                                                                                    hintText: 'Keterangan',
+                                                                                    hintStyle: textStyleColorWhite,
+                                                                                    labelText: 'Keterangan',
+                                                                                    labelStyle: const TextStyle(
+                                                                                      color: Color.fromARGB(
+                                                                                        255,
+                                                                                        255,
+                                                                                        255,
+                                                                                        255,
+                                                                                      ),
+                                                                                    ),
+                                                                                    enabledBorder: const OutlineInputBorder(
+                                                                                      borderSide: BorderSide(
+                                                                                        color: Color.fromARGB(
+                                                                                          255,
+                                                                                          255,
+                                                                                          255,
+                                                                                          255,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    focusedBorder: OutlineInputBorder(
+                                                                                      borderSide: const BorderSide(
+                                                                                        color: Color.fromARGB(
+                                                                                          255,
+                                                                                          255,
+                                                                                          255,
+                                                                                          255,
+                                                                                        ),
+                                                                                        width: 2,
+                                                                                      ),
+                                                                                      borderRadius: BorderRadius.circular(10.0),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    )
+                                                                  : BootstrapRow(
+                                                                      children: <BootstrapCol>[
+                                                                        BootstrapCol(
+                                                                          child:
+                                                                              const Text(""),
+                                                                        ),
+                                                                      ],
+                                                                    ),
                                                           BootstrapRow(
                                                             children: [
                                                               BootstrapCol(
