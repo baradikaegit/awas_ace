@@ -8,11 +8,10 @@ import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/support/api_error.dart';
 import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
-import 'package:awas_ace/support/succes_submit.dart';
 import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/model/custtypemodel.dart';
 import 'package:awas_ace/widgets/model/kisaranhargamodel.dart';
-import 'package:awas_ace/widgets/model/prospectmodel.dart';
+import 'package:awas_ace/widgets/model/prospectupdatemodel.dart';
 import 'package:awas_ace/widgets/model/sumberdatamodel.dart';
 import 'package:awas_ace/widgets/model/tipepelangganmodel.dart';
 import 'package:awas_ace/widgets/model/vfueltransmisimodel.dart';
@@ -50,6 +49,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
   // final formkey = GlobalKey<FormState>();
 
   //STEP 1
+  final TextEditingController prospectHIdController = TextEditingController();
   TextEditingController tglContactController = TextEditingController();
   final TextEditingController branchBusinessIDController =
       TextEditingController();
@@ -493,7 +493,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
     super.initState();
     // tglContactController.text = dateNow;
 
-    // q1Controller.text = '0';
+    q1Controller.text = '0';
     q2Controller.text = '0';
     q3Controller.text = '0';
     q4Controller.text = '0';
@@ -963,6 +963,9 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                           .listProspectSalesDetail![i]
                                           .meetingPoint;
 
+                                      prospectHIdController.text =
+                                          data.listProspectSalesDetail![i].iD;
+
                                       prospectCodeController.text = data
                                           .listProspectSalesDetail![i]
                                           .prospectCode;
@@ -1107,7 +1110,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                             kodePosS2Edit;
                                         idKodePosS2Controller.text =
                                             idKodePosEdit;
-                                        idAreaController.text = idAreaS2Edit;
+                                        idAreaS2Controller.text = idAreaS2Edit;
                                         areaS2Controller.text = areaS2Edit;
                                       } else {
                                         nameKabS2Edit = "Belum memilih kota";
@@ -1373,9 +1376,14 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                             ? alasanLpEdit =
                                                                 'Force Major'
                                                             : alasanLpEdit =
-                                                                'Alasan lost prospect';
-                                        alasanLostProspectController.text =
-                                            idAlasanLpEdit.toString();
+                                                                'Alasann lost prospect';
+
+                                        idAlasanLpEdit == null
+                                            ? alasanLostProspectController
+                                                .text = '0'
+                                            : alasanLostProspectController
+                                                    .text =
+                                                idAlasanLpEdit.toString();
                                         keteranganController.text = data
                                             .listProspectSalesDetail![i]
                                             .trackingInfo;
@@ -1607,7 +1615,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -1639,7 +1647,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -1675,6 +1683,38 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
+                                                                            prospectHIdController,
+                                                                        autocorrect:
+                                                                            false,
+                                                                        textInputAction:
+                                                                            TextInputAction.next,
+                                                                        decoration:
+                                                                            InputDecoration(
+                                                                          hintText:
+                                                                              'ID',
+                                                                          hintStyle:
+                                                                              textStyleColorWhite,
+                                                                          enabledBorder:
+                                                                              const OutlineInputBorder(
+                                                                            borderSide:
+                                                                                BorderSide(
+                                                                              color: Color.fromARGB(
+                                                                                255,
+                                                                                255,
+                                                                                255,
+                                                                                255,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    Visibility(
+                                                                      visible:
+                                                                          true,
+                                                                      child:
+                                                                          TextFormField(
+                                                                        controller:
                                                                             prospectCodeController,
                                                                         autocorrect:
                                                                             false,
@@ -1683,7 +1723,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                         decoration:
                                                                             InputDecoration(
                                                                           hintText:
-                                                                              'SalesmanID',
+                                                                              'Prospect Code',
                                                                           hintStyle:
                                                                               textStyleColorWhite,
                                                                           enabledBorder:
@@ -2813,7 +2853,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -2972,7 +3012,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -3223,7 +3263,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -3447,7 +3487,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -3479,7 +3519,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -4171,7 +4211,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -5299,7 +5339,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -5462,7 +5502,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -5862,7 +5902,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -6068,7 +6108,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -6313,7 +6353,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -6554,7 +6594,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -6947,7 +6987,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -7161,7 +7201,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         style: const TextStyle(
@@ -7421,7 +7461,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         style: const TextStyle(
@@ -7680,7 +7720,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -7969,7 +8009,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -8155,7 +8195,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -8377,7 +8417,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -8595,7 +8635,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -8910,7 +8950,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -9094,7 +9134,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -9282,7 +9322,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                     ),
                                                                     Visibility(
                                                                       visible:
-                                                                          false,
+                                                                          true,
                                                                       child:
                                                                           TextFormField(
                                                                         controller:
@@ -9537,7 +9577,7 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                                     2,
                                                                                   ),
                                                                                   side: const BorderSide(color: Colors.white),
-                                                                                  value: data.listProspectSalesDetail![0].q1 == '1' ? checkQ1Edit : checkQ1,
+                                                                                  value: checkQ1,
                                                                                   onChanged: (bool? value) {
                                                                                     setState(() {
                                                                                       checkQ1 = value!;
@@ -11031,73 +11071,130 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
                                                                         ),
                                                                         onPressed:
                                                                             () async {
-                                                                          if (formkey
-                                                                              .currentState!
-                                                                              .validate()) {
-                                                                            var prospect =
-                                                                                ListProspectData(
-                                                                              dateContact: tglContactController.text,
-                                                                              meetingPoint: lokasiBertemuController.text,
-                                                                              postalCodeID: idKodePosController.text,
-                                                                              ringArea: idAreaController.text,
-                                                                              referensiID: sumberDataController.text,
-                                                                              rencanaPembelian: int.tryParse(rencanaPembelianController.text),
-                                                                              branchBusinessID: branchBusinessIDController.text,
-                                                                              salesmanHeaderID: salesmanIDController.text,
-                                                                              prospectStatus: int.tryParse(prospectStatusController.text),
-                                                                              customerName: nameContactContactController.text,
-                                                                              handphone1: noHP1ContactController.text,
-                                                                              handphone2: noHP2ContactController.text,
-                                                                              gender: int.tryParse(jKController.text),
-                                                                              customerAddres: alamatController.text,
-                                                                              postaclCodeACEID: idKodePosS2Controller.text,
-                                                                              ringAreaACE: int.tryParse(idAreaS2Controller.text),
-                                                                              email: emailController.text,
-                                                                              customerTypeID: idCustTypeS2Controller.text,
-                                                                              pekerjaan: jabatanController.text,
-                                                                              kisaranHargaID: hKendaraanController.text,
-                                                                              customerStatusID: tipePelangganController.text,
-                                                                              vehicleGroupID1: vGroupController.text,
-                                                                              vehicleYear1: tahunController.text,
-                                                                              vehicleFuelID1: vFuelController.text,
-                                                                              transmisiVehicle1: vTransmisiController.text,
-                                                                              vehicleGroupID2: vGroup2Controller.text,
-                                                                              vehicleYear2: tahun2Controller.text,
-                                                                              vehicleFuelID2: vFuel2Controller.text,
-                                                                              transmisiVehicle2: vTransmisi2Controller.text,
-                                                                              payment: cashLeasingController.text,
-                                                                              downPayment: dPController.text,
-                                                                              tenor: tenorController.text,
-                                                                              q1: int.tryParse(q1Controller.text),
-                                                                              q2: int.tryParse(q2Controller.text),
-                                                                              q3: int.tryParse(q3Controller.text),
-                                                                              q4: int.tryParse(q4Controller.text),
-                                                                              q5: int.tryParse(q5Controller.text),
-                                                                              q6: int.tryParse(q6Controller.text),
-                                                                              trackingStatus: int.tryParse(statusController.text),
-                                                                              trackingReason: int.tryParse(alasanLostProspectController.text),
-                                                                              trackingInfo: keteranganController.text,
-                                                                            );
+                                                                          // if (formkey
+                                                                          //     .currentState!
+                                                                          //     .validate()) {
+                                                                          var updateProspect =
+                                                                              ListProspectUpdateResponse(
+                                                                            prospectHId:
+                                                                                prospectHIdController.text,
+                                                                            prospectCode:
+                                                                                prospectCodeController.text,
+                                                                            dateContact:
+                                                                                tglContactController.text,
+                                                                            meetingPoint:
+                                                                                lokasiBertemuController.text,
+                                                                            postalCodeID:
+                                                                                idKodePosController.text,
+                                                                            ringArea:
+                                                                                idAreaController.text,
+                                                                            referensiID:
+                                                                                sumberDataController.text,
+                                                                            rencanaPembelian:
+                                                                                int.tryParse(rencanaPembelianController.text),
+                                                                            prospectStatus:
+                                                                                int.tryParse(prospectStatusController.text),
+                                                                            customerName:
+                                                                                nameContactContactController.text,
+                                                                            handphone1:
+                                                                                noHP1ContactController.text,
+                                                                            handphone2:
+                                                                                noHP2ContactController.text,
+                                                                            gender:
+                                                                                int.tryParse(jKController.text),
+                                                                            customerAddres:
+                                                                                alamatController.text,
+                                                                            postaclCodeACEID:
+                                                                                idKodePosS2Controller.text,
+                                                                            ringAreaACE:
+                                                                                int.tryParse(idAreaS2Controller.text),
+                                                                            email:
+                                                                                emailController.text,
+                                                                            customerTypeID:
+                                                                                idCustTypeS2Controller.text,
+                                                                            pekerjaan:
+                                                                                jabatanController.text,
+                                                                            kisaranHargaID:
+                                                                                hKendaraanController.text,
+                                                                            customerStatusID:
+                                                                                tipePelangganController.text,
+                                                                            vehicleGroupID1:
+                                                                                vGroupController.text,
+                                                                            vehicleYear1:
+                                                                                tahunController.text,
+                                                                            vehicleFuelID1:
+                                                                                vFuelController.text,
+                                                                            transmisiVehicle1:
+                                                                                vTransmisiController.text,
+                                                                            vehicleGroupID2:
+                                                                                vGroup2Controller.text,
+                                                                            vehicleYear2:
+                                                                                tahun2Controller.text,
+                                                                            vehicleFuelID2:
+                                                                                vFuel2Controller.text,
+                                                                            transmisiVehicle2:
+                                                                                vTransmisi2Controller.text,
+                                                                            payment:
+                                                                                cashLeasingController.text,
+                                                                            downPayment:
+                                                                                dPController.text,
+                                                                            tenor:
+                                                                                tenorController.text,
+                                                                            q1: int.tryParse(q1Controller.text),
+                                                                            q2: int.tryParse(q2Controller.text),
+                                                                            q3: int.tryParse(q3Controller.text),
+                                                                            q4: int.tryParse(q4Controller.text),
+                                                                            q5: int.tryParse(q5Controller.text),
+                                                                            q6: int.tryParse(q6Controller.text),
+                                                                            trackingStatus:
+                                                                                int.tryParse(statusController.text),
+                                                                            trackingReason:
+                                                                                int.tryParse(alasanLostProspectController.text),
+                                                                            trackingInfo:
+                                                                                keteranganController.text,
+                                                                          );
 
-                                                                            try {
-                                                                              var resp = await ref.read(prospectFormProvider).onSubmitProspect(prospect);
+                                                                          try {
+                                                                            var resp =
+                                                                                await ref.read(updateProspectFormProviderDetail).onUpdateProspect(updateProspect);
 
-                                                                              if (resp.statusMessage == "Sucess") {
-                                                                                // lokasiBertemuController
-                                                                                //     .clear();
-                                                                                tipePelangganController.clear();
-                                                                                formkey.currentState!.reset();
-                                                                              }
+                                                                            print(" 1: ${tglContactController.text} ${prospectHIdController.text} ${prospectCodeController.text}");
+                                                                            print(" 2: ${lokasiBertemuController.text} ${idKodePosController.text} ${idAreaController.text}");
+                                                                            print(" 3: ${sumberDataController.text} ${int.tryParse(rencanaPembelianController.text)} ${nameContactContactController.text}");
+                                                                            print(" 4: ${int.tryParse(prospectStatusController.text)} ${int.tryParse(rencanaPembelianController.text)} ${nameContactContactController.text}");
+                                                                            print(" 5: ${noHP1ContactController.text} ${noHP2ContactController.text} ${int.tryParse(jKController.text)}");
+                                                                            print(" 6: ${alamatController.text} ${idKodePosS2Controller.text} ${int.tryParse(idAreaS2Controller.text)}");
+                                                                            print(" 7: ${emailController.text} ${idCustTypeS2Controller.text} ${jabatanController.text}");
+                                                                            print(" 8: ${hKendaraanController.text} ${tipePelangganController.text} ${vGroupController.text}");
+                                                                            print(" 9: ${tahunController.text} ${vFuelController.text} ${vTransmisiController.text}");
+                                                                            print(" 10: ${vGroup2Controller.text} ${tahun2Controller.text} ${vFuel2Controller.text}");
+                                                                            print(" 11: ${vTransmisi2Controller.text} ${cashLeasingController.text} ${dPController.text}");
+                                                                            print(" 12: ${tenorController.text} ${int.tryParse(q1Controller.text)} ${int.tryParse(q2Controller.text)}");
+                                                                            print(" 13: ${int.tryParse(q3Controller.text)} ${int.tryParse(q4Controller.text)} ${int.tryParse(q5Controller.text)}");
+                                                                            print(" 14: ${int.tryParse(q6Controller.text)} ${int.tryParse(statusController.text)} ${int.tryParse(alasanLostProspectController.text)}");
+                                                                            print(" 15: ${keteranganController.text} ");
 
-                                                                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomePage()), (route) => false);
-
-                                                                              successSubmit(context, resp);
-                                                                            } catch (e) {
-                                                                              Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomePage()), (route) => false);
-
-                                                                              catchError(context, e);
+                                                                            if (resp.statusMessage ==
+                                                                                "Success Updated") {
+                                                                              tglContactController.clear();
+                                                                              lokasiBertemuController.clear();
+                                                                              formkey.currentState!.reset();
                                                                             }
+
+                                                                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomePage()),
+                                                                                (route) => false);
+
+                                                                            sucessUpdate(context);
+                                                                          } catch (e) {
+                                                                            Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) => const HomePage()),
+                                                                                (route) => false);
+
+                                                                            catchError(
+                                                                              context,
+                                                                              e,
+                                                                            );
                                                                           }
+                                                                          // }
                                                                         },
                                                                         child:
                                                                             Stack(
@@ -11150,6 +11247,24 @@ class _ProspectEditPageState extends ConsumerState<ProspectEditPage>
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void sucessUpdate(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        duration: Duration(seconds: 3),
+        backgroundColor: ("Sucess Updated" == "Sucess Updated")
+            ? Color.fromARGB(
+                255,
+                1,
+                209,
+                29,
+              )
+            : Colors.red,
+        content: Text("Message : Sucess Updated"),
       ),
     );
   }
