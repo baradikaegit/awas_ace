@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/model/prospectmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesdetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
+import 'package:awas_ace/widgets/model/prospectupdatemodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -142,4 +143,25 @@ final prospectSalesdetail = FutureProvider.autoDispose
   final repositoryProspectSalesDetail = ref.watch(prospectRepositoryProvider);
   return repositoryProspectSalesDetail
       .fecthListDataProspectSalesDetail(linkObj);
+});
+
+//update prospect sales
+class UpdateProspectFormNotifier extends ChangeNotifier {
+  UpdateProspectFormNotifier(this.ref) : super();
+
+  final ProviderElementBase ref;
+
+  Future<UpdateProspectResponse> onUpdateProspect(
+      ListProspectUpdateResponse updateProspect) async {
+    final repositoryprospect = ref.read(prospectRepositoryProvider);
+    late UpdateProspectResponse resp;
+
+    resp = await repositoryprospect.updateNewProspectSales(updateProspect);
+    return resp;
+  }
+}
+
+final updateProspectFormProviderDetail =
+    ChangeNotifierProvider.autoDispose<UpdateProspectFormNotifier>((ref) {
+  return UpdateProspectFormNotifier(ref as ProviderElementBase);
 });

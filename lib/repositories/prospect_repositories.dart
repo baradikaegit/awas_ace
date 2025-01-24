@@ -9,6 +9,7 @@ import 'package:awas_ace/widgets/model/prospectmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesdetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
+import 'package:awas_ace/widgets/model/prospectupdatemodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,6 +29,8 @@ abstract class IProspectRepository {
       String linkObj);
   Future<ProspectSalesDetailResponse> fecthListDataProspectSalesDetail(
       String linkObj);
+  Future<UpdateProspectResponse> updateNewProspectSales(
+      ListProspectUpdateResponse updateProspect);
 }
 
 class ProspectRepositories implements IProspectRepository {
@@ -271,5 +274,34 @@ class ProspectRepositories implements IProspectRepository {
     var responseGetProspectSalesDetail =
         ProspectSalesDetailResponse.fromJson(jsonObjProspectSalesDetail);
     return responseGetProspectSalesDetail;
+  }
+
+  @override
+  Future<UpdateProspectResponse> updateNewProspectSales(
+      ListProspectUpdateResponse updateProspect) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    final Map<String, String> headers = {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    };
+
+    var urlUpdateProspect =
+        "${_host}UpdateProspect/${updateProspect.prospectHId}/${updateProspect.prospectCode}";
+    var body = jsonEncode(updateProspect);
+
+    var resultUpdateProspect = await http.put(
+      Uri.parse(urlUpdateProspect),
+      body: body,
+      headers: headers,
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    final jsonObjectUpdateProspect = json.decode(resultUpdateProspect.body);
+    var responseUpdateProspect =
+        UpdateProspectResponse.fromJson(jsonObjectUpdateProspect);
+    return responseUpdateProspect;
   }
 }
