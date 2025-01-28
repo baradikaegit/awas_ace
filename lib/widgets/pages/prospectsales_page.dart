@@ -1227,133 +1227,150 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
                                                       0,
                                                       10,
                                                     ),
-                                                    child: Container(
-                                                      constraints:
-                                                          const BoxConstraints(
-                                                        minHeight: 110,
-                                                        minWidth:
-                                                            double.infinity,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        boxShadow: const [
-                                                          BoxShadow(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    176,
-                                                                    115,
-                                                                    184,
-                                                                    51),
-                                                            blurRadius: 3.0,
-                                                            offset:
-                                                                Offset(0, 0),
-                                                            spreadRadius: 1.1,
-                                                          ),
-                                                        ],
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .transparent,
-                                                            width: 2),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                        // color: const Color.fromARGB(
-                                                        //     176, 130, 131, 128),
-                                                      ),
-                                                      child: Column(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    item.prospectCode,
-                                                                    style:
-                                                                        textStyleColorWhiteBI,
-                                                                  ),
-                                                                  Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      border: Border.all(
-                                                                          color:
-                                                                              Colors.grey),
-                                                                      borderRadius:
-                                                                          const BorderRadius
-                                                                              .all(
-                                                                        Radius.circular(
-                                                                            10.0),
-                                                                      ),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        var prospectCode =
+                                                            item.prospectCode;
+                                                        var salesCode =
+                                                            item.salesCode;
+
+                                                        Navigator.pushNamed(
+                                                          context,
+                                                          ProspectEditPage
+                                                              .routeName,
+                                                          arguments:
+                                                              '$prospectCode/$salesCode',
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        constraints:
+                                                            const BoxConstraints(
+                                                          minHeight: 110,
+                                                          minWidth:
+                                                              double.infinity,
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          boxShadow: const [
+                                                            BoxShadow(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      176,
+                                                                      115,
+                                                                      184,
+                                                                      51),
+                                                              blurRadius: 3.0,
+                                                              offset:
+                                                                  Offset(0, 0),
+                                                              spreadRadius: 1.1,
+                                                            ),
+                                                          ],
+                                                          border: Border.all(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                          // color: const Color.fromARGB(
+                                                          //     176, 130, 131, 128),
+                                                        ),
+                                                        child: Column(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      0),
+                                                              child: Align(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      item.prospectCode,
+                                                                      style:
+                                                                          textStyleColorWhiteBI,
                                                                     ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .fromLTRB(
-                                                                          5,
-                                                                          0,
-                                                                          5,
-                                                                          0),
+                                                                    Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        border: Border.all(
+                                                                            color:
+                                                                                Colors.grey),
+                                                                        borderRadius:
+                                                                            const BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              10.0),
+                                                                        ),
+                                                                      ),
                                                                       child:
-                                                                          Text(
-                                                                        item.prospectDate,
-                                                                        style:
-                                                                            textStyleColorWhite,
+                                                                          Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .fromLTRB(
+                                                                            5,
+                                                                            0,
+                                                                            5,
+                                                                            0),
+                                                                        child:
+                                                                            Text(
+                                                                          item.prospectDate,
+                                                                          style:
+                                                                              textStyleColorWhite,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                ],
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                item.customerName,
-                                                                style:
-                                                                    textStyleColorWhite,
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      0),
+                                                              child: Align(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Text(
+                                                                  item.customerName,
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                item.meetingPoint,
-                                                                style:
-                                                                    textStyleColorWhite,
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      0),
+                                                              child: Align(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Text(
+                                                                  item.meetingPoint,
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   )
@@ -1788,133 +1805,150 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                                       0,
                                                       10,
                                                     ),
-                                                    child: Container(
-                                                      constraints:
-                                                          const BoxConstraints(
-                                                        minHeight: 110,
-                                                        minWidth:
-                                                            double.infinity,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        boxShadow: const [
-                                                          BoxShadow(
-                                                            color:
-                                                                Color.fromARGB(
-                                                                    176,
-                                                                    115,
-                                                                    184,
-                                                                    51),
-                                                            blurRadius: 3.0,
-                                                            offset:
-                                                                Offset(0, 0),
-                                                            spreadRadius: 1.1,
-                                                          ),
-                                                        ],
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .transparent,
-                                                            width: 2),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                        // color: const Color.fromARGB(
-                                                        //     176, 130, 131, 128),
-                                                      ),
-                                                      child: Column(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    item.prospectCode,
-                                                                    style:
-                                                                        textStyleColorWhiteBI,
-                                                                  ),
-                                                                  Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      border: Border.all(
-                                                                          color:
-                                                                              Colors.grey),
-                                                                      borderRadius:
-                                                                          const BorderRadius
-                                                                              .all(
-                                                                        Radius.circular(
-                                                                            10.0),
-                                                                      ),
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        var prospectCode =
+                                                            item.prospectCode;
+                                                        var salesCode =
+                                                            item.salesCode;
+
+                                                        Navigator.pushNamed(
+                                                          context,
+                                                          ProspectEditPage
+                                                              .routeName,
+                                                          arguments:
+                                                              '$prospectCode/$salesCode',
+                                                        );
+                                                      },
+                                                      child: Container(
+                                                        constraints:
+                                                            const BoxConstraints(
+                                                          minHeight: 110,
+                                                          minWidth:
+                                                              double.infinity,
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          boxShadow: const [
+                                                            BoxShadow(
+                                                              color: Color
+                                                                  .fromARGB(
+                                                                      176,
+                                                                      115,
+                                                                      184,
+                                                                      51),
+                                                              blurRadius: 3.0,
+                                                              offset:
+                                                                  Offset(0, 0),
+                                                              spreadRadius: 1.1,
+                                                            ),
+                                                          ],
+                                                          border: Border.all(
+                                                              color: Colors
+                                                                  .transparent,
+                                                              width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(
+                                                                      10.0),
+                                                          // color: const Color.fromARGB(
+                                                          //     176, 130, 131, 128),
+                                                        ),
+                                                        child: Column(
+                                                          children: [
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      0),
+                                                              child: Align(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    Text(
+                                                                      item.prospectCode,
+                                                                      style:
+                                                                          textStyleColorWhiteBI,
                                                                     ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .fromLTRB(
-                                                                          5,
-                                                                          0,
-                                                                          5,
-                                                                          0),
+                                                                    Container(
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        color: Colors
+                                                                            .grey,
+                                                                        border: Border.all(
+                                                                            color:
+                                                                                Colors.grey),
+                                                                        borderRadius:
+                                                                            const BorderRadius.all(
+                                                                          Radius.circular(
+                                                                              10.0),
+                                                                        ),
+                                                                      ),
                                                                       child:
-                                                                          Text(
-                                                                        item.prospectDate,
-                                                                        style:
-                                                                            textStyleColorWhite,
+                                                                          Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .fromLTRB(
+                                                                            5,
+                                                                            0,
+                                                                            5,
+                                                                            0),
+                                                                        child:
+                                                                            Text(
+                                                                          item.prospectDate,
+                                                                          style:
+                                                                              textStyleColorWhite,
+                                                                        ),
                                                                       ),
                                                                     ),
-                                                                  ),
-                                                                ],
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                item.customerName,
-                                                                style:
-                                                                    textStyleColorWhite,
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      0),
+                                                              child: Align(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Text(
+                                                                  item.customerName,
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                item.meetingPoint,
-                                                                style:
-                                                                    textStyleColorWhite,
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                      .fromLTRB(
+                                                                      10,
+                                                                      10,
+                                                                      10,
+                                                                      0),
+                                                              child: Align(
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                                child: Text(
+                                                                  item.meetingPoint,
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                ),
                                                               ),
                                                             ),
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   )
