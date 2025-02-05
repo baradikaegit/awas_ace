@@ -76,7 +76,7 @@ class _ReportPageState extends State<ReportPage> {
     'bookingshow.png'
   ];
 
-  List linkPageASGR = ['/', '/', '/', '/', '/', '/'];
+  List linkPageASGR = ['/', '/prospekSaGRPage', '/', '/', '/', '/'];
 
   List menuRolesBP = [
     'Funneling',
@@ -435,7 +435,13 @@ class _ReportPageState extends State<ReportPage> {
                                   child: FlipAnimation(
                                     child: InkWell(
                                       onTap: () => Navigator.pushNamed(
-                                          context, linkPageASGR[index]),
+                                        context,
+                                        linkPageASGR[index],
+                                        arguments: linkPageASGR[index] ==
+                                                '/prospekSaGRPage'
+                                            ? '$_monthNow/$_yearNow/MTD'
+                                            : null,
+                                      ),
                                       child: Column(
                                         children: <Widget>[
                                           const SizedBox(

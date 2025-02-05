@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:awas_ace/widgets/main_page.dart';
+import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity.dart';
+import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity_bysaname.dart';
 import 'package:awas_ace/widgets/pages/call_page.dart';
 import 'package:awas_ace/widgets/pages/changepass_page.dart';
 import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
@@ -263,6 +265,10 @@ class MyApp extends StatelessWidget {
         StockByModelVbranchPage.routeName: (context) => StockByModelVbranchPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
+        ProspekSaGRPage.routeName: (context) => ProspekSaGRPage(
+            linkPageObj: ModalRoute.of(context)!.settings.arguments),
+        ProspekSaGRBySANamePage.routeName: (context) => ProspekSaGRBySANamePage(
+            linkPageObj: ModalRoute.of(context)!.settings.arguments),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
       },
