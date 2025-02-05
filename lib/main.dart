@@ -4,6 +4,8 @@ import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity_bysaname.dart';
+import 'package:awas_ace/widgets/pages/bodypaint/prospeksabpvsvalidity.dart';
+import 'package:awas_ace/widgets/pages/bodypaint/prospeksabpvsvalidity_bysaname.dart';
 import 'package:awas_ace/widgets/pages/call_page.dart';
 import 'package:awas_ace/widgets/pages/changepass_page.dart';
 import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
@@ -269,6 +271,12 @@ class MyApp extends StatelessWidget {
             linkPageObj: ModalRoute.of(context)!.settings.arguments),
         ProspekSaGRBySANamePage.routeName: (context) => ProspekSaGRBySANamePage(
             linkPageObj: ModalRoute.of(context)!.settings.arguments),
+        ProspekSaBPPage.routeName: (context) => ProspekSaBPPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ProspekSaBPBySANamePage.routeName: (context) => ProspekSaBPBySANamePage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
       },

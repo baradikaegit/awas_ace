@@ -94,7 +94,7 @@ class _ReportPageState extends State<ReportPage> {
     'contributor.png',
   ];
 
-  List linkPageBP = ['/', '/', '/', '/', '/'];
+  List linkPageBP = ['/', '/prospekSaBPPage', '/', '/', '/'];
 
   List menuRolesGeneral = [
     'Monitoring Poin',
@@ -645,7 +645,13 @@ class _ReportPageState extends State<ReportPage> {
                                   child: FlipAnimation(
                                     child: InkWell(
                                       onTap: () => Navigator.pushNamed(
-                                          context, linkPageBP[index]),
+                                        context,
+                                        linkPageBP[index],
+                                        arguments: linkPageBP[index] ==
+                                                '/prospekSaBPPage'
+                                            ? '$_monthNow/$_yearNow/MTD'
+                                            : null,
+                                      ),
                                       child: Column(
                                         children: <Widget>[
                                           const SizedBox(
