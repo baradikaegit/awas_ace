@@ -936,7 +936,7 @@ class _ProspekSaGRBySANamePageState extends State<ProspekSaGRBySANamePage> {
                                                                         ),
                                                                         child:
                                                                             Text(
-                                                                          "CABANG",
+                                                                          "SA NAME",
                                                                           style:
                                                                               textStyleColorWhiteB,
                                                                           maxLines:

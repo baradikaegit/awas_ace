@@ -1,9 +1,9 @@
-import 'package:awas_ace/provider/reportaftersales_provider.dart';
+import 'package:awas_ace/provider/reportbodypaint_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportafterslsprospeksagrmodel.dart';
+import 'package:awas_ace/widgets/model/reportafterslsprospeksabpmodel.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,7 +59,7 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
     DateFormat('yyyy').format(DateTime.utc(DateTime.now().year - 1))
   ];
 
-  List<ListRptAfterSlsProspekSaGRResponse> listRptProspekSaGRRes = [];
+  List<ListRptBodyPaintProspekSaBPResponse> listRptProspekSaBPRes = [];
 
   @override
   void initState() {
@@ -161,8 +161,8 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                     final String dateNow =
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
-                    final rptProspekSaGR =
-                        ref.watch(reportProspekSaGRBySAName(linkPageObj));
+                    final rptProspekSaBP =
+                        ref.watch(reportProspekSaBPBySAName(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -172,40 +172,40 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                                 child: SizedBox(
-                                  child: rptProspekSaGR.when(
+                                  child: rptProspekSaBP.when(
                                     data: (dataSelectOpt) {
-                                      if (dataSelectOpt.listRptProspekSaGR !=
+                                      if (dataSelectOpt.listRptProspekSaBP !=
                                           null) {
                                         String tipePeriode = dataSelectOpt
-                                                .listRptProspekSaGR!.isNotEmpty
+                                                .listRptProspekSaBP!.isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? 'MTD'
                                                 : dataSelectOpt
-                                                    .listRptProspekSaGR![0]
+                                                    .listRptProspekSaBP![0]
                                                     .periodTipe
                                             : '';
 
                                         String monthSelected = dataSelectOpt
-                                                .listRptProspekSaGR!.isNotEmpty
+                                                .listRptProspekSaBP!.isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? DateFormat('M')
                                                     .format(DateTime.now())
                                                 : dataSelectOpt
-                                                    .listRptProspekSaGR![0]
+                                                    .listRptProspekSaBP![0]
                                                     .month
                                                     .toString()
                                             : '';
 
                                         String yearSelected = dataSelectOpt
-                                                .listRptProspekSaGR!.isNotEmpty
+                                                .listRptProspekSaBP!.isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? DateFormat('yyyy')
                                                     .format(DateTime.now())
                                                 : dataSelectOpt
-                                                    .listRptProspekSaGR![0].year
+                                                    .listRptProspekSaBP![0].year
                                                     .toString()
                                             : '';
 
@@ -254,17 +254,17 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                                                                       newValTp!;
                                                                   var monthNow =
                                                                       dataSelectOpt
-                                                                          .listRptProspekSaGR![
+                                                                          .listRptProspekSaBP![
                                                                               0]
                                                                           .month;
                                                                   var yearNow =
                                                                       dataSelectOpt
-                                                                          .listRptProspekSaGR![
+                                                                          .listRptProspekSaBP![
                                                                               0]
                                                                           .year;
                                                                   var branch =
                                                                       dataSelectOpt
-                                                                          .listRptProspekSaGR![
+                                                                          .listRptProspekSaBP![
                                                                               0]
                                                                           .headerCode;
 
@@ -356,17 +356,17 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                                                                     newValMonth!;
                                                                 var yearNow =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaGR![
+                                                                        .listRptProspekSaBP![
                                                                             0]
                                                                         .year;
                                                                 var periodTipe =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaGR![
+                                                                        .listRptProspekSaBP![
                                                                             0]
                                                                         .periodTipe;
                                                                 var branch =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaGR![
+                                                                        .listRptProspekSaBP![
                                                                             0]
                                                                         .headerCode;
 
@@ -454,17 +454,17 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                                                                     newValYear!;
                                                                 var monthNow =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaGR![
+                                                                        .listRptProspekSaBP![
                                                                             0]
                                                                         .month;
                                                                 var periodTipe =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaGR![
+                                                                        .listRptProspekSaBP![
                                                                             0]
                                                                         .periodTipe;
                                                                 var branch =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaGR![
+                                                                        .listRptProspekSaBP![
                                                                             0]
                                                                         .headerCode;
 
@@ -585,7 +585,7 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                        "Periode : ${dataSelectOpt.listRptProspekSaGR![0].monthID} ${dataSelectOpt.listRptProspekSaGR![0].year}",
+                                                        "Periode : ${dataSelectOpt.listRptProspekSaBP![0].monthID} ${dataSelectOpt.listRptProspekSaBP![0].year}",
                                                         style: TextStyle(
                                                           color: const Color
                                                               .fromARGB(
@@ -683,19 +683,19 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                                 child: RefreshIndicator(
                                   onRefresh: () async {
                                     return ref.refresh(
-                                        reportProspekSaGRBySAName(
+                                        reportProspekSaBPBySAName(
                                             linkPageObj.toString()));
                                   },
-                                  child: rptProspekSaGR.when(
-                                    data: (dataProspekSaGR) {
-                                      listRptProspekSaGRRes.clear();
-                                      listRptProspekSaGRRes
-                                          .add(dataProspekSaGR);
+                                  child: rptProspekSaBP.when(
+                                    data: (dataProspekSaBP) {
+                                      listRptProspekSaBPRes.clear();
+                                      listRptProspekSaBPRes
+                                          .add(dataProspekSaBP);
 
-                                      return (dataProspekSaGR
-                                                  .listRptProspekSaGR !=
+                                      return (dataProspekSaBP
+                                                  .listRptProspekSaBP !=
                                               null)
-                                          ? dataProspekSaGR.listRptProspekSaGR!
+                                          ? dataProspekSaBP.listRptProspekSaBP!
                                                   .isNotEmpty
                                               ? ListView.builder(
                                                   physics:
@@ -760,22 +760,22 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                                                                   ],
                                                                   series: <CircularSeries>[
                                                                     DoughnutSeries<
-                                                                        DataProspekSaGR,
+                                                                        DataProspekSaBP,
                                                                         String>(
-                                                                      dataLabelMapper: (DataProspekSaGR data, _) => data
+                                                                      dataLabelMapper: (DataProspekSaBP data, _) => data
                                                                           .datalable
                                                                           .toString(),
                                                                       dataSource:
                                                                           toDynamic(
-                                                                              listRptProspekSaGRRes[0].listRptProspekSaGR!),
+                                                                              listRptProspekSaBPRes[0].listRptProspekSaBP!),
                                                                       xValueMapper:
-                                                                          (DataProspekSaGR data, _) =>
+                                                                          (DataProspekSaBP data, _) =>
                                                                               data.x,
                                                                       yValueMapper:
-                                                                          (DataProspekSaGR data, _) =>
+                                                                          (DataProspekSaBP data, _) =>
                                                                               data.y,
                                                                       pointColorMapper:
-                                                                          (DataProspekSaGR data, _) =>
+                                                                          (DataProspekSaBP data, _) =>
                                                                               data.color,
                                                                       innerRadius:
                                                                           '60%',
@@ -936,7 +936,7 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                                                                         ),
                                                                         child:
                                                                             Text(
-                                                                          "CABANG",
+                                                                          "SA NAME",
                                                                           style:
                                                                               textStyleColorWhiteB,
                                                                           maxLines:
@@ -1043,41 +1043,41 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
                                                               ],
                                                               rows: List<
                                                                   DataRow>.generate(
-                                                                dataProspekSaGR
-                                                                    .listRptProspekSaGR!
+                                                                dataProspekSaBP
+                                                                    .listRptProspekSaBP!
                                                                     .length,
                                                                 (indexObj) {
                                                                   final dataRptProspekSaGR =
-                                                                      dataProspekSaGR
-                                                                              .listRptProspekSaGR![
+                                                                      dataProspekSaBP
+                                                                              .listRptProspekSaBP![
                                                                           indexObj];
 
-                                                                  var perValidAll = dataProspekSaGR
-                                                                              .listRptProspekSaGR![
+                                                                  var perValidAll = dataProspekSaBP
+                                                                              .listRptProspekSaBP![
                                                                                   indexObj]
                                                                               .prospekAll >
                                                                           0
-                                                                      ? (dataProspekSaGR
-                                                                              .listRptProspekSaGR![
+                                                                      ? (dataProspekSaBP
+                                                                              .listRptProspekSaBP![
                                                                                   indexObj]
                                                                               .validAll /
-                                                                          dataProspekSaGR
-                                                                              .listRptProspekSaGR![indexObj]
+                                                                          dataProspekSaBP
+                                                                              .listRptProspekSaBP![indexObj]
                                                                               .prospekAll *
                                                                           100)
                                                                       : 0;
 
-                                                                  var perValidSA = dataProspekSaGR
-                                                                              .listRptProspekSaGR![
+                                                                  var perValidSA = dataProspekSaBP
+                                                                              .listRptProspekSaBP![
                                                                                   indexObj]
                                                                               .prospekSA >
                                                                           0
-                                                                      ? (dataProspekSaGR
-                                                                              .listRptProspekSaGR![
+                                                                      ? (dataProspekSaBP
+                                                                              .listRptProspekSaBP![
                                                                                   indexObj]
                                                                               .validSA /
-                                                                          dataProspekSaGR
-                                                                              .listRptProspekSaGR![indexObj]
+                                                                          dataProspekSaBP
+                                                                              .listRptProspekSaBP![indexObj]
                                                                               .prospekSA *
                                                                           100)
                                                                       : 0;
@@ -1256,18 +1256,18 @@ class _ProspekSaBPBySANamePageState extends State<ProspekSaBPBySANamePage> {
   }
 }
 
-class DataProspekSaGR {
+class DataProspekSaBP {
   String x;
   int y;
   int datalable;
   Color color;
 
-  DataProspekSaGR(this.x, this.y, this.datalable, this.color);
+  DataProspekSaBP(this.x, this.y, this.datalable, this.color);
 }
 
-dynamic toDynamic(List<ListRptProspekSaGR> objList) {
-  List<DataProspekSaGR> chartData = <DataProspekSaGR>[
-    DataProspekSaGR(
+dynamic toDynamic(List<ListRptProspekSaBP> objList) {
+  List<DataProspekSaBP> chartData = <DataProspekSaBP>[
+    DataProspekSaBP(
       "Prospek ALL",
       objList[0].prospekAll > 0 ||
               objList[0].prospekSA > 0 ||
@@ -1278,7 +1278,7 @@ dynamic toDynamic(List<ListRptProspekSaGR> objList) {
       objList[0].prospekAll > 0 ? objList[0].prospekAll : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
-    DataProspekSaGR(
+    DataProspekSaBP(
       "Prospek SA",
       objList[0].prospekSA > 0 ||
               objList[0].prospekAll > 0 ||
@@ -1289,7 +1289,7 @@ dynamic toDynamic(List<ListRptProspekSaGR> objList) {
       objList[0].prospekSA > 0 ? objList[0].prospekSA : 0,
       const Color.fromARGB(155, 0, 255, 170),
     ),
-    DataProspekSaGR(
+    DataProspekSaBP(
       "ValidSA",
       objList[0].validSA > 0 ||
               objList[0].validAll > 0 ||
@@ -1300,7 +1300,7 @@ dynamic toDynamic(List<ListRptProspekSaGR> objList) {
       objList[0].validSA > 0 ? objList[0].validSA : 0,
       const Color.fromARGB(185, 255, 238, 2),
     ),
-    DataProspekSaGR(
+    DataProspekSaBP(
       "ValidAll",
       objList[0].validAll > 0 ||
               objList[0].validSA > 0 ||
