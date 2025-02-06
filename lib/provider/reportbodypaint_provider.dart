@@ -1,5 +1,5 @@
 import 'package:awas_ace/repositories/reporbodypaint_repositories.dart';
-import 'package:awas_ace/widgets/model/reportafterslsprospeksabpmodel.dart';
+import 'package:awas_ace/widgets/model/reportbpprospeksabpmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportBodyPaintRepositoryProvider = Provider(

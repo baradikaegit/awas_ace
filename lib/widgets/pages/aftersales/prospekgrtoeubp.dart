@@ -1,10 +1,10 @@
-import 'package:awas_ace/provider/reportbodypaint_provider.dart';
+import 'package:awas_ace/provider/reportaftersales_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportbpprospeksabpmodel.dart';
-import 'package:awas_ace/widgets/pages/bodypaint/prospeksabpvsvalidity_bysaname.dart';
+import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
+import 'package:awas_ace/widgets/pages/aftersales/prospekgrtoeubp_bysaname.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,13 +13,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ProspekSaBPPage extends StatefulWidget {
+class ProspekGRtoUeBPPage extends StatefulWidget {
   final Object? linkPageObj;
-  const ProspekSaBPPage({super.key, required this.linkPageObj});
+  const ProspekGRtoUeBPPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/prospekSaBPPage";
+  static const String routeName = "/prospekGRtoUeBPPage";
   @override
-  State<ProspekSaBPPage> createState() => _ProspekSaBPPageState();
+  State<ProspekGRtoUeBPPage> createState() => _ProspekGRtoUeBPPageState();
 }
 
 class ModelMonth {
@@ -28,9 +28,9 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
+class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
   Widget titleBar = const Text(
-    "Prospek SA BP & Receiver VS Validity",
+    "Prospek Ratio from GR to UE BP",
     style: TextStyle(color: Colors.white),
   );
 
@@ -59,7 +59,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
     DateFormat('yyyy').format(DateTime.utc(DateTime.now().year - 1))
   ];
 
-  List<ListRptBodyPaintProspekSaBPResponse> listRptProspekSaBPRes = [];
+  List<ListRptAfterSlsProspekGRUeBPResponse> listRptProspekGRUeBP = [];
 
   @override
   void initState() {
@@ -161,8 +161,8 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                     final String dateNow =
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
-                    final rptProspekSaBP =
-                        ref.watch(reportProspekSaBP(linkPageObj));
+                    final rptProspekGRUeBP =
+                        ref.watch(reportProspekGRUeBP(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -172,40 +172,45 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                                 child: SizedBox(
-                                  child: rptProspekSaBP.when(
+                                  child: rptProspekGRUeBP.when(
                                     data: (dataSelectOpt) {
-                                      if (dataSelectOpt.listRptProspekSaBP !=
+                                      if (dataSelectOpt
+                                              .listRptProspekGRtoUeBP !=
                                           null) {
                                         String tipePeriode = dataSelectOpt
-                                                .listRptProspekSaBP!.isNotEmpty
+                                                .listRptProspekGRtoUeBP!
+                                                .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? 'MTD'
                                                 : dataSelectOpt
-                                                    .listRptProspekSaBP![0]
+                                                    .listRptProspekGRtoUeBP![0]
                                                     .periodTipe
                                             : '';
 
                                         String monthSelected = dataSelectOpt
-                                                .listRptProspekSaBP!.isNotEmpty
+                                                .listRptProspekGRtoUeBP!
+                                                .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? DateFormat('M')
                                                     .format(DateTime.now())
                                                 : dataSelectOpt
-                                                    .listRptProspekSaBP![0]
+                                                    .listRptProspekGRtoUeBP![0]
                                                     .month
                                                     .toString()
                                             : '';
 
                                         String yearSelected = dataSelectOpt
-                                                .listRptProspekSaBP!.isNotEmpty
+                                                .listRptProspekGRtoUeBP!
+                                                .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? DateFormat('yyyy')
                                                     .format(DateTime.now())
                                                 : dataSelectOpt
-                                                    .listRptProspekSaBP![0].year
+                                                    .listRptProspekGRtoUeBP![0]
+                                                    .year
                                                     .toString()
                                             : '';
 
@@ -254,12 +259,12 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                       newValTp!;
                                                                   var monthNow =
                                                                       dataSelectOpt
-                                                                          .listRptProspekSaBP![
+                                                                          .listRptProspekGRtoUeBP![
                                                                               0]
                                                                           .month;
                                                                   var yearNow =
                                                                       dataSelectOpt
-                                                                          .listRptProspekSaBP![
+                                                                          .listRptProspekGRtoUeBP![
                                                                               0]
                                                                           .year;
                                                                   var linkResultPeriodTipe =
@@ -268,7 +273,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                   Navigator
                                                                       .pushReplacementNamed(
                                                                     context,
-                                                                    ProspekSaBPPage
+                                                                    ProspekGRtoUeBPPage
                                                                         .routeName,
                                                                     arguments:
                                                                         linkResultPeriodTipe,
@@ -350,12 +355,12 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                     newValMonth!;
                                                                 var yearNow =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaBP![
+                                                                        .listRptProspekGRtoUeBP![
                                                                             0]
                                                                         .year;
                                                                 var periodTipe =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaBP![
+                                                                        .listRptProspekGRtoUeBP![
                                                                             0]
                                                                         .periodTipe;
 
@@ -365,7 +370,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                 Navigator
                                                                     .pushReplacementNamed(
                                                                   context,
-                                                                  ProspekSaBPPage
+                                                                  ProspekGRtoUeBPPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultMonth,
@@ -443,12 +448,12 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                     newValYear!;
                                                                 var monthNow =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaBP![
+                                                                        .listRptProspekGRtoUeBP![
                                                                             0]
                                                                         .month;
                                                                 var periodTipe =
                                                                     dataSelectOpt
-                                                                        .listRptProspekSaBP![
+                                                                        .listRptProspekGRtoUeBP![
                                                                             0]
                                                                         .periodTipe;
 
@@ -458,7 +463,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                 Navigator
                                                                     .pushNamed(
                                                                   context,
-                                                                  ProspekSaBPPage
+                                                                  ProspekGRtoUeBPPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultYear,
@@ -569,7 +574,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                       alignment:
                                                           Alignment.centerLeft,
                                                       child: Text(
-                                                        "Periode : ${dataSelectOpt.listRptProspekSaBP![0].monthID} ${dataSelectOpt.listRptProspekSaBP![0].year}",
+                                                        "Periode : ${dataSelectOpt.listRptProspekGRtoUeBP![0].monthID} ${dataSelectOpt.listRptProspekGRtoUeBP![0].year}",
                                                         style: TextStyle(
                                                           color: const Color
                                                               .fromARGB(
@@ -666,19 +671,20 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportProspekSaBP(
+                                    return ref.refresh(reportProspekGRUeBP(
                                         linkPageObj.toString()));
                                   },
-                                  child: rptProspekSaBP.when(
-                                    data: (dataProspekSaBP) {
-                                      listRptProspekSaBPRes.clear();
-                                      listRptProspekSaBPRes
-                                          .add(dataProspekSaBP);
+                                  child: rptProspekGRUeBP.when(
+                                    data: (dataProspekGRUeBP) {
+                                      listRptProspekGRUeBP.clear();
+                                      listRptProspekGRUeBP
+                                          .add(dataProspekGRUeBP);
 
-                                      return (dataProspekSaBP
-                                                  .listRptProspekSaBP !=
+                                      return (dataProspekGRUeBP
+                                                  .listRptProspekGRtoUeBP !=
                                               null)
-                                          ? dataProspekSaBP.listRptProspekSaBP!
+                                          ? dataProspekGRUeBP
+                                                  .listRptProspekGRtoUeBP!
                                                   .isNotEmpty
                                               ? ListView.builder(
                                                   physics:
@@ -743,22 +749,22 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                   ],
                                                                   series: <CircularSeries>[
                                                                     DoughnutSeries<
-                                                                        DataProspekSaBP,
+                                                                        DataProspekGRUeBP,
                                                                         String>(
-                                                                      dataLabelMapper: (DataProspekSaBP data, _) => data
+                                                                      dataLabelMapper: (DataProspekGRUeBP data, _) => data
                                                                           .datalable
                                                                           .toString(),
                                                                       dataSource:
                                                                           toDynamic(
-                                                                              listRptProspekSaBPRes[0].listRptProspekSaBP!),
+                                                                              listRptProspekGRUeBP[0].listRptProspekGRtoUeBP!),
                                                                       xValueMapper:
-                                                                          (DataProspekSaBP data, _) =>
+                                                                          (DataProspekGRUeBP data, _) =>
                                                                               data.x,
                                                                       yValueMapper:
-                                                                          (DataProspekSaBP data, _) =>
+                                                                          (DataProspekGRUeBP data, _) =>
                                                                               data.y,
                                                                       pointColorMapper:
-                                                                          (DataProspekSaBP data, _) =>
+                                                                          (DataProspekGRUeBP data, _) =>
                                                                               data.color,
                                                                       innerRadius:
                                                                           '60%',
@@ -938,35 +944,12 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                             .topCenter,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 60,
+                                                                      width: 70,
                                                                       child:
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "PROS.ALL",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 60,
-                                                                      child:
-                                                                          Text(
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        "PROS.SA",
+                                                                        "UE GR",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -989,7 +972,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "VALIDALL",
+                                                                        "PROSPEK",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1012,7 +995,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "VALIDSA",
+                                                                        "UE BP",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1026,48 +1009,48 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                               ],
                                                               rows: List<
                                                                   DataRow>.generate(
-                                                                dataProspekSaBP
-                                                                    .listRptProspekSaBP!
+                                                                dataProspekGRUeBP
+                                                                    .listRptProspekGRtoUeBP!
                                                                     .length,
                                                                 (indexObj) {
-                                                                  final dataRptProspekSaBP =
-                                                                      dataProspekSaBP
-                                                                              .listRptProspekSaBP![
+                                                                  final dataRptProspekGRUeBP =
+                                                                      dataProspekGRUeBP
+                                                                              .listRptProspekGRtoUeBP![
                                                                           indexObj];
 
-                                                                  var perValidAll = dataProspekSaBP
-                                                                              .listRptProspekSaBP![
+                                                                  var perProspek = dataProspekGRUeBP
+                                                                              .listRptProspekGRtoUeBP![
                                                                                   indexObj]
-                                                                              .prospekAll >
+                                                                              .ueGR >
                                                                           0
-                                                                      ? (dataProspekSaBP
-                                                                              .listRptProspekSaBP![
+                                                                      ? (dataProspekGRUeBP
+                                                                              .listRptProspekGRtoUeBP![
                                                                                   indexObj]
-                                                                              .validAll /
-                                                                          dataProspekSaBP
-                                                                              .listRptProspekSaBP![indexObj]
-                                                                              .prospekAll *
+                                                                              .prospek /
+                                                                          dataProspekGRUeBP
+                                                                              .listRptProspekGRtoUeBP![indexObj]
+                                                                              .ueGR *
                                                                           100)
                                                                       : 0;
 
-                                                                  var perValidSA = dataProspekSaBP
-                                                                              .listRptProspekSaBP![
+                                                                  var perUeBP = dataProspekGRUeBP
+                                                                              .listRptProspekGRtoUeBP![
                                                                                   indexObj]
-                                                                              .prospekSA >
+                                                                              .ueGR >
                                                                           0
-                                                                      ? (dataProspekSaBP
-                                                                              .listRptProspekSaBP![
+                                                                      ? (dataProspekGRUeBP
+                                                                              .listRptProspekGRtoUeBP![
                                                                                   indexObj]
-                                                                              .validSA /
-                                                                          dataProspekSaBP
-                                                                              .listRptProspekSaBP![indexObj]
-                                                                              .prospekSA *
+                                                                              .ueBP /
+                                                                          dataProspekGRUeBP
+                                                                              .listRptProspekGRtoUeBP![indexObj]
+                                                                              .ueGR *
                                                                           100)
                                                                       : 0;
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataProspekSaBP.listRptProspekSaBP![indexObj].headerName ==
+                                                                    color: dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].headerName ==
                                                                             'TOTAL'
                                                                         ? const Color
                                                                             .fromARGB(
@@ -1125,20 +1108,20 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataProspekSaBP.listRptProspekSaBP![indexObj].headerName == 'TOTAL'
+                                                                          onTap: dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].headerName == 'TOTAL'
                                                                               ? () {}
                                                                               : () {
-                                                                                  var month = dataProspekSaBP.listRptProspekSaBP![indexObj].month.toString();
-                                                                                  var year = dataProspekSaBP.listRptProspekSaBP![indexObj].year.toString();
-                                                                                  var periodTipe = dataProspekSaBP.listRptProspekSaBP![indexObj].periodTipe;
-                                                                                  var branchCode = dataProspekSaBP.listRptProspekSaBP![indexObj].headerName;
+                                                                                  var month = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].month.toString();
+                                                                                  var year = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].year.toString();
+                                                                                  var periodTipe = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].periodTipe;
+                                                                                  var branchCode = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].headerName;
 
                                                                                   Navigator.pushNamed(
                                                                                     context,
-                                                                                    ProspekSaBPBySANamePage.routeName,
+                                                                                    ProspekGRtoUeBPBySANamePage.routeName,
                                                                                     arguments: '$month/$year/$periodTipe/$branchCode',
                                                                                   );
-                                                                                  // print('$month/$year/$periodTipe/$branchCode');
+                                                                                  print('$month/$year/$periodTipe/$branchCode');
                                                                                 },
                                                                           child:
                                                                               Padding(
@@ -1148,7 +1131,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              dataRptProspekSaBP.headerName,
+                                                                              dataRptProspekGRUeBP.headerName,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),
@@ -1160,21 +1143,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                               Alignment.center,
                                                                           child:
                                                                               Text(
-                                                                            dataRptProspekSaBP.prospekAll.toString(),
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                            style:
-                                                                                textStyleColorWhite,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      DataCell(
-                                                                        Align(
-                                                                          alignment:
-                                                                              Alignment.center,
-                                                                          child:
-                                                                              Text(
-                                                                            dataRptProspekSaBP.prospekSA.toString(),
+                                                                            dataRptProspekGRUeBP.ueGR.toString(),
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -1190,10 +1159,10 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                               RichText(
                                                                             text:
                                                                                 TextSpan(
-                                                                              text: dataRptProspekSaBP.validAll.toString(),
+                                                                              text: dataRptProspekGRUeBP.prospek.toString(),
                                                                               style: textStyleColorWhite,
                                                                               children: <TextSpan>[
-                                                                                TextSpan(text: '(${perValidAll.ceil()}%)', style: textStyleColorGold),
+                                                                                TextSpan(text: '(${perProspek.ceil()}%)', style: textStyleColorGold),
                                                                               ],
                                                                             ),
                                                                           ),
@@ -1207,10 +1176,10 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                               RichText(
                                                                             text:
                                                                                 TextSpan(
-                                                                              text: dataRptProspekSaBP.validSA.toString(),
+                                                                              text: dataRptProspekGRUeBP.ueBP.toString(),
                                                                               style: textStyleColorWhite,
                                                                               children: <TextSpan>[
-                                                                                TextSpan(text: '(${perValidSA.ceil()}%)', style: textStyleColorGold),
+                                                                                TextSpan(text: '(${perUeBP.ceil()}%)', style: textStyleColorGold),
                                                                               ],
                                                                             ),
                                                                           ),
@@ -1256,60 +1225,40 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
   }
 }
 
-class DataProspekSaBP {
+class DataProspekGRUeBP {
   String x;
   int y;
   int datalable;
   Color color;
 
-  DataProspekSaBP(this.x, this.y, this.datalable, this.color);
+  DataProspekGRUeBP(this.x, this.y, this.datalable, this.color);
 }
 
-dynamic toDynamic(List<ListRptProspekSaBP> objList) {
-  List<DataProspekSaBP> chartData = <DataProspekSaBP>[
-    DataProspekSaBP(
-      "Prospek ALL",
-      objList[0].prospekAll > 0 ||
-              objList[0].prospekSA > 0 ||
-              objList[0].validAll > 0 ||
-              objList[0].validSA > 0
-          ? objList[0].prospekAll
+dynamic toDynamic(List<ListRptProspekGRtoUeBP> objList) {
+  List<DataProspekGRUeBP> chartData = <DataProspekGRUeBP>[
+    DataProspekGRUeBP(
+      "UE BP",
+      objList[0].ueBP > 0 || objList[0].ueGR > 0 || objList[0].prospek > 0
+          ? objList[0].ueBP
           : 50,
-      objList[0].prospekAll > 0 ? objList[0].prospekAll : 0,
+      objList[0].ueBP > 0 ? objList[0].ueBP : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
-    DataProspekSaBP(
-      "Prospek SA",
-      objList[0].prospekSA > 0 ||
-              objList[0].prospekAll > 0 ||
-              objList[0].validSA > 0 ||
-              objList[0].validAll > 0
-          ? objList[0].prospekSA
+    DataProspekGRUeBP(
+      "Prospek",
+      objList[0].prospek > 0 || objList[0].ueGR > 0 || objList[0].ueBP > 0
+          ? objList[0].prospek
           : 50,
-      objList[0].prospekSA > 0 ? objList[0].prospekSA : 0,
+      objList[0].prospek > 0 ? objList[0].prospek : 0,
       const Color.fromARGB(155, 0, 255, 170),
     ),
-    DataProspekSaBP(
-      "ValidSA",
-      objList[0].validSA > 0 ||
-              objList[0].validAll > 0 ||
-              objList[0].prospekAll > 0 ||
-              objList[0].prospekSA > 0
-          ? objList[0].validSA
+    DataProspekGRUeBP(
+      "UE GR",
+      objList[0].ueGR > 0 || objList[0].prospek > 0 || objList[0].ueBP > 0
+          ? objList[0].ueGR
           : 50,
-      objList[0].validSA > 0 ? objList[0].validSA : 0,
+      objList[0].ueGR > 0 ? objList[0].ueGR : 0,
       const Color.fromARGB(185, 255, 238, 2),
-    ),
-    DataProspekSaBP(
-      "ValidAll",
-      objList[0].validAll > 0 ||
-              objList[0].validSA > 0 ||
-              objList[0].prospekAll > 0 ||
-              objList[0].prospekSA > 0
-          ? objList[0].validAll
-          : 50,
-      objList[0].validAll > 0 ? objList[0].validAll : 0,
-      const Color.fromARGB(192, 255, 81, 0),
     ),
   ];
   return chartData;

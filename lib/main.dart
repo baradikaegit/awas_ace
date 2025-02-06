@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:awas_ace/widgets/main_page.dart';
+import 'package:awas_ace/widgets/pages/aftersales/prospekgrtoeubp.dart';
+import 'package:awas_ace/widgets/pages/aftersales/prospekgrtoeubp_bysaname.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity_bysaname.dart';
 import 'package:awas_ace/widgets/pages/bodypaint/prospeksabpvsvalidity.dart';
@@ -275,6 +277,13 @@ class MyApp extends StatelessWidget {
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         ProspekSaBPBySANamePage.routeName: (context) => ProspekSaBPBySANamePage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ProspekGRtoUeBPPage.routeName: (context) => ProspekGRtoUeBPPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        ProspekGRtoUeBPBySANamePage.routeName: (context) =>
+            ProspekGRtoUeBPBySANamePage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),

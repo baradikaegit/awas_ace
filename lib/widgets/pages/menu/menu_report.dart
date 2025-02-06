@@ -76,7 +76,14 @@ class _ReportPageState extends State<ReportPage> {
     'bookingshow.png'
   ];
 
-  List linkPageASGR = ['/', '/prospekSaGRPage', '/', '/', '/', '/'];
+  List linkPageASGR = [
+    '/',
+    '/prospekSaGRPage',
+    '/',
+    '/prospekGRtoUeBPPage',
+    '/',
+    '/'
+  ];
 
   List menuRolesBP = [
     'Funneling',
@@ -438,7 +445,9 @@ class _ReportPageState extends State<ReportPage> {
                                         context,
                                         linkPageASGR[index],
                                         arguments: linkPageASGR[index] ==
-                                                '/prospekSaGRPage'
+                                                    '/prospekSaGRPage' ||
+                                                linkPageASGR[index] ==
+                                                    '/prospekGRtoUeBPPage'
                                             ? '$_monthNow/$_yearNow/MTD'
                                             : null,
                                       ),
