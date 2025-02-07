@@ -101,7 +101,7 @@ class _ReportPageState extends State<ReportPage> {
     'contributor.png',
   ];
 
-  List linkPageBP = ['/', '/prospekSaBPPage', '/', '/', '/'];
+  List linkPageBP = ['/', '/prospekSaBPPage', '/', '/prospekBPtoUeGRPage', '/'];
 
   List menuRolesGeneral = [
     'Monitoring Poin',
@@ -657,7 +657,9 @@ class _ReportPageState extends State<ReportPage> {
                                         context,
                                         linkPageBP[index],
                                         arguments: linkPageBP[index] ==
-                                                '/prospekSaBPPage'
+                                                    '/prospekSaBPPage' ||
+                                                linkPageBP[index] ==
+                                                    '/prospekBPtoUeGRPage'
                                             ? '$_monthNow/$_yearNow/MTD'
                                             : null,
                                       ),
