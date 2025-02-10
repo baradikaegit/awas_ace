@@ -1228,6 +1228,14 @@ class DataTMSProductivity {
 dynamic toDynamic(List<ListRptTMSProductivity> objList) {
   List<DataTMSProductivity> chartData = <DataTMSProductivity>[
     DataTMSProductivity(
+      "TMS",
+      objList[0].tms.toDouble() > 0 || objList[0].productivity!.toDouble() > 0
+          ? objList[0].tms.toDouble()
+          : 50,
+      objList[0].tms > 0 ? objList[0].tms : 0,
+      const Color.fromARGB(183, 0, 89, 255),
+    ),
+    DataTMSProductivity(
       "PRODUCTIVITY",
       objList[0].productivity!.toDouble() > 0 || objList[0].tms > 0
           ? objList[0].productivity!.toDouble()
@@ -1236,14 +1244,6 @@ dynamic toDynamic(List<ListRptTMSProductivity> objList) {
           ? objList[0].productivity!.toInt()
           : 0,
       const Color.fromARGB(155, 0, 255, 170),
-    ),
-    DataTMSProductivity(
-      "TMS",
-      objList[0].tms.toDouble() > 0 || objList[0].productivity!.toDouble() > 0
-          ? objList[0].tms.toDouble()
-          : 50,
-      objList[0].tms > 0 ? objList[0].tms : 0,
-      const Color.fromARGB(183, 0, 89, 255),
     ),
   ];
   return chartData;
