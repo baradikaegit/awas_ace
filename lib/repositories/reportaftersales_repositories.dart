@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospeksagrmodel.dart';
+import 'package:awas_ace/widgets/model/reportafterslstmsproductivitymodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +17,8 @@ abstract class IReportAfterSalesRepository {
       String linkPageObj);
   Future<ListRptAfterSlsProspekGRUeBPResponse>
       fecthListDataProspekGRtoUeBPBySAName(String linkPageObj);
+  Future<ListRptAfterSlsTMSPRoductivityResponse> fecthListDataTMSProductivity(
+      String linkPageObj);
 }
 
 class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
@@ -120,5 +123,31 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
         ListRptAfterSlsProspekGRUeBPResponse.fromJson(
             jsonObjRptProspekGRtoUeBPBySAName);
     return responseGetProspekGRtoUeBPBySAName;
+  }
+
+  //Prospek GR to UEBP By SAName
+  @override
+  Future<ListRptAfterSlsTMSPRoductivityResponse> fecthListDataTMSProductivity(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptTMSProductivity =
+        "${_host}GetReportTMSProductivity/$linkPageObj";
+
+    var resultGetRptTMSProductivity =
+        await http.get(Uri.parse(urlGetRptTMSProductivity), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptTMSProductivity =
+        jsonDecode(resultGetRptTMSProductivity.body);
+
+    var responseGetTMSProductivity =
+        ListRptAfterSlsTMSPRoductivityResponse.fromJson(
+            jsonObjRptTMSProductivity);
+    return responseGetTMSProductivity;
   }
 }

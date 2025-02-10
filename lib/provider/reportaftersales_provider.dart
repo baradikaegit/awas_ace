@@ -1,6 +1,7 @@
 import 'package:awas_ace/repositories/reportaftersales_repositories.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospeksagrmodel.dart';
+import 'package:awas_ace/widgets/model/reportafterslstmsproductivitymodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportAfterSlsRepositoryProvider = Provider(
@@ -44,5 +45,15 @@ final reportProspekGRUeBPBySAName = FutureProvider.autoDispose
         ref.watch(reportAfterSlsRepositoryProvider);
     return repositoryProspekUeBPBySAName
         .fecthListDataProspekGRtoUeBPBySAName(linkPageObj);
+  },
+);
+
+//list report tms productivity
+final reportTMSProductivity = FutureProvider.autoDispose
+    .family<ListRptAfterSlsTMSPRoductivityResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryTMSProductivity =
+        ref.watch(reportAfterSlsRepositoryProvider);
+    return repositoryTMSProductivity.fecthListDataTMSProductivity(linkPageObj);
   },
 );

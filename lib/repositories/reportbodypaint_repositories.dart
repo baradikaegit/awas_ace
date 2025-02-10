@@ -106,8 +106,6 @@ class ReportBodyPaintRepositories implements IReportBodyPaintRepository {
     var urlGetRptProspekBPtoUeGRBySAName =
         "${_host}GetReportProspekBPtoUeGRBySAName/$linkPageObj";
 
-    print(urlGetRptProspekBPtoUeGRBySAName);
-
     var resultGetRptProspekBPtoUeGRBySAName =
         await http.get(Uri.parse(urlGetRptProspekBPtoUeGRBySAName), headers: {
       HttpHeaders.acceptHeader: "application/json",

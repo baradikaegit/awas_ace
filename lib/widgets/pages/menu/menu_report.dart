@@ -81,7 +81,7 @@ class _ReportPageState extends State<ReportPage> {
     '/prospekSaGRPage',
     '/',
     '/prospekGRtoUeBPPage',
-    '/',
+    '/tMSProductivityPage',
     '/'
   ];
 
@@ -447,7 +447,9 @@ class _ReportPageState extends State<ReportPage> {
                                         arguments: linkPageASGR[index] ==
                                                     '/prospekSaGRPage' ||
                                                 linkPageASGR[index] ==
-                                                    '/prospekGRtoUeBPPage'
+                                                    '/prospekGRtoUeBPPage' ||
+                                                linkPageASGR[index] ==
+                                                    '/tMSProductivityPage'
                                             ? '$_monthNow/$_yearNow/MTD'
                                             : null,
                                       ),

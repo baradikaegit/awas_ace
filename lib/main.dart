@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/pages/aftersales/prospekgrtoeubp.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospekgrtoeubp_bysaname.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity_bysaname.dart';
+import 'package:awas_ace/widgets/pages/aftersales/tmsproductivity.dart';
 import 'package:awas_ace/widgets/pages/bodypaint/prospekbptouegr.dart';
 import 'package:awas_ace/widgets/pages/bodypaint/prospekbptouegr_bysaname.dart';
 import 'package:awas_ace/widgets/pages/bodypaint/prospeksabpvsvalidity.dart';
@@ -293,6 +294,9 @@ class MyApp extends StatelessWidget {
             ),
         ProspekBPtoUeGRBySANamePage.routeName: (context) =>
             ProspekBPtoUeGRBySANamePage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        TMSProductivityPage.routeName: (context) => TMSProductivityPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),

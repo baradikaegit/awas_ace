@@ -1,4 +1,4 @@
-import 'package:awas_ace/repositories/reporbodypaint_repositories.dart';
+import 'package:awas_ace/repositories/reportbodypaint_repositories.dart';
 import 'package:awas_ace/widgets/model/reportbpprospekbpuegrmodel.dart';
 import 'package:awas_ace/widgets/model/reportbpprospeksabpmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
