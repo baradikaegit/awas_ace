@@ -509,7 +509,7 @@ class _TMSProductivityPageState extends State<TMSProductivityPage> {
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      "Prospek Ue Bp to Ue Bp",
+                                                      "TMS Productivity",
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,

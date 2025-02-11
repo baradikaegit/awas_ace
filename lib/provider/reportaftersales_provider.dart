@@ -1,4 +1,5 @@
 import 'package:awas_ace/repositories/reportaftersales_repositories.dart';
+import 'package:awas_ace/widgets/model/reportafterslsbookingtoshow.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospeksagrmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslstmsproductivitymodel.dart';
@@ -55,5 +56,14 @@ final reportTMSProductivity = FutureProvider.autoDispose
     final repositoryTMSProductivity =
         ref.watch(reportAfterSlsRepositoryProvider);
     return repositoryTMSProductivity.fecthListDataTMSProductivity(linkPageObj);
+  },
+);
+
+//list report booking to show
+final reportBookingToShow = FutureProvider.autoDispose
+    .family<ListRptAfterSlsBookingToShowResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryBookingToShow = ref.watch(reportAfterSlsRepositoryProvider);
+    return repositoryBookingToShow.fecthListDataBookingToShow(linkPageObj);
   },
 );

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/reportafterslsbookingtoshow.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospeksagrmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslstmsproductivitymodel.dart';
@@ -18,6 +19,8 @@ abstract class IReportAfterSalesRepository {
   Future<ListRptAfterSlsProspekGRUeBPResponse>
       fecthListDataProspekGRtoUeBPBySAName(String linkPageObj);
   Future<ListRptAfterSlsTMSPRoductivityResponse> fecthListDataTMSProductivity(
+      String linkPageObj);
+  Future<ListRptAfterSlsBookingToShowResponse> fecthListDataBookingToShow(
       String linkPageObj);
 }
 
@@ -125,7 +128,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
     return responseGetProspekGRtoUeBPBySAName;
   }
 
-  //Prospek GR to UEBP By SAName
+  //TMS Productivity
   @override
   Future<ListRptAfterSlsTMSPRoductivityResponse> fecthListDataTMSProductivity(
       String linkPageObj) async {
@@ -149,5 +152,28 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
         ListRptAfterSlsTMSPRoductivityResponse.fromJson(
             jsonObjRptTMSProductivity);
     return responseGetTMSProductivity;
+  }
+
+  //Booking To Show
+  @override
+  Future<ListRptAfterSlsBookingToShowResponse> fecthListDataBookingToShow(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptBookingToShow = "${_host}GetReportBookingToShow/$linkPageObj";
+
+    var resultGetRptBookingToShow =
+        await http.get(Uri.parse(urlGetRptBookingToShow), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptBookingToShow = jsonDecode(resultGetRptBookingToShow.body);
+
+    var responseGetBookingToShow =
+        ListRptAfterSlsBookingToShowResponse.fromJson(jsonObjRptBookingToShow);
+    return responseGetBookingToShow;
   }
 }

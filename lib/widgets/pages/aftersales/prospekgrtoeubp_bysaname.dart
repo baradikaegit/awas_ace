@@ -529,7 +529,7 @@ class _ProspekGRtoUeBPBySANamePageState
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      "Prospek SA GR VS Validity",
+                                                      "Prospek Ratio from GR to UE BP",
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,

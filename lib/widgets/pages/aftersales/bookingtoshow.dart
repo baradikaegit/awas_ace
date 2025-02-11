@@ -3,8 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
-import 'package:awas_ace/widgets/pages/aftersales/prospekgrtoeubp_bysaname.dart';
+import 'package:awas_ace/widgets/model/reportafterslsbookingtoshow.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,13 +12,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-class ProspekGRtoUeBPPage extends StatefulWidget {
+class BookingToShowPage extends StatefulWidget {
   final Object? linkPageObj;
-  const ProspekGRtoUeBPPage({super.key, required this.linkPageObj});
+  const BookingToShowPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/prospekGRtoUeBPPage";
+  static const String routeName = "/bookingToShowPage";
   @override
-  State<ProspekGRtoUeBPPage> createState() => _ProspekGRtoUeBPPageState();
+  State<BookingToShowPage> createState() => _BookingToShowPageState();
 }
 
 class ModelMonth {
@@ -28,9 +27,9 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
+class _BookingToShowPageState extends State<BookingToShowPage> {
   Widget titleBar = const Text(
-    "Prospek Ratio from GR to UE BP",
+    "Booking To Show",
     style: TextStyle(color: Colors.white),
   );
 
@@ -59,7 +58,7 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
     DateFormat('yyyy').format(DateTime.utc(DateTime.now().year - 1))
   ];
 
-  List<ListRptAfterSlsProspekGRUeBPResponse> listRptProspekGRUeBP = [];
+  List<ListRptAfterSlsBookingToShowResponse> listRptBookingToShowRes = [];
 
   @override
   void initState() {
@@ -161,8 +160,8 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                     final String dateNow =
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
-                    final rptProspekGRUeBP =
-                        ref.watch(reportProspekGRUeBP(linkPageObj));
+                    final rptBookingToShow =
+                        ref.watch(reportBookingToShow(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -172,44 +171,43 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                                 child: SizedBox(
-                                  child: rptProspekGRUeBP.when(
+                                  child: rptBookingToShow.when(
                                     data: (dataSelectOpt) {
-                                      if (dataSelectOpt
-                                              .listRptProspekGRtoUeBP !=
+                                      if (dataSelectOpt.listRptBookingToShow !=
                                           null) {
                                         String tipePeriode = dataSelectOpt
-                                                .listRptProspekGRtoUeBP!
+                                                .listRptBookingToShow!
                                                 .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? 'MTD'
                                                 : dataSelectOpt
-                                                    .listRptProspekGRtoUeBP![0]
+                                                    .listRptBookingToShow![0]
                                                     .periodTipe
                                             : '';
 
                                         String monthSelected = dataSelectOpt
-                                                .listRptProspekGRtoUeBP!
+                                                .listRptBookingToShow!
                                                 .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? DateFormat('M')
                                                     .format(DateTime.now())
                                                 : dataSelectOpt
-                                                    .listRptProspekGRtoUeBP![0]
+                                                    .listRptBookingToShow![0]
                                                     .month
                                                     .toString()
                                             : '';
 
                                         String yearSelected = dataSelectOpt
-                                                .listRptProspekGRtoUeBP!
+                                                .listRptBookingToShow!
                                                 .isNotEmpty
                                             ? (linkPageObj ==
                                                     '$monthNow/$yearNow')
                                                 ? DateFormat('yyyy')
                                                     .format(DateTime.now())
                                                 : dataSelectOpt
-                                                    .listRptProspekGRtoUeBP![0]
+                                                    .listRptBookingToShow![0]
                                                     .year
                                                     .toString()
                                             : '';
@@ -253,33 +251,31 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                             }).toList(),
                                                             onChanged: (String?
                                                                 newValTp) {
-                                                              setState(
-                                                                () {
-                                                                  tipePeriode =
-                                                                      newValTp!;
-                                                                  var monthNow =
-                                                                      dataSelectOpt
-                                                                          .listRptProspekGRtoUeBP![
-                                                                              0]
-                                                                          .month;
-                                                                  var yearNow =
-                                                                      dataSelectOpt
-                                                                          .listRptProspekGRtoUeBP![
-                                                                              0]
-                                                                          .year;
-                                                                  var linkResultPeriodTipe =
-                                                                      '$monthNow/$yearNow/$tipePeriode';
+                                                              setState(() {
+                                                                tipePeriode =
+                                                                    newValTp!;
+                                                                var monthNow =
+                                                                    dataSelectOpt
+                                                                        .listRptBookingToShow![
+                                                                            0]
+                                                                        .month;
+                                                                var yearNow =
+                                                                    dataSelectOpt
+                                                                        .listRptBookingToShow![
+                                                                            0]
+                                                                        .year;
+                                                                var linkResultPeriodTipe =
+                                                                    '$monthNow/$yearNow/$tipePeriode';
 
-                                                                  Navigator
-                                                                      .pushReplacementNamed(
-                                                                    context,
-                                                                    ProspekGRtoUeBPPage
-                                                                        .routeName,
-                                                                    arguments:
-                                                                        linkResultPeriodTipe,
-                                                                  );
-                                                                },
-                                                              );
+                                                                Navigator
+                                                                    .pushReplacementNamed(
+                                                                  context,
+                                                                  BookingToShowPage
+                                                                      .routeName,
+                                                                  arguments:
+                                                                      linkResultPeriodTipe,
+                                                                );
+                                                              });
                                                             },
                                                             dropdownStyleData:
                                                                 DropdownStyleData(
@@ -355,12 +351,12 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                     newValMonth!;
                                                                 var yearNow =
                                                                     dataSelectOpt
-                                                                        .listRptProspekGRtoUeBP![
+                                                                        .listRptBookingToShow![
                                                                             0]
                                                                         .year;
                                                                 var periodTipe =
                                                                     dataSelectOpt
-                                                                        .listRptProspekGRtoUeBP![
+                                                                        .listRptBookingToShow![
                                                                             0]
                                                                         .periodTipe;
 
@@ -370,7 +366,7 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                 Navigator
                                                                     .pushReplacementNamed(
                                                                   context,
-                                                                  ProspekGRtoUeBPPage
+                                                                  BookingToShowPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultMonth,
@@ -448,12 +444,12 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                     newValYear!;
                                                                 var monthNow =
                                                                     dataSelectOpt
-                                                                        .listRptProspekGRtoUeBP![
+                                                                        .listRptBookingToShow![
                                                                             0]
                                                                         .month;
                                                                 var periodTipe =
                                                                     dataSelectOpt
-                                                                        .listRptProspekGRtoUeBP![
+                                                                        .listRptBookingToShow![
                                                                             0]
                                                                         .periodTipe;
 
@@ -463,7 +459,7 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                 Navigator
                                                                     .pushNamed(
                                                                   context,
-                                                                  ProspekGRtoUeBPPage
+                                                                  BookingToShowPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultYear,
@@ -512,7 +508,46 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      "Prospek Ratio from GR to UE BP",
+                                                      "Booking To Show",
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 14.5,
+                                                        ).value,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      "(ALL)",
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -564,90 +599,101 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                             AppBar(
                                               automaticallyImplyLeading: false,
                                               centerTitle: false,
-                                              title: Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        5, 0, 0, 0),
-                                                child: Column(
-                                                  children: [
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                        "Periode : ${dataSelectOpt.listRptProspekGRtoUeBP![0].monthID} ${dataSelectOpt.listRptProspekGRtoUeBP![0].year}",
-                                                        style: TextStyle(
-                                                          color: const Color
-                                                              .fromARGB(
-                                                            255,
-                                                            255,
-                                                            255,
-                                                            255,
+                                              title: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(5, 0, 0, 0),
+                                                    child: Column(
+                                                      children: [
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            "Periode : ${dataSelectOpt.listRptBookingToShow![0].monthID} ${dataSelectOpt.listRptBookingToShow![0].year}",
+                                                            style: TextStyle(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                255,
+                                                                255,
+                                                                255,
+                                                                255,
+                                                              ),
+                                                              fontSize:
+                                                                  ResponsiveValue<
+                                                                      double>(
+                                                                context,
+                                                                conditionalValues: [
+                                                                  const Condition
+                                                                      .equals(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          12.0,
+                                                                      landscapeValue:
+                                                                          12.0),
+                                                                  const Condition.largerThan(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          12.5,
+                                                                      landscapeValue:
+                                                                          12.5,
+                                                                      breakpoint:
+                                                                          800),
+                                                                ],
+                                                                defaultValue:
+                                                                    11.0,
+                                                              ).value,
+                                                            ),
                                                           ),
-                                                          fontSize:
-                                                              ResponsiveValue<
-                                                                  double>(
-                                                            context,
-                                                            conditionalValues: [
-                                                              const Condition
-                                                                  .equals(
-                                                                  name: TABLET,
-                                                                  value: 12.0,
-                                                                  landscapeValue:
-                                                                      12.0),
-                                                              const Condition
-                                                                  .largerThan(
-                                                                  name: TABLET,
-                                                                  value: 12.5,
-                                                                  landscapeValue:
-                                                                      12.5,
-                                                                  breakpoint:
-                                                                      800),
-                                                            ],
-                                                            defaultValue: 11.0,
-                                                          ).value,
                                                         ),
-                                                      ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                        "Tanggal Hari ini : $dateNow",
-                                                        style: TextStyle(
-                                                          color: const Color
-                                                              .fromARGB(
-                                                            255,
-                                                            255,
-                                                            255,
-                                                            255,
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Text(
+                                                            "Tanggal Hari ini : $dateNow",
+                                                            style: TextStyle(
+                                                              color: const Color
+                                                                  .fromARGB(
+                                                                255,
+                                                                255,
+                                                                255,
+                                                                255,
+                                                              ),
+                                                              fontSize:
+                                                                  ResponsiveValue<
+                                                                      double>(
+                                                                context,
+                                                                conditionalValues: [
+                                                                  const Condition
+                                                                      .equals(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          12.0,
+                                                                      landscapeValue:
+                                                                          12.0),
+                                                                  const Condition.largerThan(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          12.5,
+                                                                      landscapeValue:
+                                                                          12.5,
+                                                                      breakpoint:
+                                                                          800),
+                                                                ],
+                                                                defaultValue:
+                                                                    11.0,
+                                                              ).value,
+                                                            ),
                                                           ),
-                                                          fontSize:
-                                                              ResponsiveValue<
-                                                                  double>(
-                                                            context,
-                                                            conditionalValues: [
-                                                              const Condition
-                                                                  .equals(
-                                                                  name: TABLET,
-                                                                  value: 12.0,
-                                                                  landscapeValue:
-                                                                      12.0),
-                                                              const Condition
-                                                                  .largerThan(
-                                                                  name: TABLET,
-                                                                  value: 12.5,
-                                                                  landscapeValue:
-                                                                      12.5,
-                                                                  breakpoint:
-                                                                      800),
-                                                            ],
-                                                            defaultValue: 11.0,
-                                                          ).value,
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
+                                                  ),
+                                                ],
                                               ),
                                               backgroundColor:
                                                   const Color.fromARGB(
@@ -671,20 +717,20 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportProspekGRUeBP(
+                                    return ref.refresh(reportBookingToShow(
                                         linkPageObj.toString()));
                                   },
-                                  child: rptProspekGRUeBP.when(
-                                    data: (dataProspekGRUeBP) {
-                                      listRptProspekGRUeBP.clear();
-                                      listRptProspekGRUeBP
-                                          .add(dataProspekGRUeBP);
+                                  child: rptBookingToShow.when(
+                                    data: (dataBookingToShow) {
+                                      listRptBookingToShowRes.clear();
+                                      listRptBookingToShowRes
+                                          .add(dataBookingToShow);
 
-                                      return (dataProspekGRUeBP
-                                                  .listRptProspekGRtoUeBP !=
+                                      return (dataBookingToShow
+                                                  .listRptBookingToShow !=
                                               null)
-                                          ? dataProspekGRUeBP
-                                                  .listRptProspekGRtoUeBP!
+                                          ? dataBookingToShow
+                                                  .listRptBookingToShow!
                                                   .isNotEmpty
                                               ? ListView.builder(
                                                   physics:
@@ -719,52 +765,48 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                   annotations: [
                                                                     CircularChartAnnotation(
                                                                       widget:
-                                                                          Align(
-                                                                        alignment:
-                                                                            Alignment.center,
-                                                                        child:
-                                                                            Text(
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          "ASTRIDO",
-                                                                          style:
-                                                                              TextStyle(
-                                                                            color:
-                                                                                Colors.white,
-                                                                            fontSize:
-                                                                                ResponsiveValue<double>(
-                                                                              context,
-                                                                              conditionalValues: [
-                                                                                const Condition.equals(name: TABLET, value: 25.0, landscapeValue: 25.0),
-                                                                                const Condition.largerThan(name: TABLET, value: 35.0, landscapeValue: 35.0, breakpoint: 800),
-                                                                              ],
-                                                                              defaultValue: 25.5,
-                                                                            ).value,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                          ),
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "ASTRIDO \n${dataBookingToShow.listRptBookingToShow![0].persen}%",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Colors.white,
+                                                                          fontSize:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 25.0, landscapeValue: 25.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 35.0, landscapeValue: 35.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                25.5,
+                                                                          ).value,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
                                                                         ),
                                                                       ),
                                                                     ),
                                                                   ],
                                                                   series: <CircularSeries>[
                                                                     DoughnutSeries<
-                                                                        DataProspekGRUeBP,
+                                                                        DataBookingToShow,
                                                                         String>(
-                                                                      dataLabelMapper: (DataProspekGRUeBP data, _) => data
-                                                                          .datalable
+                                                                      dataLabelMapper: (DataBookingToShow data, _) => data
+                                                                          .dataLabel
                                                                           .toString(),
                                                                       dataSource:
                                                                           toDynamic(
-                                                                              listRptProspekGRUeBP[0].listRptProspekGRtoUeBP!),
+                                                                              listRptBookingToShowRes[0].listRptBookingToShow!),
                                                                       xValueMapper:
-                                                                          (DataProspekGRUeBP data, _) =>
+                                                                          (DataBookingToShow data, _) =>
                                                                               data.x,
                                                                       yValueMapper:
-                                                                          (DataProspekGRUeBP data, _) =>
+                                                                          (DataBookingToShow data, _) =>
                                                                               data.y,
                                                                       pointColorMapper:
-                                                                          (DataProspekGRUeBP data, _) =>
+                                                                          (DataBookingToShow data, _) =>
                                                                               data.color,
                                                                       innerRadius:
                                                                           '60%',
@@ -778,7 +820,6 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                       explodeOffset:
                                                                           '5',
                                                                       // explodeIndex: 1,
-
                                                                       dataLabelSettings:
                                                                           const DataLabelSettings(
                                                                         showZeroValue:
@@ -915,7 +956,8 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                             .topLeft,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 80,
+                                                                      width:
+                                                                          110,
                                                                       child:
                                                                           Padding(
                                                                         padding:
@@ -944,12 +986,36 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                             .topCenter,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 70,
+                                                                      width: 80,
                                                                       child:
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "UE GR",
+                                                                        "TMS",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topCenter,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width:
+                                                                          110,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.center,
+                                                                        "PRODUCTIVITY",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -972,30 +1038,7 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "PROSPEK",
-                                                                        style:
-                                                                            textStyleColorWhiteB,
-                                                                        maxLines:
-                                                                            2,
-                                                                        overflow:
-                                                                            TextOverflow.ellipsis,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                                DataColumn(
-                                                                  label: Align(
-                                                                    alignment:
-                                                                        Alignment
-                                                                            .topCenter,
-                                                                    child:
-                                                                        SizedBox(
-                                                                      width: 70,
-                                                                      child:
-                                                                          Text(
-                                                                        textAlign:
-                                                                            TextAlign.center,
-                                                                        "UE BP",
+                                                                        "%",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1009,58 +1052,24 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                               ],
                                                               rows: List<
                                                                   DataRow>.generate(
-                                                                dataProspekGRUeBP
-                                                                    .listRptProspekGRtoUeBP!
+                                                                dataBookingToShow
+                                                                    .listRptBookingToShow!
                                                                     .length,
                                                                 (indexObj) {
-                                                                  final dataRptProspekGRUeBP =
-                                                                      dataProspekGRUeBP
-                                                                              .listRptProspekGRtoUeBP![
+                                                                  final dataRptBookingToShow =
+                                                                      dataBookingToShow
+                                                                              .listRptBookingToShow![
                                                                           indexObj];
-
-                                                                  var perProspek = dataProspekGRUeBP
-                                                                              .listRptProspekGRtoUeBP![
-                                                                                  indexObj]
-                                                                              .ueGR >
-                                                                          0
-                                                                      ? (dataProspekGRUeBP
-                                                                              .listRptProspekGRtoUeBP![
-                                                                                  indexObj]
-                                                                              .prospek /
-                                                                          dataProspekGRUeBP
-                                                                              .listRptProspekGRtoUeBP![indexObj]
-                                                                              .ueGR *
-                                                                          100)
-                                                                      : 0;
-
-                                                                  var perUeBP = dataProspekGRUeBP
-                                                                              .listRptProspekGRtoUeBP![
-                                                                                  indexObj]
-                                                                              .ueGR >
-                                                                          0
-                                                                      ? (dataProspekGRUeBP
-                                                                              .listRptProspekGRtoUeBP![
-                                                                                  indexObj]
-                                                                              .ueBP /
-                                                                          dataProspekGRUeBP
-                                                                              .listRptProspekGRtoUeBP![indexObj]
-                                                                              .ueGR *
-                                                                          100)
-                                                                      : 0;
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].headerName ==
-                                                                            'TOTAL'
-                                                                        ? const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                          )
-                                                                        : Colors
-                                                                            .blue,
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                    ),
                                                                     fontSize:
                                                                         ResponsiveValue<
                                                                             double>(
@@ -1108,21 +1117,8 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].headerName == 'TOTAL'
-                                                                              ? () {}
-                                                                              : () {
-                                                                                  var month = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].month.toString();
-                                                                                  var year = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].year.toString();
-                                                                                  var periodTipe = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].periodTipe;
-                                                                                  var branchCode = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].headerName;
-
-                                                                                  Navigator.pushNamed(
-                                                                                    context,
-                                                                                    ProspekGRtoUeBPBySANamePage.routeName,
-                                                                                    arguments: '$month/$year/$periodTipe/$branchCode',
-                                                                                  );
-                                                                                  print('$month/$year/$periodTipe/$branchCode');
-                                                                                },
+                                                                          onTap:
+                                                                              () {},
                                                                           child:
                                                                               Padding(
                                                                             padding:
@@ -1131,7 +1127,7 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              dataRptProspekGRUeBP.headerName,
+                                                                              dataRptBookingToShow.headerCode,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),
@@ -1143,7 +1139,7 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                               Alignment.center,
                                                                           child:
                                                                               Text(
-                                                                            dataRptProspekGRUeBP.ueGR.toString(),
+                                                                            dataRptBookingToShow.booking.toString(),
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -1156,15 +1152,12 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                           alignment:
                                                                               Alignment.center,
                                                                           child:
-                                                                              RichText(
-                                                                            text:
-                                                                                TextSpan(
-                                                                              text: dataRptProspekGRUeBP.prospek.toString(),
-                                                                              style: textStyleColorWhite,
-                                                                              children: <TextSpan>[
-                                                                                TextSpan(text: '(${perProspek.ceil()}%)', style: textStyleColorGold),
-                                                                              ],
-                                                                            ),
+                                                                              Text(
+                                                                            dataRptBookingToShow.show.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.right,
+                                                                            style:
+                                                                                textStyleColorWhite,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1173,15 +1166,12 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                           alignment:
                                                                               Alignment.center,
                                                                           child:
-                                                                              RichText(
-                                                                            text:
-                                                                                TextSpan(
-                                                                              text: dataRptProspekGRUeBP.ueBP.toString(),
-                                                                              style: textStyleColorWhite,
-                                                                              children: <TextSpan>[
-                                                                                TextSpan(text: '(${perUeBP.ceil()}%)', style: textStyleColorGold),
-                                                                              ],
-                                                                            ),
+                                                                              Text(
+                                                                            dataRptBookingToShow.persen.toString(),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style:
+                                                                                textStyleColorGold,
                                                                           ),
                                                                         ),
                                                                       ),
@@ -1225,40 +1215,28 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
   }
 }
 
-class DataProspekGRUeBP {
+class DataBookingToShow {
   String x;
   int y;
-  int datalable;
+  int dataLabel;
   Color color;
 
-  DataProspekGRUeBP(this.x, this.y, this.datalable, this.color);
+  DataBookingToShow(this.x, this.y, this.dataLabel, this.color);
 }
 
-dynamic toDynamic(List<ListRptProspekGRtoUeBP> objList) {
-  List<DataProspekGRUeBP> chartData = <DataProspekGRUeBP>[
-    DataProspekGRUeBP(
-      "UE BP",
-      objList[0].ueBP > 0 || objList[0].ueGR > 0 || objList[0].prospek > 0
-          ? objList[0].ueBP
-          : 50,
-      objList[0].ueBP > 0 ? objList[0].ueBP : 0,
+dynamic toDynamic(List<ListRptBookingToShow> objList) {
+  List<DataBookingToShow> chartData = <DataBookingToShow>[
+    DataBookingToShow(
+      "Booking",
+      objList[0].booking > 0 || objList[0].show > 0 ? objList[0].booking : 50,
+      objList[0].booking > 0 ? objList[0].booking : 0,
       const Color.fromARGB(183, 0, 89, 255),
     ),
-    DataProspekGRUeBP(
-      "Prospek",
-      objList[0].prospek > 0 || objList[0].ueGR > 0 || objList[0].ueBP > 0
-          ? objList[0].prospek
-          : 50,
-      objList[0].prospek > 0 ? objList[0].prospek : 0,
+    DataBookingToShow(
+      "Show",
+      objList[0].show > 0 || objList[0].booking > 0 ? objList[0].show : 50,
+      objList[0].show > 0 ? objList[0].show : 0,
       const Color.fromARGB(155, 0, 255, 170),
-    ),
-    DataProspekGRUeBP(
-      "UE GR",
-      objList[0].ueGR > 0 || objList[0].prospek > 0 || objList[0].ueBP > 0
-          ? objList[0].ueGR
-          : 50,
-      objList[0].ueGR > 0 ? objList[0].ueGR : 0,
-      const Color.fromARGB(185, 255, 238, 2),
     ),
   ];
   return chartData;

@@ -82,7 +82,7 @@ class _ReportPageState extends State<ReportPage> {
     '/',
     '/prospekGRtoUeBPPage',
     '/tMSProductivityPage',
-    '/'
+    '/bookingToShowPage'
   ];
 
   List menuRolesBP = [
@@ -449,7 +449,9 @@ class _ReportPageState extends State<ReportPage> {
                                                 linkPageASGR[index] ==
                                                     '/prospekGRtoUeBPPage' ||
                                                 linkPageASGR[index] ==
-                                                    '/tMSProductivityPage'
+                                                    '/tMSProductivityPage' ||
+                                                linkPageASGR[index] ==
+                                                    '/bookingToShowPage'
                                             ? '$_monthNow/$_yearNow/MTD'
                                             : null,
                                       ),
