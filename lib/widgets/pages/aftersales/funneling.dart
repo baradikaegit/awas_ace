@@ -1588,7 +1588,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                         ),
                                                                         child:
                                                                             Text(
-                                                                          "CABANG",
+                                                                          "ACTUAL",
                                                                           style:
                                                                               textStyleColorWhiteB,
                                                                           maxLines:
