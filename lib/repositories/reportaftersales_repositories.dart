@@ -2,7 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
-import 'package:awas_ace/widgets/model/reportafterslsbookingtoshow.dart';
+import 'package:awas_ace/widgets/model/reportafterslsbookingtoshowmodel.dart';
+import 'package:awas_ace/widgets/model/reportafterslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospeksagrmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslstmsproductivitymodel.dart';
@@ -21,6 +22,8 @@ abstract class IReportAfterSalesRepository {
   Future<ListRptAfterSlsTMSPRoductivityResponse> fecthListDataTMSProductivity(
       String linkPageObj);
   Future<ListRptAfterSlsBookingToShowResponse> fecthListDataBookingToShow(
+      String linkPageObj);
+  Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunneling(
       String linkPageObj);
 }
 
@@ -175,5 +178,28 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
     var responseGetBookingToShow =
         ListRptAfterSlsBookingToShowResponse.fromJson(jsonObjRptBookingToShow);
     return responseGetBookingToShow;
+  }
+
+  //Booking To Show
+  @override
+  Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunneling(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptFunneling = "${_host}GetReportFunneling/$linkPageObj";
+
+    var resultGetRptFunneling =
+        await http.get(Uri.parse(urlGetRptFunneling), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptFunneling = jsonDecode(resultGetRptFunneling.body);
+
+    var responseGetFunneling =
+        ListRptAfterSlsFunnelingResponse.fromJson(jsonObjRptFunneling);
+    return responseGetFunneling;
   }
 }

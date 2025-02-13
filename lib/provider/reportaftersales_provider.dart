@@ -1,5 +1,6 @@
 import 'package:awas_ace/repositories/reportaftersales_repositories.dart';
-import 'package:awas_ace/widgets/model/reportafterslsbookingtoshow.dart';
+import 'package:awas_ace/widgets/model/reportafterslsbookingtoshowmodel.dart';
+import 'package:awas_ace/widgets/model/reportafterslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospeksagrmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslstmsproductivitymodel.dart';
@@ -65,5 +66,14 @@ final reportBookingToShow = FutureProvider.autoDispose
   (ref, linkPageObj) async {
     final repositoryBookingToShow = ref.watch(reportAfterSlsRepositoryProvider);
     return repositoryBookingToShow.fecthListDataBookingToShow(linkPageObj);
+  },
+);
+
+//list report funneling
+final reportFunneling =
+    FutureProvider.autoDispose.family<ListRptAfterSlsFunnelingResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryFunneling = ref.watch(reportAfterSlsRepositoryProvider);
+    return repositoryFunneling.fecthListDataFunneling(linkPageObj);
   },
 );

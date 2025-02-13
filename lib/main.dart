@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/pages/aftersales/bookingtoshow.dart';
+import 'package:awas_ace/widgets/pages/aftersales/funneling.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospekgrtoeubp.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospekgrtoeubp_bysaname.dart';
 import 'package:awas_ace/widgets/pages/aftersales/prospeksagrvsvalidity.dart';
@@ -301,6 +302,9 @@ class MyApp extends StatelessWidget {
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         BookingToShowPage.routeName: (context) => BookingToShowPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        FunnelingAfterSalesPage.routeName: (context) => FunnelingAfterSalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
