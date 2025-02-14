@@ -4,7 +4,7 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportafterslsfunnelingmodel.dart';
-import 'package:awas_ace/widgets/pages/aftersales/funneling_bybranch.dart';
+import 'package:awas_ace/widgets/pages/aftersales/funneling_byactual.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -14,14 +14,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class FunnelingAfterSalesPage extends StatefulWidget {
+class FunnelingByBranchAfterSalesPage extends StatefulWidget {
   final Object? linkPageObj;
-  const FunnelingAfterSalesPage({super.key, required this.linkPageObj});
+  const FunnelingByBranchAfterSalesPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/funnelingAfterSalesPage";
+  static const String routeName = "/funnelingByBranchAfterSalesPage";
   @override
-  State<FunnelingAfterSalesPage> createState() =>
-      _FunnelingAfterSalesPageState();
+  State<FunnelingByBranchAfterSalesPage> createState() =>
+      _FunnelingByBranchAfterSalesPageState();
 }
 
 class ModelMonth {
@@ -30,7 +30,8 @@ class ModelMonth {
   ModelMonth(this.value, this.id);
 }
 
-class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
+class _FunnelingByBranchAfterSalesPageState
+    extends State<FunnelingByBranchAfterSalesPage> {
   Widget titleBar = const Text(
     "Funneling",
     style: TextStyle(color: Colors.white),
@@ -207,7 +208,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
                     final rptFunneling =
-                        ref.watch(reportFunneling(linkPageObj));
+                        ref.watch(reportFunnelingByBranch(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -315,13 +316,18 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                           .listRptAfterSalesFunneling![
                                                                               0]
                                                                           .year;
+                                                                  var branchCode =
+                                                                      dataSelectOpt
+                                                                          .listRptAfterSalesFunneling![
+                                                                              0]
+                                                                          .headerCode;
                                                                   var linkResultPeriodTipe =
-                                                                      '$monthNow/$yearNow/$tipePeriode';
+                                                                      '$monthNow/$yearNow/$tipePeriode/$branchCode';
 
                                                                   Navigator
                                                                       .pushReplacementNamed(
                                                                     context,
-                                                                    FunnelingAfterSalesPage
+                                                                    FunnelingByBranchAfterSalesPage
                                                                         .routeName,
                                                                     arguments:
                                                                         linkResultPeriodTipe,
@@ -411,14 +417,19 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                         .listRptAfterSalesFunneling![
                                                                             0]
                                                                         .periodTipe;
+                                                                var branchCode =
+                                                                    dataSelectOpt
+                                                                        .listRptAfterSalesFunneling![
+                                                                            0]
+                                                                        .headerCode;
 
                                                                 var linkResultMonth =
-                                                                    '$monthSelected/$yearNow/$periodTipe';
+                                                                    '$monthSelected/$yearNow/$periodTipe/$branchCode';
 
                                                                 Navigator
                                                                     .pushReplacementNamed(
                                                                   context,
-                                                                  FunnelingAfterSalesPage
+                                                                  FunnelingByBranchAfterSalesPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultMonth,
@@ -504,14 +515,19 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                         .listRptAfterSalesFunneling![
                                                                             0]
                                                                         .periodTipe;
+                                                                var branchCode =
+                                                                    dataSelectOpt
+                                                                        .listRptAfterSalesFunneling![
+                                                                            0]
+                                                                        .headerCode;
 
                                                                 var linkResultYear =
-                                                                    '$monthNow/$yearSelected/$periodTipe';
+                                                                    '$monthNow/$yearSelected/$periodTipe/$branchCode';
 
                                                                 Navigator
                                                                     .pushNamed(
                                                                   context,
-                                                                  FunnelingAfterSalesPage
+                                                                  FunnelingByBranchAfterSalesPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultYear,
@@ -537,6 +553,69 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                     ],
                                                   ),
                                                 ],
+                                              ),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                255,
+                                                33,
+                                                44,
+                                                81,
+                                              ),
+                                            ),
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
+                                              centerTitle: true,
+                                              title: Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                  0,
+                                                  10,
+                                                  0,
+                                                  0,
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Text(
+                                                      "Cabang ${dataSelectOpt.listRptAfterSalesFunneling![0].headerCode}",
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        color: const Color
+                                                            .fromARGB(
+                                                          255,
+                                                          255,
+                                                          255,
+                                                          255,
+                                                        ),
+                                                        fontSize:
+                                                            ResponsiveValue<
+                                                                double>(
+                                                          context,
+                                                          conditionalValues: [
+                                                            const Condition
+                                                                .equals(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0),
+                                                            const Condition
+                                                                .largerThan(
+                                                                name: TABLET,
+                                                                value: 17.0,
+                                                                landscapeValue:
+                                                                    17.0,
+                                                                breakpoint:
+                                                                    800),
+                                                          ],
+                                                          defaultValue: 14.5,
+                                                        ).value,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                               backgroundColor:
                                                   const Color.fromARGB(
@@ -656,7 +735,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportFunneling(
+                                    return ref.refresh(reportFunnelingByBranch(
                                         linkPageObj.toString()));
                                   },
                                   child: rptFunneling.when(
@@ -1706,17 +1785,20 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName ==
-                                                                            'TOTAL'
-                                                                        ? const Color
+                                                                    color: dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName == 'Next Service' ||
+                                                                            dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName ==
+                                                                                'SA Engg' ||
+                                                                            dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName ==
+                                                                                'Saran Service'
+                                                                        ? Colors
+                                                                            .blue
+                                                                        : const Color
                                                                             .fromARGB(
                                                                             255,
                                                                             255,
                                                                             255,
                                                                             255,
-                                                                          )
-                                                                        : Colors
-                                                                            .blue,
+                                                                          ),
                                                                     fontSize:
                                                                         ResponsiveValue<
                                                                             double>(
@@ -1764,20 +1846,22 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName == 'TOTAL'
-                                                                              ? () {}
-                                                                              : () {
+                                                                          onTap: dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName == 'Next Service' || dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName == 'SA Engg' || dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName == 'Saran Service'
+                                                                              ? () {
                                                                                   var month = dataFunnelingList.listRptAfterSalesFunneling![indexObj].month.toString();
                                                                                   var year = dataFunnelingList.listRptAfterSalesFunneling![indexObj].year.toString();
                                                                                   var periodTipe = dataFunnelingList.listRptAfterSalesFunneling![indexObj].periodTipe;
                                                                                   var branchCode = dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerCode;
+                                                                                  var actual = dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName;
 
                                                                                   Navigator.pushNamed(
                                                                                     context,
-                                                                                    FunnelingByBranchAfterSalesPage.routeName,
-                                                                                    arguments: '$month/$year/$periodTipe/$branchCode',
+                                                                                    FunnelingByActualAfterSalesPage.routeName,
+                                                                                    arguments: '$month/$year/$periodTipe/$branchCode/$actual',
                                                                                   );
-                                                                                },
+                                                                                  // print('$month/$year/$periodTipe/$branchCode/$actual');
+                                                                                }
+                                                                              : () {},
                                                                           child:
                                                                               Padding(
                                                                             padding:
@@ -1786,7 +1870,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              dataRptFunneling.headerCode,
+                                                                              dataRptFunneling.headerName,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),
@@ -1925,9 +2009,9 @@ dynamic toDynamic(List<ListRptAfterSalesFunneling> objList) {
   List<DataFunnelingColumn> barData = [];
 
   for (var i = 1; i < objList.length + 1; i++) {
-    if (objList[objList.length - i].headerCode != 'TOTAL') {
+    if (objList[objList.length - i].headerName != 'TOTAL') {
       barData.add(DataFunnelingColumn(
-        objList[objList.length - i].headerCode,
+        objList[objList.length - i].headerName,
         objList[objList.length - i].data1,
         objList[objList.length - i].connected,
         objList[objList.length - i].contacted,

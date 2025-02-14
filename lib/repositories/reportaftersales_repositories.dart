@@ -25,6 +25,10 @@ abstract class IReportAfterSalesRepository {
       String linkPageObj);
   Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunneling(
       String linkPageObj);
+  Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunnelingByBranch(
+      String linkPageObj);
+  Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunnelingByActual(
+      String linkPageObj);
 }
 
 class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
@@ -180,7 +184,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
     return responseGetBookingToShow;
   }
 
-  //Booking To Show
+  //Funneling
   @override
   Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunneling(
       String linkPageObj) async {
@@ -201,5 +205,55 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
     var responseGetFunneling =
         ListRptAfterSlsFunnelingResponse.fromJson(jsonObjRptFunneling);
     return responseGetFunneling;
+  }
+
+  //Funneling by branch
+  @override
+  Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunnelingByBranch(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptFunnelingByBranch =
+        "${_host}GetReportFunnelingByBranch/$linkPageObj";
+
+    var resultGetRptFunnelingByBranch =
+        await http.get(Uri.parse(urlGetRptFunnelingByBranch), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptFunnelingByBranch =
+        jsonDecode(resultGetRptFunnelingByBranch.body);
+
+    var responseGetFunnelingByBranch =
+        ListRptAfterSlsFunnelingResponse.fromJson(jsonObjRptFunnelingByBranch);
+    return responseGetFunnelingByBranch;
+  }
+
+  //Funneling by actual
+  @override
+  Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunnelingByActual(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptFunnelingByActual =
+        "${_host}GetReportFunnelingByActual/$linkPageObj";
+
+    var resultGetRptFunnelingByActual =
+        await http.get(Uri.parse(urlGetRptFunnelingByActual), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptFunnelingByActual =
+        jsonDecode(resultGetRptFunnelingByActual.body);
+
+    var responseGetFunnelingByActual =
+        ListRptAfterSlsFunnelingResponse.fromJson(jsonObjRptFunnelingByActual);
+    return responseGetFunnelingByActual;
   }
 }

@@ -77,3 +77,25 @@ final reportFunneling =
     return repositoryFunneling.fecthListDataFunneling(linkPageObj);
   },
 );
+
+//list report funneling by branch
+final reportFunnelingByBranch =
+    FutureProvider.autoDispose.family<ListRptAfterSlsFunnelingResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryFunnelingByBranch =
+        ref.watch(reportAfterSlsRepositoryProvider);
+    return repositoryFunnelingByBranch
+        .fecthListDataFunnelingByBranch(linkPageObj);
+  },
+);
+
+//list report funneling by actual
+final reportFunnelingByActual =
+    FutureProvider.autoDispose.family<ListRptAfterSlsFunnelingResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryFunnelingByActual =
+        ref.watch(reportAfterSlsRepositoryProvider);
+    return repositoryFunnelingByActual
+        .fecthListDataFunnelingByActual(linkPageObj);
+  },
+);
