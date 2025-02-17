@@ -86,22 +86,26 @@ class _ReportPageState extends State<ReportPage> {
   ];
 
   List menuRolesBP = [
-    'Funneling',
+    //'Funneling',
     'Prospek SA BP & Receiver VS Validity',
     'BOC & CAI By SA BP & Receiver',
     'Prospect Ratio from BP to UE GR',
-    'Daihatsu GR Contributon to UE BP',
+    //'Daihatsu GR Contributon to UE BP',
   ];
 
   List imageBP = [
-    'funneling_1.png',
+    //'funneling_1.png',
     'prospek.png',
     'boccai.png',
     'prospek.png',
-    'contributor.png',
+    //'contributor.png',
   ];
 
-  List linkPageBP = ['/', '/prospekSaBPPage', '/', '/prospekBPtoUeGRPage', '/'];
+  List linkPageBP = [
+    //'/',
+    '/prospekSaBPPage', '/', '/prospekBPtoUeGRPage',
+    //'/'
+  ];
 
   List menuRolesGeneral = [
     'Monitoring Poin',
@@ -154,7 +158,6 @@ class _ReportPageState extends State<ReportPage> {
         ),
         child: Stack(
           children: [
-            const Watermark(),
             ListView(
               padding: const EdgeInsets.only(top: 10.0),
               children: [
@@ -1005,6 +1008,7 @@ class _ReportPageState extends State<ReportPage> {
                 )
               ],
             ),
+            const Watermark(),
           ],
         ),
       ),

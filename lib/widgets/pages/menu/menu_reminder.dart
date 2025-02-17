@@ -42,7 +42,6 @@ class _ReminderPageState extends State<ReminderPage> {
         ),
         child: Stack(
           children: [
-            const Watermark(),
             ListView(
               padding: const EdgeInsets.only(top: 10.0),
               children: [
@@ -236,6 +235,7 @@ class _ReminderPageState extends State<ReminderPage> {
                 )
               ],
             ),
+            const Watermark(),
           ],
         ),
       ),
