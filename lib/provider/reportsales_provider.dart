@@ -1,4 +1,5 @@
 import 'package:awas_ace/repositories/reportsales_repositories.dart';
+import 'package:awas_ace/widgets/model/reportslsboccaibysalesmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
@@ -229,4 +230,12 @@ final reportMonitoringFoaPMABySls = FutureProvider.autoDispose
   final repositoryMonitFoaPMABySls = ref.watch(reportSalesRepositoryProvider);
   return repositoryMonitFoaPMABySls
       .fecthListDataMonitoringFoaPMABySls(linkPageObj);
+});
+
+//list report boc cai by sales
+final reportBocCaiBySales = FutureProvider.autoDispose
+    .family<ListRptSalesBocCaiBySalesResponse, String>(
+        (ref, linkPageObj) async {
+  final repositoryBocCaiBySales = ref.watch(reportSalesRepositoryProvider);
+  return repositoryBocCaiBySales.fecthListDataBocCaiBySales(linkPageObj);
 });

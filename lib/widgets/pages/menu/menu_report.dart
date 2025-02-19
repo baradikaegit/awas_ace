@@ -46,7 +46,7 @@ class _ReportPageState extends State<ReportPage> {
   List linkPageSales = [
     '/funnelingPage',
     '/prospekVtoSpkPage',
-    '/bocCaiSBEPage',
+    '/bocCaiBySalesPage',
     '/prospekUeBPPage',
     // '/monitAreaMappingPage',
     '/monitVolMakerPage',
@@ -254,7 +254,11 @@ class _ReportPageState extends State<ReportPage> {
                                                     : linkPageSales[index] ==
                                                             '/monitFoaPMAPage'
                                                         ? '$_monthNow/$_yearNow/MTD/Pembeli'
-                                                        : null,
+                                                        : linkPageSales[
+                                                                    index] ==
+                                                                '/bocCaiBySalesPage'
+                                                            ? '$_monthNow/$_yearNow/MTD/ALL'
+                                                            : null,
                                   ),
                                   child: Column(
                                     children: <Widget>[

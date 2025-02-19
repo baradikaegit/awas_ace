@@ -33,6 +33,7 @@ import 'package:awas_ace/widgets/pages/reminder/leasingberakhirdetail_page.dart'
 import 'package:awas_ace/widgets/pages/reminder/stnk_page.dart';
 import 'package:awas_ace/widgets/pages/reminder/stnkdetail_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
+import 'package:awas_ace/widgets/pages/sales/boccaibysales.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
@@ -57,7 +58,6 @@ import 'package:awas_ace/widgets/pages/sales/stockbymodel_vtype.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byssales.dart';
 import 'package:awas_ace/widgets/pages/settings/rotg_page.dart';
-import 'package:awas_ace/widgets/pages/sales/boccaisbe.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling.dart';
 import 'package:awas_ace/widgets/pages/sales/gatepasstosbi.dart';
@@ -256,7 +256,9 @@ class MyApp extends StatelessWidget {
             TargetSalesActualBySalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
-        BocCaiSBEPage.routeName: (context) => const BocCaiSBEPage(),
+        BocCaiBySalesPage.routeName: (context) => BocCaiBySalesPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         MonitFoaPMAPage.routeName: (context) => MonitFoaPMAPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),

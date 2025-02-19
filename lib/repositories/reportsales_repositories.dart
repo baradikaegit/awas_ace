@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/reportslsboccaibysalesmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingdetailmodel.dart';
@@ -67,6 +68,8 @@ abstract class IReportSalesRepository {
   Future<ListMonitroingFoaPMAResponse> fecthListDataMonitoringFoaPMABySS(
       String linkPageObj);
   Future<ListMonitroingFoaPMAResponse> fecthListDataMonitoringFoaPMABySls(
+      String linkPageObj);
+  Future<ListRptSalesBocCaiBySalesResponse> fecthListDataBocCaiBySales(
       String linkPageObj);
 }
 
@@ -749,5 +752,29 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptFoaPMABySls =
         ListMonitroingFoaPMAResponse.fromJson(jsonObjRptFoaPMABySls);
     return responseGetRptFoaPMABySls;
+  }
+
+  //Monitoring BOC & CAI BySales
+  @override
+  Future<ListRptSalesBocCaiBySalesResponse> fecthListDataBocCaiBySales(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptBocCaiBySales = "${_host}GetBocCaiBySalesBranch/$linkPageObj";
+    print(urlGetRptBocCaiBySales);
+
+    var resultGetRptBocCaiBySales =
+        await http.get(Uri.parse(urlGetRptBocCaiBySales), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptBocCaiBySales = jsonDecode(resultGetRptBocCaiBySales.body);
+
+    var responseGetRptBocCaiBySales =
+        ListRptSalesBocCaiBySalesResponse.fromJson(jsonObjRptBocCaiBySales);
+    return responseGetRptBocCaiBySales;
   }
 }
