@@ -71,6 +71,10 @@ abstract class IReportSalesRepository {
       String linkPageObj);
   Future<ListRptSalesBocCaiBySalesResponse> fecthListDataBocCaiBySales(
       String linkPageObj);
+  Future<ListRptSalesBocCaiBySalesResponse> fecthListDataBocCaiBySalesSS(
+      String linkPageObj);
+  Future<ListRptSalesBocCaiBySalesResponse> fecthListDataBocCaiBySalesSSDetail(
+      String linkPageObj);
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
@@ -762,7 +766,6 @@ class ReportSalesRepositories implements IReportSalesRepository {
     String? token = pref.getString("login");
 
     var urlGetRptBocCaiBySales = "${_host}GetBocCaiBySalesBranch/$linkPageObj";
-    print(urlGetRptBocCaiBySales);
 
     var resultGetRptBocCaiBySales =
         await http.get(Uri.parse(urlGetRptBocCaiBySales), headers: {
@@ -776,5 +779,55 @@ class ReportSalesRepositories implements IReportSalesRepository {
     var responseGetRptBocCaiBySales =
         ListRptSalesBocCaiBySalesResponse.fromJson(jsonObjRptBocCaiBySales);
     return responseGetRptBocCaiBySales;
+  }
+
+  //Monitoring BOC & CAI BySales SS
+  @override
+  Future<ListRptSalesBocCaiBySalesResponse> fecthListDataBocCaiBySalesSS(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptBocCaiBySalesSS = "${_host}GetBocCaiBySalesSS/$linkPageObj";
+
+    var resultGetRptBocCaiBySalesSS =
+        await http.get(Uri.parse(urlGetRptBocCaiBySalesSS), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptBocCaiBySalesSS =
+        jsonDecode(resultGetRptBocCaiBySalesSS.body);
+
+    var responseGetRptBocCaiBySalesSS =
+        ListRptSalesBocCaiBySalesResponse.fromJson(jsonObjRptBocCaiBySalesSS);
+    return responseGetRptBocCaiBySalesSS;
+  }
+
+  //Monitoring BOC & CAI BySales SS detail
+  @override
+  Future<ListRptSalesBocCaiBySalesResponse> fecthListDataBocCaiBySalesSSDetail(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptBocCaiBySalesSSDtl =
+        "${_host}GetBocCaiBySalesSSDetail/$linkPageObj";
+
+    var resultGetRptBocCaiBySalesSSDtl =
+        await http.get(Uri.parse(urlGetRptBocCaiBySalesSSDtl), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptBocCaiBySalesSSDtl =
+        jsonDecode(resultGetRptBocCaiBySalesSSDtl.body);
+
+    var responseGetRptBocCaiBySalesSSDtl =
+        ListRptSalesBocCaiBySalesResponse.fromJson(
+            jsonObjRptBocCaiBySalesSSDtl);
+    return responseGetRptBocCaiBySalesSSDtl;
   }
 }

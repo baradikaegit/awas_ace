@@ -34,6 +34,8 @@ import 'package:awas_ace/widgets/pages/reminder/stnk_page.dart';
 import 'package:awas_ace/widgets/pages/reminder/stnkdetail_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
 import 'package:awas_ace/widgets/pages/sales/boccaibysales.dart';
+import 'package:awas_ace/widgets/pages/sales/boccaibysales_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/boccaibysales_byssdtl.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_bysales.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling_bysales.dart';
@@ -257,6 +259,12 @@ class MyApp extends StatelessWidget {
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         BocCaiBySalesPage.routeName: (context) => BocCaiBySalesPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        BocCaiBySalesSSPage.routeName: (context) => BocCaiBySalesSSPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        BocCaiBySalesSSDtlPage.routeName: (context) => BocCaiBySalesSSDtlPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         MonitFoaPMAPage.routeName: (context) => MonitFoaPMAPage(

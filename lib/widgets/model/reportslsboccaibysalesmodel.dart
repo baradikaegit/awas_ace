@@ -46,6 +46,7 @@ class ListBocCaiBySales {
     required this.persenContacted,
     required this.persenBoc,
     required this.persenCai,
+    required this.title,
     required this.linkPage,
   });
   late final int num;
@@ -63,6 +64,7 @@ class ListBocCaiBySales {
   late final int persenContacted;
   late final int persenBoc;
   late final int persenCai;
+  late final String title;
   late final String linkPage;
 
   ListBocCaiBySales.fromJson(Map<String, dynamic> json) {
@@ -81,6 +83,7 @@ class ListBocCaiBySales {
     persenContacted = json['persenContacted'];
     persenBoc = json['persenBoc'];
     persenCai = json['persenCai'];
+    title = json['title'];
     linkPage = json['linkPage'];
   }
 
@@ -101,6 +104,7 @@ class ListBocCaiBySales {
     _data['persenContacted'] = persenContacted;
     _data['persenBoc'] = persenBoc;
     _data['persenCai'] = persenCai;
+    _data['title'] = title;
     _data['linkPage'] = linkPage;
     return _data;
   }

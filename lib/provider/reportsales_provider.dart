@@ -239,3 +239,20 @@ final reportBocCaiBySales = FutureProvider.autoDispose
   final repositoryBocCaiBySales = ref.watch(reportSalesRepositoryProvider);
   return repositoryBocCaiBySales.fecthListDataBocCaiBySales(linkPageObj);
 });
+
+//list report boc cai by sales SS
+final reportBocCaiBySalesSS = FutureProvider.autoDispose
+    .family<ListRptSalesBocCaiBySalesResponse, String>(
+        (ref, linkPageObj) async {
+  final repositoryBocCaiBySalesSS = ref.watch(reportSalesRepositoryProvider);
+  return repositoryBocCaiBySalesSS.fecthListDataBocCaiBySalesSS(linkPageObj);
+});
+
+//list report boc cai by sales SS Detail
+final reportBocCaiBySalesSSDtl = FutureProvider.autoDispose
+    .family<ListRptSalesBocCaiBySalesResponse, String>(
+        (ref, linkPageObj) async {
+  final repositoryBocCaiBySalesSSDtl = ref.watch(reportSalesRepositoryProvider);
+  return repositoryBocCaiBySalesSSDtl
+      .fecthListDataBocCaiBySalesSSDetail(linkPageObj);
+});

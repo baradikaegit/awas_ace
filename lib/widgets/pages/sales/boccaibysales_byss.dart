@@ -3,7 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/pages/sales/boccaibysales_byss.dart';
+import 'package:awas_ace/widgets/pages/sales/boccaibysales_byssdtl.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -12,13 +12,13 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
-class BocCaiBySalesPage extends StatefulWidget {
+class BocCaiBySalesSSPage extends StatefulWidget {
   final Object? linkPageObj;
-  const BocCaiBySalesPage({super.key, required this.linkPageObj});
+  const BocCaiBySalesSSPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/bocCaiBySalesPage";
+  static const String routeName = "/bocCaiBySalesSSPage";
   @override
-  State<BocCaiBySalesPage> createState() => _BocCaiBySalesPageState();
+  State<BocCaiBySalesSSPage> createState() => _BocCaiBySalesSSPageState();
 }
 
 class ModelMonth {
@@ -33,9 +33,9 @@ class ModelKodeTipe {
   ModelKodeTipe(this.value, this.id);
 }
 
-class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
+class _BocCaiBySalesSSPageState extends State<BocCaiBySalesSSPage> {
   Widget titleBar = const Text(
-    "BOC & CAI By Sales",
+    "BOC & CAI By Sales SS",
     style: TextStyle(color: Colors.white),
   );
 
@@ -174,7 +174,7 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                         DateFormat('dd MMMM yyyy').format(DateTime.now());
 
                     final rptBocCai =
-                        ref.watch(reportBocCaiBySales(linkPageObj));
+                        ref.watch(reportBocCaiBySalesSS(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -290,13 +290,18 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                                                           .listBocCaiBySales![
                                                                               0]
                                                                           .tipeCode;
+                                                                  var branchCode =
+                                                                      dataSelectOpt
+                                                                          .listBocCaiBySales![
+                                                                              0]
+                                                                          .title;
                                                                   var linkResultPeriodTipe =
-                                                                      '$monthNow/$yearNow/$tipePeriode/$tipeCode';
+                                                                      '$monthNow/$yearNow/$tipePeriode/$tipeCode/$branchCode';
 
                                                                   Navigator
                                                                       .pushReplacementNamed(
                                                                     context,
-                                                                    BocCaiBySalesPage
+                                                                    BocCaiBySalesSSPage
                                                                         .routeName,
                                                                     arguments:
                                                                         linkResultPeriodTipe,
@@ -391,14 +396,18 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                                                         .listBocCaiBySales![
                                                                             0]
                                                                         .tipeCode;
-
+                                                                var branchCode =
+                                                                    dataSelectOpt
+                                                                        .listBocCaiBySales![
+                                                                            0]
+                                                                        .title;
                                                                 var linkResultMonth =
-                                                                    '$monthSelected/$yearNow/$periodTipe/$tipeCode';
+                                                                    '$monthSelected/$yearNow/$periodTipe/$tipeCode/$branchCode';
 
                                                                 Navigator
                                                                     .pushReplacementNamed(
                                                                   context,
-                                                                  BocCaiBySalesPage
+                                                                  BocCaiBySalesSSPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultMonth,
@@ -489,14 +498,18 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                                                         .listBocCaiBySales![
                                                                             0]
                                                                         .tipeCode;
-
+                                                                var branchCode =
+                                                                    dataSelectOpt
+                                                                        .listBocCaiBySales![
+                                                                            0]
+                                                                        .title;
                                                                 var linkResultYear =
-                                                                    '$monthNow/$yearSelected/$periodTipe/$tipeCode';
+                                                                    '$monthNow/$yearSelected/$periodTipe/$tipeCode/$branchCode';
 
                                                                 Navigator
                                                                     .pushNamed(
                                                                   context,
-                                                                  BocCaiBySalesPage
+                                                                  BocCaiBySalesSSPage
                                                                       .routeName,
                                                                   arguments:
                                                                       linkResultYear,
@@ -596,14 +609,19 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                                                       .listBocCaiBySales![
                                                                           0]
                                                                       .periodTipe;
+                                                              var branchCode =
+                                                                  dataSelectOpt
+                                                                      .listBocCaiBySales![
+                                                                          0]
+                                                                      .title;
 
                                                               var linkResultYear =
-                                                                  '$monthNow/$yearNow/$periodTipe/$kodeTipeSelected';
+                                                                  '$monthNow/$yearNow/$periodTipe/$kodeTipeSelected/$branchCode';
 
                                                               Navigator
                                                                   .pushNamed(
                                                                 context,
-                                                                BocCaiBySalesPage
+                                                                BocCaiBySalesSSPage
                                                                     .routeName,
                                                                 arguments:
                                                                     linkResultYear,
@@ -747,7 +765,7 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                               Expanded(
                                 child: RefreshIndicator(
                                   onRefresh: () async {
-                                    return ref.refresh(reportBocCaiBySales(
+                                    return ref.refresh(reportBocCaiBySalesSS(
                                         linkPageObj.toString()));
                                   },
                                   child: rptBocCai.when(
@@ -1492,7 +1510,7 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                                                         ),
                                                                         child:
                                                                             Text(
-                                                                          "CABANG",
+                                                                          "SS Name",
                                                                           style:
                                                                               textStyleColorWhiteB,
                                                                           maxLines:
@@ -1610,7 +1628,7 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataBocCai.listBocCaiBySales![indexObj].headerCode ==
+                                                                    color: dataBocCai.listBocCaiBySales![indexObj].headerName ==
                                                                             'TOTAL'
                                                                         ? const Color
                                                                             .fromARGB(
@@ -1668,14 +1686,14 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataBocCai.listBocCaiBySales![indexObj].headerCode == 'TOTAL'
+                                                                          onTap: dataBocCai.listBocCaiBySales![indexObj].headerName == 'TOTAL'
                                                                               ? () {}
                                                                               : () {
                                                                                   var linkPage = dataBocCai.listBocCaiBySales![indexObj].linkPage.toString();
 
                                                                                   Navigator.pushNamed(
                                                                                     context,
-                                                                                    BocCaiBySalesSSPage.routeName,
+                                                                                    BocCaiBySalesSSDtlPage.routeName,
                                                                                     arguments: linkPage,
                                                                                   );
                                                                                 },
@@ -1687,7 +1705,7 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              dataRptBocCai.headerCode,
+                                                                              dataRptBocCai.headerName,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),
