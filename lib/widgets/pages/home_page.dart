@@ -529,9 +529,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           return Padding(
                                                                             padding: const EdgeInsets.fromLTRB(
                                                                                 0,
-                                                                                20,
+                                                                                5,
                                                                                 0,
-                                                                                0),
+                                                                                0,),
                                                                             child:
                                                                                 SizedBox(
                                                                               height: 20,

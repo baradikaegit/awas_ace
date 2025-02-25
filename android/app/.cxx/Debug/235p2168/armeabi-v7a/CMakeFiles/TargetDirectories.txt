@@ -1,0 +1,2 @@
+D:/Document/Mobile ACE/awas_ace/android/app/.cxx/Debug/235p2168/armeabi-v7a/CMakeFiles/edit_cache.dir
+D:/Document/Mobile ACE/awas_ace/android/app/.cxx/Debug/235p2168/armeabi-v7a/CMakeFiles/rebuild_cache.dir

@@ -48,7 +48,8 @@ dependencies:
   # number_to_character: ^0.0.12
   responsive_framework: ^1.4.0
   searchable_listview: ^2.15.0
-  shared_preferences: ^2.2.0
+  # shared_preferences: ^2.2.0
+  shared_preferences: ^2.5.2
   syncfusion_flutter_charts: ^28.2.6
   syncfusion_flutter_datagrid: ^28.2.6
   syncfusion_flutter_gauges: ^28.2.6
