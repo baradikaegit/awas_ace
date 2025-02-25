@@ -945,7 +945,7 @@ class _FunnelingByActualAfterSalesPageState
                                                                               value: gConnected.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gConnected < 20
@@ -1112,7 +1112,7 @@ class _FunnelingByActualAfterSalesPageState
                                                                               value: gContacted.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gContacted < 20
@@ -1289,7 +1289,7 @@ class _FunnelingByActualAfterSalesPageState
                                                                               value: gCai.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gCai < 20
@@ -1377,7 +1377,7 @@ class _FunnelingByActualAfterSalesPageState
                                                                 child:
                                                                     SfCartesianChart(
                                                                   title:
-                                                                      ChartTitle(
+                                                                      const ChartTitle(
                                                                     text: "",
                                                                   ),
                                                                   legend:
@@ -1410,7 +1410,8 @@ class _FunnelingByActualAfterSalesPageState
                                                                       ).value,
                                                                     ),
                                                                   ),
-                                                                  series: <ChartSeries>[
+                                                                  series: 
+                                                                  <CartesianSeries>[
                                                                     //memanggil isi grafik
 
                                                                     StackedBarSeries<

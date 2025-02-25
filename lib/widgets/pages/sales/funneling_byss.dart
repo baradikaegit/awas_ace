@@ -1050,7 +1050,7 @@ class _FunnelingSSPageState extends State<FunnelingSSPage> {
                                                                           ).value,
                                                                         ),
                                                                       ),
-                                                                      series: <ChartSeries>[
+                                                                      series: <CartesianSeries>[
                                                                         //memanggil isi grafik
 
                                                                         StackedBarSeries<

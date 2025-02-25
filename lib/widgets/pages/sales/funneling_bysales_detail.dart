@@ -1089,7 +1089,7 @@ class _FunnelingSalesDetailPageState extends State<FunnelingSalesDetailPage> {
                                                                           ).value,
                                                                         ),
                                                                       ),
-                                                                      series: <ChartSeries>[
+                                                                      series: <CartesianSeries>[
                                                                         //memanggil isi grafik
 
                                                                         StackedBarSeries<

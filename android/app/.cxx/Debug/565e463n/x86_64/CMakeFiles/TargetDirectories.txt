@@ -1,0 +1,2 @@
+D:/Document/awas_ace/android/app/.cxx/Debug/565e463n/x86_64/CMakeFiles/edit_cache.dir
+D:/Document/awas_ace/android/app/.cxx/Debug/565e463n/x86_64/CMakeFiles/rebuild_cache.dir

@@ -1031,7 +1031,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                     height: 900,
                                                                     child:
                                                                         SfCartesianChart(
-                                                                      title: ChartTitle(
+                                                                      title: const ChartTitle(
                                                                           text:
                                                                               ""),
                                                                       legend:
@@ -1054,7 +1054,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                           ).value,
                                                                         ),
                                                                       ),
-                                                                      series: <ChartSeries>[
+                                                                      series: <CartesianSeries>[
                                                                         //memanggil isi grafik
 
                                                                         StackedBarSeries<

@@ -810,7 +810,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                               value: gConnected.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gConnected < 20
@@ -977,7 +977,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                               value: gContacted.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gContacted < 20
@@ -1154,7 +1154,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                               value: gCai.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gCai < 20
@@ -1242,7 +1242,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                 child:
                                                                     SfCartesianChart(
                                                                   title:
-                                                                      ChartTitle(
+                                                                      const ChartTitle(
                                                                     text: "",
                                                                   ),
                                                                   legend:
@@ -1275,7 +1275,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                       ).value,
                                                                     ),
                                                                   ),
-                                                                  series: <ChartSeries>[
+                                                                  series: <CartesianSeries>[
                                                                     //memanggil isi grafik
 
                                                                     StackedBarSeries<

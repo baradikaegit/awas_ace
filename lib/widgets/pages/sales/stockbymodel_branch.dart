@@ -241,10 +241,10 @@ class _StockByModelVbranchPageState extends State<StockByModelVbranchPage> {
                                                                 child:
                                                                     SfCartesianChart(
                                                                   title:
-                                                                      ChartTitle(
+                                                                      const ChartTitle(
                                                                           text:
                                                                               ""),
-                                                                  series: <ChartSeries>[
+                                                                  series: <CartesianSeries>[
                                                                     //memanggil isi grafik
 
                                                                     StackedBarSeries<

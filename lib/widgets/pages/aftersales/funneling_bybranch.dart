@@ -889,7 +889,7 @@ class _FunnelingByBranchAfterSalesPageState
                                                                               value: gConnected.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gConnected < 20
@@ -1056,7 +1056,7 @@ class _FunnelingByBranchAfterSalesPageState
                                                                               value: gContacted.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gContacted < 20
@@ -1233,7 +1233,7 @@ class _FunnelingByBranchAfterSalesPageState
                                                                               value: gCai.toDouble(),
                                                                               needleLength: 0.95,
                                                                               enableAnimation: true,
-                                                                              animationType: AnimationType.ease,
+                                                                              // animationType: AnimationType.ease,
                                                                               needleStartWidth: 0.3,
                                                                               needleEndWidth: 6,
                                                                               needleColor: gCai < 20
@@ -1321,7 +1321,7 @@ class _FunnelingByBranchAfterSalesPageState
                                                                 child:
                                                                     SfCartesianChart(
                                                                   title:
-                                                                      ChartTitle(
+                                                                      const ChartTitle(
                                                                     text: "",
                                                                   ),
                                                                   legend:
@@ -1354,7 +1354,7 @@ class _FunnelingByBranchAfterSalesPageState
                                                                       ).value,
                                                                     ),
                                                                   ),
-                                                                  series: <ChartSeries>[
+                                                                  series: <CartesianSeries>[
                                                                     //memanggil isi grafik
 
                                                                     StackedBarSeries<
