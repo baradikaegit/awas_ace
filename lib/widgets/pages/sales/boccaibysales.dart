@@ -639,6 +639,34 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                             ),
                                             AppBar(
                                               automaticallyImplyLeading: false,
+                                              centerTitle: true,
+                                              title: Column(
+                                                children: [
+                                                  Padding(
+                                                    padding: const EdgeInsets
+                                                        .fromLTRB(
+                                                      0,
+                                                      5,
+                                                      0,
+                                                      0,
+                                                    ),
+                                                    child: 
+                                                    Text("BOC & CAI (${dataSelectOpt.listBocCaiBySales![0].tipeCode})", 
+                                                    style: textStyleColorWhiteB,
+                                                      ),
+                                                  ),
+                                                ],
+                                              ),
+                                              backgroundColor:
+                                                  const Color.fromARGB(
+                                                255,
+                                                33,
+                                                44,
+                                                81,
+                                              ),
+                                            ),
+                                            AppBar(
+                                              automaticallyImplyLeading: false,
                                               centerTitle: false,
                                               title: Padding(
                                                 padding:
