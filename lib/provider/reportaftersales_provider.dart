@@ -1,4 +1,5 @@
 import 'package:awas_ace/repositories/reportaftersales_repositories.dart';
+import 'package:awas_ace/widgets/model/reportafterslsboccaibypicbookingmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsbookingtoshowmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
@@ -97,5 +98,16 @@ final reportFunnelingByActual =
         ref.watch(reportAfterSlsRepositoryProvider);
     return repositoryFunnelingByActual
         .fecthListDataFunnelingByActual(linkPageObj);
+  },
+);
+
+//list report boc cai by pic booking
+final reportBocCaiByPicBooking = FutureProvider.autoDispose
+    .family<ListRptSalesBocCaiByPICBookingResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryBocCaiByPicBooking =
+        ref.watch(reportAfterSlsRepositoryProvider);
+    return repositoryBocCaiByPicBooking
+        .fecthListDataBocCaiByPicBooking(linkPageObj);
   },
 );

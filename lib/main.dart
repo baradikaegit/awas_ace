@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:awas_ace/widgets/main_page.dart';
+import 'package:awas_ace/widgets/pages/aftersales/boccaibypicbooking.dart';
 import 'package:awas_ace/widgets/pages/aftersales/bookingtoshow.dart';
 import 'package:awas_ace/widgets/pages/aftersales/funneling.dart';
 import 'package:awas_ace/widgets/pages/aftersales/funneling_byactual.dart';
@@ -325,6 +326,9 @@ class MyApp extends StatelessWidget {
             ),
         FunnelingByActualAfterSalesPage.routeName: (context) =>
             FunnelingByActualAfterSalesPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        BocCaiByPicBookingPage.routeName: (context) => BocCaiByPicBookingPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),

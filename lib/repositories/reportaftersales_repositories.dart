@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/reportafterslsboccaibypicbookingmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsbookingtoshowmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsfunnelingmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsprospekgruebpmodel.dart';
@@ -29,6 +30,8 @@ abstract class IReportAfterSalesRepository {
       String linkPageObj);
   Future<ListRptAfterSlsFunnelingResponse> fecthListDataFunnelingByActual(
       String linkPageObj);
+  Future<ListRptSalesBocCaiByPICBookingResponse>
+      fecthListDataBocCaiByPicBooking(String linkPageObj);
 }
 
 class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
@@ -255,5 +258,31 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
     var responseGetFunnelingByActual =
         ListRptAfterSlsFunnelingResponse.fromJson(jsonObjRptFunnelingByActual);
     return responseGetFunnelingByActual;
+  }
+
+  //Funneling by boc cai by pic booking
+  @override
+  Future<ListRptSalesBocCaiByPICBookingResponse>
+      fecthListDataBocCaiByPicBooking(String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptBocCaiByPicBooking =
+        "${_host}GetReportBocCaiByPICBookingBranch/$linkPageObj";
+
+    var resultGetRptBocCaiByPicBooking =
+        await http.get(Uri.parse(urlGetRptBocCaiByPicBooking), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptBocCaiByPicBooking =
+        jsonDecode(resultGetRptBocCaiByPicBooking.body);
+
+    var responseGetBocCaiByPicBooking =
+        ListRptSalesBocCaiByPICBookingResponse.fromJson(
+            jsonObjRptBocCaiByPicBooking);
+    return responseGetBocCaiByPicBooking;
   }
 }

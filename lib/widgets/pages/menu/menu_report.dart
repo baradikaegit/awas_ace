@@ -79,7 +79,7 @@ class _ReportPageState extends State<ReportPage> {
   List linkPageASGR = [
     '/funnelingAfterSalesPage',
     '/prospekSaGRPage',
-    '/',
+    '/bocCaiByPicBookingPage',
     '/prospekGRtoUeBPPage',
     '/tMSProductivityPage',
     '/bookingToShowPage'
@@ -460,7 +460,9 @@ class _ReportPageState extends State<ReportPage> {
                                                 linkPageASGR[index] ==
                                                     '/bookingToShowPage' ||
                                                 linkPageASGR[index] ==
-                                                    '/funnelingAfterSalesPage'
+                                                    '/funnelingAfterSalesPage' ||
+                                                linkPageASGR[index] ==
+                                                    '/bocCaiByPicBookingPage'
                                             ? '$_monthNow/$_yearNow/MTD'
                                             : null,
                                       ),
