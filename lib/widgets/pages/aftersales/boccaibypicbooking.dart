@@ -1507,17 +1507,13 @@ class _BocCaiByPicBookingPageState extends State<BocCaiByPicBookingPage> {
 
                                                                   var textStyleDataTable =
                                                                       TextStyle(
-                                                                    color: dataBocCai.listRptAfterSalesBocCaiByPICBooking![indexObj].headerCode ==
-                                                                            'TOTAL'
-                                                                        ? const Color
-                                                                            .fromARGB(
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                            255,
-                                                                          )
-                                                                        : Colors
-                                                                            .blue,
+                                                                    color: const Color
+                                                                        .fromARGB(
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                      255,
+                                                                    ),
                                                                     fontSize:
                                                                         ResponsiveValue<
                                                                             double>(
@@ -1565,19 +1561,8 @@ class _BocCaiByPicBookingPageState extends State<BocCaiByPicBookingPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataBocCai.listRptAfterSalesBocCaiByPICBooking![indexObj].headerCode == 'TOTAL'
-                                                                              ? () {}
-                                                                              : () {
-                                                                                  var linkPage = dataBocCai.listRptAfterSalesBocCaiByPICBooking![indexObj].linkPage.toString();
-
-                                                                                  print(linkPage);
-
-                                                                                  // Navigator.pushNamed(
-                                                                                  //   context,
-                                                                                  //   BocCaiBySalesSSPage.routeName,
-                                                                                  //   arguments: linkPage,
-                                                                                  // );
-                                                                                },
+                                                                          onTap:
+                                                                              () {},
                                                                           child:
                                                                               Padding(
                                                                             padding:
@@ -1586,7 +1571,7 @@ class _BocCaiByPicBookingPageState extends State<BocCaiByPicBookingPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              dataRptBocCai.headerCode,
+                                                                              dataRptBocCai.headerName,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),
