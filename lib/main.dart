@@ -19,6 +19,7 @@ import 'package:awas_ace/widgets/pages/bodypaint/prospeksabpvsvalidity_bysaname.
 import 'package:awas_ace/widgets/pages/call_page.dart';
 import 'package:awas_ace/widgets/pages/changepass_page.dart';
 import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringpoin.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
@@ -331,6 +332,7 @@ class MyApp extends StatelessWidget {
         BocCaiByPicBookingPage.routeName: (context) => BocCaiByPicBookingPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
+        MonitoringPoinPage.routeName: (context) => const MonitoringPoinPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
       },

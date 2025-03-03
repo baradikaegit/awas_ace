@@ -119,7 +119,7 @@ class _ReportPageState extends State<ReportPage> {
     'monitoringsaldo.png'
   ];
 
-  List linkPageGeneral = ['/', '/', '/'];
+  List linkPageGeneral = ['/monitoringPoinPage', '/', '/'];
 
   String? roles;
 
@@ -881,7 +881,9 @@ class _ReportPageState extends State<ReportPage> {
                                   child: FlipAnimation(
                                     child: InkWell(
                                       onTap: () => Navigator.pushNamed(
-                                          context, linkPageGeneral[index]),
+                                        context,
+                                        linkPageGeneral[index],
+                                      ),
                                       child: Column(
                                         children: <Widget>[
                                           const SizedBox(
