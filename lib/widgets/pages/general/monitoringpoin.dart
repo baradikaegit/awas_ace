@@ -3,6 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringpoinbyss.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -12,10 +13,10 @@ class MonitoringPoinPage extends StatefulWidget {
 
   static const String routeName = "/monitoringPoinPage";
   @override
-  State<MonitoringPoinPage> createState() => _MonitVolProfiPageState();
+  State<MonitoringPoinPage> createState() => _MonitoringPoinPageState();
 }
 
-class _MonitVolProfiPageState extends State<MonitoringPoinPage>
+class _MonitoringPoinPageState extends State<MonitoringPoinPage>
     with TickerProviderStateMixin {
   Widget titleBar = const Text(
     "Monitoring Poin",
@@ -238,230 +239,99 @@ class _MonitVolProfiPageState extends State<MonitoringPoinPage>
                             children: [
                               Column(
                                 children: [
-                                  // SizedBox(
-                                  //   child: rptMonitoringPoin.when(
-                                  //     data: (dataPeriod) => (dataPeriod
-                                  //                 .listMonitoringVolProfitMaker !=
-                                  //             null)
-                                  //         ? Column(
-                                  //             children: [
-                                  //               AppBar(
-                                  //                 automaticallyImplyLeading: false,
-                                  //                 centerTitle: true,
-                                  //                 title: Padding(
-                                  //                   padding:
-                                  //                       const EdgeInsets.fromLTRB(
-                                  //                           0, 10, 0, 0),
-                                  //                   child: Column(
-                                  //                     children: [
-                                  //                       Align(
-                                  //                         alignment:
-                                  //                             Alignment.center,
-                                  //                         child: Text(
-                                  //                           textAlign:
-                                  //                               TextAlign.center,
-                                  //                           "Monitoring Volume Maker",
-                                  //                           maxLines: 2,
-                                  //                           overflow: TextOverflow
-                                  //                               .ellipsis,
-                                  //                           style: TextStyle(
-                                  //                             color: const Color
-                                  //                                 .fromARGB(
-                                  //                               255,
-                                  //                               255,
-                                  //                               255,
-                                  //                               255,
-                                  //                             ),
-                                  //                             fontSize:
-                                  //                                 ResponsiveValue<
-                                  //                                     double>(
-                                  //                               context,
-                                  //                               conditionalValues: [
-                                  //                                 const Condition
-                                  //                                     .equals(
-                                  //                                   name: TABLET,
-                                  //                                   value: 12.0,
-                                  //                                   landscapeValue:
-                                  //                                       12.0,
-                                  //                                 ),
-                                  //                                 const Condition
-                                  //                                     .largerThan(
-                                  //                                     name: TABLET,
-                                  //                                     value: 17.0,
-                                  //                                     landscapeValue:
-                                  //                                         17.0,
-                                  //                                     breakpoint:
-                                  //                                         800),
-                                  //                               ],
-                                  //                               defaultValue: 11,
-                                  //                             ).value,
-                                  //                             fontWeight:
-                                  //                                 FontWeight.bold,
-                                  //                           ),
-                                  //                         ),
-                                  //                       ),
-                                  //                       Align(
-                                  //                         alignment:
-                                  //                             Alignment.center,
-                                  //                         child: Text(
-                                  //                           textAlign:
-                                  //                               TextAlign.center,
-                                  //                           "VELOZ, AVANZA, RAIZE, RUSH, AGYA & CALYA",
-                                  //                           maxLines: 2,
-                                  //                           overflow: TextOverflow
-                                  //                               .ellipsis,
-                                  //                           style: TextStyle(
-                                  //                             color: const Color
-                                  //                                 .fromARGB(
-                                  //                               255,
-                                  //                               255,
-                                  //                               255,
-                                  //                               255,
-                                  //                             ),
-                                  //                             fontSize:
-                                  //                                 ResponsiveValue<
-                                  //                                     double>(
-                                  //                               context,
-                                  //                               conditionalValues: [
-                                  //                                 const Condition
-                                  //                                     .equals(
-                                  //                                   name: TABLET,
-                                  //                                   value: 12.0,
-                                  //                                   landscapeValue:
-                                  //                                       12.0,
-                                  //                                 ),
-                                  //                                 const Condition
-                                  //                                     .largerThan(
-                                  //                                     name: TABLET,
-                                  //                                     value: 17.0,
-                                  //                                     landscapeValue:
-                                  //                                         17.0,
-                                  //                                     breakpoint:
-                                  //                                         800),
-                                  //                               ],
-                                  //                               defaultValue: 11.0,
-                                  //                             ).value,
-                                  //                             fontWeight:
-                                  //                                 FontWeight.bold,
-                                  //                           ),
-                                  //                         ),
-                                  //                       ),
-                                  //                     ],
-                                  //                   ),
-                                  //                 ),
-                                  //                 backgroundColor:
-                                  //                     const Color.fromARGB(
-                                  //                   255,
-                                  //                   33,
-                                  //                   44,
-                                  //                   81,
-                                  //                 ),
-                                  //               ),
-                                  //               AppBar(
-                                  //                 automaticallyImplyLeading: false,
-                                  //                 centerTitle: false,
-                                  //                 title: Padding(
-                                  //                   padding:
-                                  //                       const EdgeInsets.fromLTRB(
-                                  //                           5, 0, 0, 0),
-                                  //                   child: Column(
-                                  //                     children: [
-                                  //                       Align(
-                                  //                         alignment:
-                                  //                             Alignment.centerLeft,
-                                  //                         child: Text(
-                                  //                           "Periode : $yearNow",
-                                  //                           style: TextStyle(
-                                  //                             color: const Color
-                                  //                                 .fromARGB(
-                                  //                               255,
-                                  //                               255,
-                                  //                               255,
-                                  //                               255,
-                                  //                             ),
-                                  //                             fontSize:
-                                  //                                 ResponsiveValue<
-                                  //                                     double>(
-                                  //                               context,
-                                  //                               conditionalValues: [
-                                  //                                 const Condition
-                                  //                                     .equals(
-                                  //                                     name: TABLET,
-                                  //                                     value: 12.5,
-                                  //                                     landscapeValue:
-                                  //                                         12.5),
-                                  //                                 const Condition
-                                  //                                     .largerThan(
-                                  //                                     name: TABLET,
-                                  //                                     value: 12.5,
-                                  //                                     landscapeValue:
-                                  //                                         12.5,
-                                  //                                     breakpoint:
-                                  //                                         800),
-                                  //                               ],
-                                  //                               defaultValue: 11.5,
-                                  //                             ).value,
-                                  //                           ),
-                                  //                         ),
-                                  //                       ),
-                                  //                       Align(
-                                  //                         alignment:
-                                  //                             Alignment.centerLeft,
-                                  //                         child: Text(
-                                  //                           "Tanggal Hari ini : $dateNow",
-                                  //                           style: TextStyle(
-                                  //                             color: const Color
-                                  //                                 .fromARGB(
-                                  //                               255,
-                                  //                               255,
-                                  //                               255,
-                                  //                               255,
-                                  //                             ),
-                                  //                             fontSize:
-                                  //                                 ResponsiveValue<
-                                  //                                     double>(
-                                  //                               context,
-                                  //                               conditionalValues: [
-                                  //                                 const Condition
-                                  //                                     .equals(
-                                  //                                     name: TABLET,
-                                  //                                     value: 12.5,
-                                  //                                     landscapeValue:
-                                  //                                         12.5),
-                                  //                                 const Condition
-                                  //                                     .largerThan(
-                                  //                                     name: TABLET,
-                                  //                                     value: 12.5,
-                                  //                                     landscapeValue:
-                                  //                                         12.5,
-                                  //                                     breakpoint:
-                                  //                                         800),
-                                  //                               ],
-                                  //                               defaultValue: 11.5,
-                                  //                             ).value,
-                                  //                           ),
-                                  //                         ),
-                                  //                       ),
-                                  //                     ],
-                                  //                   ),
-                                  //                 ),
-                                  //                 backgroundColor:
-                                  //                     const Color.fromARGB(
-                                  //                   255,
-                                  //                   33,
-                                  //                   44,
-                                  //                   81,
-                                  //                 ),
-                                  //               ),
-                                  //             ],
-                                  //           )
-                                  //         : const Column(
-                                  //             children: [],
-                                  //           ),
-                                  //     error: (err, stack) => Text('Error $err'),
-                                  //     loading: () => const Center(child: Text('')),
-                                  //   ),
-                                  // ),
+                                  SizedBox(
+                                    child: rptMonitoringPoin.when(
+                                      data: (dataTop) => (dataTop
+                                                  .listRptGeneralMonitoringPoin !=
+                                              null)
+                                          ? Column(
+                                              children: [
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    for (int i = 0;
+                                                        i <
+                                                            dataTop
+                                                                .listRptGeneralMonitoringPoin!
+                                                                .length;
+                                                        i++)
+                                                      if (dataTop
+                                                              .listRptGeneralMonitoringPoin![
+                                                                  i]
+                                                              .tipe !=
+                                                          'List')
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                            15,
+                                                            10,
+                                                            15,
+                                                            20,
+                                                          ),
+                                                          child: Column(
+                                                            children: [
+                                                              CircleAvatar(
+                                                                backgroundColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                  255,
+                                                                  3,
+                                                                  116,
+                                                                  18,
+                                                                ),
+                                                                minRadius: 30,
+                                                                maxRadius: 50,
+                                                                child:
+                                                                    Image.asset(
+                                                                  'assets/images/user.png',
+                                                                  fit: BoxFit
+                                                                      .cover,
+                                                                ),
+                                                              ),
+                                                              const SizedBox(
+                                                                height: 15,
+                                                              ),
+                                                              Text(
+                                                                dataTop
+                                                                    .listRptGeneralMonitoringPoin![
+                                                                        i]
+                                                                    .data3,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                              Text(
+                                                                dataTop
+                                                                    .listRptGeneralMonitoringPoin![
+                                                                        i]
+                                                                    .headerCode,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                              Text(
+                                                                dataTop
+                                                                    .listRptGeneralMonitoringPoin![
+                                                                        i]
+                                                                    .data2,
+                                                                style:
+                                                                    textStyleColorWhite,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                  ],
+                                                ),
+                                              ],
+                                            )
+                                          : const Column(
+                                              children: [],
+                                            ),
+                                      error: (err, stack) => Text('Error $err'),
+                                      loading: () =>
+                                          const Center(child: Text('')),
+                                    ),
+                                  ),
                                   Expanded(
                                     child: RefreshIndicator(
                                       onRefresh: () async {
@@ -740,12 +610,11 @@ class _MonitVolProfiPageState extends State<MonitoringPoinPage>
                                                                               onTap: () {
                                                                                 String branchCode = dataRptMonitoring.headerCode;
 
-                                                                                // Navigator.pushNamed(
-                                                                                //   context,
-                                                                                //   MonitoringPoinPage.routeName,
-                                                                                //   arguments: branchCode,
-                                                                                // );
-                                                                                print(branchCode);
+                                                                                Navigator.pushNamed(
+                                                                                  context,
+                                                                                  MonitoringPoinBySSPage.routeName,
+                                                                                  arguments: branchCode,
+                                                                                );
                                                                               },
                                                                               child: Padding(
                                                                                 padding: const EdgeInsets.only(

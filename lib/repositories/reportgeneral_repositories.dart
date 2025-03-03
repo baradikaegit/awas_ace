@@ -72,6 +72,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
 
     var urlGetRptMonitPoinBySales =
         "${_host}GetReportMonitoringPoinBySales/$linkPageObj";
+    print(urlGetRptMonitPoinBySales);
 
     var resultGetRptMonitPoinBySales =
         await http.get(Uri.parse(urlGetRptMonitPoinBySales), headers: {
