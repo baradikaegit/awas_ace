@@ -19,6 +19,9 @@ import 'package:awas_ace/widgets/pages/bodypaint/prospeksabpvsvalidity_bysaname.
 import 'package:awas_ace/widgets/pages/call_page.dart';
 import 'package:awas_ace/widgets/pages/changepass_page.dart';
 import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringpoin.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringpoinbysls.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringpoinbyss.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
@@ -329,6 +332,14 @@ class MyApp extends StatelessWidget {
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         BocCaiByPicBookingPage.routeName: (context) => BocCaiByPicBookingPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitoringPoinPage.routeName: (context) => const MonitoringPoinPage(),
+        MonitoringPoinBySSPage.routeName: (context) => MonitoringPoinBySSPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitoringPoinBySalesPage.routeName: (context) =>
+            MonitoringPoinBySalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
