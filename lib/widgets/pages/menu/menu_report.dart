@@ -119,7 +119,7 @@ class _ReportPageState extends State<ReportPage> {
     'monitoringsaldo.png'
   ];
 
-  List linkPageGeneral = ['/monitoringPoinPage', '/', '/'];
+  List linkPageGeneral = ['/monitoringPoinPage', '/monitoringRedeemPage', '/'];
 
   String? roles;
 

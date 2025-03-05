@@ -1,5 +1,6 @@
 import 'package:awas_ace/repositories/reportgeneral_repositories.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportGeneralRepositoryProvider = Provider(
@@ -32,5 +33,36 @@ final reportMonitPoinBySales =
         ref.watch(reportGeneralRepositoryProvider);
     return repositoryMonitPoinBySales
         .fecthListDataMonitoringPoinBySales(linkPageObj);
+  },
+);
+
+//list report monitoring redeem
+final reportMonitRedeem =
+    FutureProvider.autoDispose<ListRptGeneralMntRedeemResponse>(
+  (ref) async {
+    final repositoryMonitRedeem = ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitRedeem.fecthListDataMonitoringRedeem();
+  },
+);
+
+//list report monitoring redeem by ss
+final reportMonitRedeemBySS =
+    FutureProvider.autoDispose.family<ListRptGeneralMntRedeemResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryMonitRedeemBySS =
+        ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitRedeemBySS
+        .fecthListDataMonitoringRedeemBySS(linkPageObj);
+  },
+);
+
+//list report monitoring redeem by sales
+final reportMonitRedeemBySales =
+    FutureProvider.autoDispose.family<ListRptGeneralMntRedeemResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryMonitRedeemBySales =
+        ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitRedeemBySales
+        .fecthListDataMonitoringRedeemBySales(linkPageObj);
   },
 );

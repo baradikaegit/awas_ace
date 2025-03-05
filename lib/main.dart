@@ -22,6 +22,9 @@ import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoin.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoinbysls.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoinbyss.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeem.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeembysls.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeembyss.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
@@ -340,6 +343,15 @@ class MyApp extends StatelessWidget {
             ),
         MonitoringPoinBySalesPage.routeName: (context) =>
             MonitoringPoinBySalesPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitoringRedeemPage.routeName: (context) =>
+            const MonitoringRedeemPage(),
+        MonitoringRedeemBySSPage.routeName: (context) =>
+            MonitoringRedeemBySSPage(
+                linkPageObj: ModalRoute.of(context)!.settings.arguments),
+        MonitoringRedeemBySalesPage.routeName: (context) =>
+            MonitoringRedeemBySalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
