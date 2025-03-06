@@ -1,6 +1,7 @@
 import 'package:awas_ace/repositories/reportgeneral_repositories.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportGeneralRepositoryProvider = Provider(
@@ -64,5 +65,14 @@ final reportMonitRedeemBySales =
         ref.watch(reportGeneralRepositoryProvider);
     return repositoryMonitRedeemBySales
         .fecthListDataMonitoringRedeemBySales(linkPageObj);
+  },
+);
+
+//list report monitoring saldo
+final reportMonitSaldo =
+    FutureProvider.autoDispose<ListRptGeneralMntSaldoResponse>(
+  (ref) async {
+    final repositoryMonitSaldo = ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitSaldo.fecthListDataMonitoringSaldo();
   },
 );

@@ -25,6 +25,7 @@ import 'package:awas_ace/widgets/pages/general/monitoringpoinbyss.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeem.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembysls.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembyss.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringsaldo.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
@@ -354,6 +355,7 @@ class MyApp extends StatelessWidget {
             MonitoringRedeemBySalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
+        MonitoringSaldoPage.routeName: (context) => const MonitoringSaldoPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
       },

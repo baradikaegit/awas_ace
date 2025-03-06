@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,6 +19,7 @@ abstract class IReportGeneralRepository {
       String linkPageObj);
   Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeemBySales(
       String linkPageObj);
+  Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldo();
 }
 
 class ReportGeneralRepositories implements IReportGeneralRepository {
@@ -126,7 +128,6 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
 
     var urlGetRptMonitRedeemBySS =
         "${_host}GetReportMonitoringRedeemBySS/$linkPageObj";
-    print(urlGetRptMonitRedeemBySS);
 
     var resultGetRptMonitRedeemBySS =
         await http.get(Uri.parse(urlGetRptMonitRedeemBySS), headers: {
@@ -166,5 +167,27 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
     var responseGetMonitRedeemBySales =
         ListRptGeneralMntRedeemResponse.fromJson(jsonObjRptMonitRedeemBySales);
     return responseGetMonitRedeemBySales;
+  }
+
+  //Monitoring Saldo
+  @override
+  Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldo() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitSaldo = "${_host}GetReportMonitoringSaldo";
+
+    var resultGetRptMonitSaldo =
+        await http.get(Uri.parse(urlGetRptMonitSaldo), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitSaldo = jsonDecode(resultGetRptMonitSaldo.body);
+
+    var responseGetMonitSaldo =
+        ListRptGeneralMntSaldoResponse.fromJson(jsonObjRptMonitSaldo);
+    return responseGetMonitSaldo;
   }
 }
