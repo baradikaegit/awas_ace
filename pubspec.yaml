@@ -37,6 +37,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_bootstrap: ^2.0.0
+  flutter_fancy_tree_view: ^1.6.0
   flutter_riverpod: ^2.3.6
   flutter_staggered_animations: ^1.1.1
   font_awesome_flutter: ^10.7.0
@@ -45,10 +46,8 @@ dependencies:
   intl: ^0.18.1
   loading_animation_widget: ^1.2.1
   marquee: ^2.2.3
-  # number_to_character: ^0.0.12
   responsive_framework: ^1.4.0
   searchable_listview: ^2.15.0
-  # shared_preferences: ^2.2.0
   shared_preferences: ^2.5.2
   syncfusion_flutter_charts: ^28.2.6
   syncfusion_flutter_datagrid: ^28.2.6

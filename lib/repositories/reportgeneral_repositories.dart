@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
@@ -14,6 +15,8 @@ abstract class IReportGeneralRepository {
       String linkPageObj);
   Future<ListRptGeneralMntPoinResponse> fecthListDataMonitoringPoinBySales(
       String linkPageObj);
+  Future<ListRptGeneralMntPoinHistoryResponse>
+      fecthListDataMonitoringPoinHistory(String linkPageObj);
   Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeem();
   Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeemBySS(
       String linkPageObj);
@@ -94,6 +97,32 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
     var responseGetMonitPoinBySales =
         ListRptGeneralMntPoinResponse.fromJson(jsonObjRptMonitPoinBySales);
     return responseGetMonitPoinBySales;
+  }
+
+  //Monitoring Poin history
+  @override
+  Future<ListRptGeneralMntPoinHistoryResponse>
+      fecthListDataMonitoringPoinHistory(String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitPoinHistory =
+        "${_host}GetReportMonitoringPoinByHistory/$linkPageObj";
+
+    var resultGetRptMonitPoinHistory =
+        await http.get(Uri.parse(urlGetRptMonitPoinHistory), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitPoinHistory =
+        jsonDecode(resultGetRptMonitPoinHistory.body);
+
+    var responseGetMonitPoinHistory =
+        ListRptGeneralMntPoinHistoryResponse.fromJson(
+            jsonObjRptMonitPoinHistory);
+    return responseGetMonitPoinHistory;
   }
 
   //Monitoring Redeem

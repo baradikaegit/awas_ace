@@ -3,6 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringpoinhistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -548,18 +549,21 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                           onTap:
                                                                               () {
                                                                             String
-                                                                                branchCode =
-                                                                                dataRptMonitoring.title;
-                                                                            String
-                                                                                ssCode =
+                                                                                userCode =
                                                                                 dataRptMonitoring.headerCode;
+                                                                            int tipe =
+                                                                                0;
 
-                                                                            // Navigator.pushNamed(
-                                                                            //   context,
-                                                                            //   MonitoringPoinBySalesPage.routeName,
-                                                                            //   arguments: branchCode,
-                                                                            // );
-                                                                            print('${branchCode} , ${ssCode}');
+                                                                            String
+                                                                                linkPage =
+                                                                                '$userCode/$tipe';
+
+                                                                            Navigator.pushNamed(
+                                                                              context,
+                                                                              MonitoringPoinHistoryPage.routeName,
+                                                                              arguments: linkPage,
+                                                                            );
+                                                                            print(linkPage);
                                                                           },
                                                                           child:
                                                                               Padding(

@@ -1,7 +1,10 @@
 import 'package:awas_ace/repositories/reportgeneral_repositories.dart';
+import 'package:awas_ace/repositories/repositories_history.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
+import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportGeneralRepositoryProvider = Provider(
@@ -76,3 +79,46 @@ final reportMonitSaldo =
     return repositoryMonitSaldo.fecthListDataMonitoringSaldo();
   },
 );
+
+//list report monitoring history
+final reportMonitPoinHistory = FutureProvider.autoDispose
+    .family<ListRptGeneralMntPoinHistoryResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryMonitPoinHistory =
+        ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitPoinHistory
+        .fecthListDataMonitoringPoinHistory(linkPageObj);
+  },
+);
+
+// Provider untuk TreeController
+final treeControllerProvider = Provider.autoDispose
+    .family<TreeController<ListRptGeneralMonitoringPoinHistory>, String>(
+        (ref, linkPageObj) {
+  final data =
+      ref.watch(monitoringPoinHistoryProvider(linkPageObj)).valueOrNull;
+
+  if (data == null || data.listRptGeneralMonitoringPoinHistory == null) {
+    return TreeController<ListRptGeneralMonitoringPoinHistory>(
+      roots: [],
+      childrenProvider: (node) => node.children ?? [],
+    );
+  }
+
+  return TreeController<ListRptGeneralMonitoringPoinHistory>(
+    roots: data.listRptGeneralMonitoringPoinHistory!,
+    childrenProvider: (node) => node.children ?? [],
+  );
+
+  // final controller = TreeController<ListRptGeneralMonitoringPoinHistory>(
+  //   roots: data?.listRptGeneralMonitoringPoinHistory ?? [],
+  //   childrenProvider: (node) => node.children ?? [],
+  // );
+
+  // Future.delayed(const Duration(milliseconds: 100), () {
+  //   controller.expandAll(); // Pastikan semua terbuka dulu
+  //   controller.collapseAll(); // Kemudian ditutup
+  // });
+
+  // return controller;
+});
