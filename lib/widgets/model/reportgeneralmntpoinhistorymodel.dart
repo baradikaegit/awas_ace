@@ -44,7 +44,6 @@ class ListRptGeneralMonitoringPoinHistory {
     required this.totalRedeem,
     required this.poinTipe,
     required this.iD,
-    this.children, // Tambahkan children
   });
 
   late final int rowGroup;
@@ -58,8 +57,6 @@ class ListRptGeneralMonitoringPoinHistory {
   late final int totalRedeem;
   late final String poinTipe;
   late final String iD;
-  List<ListRptGeneralMonitoringPoinHistory>?
-      children; // Tambahkan properti children
 
   ListRptGeneralMonitoringPoinHistory.fromJson(Map<String, dynamic> json) {
     rowGroup = json['rowGroup'];
@@ -73,13 +70,6 @@ class ListRptGeneralMonitoringPoinHistory {
     totalRedeem = json['totalRedeem'];
     poinTipe = json['poinTipe'];
     iD = json['iD'];
-
-    // Parsing children jika ada
-    children = json['children'] != null
-        ? List.from(json['children'])
-            .map((e) => ListRptGeneralMonitoringPoinHistory.fromJson(e))
-            .toList()
-        : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -95,9 +85,7 @@ class ListRptGeneralMonitoringPoinHistory {
     _data['totalRedeem'] = totalRedeem;
     _data['poinTipe'] = poinTipe;
     _data['iD'] = iD;
-    if (children != null) {
-      _data['children'] = children!.map((e) => e.toJson()).toList();
-    }
+
     return _data;
   }
 }

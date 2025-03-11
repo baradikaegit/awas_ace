@@ -91,34 +91,71 @@ final reportMonitPoinHistory = FutureProvider.autoDispose
   },
 );
 
-// Provider untuk TreeController
-final treeControllerProvider = Provider.autoDispose
-    .family<TreeController<ListRptGeneralMonitoringPoinHistory>, String>(
-        (ref, linkPageObj) {
-  final data =
-      ref.watch(monitoringPoinHistoryProvider(linkPageObj)).valueOrNull;
+// Provider untuk Api Service
+final treeControllerProvider = StateNotifierProvider.family.autoDispose<
+    TreeControllerNotifier,
+    TreeController<ListRptGeneralMonitoringPoinHistory>,
+    String>(
+  (ref, linkPageObj) {
+    final data = ref.watch(monitoringPoinHistoryProvider(linkPageObj));
 
-  if (data == null || data.listRptGeneralMonitoringPoinHistory == null) {
-    return TreeController<ListRptGeneralMonitoringPoinHistory>(
-      roots: [],
-      childrenProvider: (node) => node.children ?? [],
-    );
+    return TreeControllerNotifier(
+        data.value?.listRptGeneralMonitoringPoinHistory ?? []);
+  },
+);
+
+// Provider untuk TreeController
+class TreeControllerNotifier
+    extends StateNotifier<TreeController<ListRptGeneralMonitoringPoinHistory>> {
+  TreeControllerNotifier(List<ListRptGeneralMonitoringPoinHistory>? roots)
+      : super(TreeController<ListRptGeneralMonitoringPoinHistory>(
+          roots: roots ?? [],
+          childrenProvider: (node) => _getChildren(node, roots),
+        ));
+
+  static List<ListRptGeneralMonitoringPoinHistory> _getChildren(
+      ListRptGeneralMonitoringPoinHistory node,
+      List<ListRptGeneralMonitoringPoinHistory>? allNodes) {
+    return allNodes
+            ?.where((item) => item.rowGroup == node.rowGroup + 1)
+            .toList() ??
+        [];
   }
 
-  return TreeController<ListRptGeneralMonitoringPoinHistory>(
-    roots: data.listRptGeneralMonitoringPoinHistory!,
-    childrenProvider: (node) => node.children ?? [],
-  );
+  void toggleNode(ListRptGeneralMonitoringPoinHistory node) {
+    state = state..toggleExpansion(node);
+  }
+}
 
-  // final controller = TreeController<ListRptGeneralMonitoringPoinHistory>(
-  //   roots: data?.listRptGeneralMonitoringPoinHistory ?? [],
-  //   childrenProvider: (node) => node.children ?? [],
-  // );
+// Provider untuk TreeController
 
-  // Future.delayed(const Duration(milliseconds: 100), () {
-  //   controller.expandAll(); // Pastikan semua terbuka dulu
-  //   controller.collapseAll(); // Kemudian ditutup
-  // });
+// final treeControllerProvider = Provider.autoDispose
+//     .family<TreeController<ListRptGeneralMonitoringPoinHistory>, String>(
+//         (ref, linkPageObj) {
+//   final data =
+//       ref.watch(monitoringPoinHistoryProvider(linkPageObj)).valueOrNull;
 
-  // return controller;
-});
+//   if (data == null || data.listRptGeneralMonitoringPoinHistory == null) {
+//     return TreeController<ListRptGeneralMonitoringPoinHistory>(
+//       roots: [],
+//       childrenProvider: (node) => node.children ?? [],
+//     );
+//   }
+
+//   return TreeController<ListRptGeneralMonitoringPoinHistory>(
+//     roots: data.listRptGeneralMonitoringPoinHistory!,
+//     childrenProvider: (node) => node.children ?? [],
+//   );
+
+//   // final controller = TreeController<ListRptGeneralMonitoringPoinHistory>(
+//   //   roots: data?.listRptGeneralMonitoringPoinHistory ?? [],
+//   //   childrenProvider: (node) => node.children ?? [],
+//   // );
+
+//   // Future.delayed(const Duration(milliseconds: 100), () {
+//   //   controller.expandAll(); // Pastikan semua terbuka dulu
+//   //   controller.collapseAll(); // Kemudian ditutup
+//   // });
+
+//   // return controller;
+// });

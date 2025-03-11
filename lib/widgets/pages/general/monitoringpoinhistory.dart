@@ -1,14 +1,12 @@
 import 'package:awas_ace/provider/reportgeneral_provider.dart';
 import 'package:awas_ace/repositories/repositories_history.dart';
-import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
-import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
-import 'package:awas_ace/widgets/pages/general/MonitoringPoinTreeNode.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_fancy_tree_view/flutter_fancy_tree_view.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
 class MonitoringPoinHistoryPage extends StatefulWidget {
@@ -26,9 +24,6 @@ class _MonitoringPoinHistoryPageState extends State<MonitoringPoinHistoryPage> {
     "Monitoring Poin",
     style: TextStyle(color: Colors.white),
   );
-
-  // late TreeController<ListRptGeneralMonitoringPoinHistory> _treeController;
-  // final List<ListRptGeneralMntPoinHistoryResponse> _treeData = [];
 
   @override
   Widget build(BuildContext context) {
@@ -100,118 +95,19 @@ class _MonitoringPoinHistoryPageState extends State<MonitoringPoinHistoryPage> {
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
 
-                    // final treeAsync =
-                    //     ref.watch(reportMonitPoinHistory(linkPageObj));
-
-                    final monitoringData = ref.watch(
+                    final treeData = ref.watch(
                       monitoringPoinHistoryProvider(linkPageObj),
                     );
-                    final treeController = ref.watch(
-                      treeControllerProvider(linkPageObj),
+
+                    return treeData.when(
+                      data: (data) => _buildTreeView(ref, linkPageObj),
+                      error: (err, stack) => Text('Error $err'),
+                      loading: () => const Center(
+                        child: Column(
+                          children: [loadingAnimation()],
+                        ),
+                      ),
                     );
-
-                    return TreeView<ListRptGeneralMonitoringPoinHistory>(
-                      treeController: treeController,
-                      padding: const EdgeInsets.all(8),
-                      nodeBuilder: (context, entry) {
-                        return MonitoringPoinTreeNode(
-                          entry: entry,
-                          treeController: treeController,
-                        );
-                      },
-                    );
-                    // monitoringData.when(
-                    //   loading: () =>
-                    //       const Center(child: CircularProgressIndicator()),
-                    //   error: (err, stack) => Center(child: Text("Error: $err")),
-                    //   data: (data) {
-                    //     if (data.listRptGeneralMonitoringPoinHistory == null ||
-                    //         data.listRptGeneralMonitoringPoinHistory!.isEmpty) {
-                    //       return const Center(child: Text("Tidak ada data"));
-                    //     }
-
-                    //     return Padding(
-                    //       padding: const EdgeInsets.all(8.0),
-                    //       child: TreeView<ListRptGeneralMonitoringPoinHistory>(
-                    //         treeController: treeController,
-                    //         nodeBuilder: (context, entry) {
-                    //           final node = entry.node;
-                    //           return MyTreeTile(
-                    //             title: Text(node.title),
-                    //             subtitle: Text("Poin: ${node.poin}"),
-                    //             trailing: entry.hasChildren
-                    //                 ? Icon(entry.isExpanded
-                    //                     ? Icons.expand_less
-                    //                     : Icons.expand_more)
-                    //                 : null,
-                    //             onTap: () =>
-                    //                 treeController.toggleExpansion(entry.node),
-                    //           );
-                    //         },
-                    //       ),
-                    //     );
-                    //   },
-                    // );
-                    // Center(
-                    //   child: Stack(
-                    //     children: [
-                    //       Column(
-                    //         children: [
-                    //           Expanded(
-                    //             child: RefreshIndicator(
-                    //               onRefresh: () async {
-                    //                 return ref.refresh(
-                    //                   reportMonitPoinHistory(linkPageObj),
-                    //                 );
-                    //               },
-                    //               child: treeAsync.when(
-                    //                 data: (nodes) {
-                    //                   _treeData.clear();
-                    //                   _treeData.add(nodes);
-
-                    //                   // final treeController = TreeController<
-                    //                   //     ListRptGeneralMonitoringPoinHistory>(
-                    //                   //   roots: _treeData,
-                    //                   //   childrenProvider: (node) =>
-                    //                   //       node.children ?? [],
-                    //                   // );
-
-                    //                   // _treeController = TreeController<
-                    //                   //     ListRptGeneralMonitoringPoinHistory>(
-                    //                   //   roots: _treeData,
-                    //                   //   childrenProvider: (node) =>
-                    //                   //       node.children ?? [],
-                    //                   // );
-
-                    //                   return AnimatedTreeView<
-                    //                       ListRptGeneralMonitoringPoinHistory>(
-                    //                     treeController: _treeController,
-                    //                     nodeBuilder: (context, entry) {
-                    //                       return InkWell(
-                    //                         onTap: () => _treeController
-                    //                             .toggleExpansion(entry.node),
-                    //                         child: TreeIndentation(
-                    //                           entry: entry,
-                    //                           child: ListTile(
-                    //                             title: Text(entry.node.title),
-                    //                           ),
-                    //                         ),
-                    //                       );
-                    //                     },
-                    //                   );
-                    //                 },
-                    //                 loading: () => const Center(
-                    //                     child: CircularProgressIndicator()),
-                    //                 error: (err, stack) =>
-                    //                     Center(child: Text("Error: $err")),
-                    //               ),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       )
-                    //     ],
-                    //   ),
-                    // );
                   },
                 ),
                 const Watermark(),
@@ -220,6 +116,55 @@ class _MonitoringPoinHistoryPageState extends State<MonitoringPoinHistoryPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildTreeView(WidgetRef ref, String linkPageObj) {
+    final treeController = ref.watch(treeControllerProvider(linkPageObj));
+    return TreeView(
+      treeController: treeController,
+      nodeBuilder: (context, entry) {
+        return MyTreeTile(
+          key: ValueKey(entry.node),
+          entry: entry,
+          onTap: () => ref
+              .read(treeControllerProvider(linkPageObj).notifier)
+              .toggleNode(entry.node),
+        );
+      },
+    );
+  }
+}
+
+class MyTreeTile extends StatelessWidget {
+  const MyTreeTile({super.key, required this.entry, required this.onTap});
+
+  final TreeEntry<ListRptGeneralMonitoringPoinHistory> entry;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: TreeIndentation(
+        entry: entry,
+        guide: const IndentGuide.connectingLines(indent: 48),
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(4, 8, 8, 8),
+          child: Row(
+            children: [
+              IconButton(
+                onPressed: entry.hasChildren ? onTap : null,
+                icon: entry.hasChildren
+                    ? const Icon(Icons.calendar_month)
+                    : const FaIcon(FontAwesomeIcons.coins),
+                selectedIcon: const FaIcon(FontAwesomeIcons.calendarMinus),
+              ),
+              Text(entry.node.title),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
