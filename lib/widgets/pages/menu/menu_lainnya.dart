@@ -59,7 +59,7 @@ class _widgetBodyState extends State<widgetBody> {
     '/svcKendaraanPelangganPage',
     '/bodyRepairGRPage',
     '/bodyRepairSlsPage',
-    '/bodyCapturePage',
+    '/',
   ];
 
   // List menuRolesSurvey = [
