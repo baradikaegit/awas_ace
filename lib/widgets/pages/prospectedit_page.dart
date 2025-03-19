@@ -200,7 +200,6 @@ class _ProspectEditPageState extends State<ProspectEditPage>
   String tenorVal = '';
   String tenorValEdit = '';
   bool checkQ1 = false;
-  bool checkQ1Edit = true;
   bool checkQ2 = false;
   bool checkQ3 = false;
   bool checkQ4 = false;
@@ -481,6 +480,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
   String? userName;
   String? sid;
   String? branchID;
+  bool isDataLoaded = false;
 
   @override
   void initState() {
@@ -578,9 +578,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(
                             255,
-                            134,
-                            134,
-                            134,
+                            109,
+                            149,
+                            79,
                           ),
                           borderRadius: BorderRadius.circular(0),
                         ),
@@ -641,9 +641,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(
                             255,
-                            1,
-                            53,
-                            131,
+                            15,
+                            70,
+                            128,
                           ),
                           borderRadius: BorderRadius.circular(0),
                         ),
@@ -704,9 +704,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(
                             255,
-                            202,
-                            109,
-                            2,
+                            215,
+                            156,
+                            18,
                           ),
                           borderRadius: BorderRadius.circular(0),
                         ),
@@ -767,9 +767,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                         decoration: BoxDecoration(
                           color: const Color.fromARGB(
                             255,
-                            146,
-                            2,
-                            2,
+                            150,
+                            11,
+                            18,
                           ),
                           borderRadius: BorderRadius.circular(0),
                         ),
@@ -860,6 +860,112 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                               },
                               child: prospectSlsEdit.when(
                                 data: (data) {
+                                  if (!isDataLoaded &&
+                                      data.listProspectSalesDetail!
+                                          .isNotEmpty) {
+                                    data.listProspectSalesDetail![0]
+                                                .customerVal ==
+                                            1
+                                        ? Future.microtask(() {
+                                            if (mounted) {
+                                              setState(() {
+                                                checkQ1 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q1 ==
+                                                    '1';
+                                                checkQ2 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q2 ==
+                                                    '1';
+                                                checkQ3 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q3 ==
+                                                    '1';
+                                                checkQ4 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q4 ==
+                                                    '1';
+                                                checkQ5 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q5 ==
+                                                    '1';
+                                                checkQ6 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q6 ==
+                                                    '1';
+                                                q1Controller.text =
+                                                    checkQ1 ? '1' : '0';
+                                                q2Controller.text =
+                                                    checkQ2 ? '1' : '0';
+                                                q3Controller.text =
+                                                    checkQ3 ? '1' : '0';
+                                                q4Controller.text =
+                                                    checkQ4 ? '1' : '0';
+                                                q5Controller.text =
+                                                    checkQ5 ? '1' : '0';
+                                                q6Controller.text =
+                                                    checkQ6 ? '1' : '0';
+                                                isDataLoaded = true;
+                                              });
+                                            }
+                                          })
+                                        : Future.microtask(() {
+                                            if (mounted) {
+                                              setState(() {
+                                                checkQ7 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q1 ==
+                                                    '1';
+                                                checkQ8 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q2 ==
+                                                    '1';
+                                                checkQ9 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q3 ==
+                                                    '1';
+                                                checkQ10 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q4 ==
+                                                    '1';
+                                                checkQ11 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q5 ==
+                                                    '1';
+                                                checkQ12 = data
+                                                        .listProspectSalesDetail![
+                                                            0]
+                                                        .q6 ==
+                                                    '1';
+                                                q1Controller.text =
+                                                    checkQ7 ? '1' : '0';
+                                                q2Controller.text =
+                                                    checkQ8 ? '1' : '0';
+                                                q3Controller.text =
+                                                    checkQ9 ? '1' : '0';
+                                                q4Controller.text =
+                                                    checkQ10 ? '1' : '0';
+                                                q5Controller.text =
+                                                    checkQ11 ? '1' : '0';
+                                                q6Controller.text =
+                                                    checkQ12 ? '1' : '0';
+                                                isDataLoaded = true;
+                                              });
+                                            }
+                                          });
+                                  }
+
                                   for (int i = 0;
                                       i < data.listProspectSalesDetail!.length;
                                       i++) {
@@ -901,7 +1007,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
 
                                       prospectCodeController.text = data
                                           .listProspectSalesDetail![i]
-                                          .kelurahan;
+                                          .prospectCode;
                                       kodePosEdit = data
                                           .listProspectSalesDetail![i]
                                           .postalCode;
@@ -1250,19 +1356,6 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                       } else {
                                         alasanLpEdit = 'Alasan lost prospect';
                                       }
-
-                                      // if (checkQ1 == false) {
-                                      // if (data.listProspectSalesDetail![i].q1 ==
-                                      //     '1') {
-                                      //   checkQ1 = true;
-                                      // } else if (data
-                                      //         .listProspectSalesDetail![i].q1 ==
-                                      //     '0') {
-                                      //   checkQ1 = false;
-                                      // }
-                                      // } else {
-                                      //   checkQ1 = false;
-                                      // }
                                     }
 
                                     if (sumberData == '') {
@@ -1630,19 +1723,6 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                     } else {
                                       alasanLpEdit = 'Alasan lost prospect';
                                     }
-
-                                    // if (checkQ1 == false) {
-                                    // if (data.listProspectSalesDetail![i].q1 ==
-                                    //     '1') {
-                                    //   checkQ1 = true;
-                                    // } else if (data
-                                    //         .listProspectSalesDetail![i].q1 ==
-                                    //     '0') {
-                                    //   checkQ1 = false;
-                                    // }
-                                    // } else {
-                                    //   checkQ1 = false;
-                                    // }
                                   }
                                   return TabBarView(
                                     children: [
@@ -1650,9 +1730,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                         decoration: const BoxDecoration(
                                           color: Color.fromARGB(
                                             255,
-                                            134,
-                                            134,
-                                            134,
+                                            109,
+                                            149,
+                                            79,
                                           ),
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(0),
@@ -1849,16 +1929,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
 
                                                                           tglContactController.text =
                                                                               dateContact;
-
-                                                                          print(
-                                                                              dateContact);
                                                                         }
                                                                       },
                                                                     ),
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -1892,7 +1969,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -1926,7 +2003,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -1960,7 +2037,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -3205,7 +3282,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -3375,7 +3452,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -3648,7 +3725,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -3894,7 +3971,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -3928,7 +4005,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -3978,9 +4055,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                         decoration: const BoxDecoration(
                                           color: Color.fromARGB(
                                             255,
-                                            1,
-                                            53,
-                                            131,
+                                            15,
+                                            70,
+                                            128,
                                           ),
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(0),
@@ -4562,9 +4639,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                         color: const Color
                                                                             .fromARGB(
                                                                           255,
-                                                                          1,
-                                                                          53,
-                                                                          131,
+                                                                          15,
+                                                                          70,
+                                                                          128,
                                                                         ),
                                                                         borderRadius:
                                                                             const BorderRadius.all(
@@ -4646,7 +4723,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -5884,7 +5961,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -6058,7 +6135,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -6511,7 +6588,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -6737,7 +6814,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -7006,7 +7083,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -7271,7 +7348,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -7321,9 +7398,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                         decoration: const BoxDecoration(
                                           color: Color.fromARGB(
                                             255,
-                                            202,
-                                            109,
-                                            2,
+                                            215,
+                                            156,
+                                            18,
                                           ),
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(0),
@@ -7679,7 +7756,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -7910,7 +7987,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       style: const TextStyle(
@@ -8193,7 +8270,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       style: const TextStyle(
@@ -8477,7 +8554,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -8783,7 +8860,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -8984,7 +9061,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -9225,7 +9302,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -9462,7 +9539,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -9515,9 +9592,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                         decoration: const BoxDecoration(
                                           color: Color.fromARGB(
                                             255,
-                                            146,
-                                            2,
-                                            2,
+                                            150,
+                                            11,
+                                            18,
                                           ),
                                           borderRadius: BorderRadius.only(
                                             topLeft: Radius.circular(0),
@@ -9693,9 +9770,9 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                         color: const Color
                                                                             .fromARGB(
                                                                           255,
-                                                                          146,
-                                                                          2,
-                                                                          2,
+                                                                          150,
+                                                                          11,
+                                                                          18,
                                                                         ),
                                                                         borderRadius:
                                                                             const BorderRadius.all(
@@ -9776,7 +9853,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -9975,7 +10052,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -10179,7 +10256,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -10447,12 +10524,14 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                                 value: checkQ1,
                                                                                 onChanged: (bool? value) {
                                                                                   setState(() {
-                                                                                    checkQ1 = value!;
-                                                                                    if (checkQ1 == true) {
-                                                                                      q1Controller.text = '1';
-                                                                                    } else {
-                                                                                      q1Controller.text = '0';
-                                                                                    }
+                                                                                    // checkQ1 = value!;
+                                                                                    // if (checkQ1 == true) {
+                                                                                    //   q1Controller.text = '1';
+                                                                                    // } else {
+                                                                                    //   q1Controller.text = '0';
+                                                                                    // }
+                                                                                    checkQ1 = value ?? false;
+                                                                                    q1Controller.text = checkQ1 ? '1' : '0';
                                                                                   });
                                                                                 },
                                                                               ),
@@ -10519,12 +10598,8 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                                 value: checkQ2,
                                                                                 onChanged: (bool? value) {
                                                                                   setState(() {
-                                                                                    checkQ2 = value!;
-                                                                                    if (checkQ2 == true) {
-                                                                                      q2Controller.text = '1';
-                                                                                    } else {
-                                                                                      q2Controller.text = '0';
-                                                                                    }
+                                                                                    checkQ2 = value ?? false;
+                                                                                    q2Controller.text = checkQ2 ? '1' : '0';
                                                                                   });
                                                                                 },
                                                                               ),
@@ -10591,12 +10666,8 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                                 value: checkQ3,
                                                                                 onChanged: (bool? value) {
                                                                                   setState(() {
-                                                                                    checkQ3 = value!;
-                                                                                    if (checkQ3 == true) {
-                                                                                      q3Controller.text = '1';
-                                                                                    } else {
-                                                                                      q3Controller.text = '0';
-                                                                                    }
+                                                                                    checkQ3 = value ?? false;
+                                                                                    q3Controller.text = checkQ3 ? '1' : '0';
                                                                                   });
                                                                                 },
                                                                               ),
@@ -10663,12 +10734,8 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                                 value: checkQ4,
                                                                                 onChanged: (bool? value) {
                                                                                   setState(() {
-                                                                                    checkQ4 = value!;
-                                                                                    if (checkQ4 == true) {
-                                                                                      q4Controller.text = '1';
-                                                                                    } else {
-                                                                                      q4Controller.text = '0';
-                                                                                    }
+                                                                                    checkQ4 = value ?? false;
+                                                                                    q4Controller.text = checkQ4 ? '1' : '0';
                                                                                   });
                                                                                 },
                                                                               ),
@@ -10735,12 +10802,8 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                                 value: checkQ5,
                                                                                 onChanged: (bool? value) {
                                                                                   setState(() {
-                                                                                    checkQ5 = value!;
-                                                                                    if (checkQ5 == true) {
-                                                                                      q5Controller.text = '1';
-                                                                                    } else {
-                                                                                      q5Controller.text = '0';
-                                                                                    }
+                                                                                    checkQ5 = value ?? false;
+                                                                                    q5Controller.text = checkQ5 ? '1' : '0';
                                                                                   });
                                                                                 },
                                                                               ),
@@ -10807,12 +10870,8 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                                 value: checkQ6,
                                                                                 onChanged: (bool? value) {
                                                                                   setState(() {
-                                                                                    checkQ6 = value!;
-                                                                                    if (checkQ6 == true) {
-                                                                                      q6Controller.text = '1';
-                                                                                    } else {
-                                                                                      q6Controller.text = '0';
-                                                                                    }
+                                                                                    checkQ6 = value ?? false;
+                                                                                    q6Controller.text = checkQ6 ? '1' : '0';
                                                                                   });
                                                                                 },
                                                                               ),
@@ -10883,12 +10942,15 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                                 value: checkQ7,
                                                                                 onChanged: (bool? value) {
                                                                                   setState(() {
-                                                                                    checkQ7 = value!;
-                                                                                    if (checkQ7 == true) {
-                                                                                      q1Controller.text = '1';
-                                                                                    } else {
-                                                                                      q1Controller.text = '0';
-                                                                                    }
+                                                                                    // checkQ7 = value!;
+                                                                                    // if (checkQ7 == true) {
+                                                                                    //   q1Controller.text = '1';
+                                                                                    // } else {
+                                                                                    //   q1Controller.text = '0';
+                                                                                    // }
+
+                                                                                    checkQ7 = value ?? false;
+                                                                                    q1Controller.text = checkQ7 ? '1' : '0';
                                                                                   });
                                                                                 },
                                                                               ),
@@ -10905,7 +10967,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                         ),
                                                                         Visibility(
                                                                           visible:
-                                                                              false,
+                                                                              true,
                                                                           child:
                                                                               TextFormField(
                                                                             controller:
@@ -10955,12 +11017,8 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                                 value: checkQ8,
                                                                                 onChanged: (bool? value) {
                                                                                   setState(() {
-                                                                                    checkQ8 = value!;
-                                                                                    if (checkQ8 == true) {
-                                                                                      q2Controller.text = '1';
-                                                                                    } else {
-                                                                                      q2Controller.text = '0';
-                                                                                    }
+                                                                                    checkQ8 = value ?? false;
+                                                                                    q2Controller.text = checkQ8 ? '1' : '0';
                                                                                   });
                                                                                 },
                                                                               ),
@@ -10977,7 +11035,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                         ),
                                                                         Visibility(
                                                                           visible:
-                                                                              false,
+                                                                              true,
                                                                           child:
                                                                               TextFormField(
                                                                             controller:
@@ -11049,7 +11107,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                         ),
                                                                         Visibility(
                                                                           visible:
-                                                                              false,
+                                                                              true,
                                                                           child:
                                                                               TextFormField(
                                                                             controller:
@@ -11121,7 +11179,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                         ),
                                                                         Visibility(
                                                                           visible:
-                                                                              false,
+                                                                              true,
                                                                           child:
                                                                               TextFormField(
                                                                             controller:
@@ -11193,7 +11251,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                         ),
                                                                         Visibility(
                                                                           visible:
-                                                                              false,
+                                                                              true,
                                                                           child:
                                                                               TextFormField(
                                                                             controller:
@@ -11265,7 +11323,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                         ),
                                                                         Visibility(
                                                                           visible:
-                                                                              false,
+                                                                              true,
                                                                           child:
                                                                               TextFormField(
                                                                             controller:
@@ -11482,7 +11540,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                   ),
                                                                   Visibility(
                                                                     visible:
-                                                                        true,
+                                                                        false,
                                                                     child:
                                                                         TextFormField(
                                                                       controller:
@@ -11882,7 +11940,7 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                               ),
                                                                             ),
                                                                             Visibility(
-                                                                              visible: true,
+                                                                              visible: false,
                                                                               child: TextFormField(
                                                                                 controller: alasanLostProspectController,
                                                                                 autocorrect: false,
@@ -12149,28 +12207,28 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                               .read(updateProspectFormProviderDetail)
                                                                               .onUpdateProspect(updateProspect);
 
-                                                                          print(
-                                                                              " 1: ${tglContactController.text} ${prospectHIdController.text} ${prospectCodeController.text}");
-                                                                          print(
-                                                                              " 2: ${lokasiBertemuController.text} ${idKodePosController.text} ${idAreaController.text}");
-                                                                          print(
-                                                                              " 3: ${sumberDataController.text} ${int.tryParse(rencanaPembelianController.text)} ${nameContactContactController.text}");
-                                                                          print(
-                                                                              " 4: ${int.tryParse(prospectStatusController.text)} ${int.tryParse(rencanaPembelianController.text)} ${nameContactContactController.text}");
-                                                                          print(
-                                                                              " 5: ${noHP1ContactController.text} ${noHP2ContactController.text} ${int.tryParse(jKController.text)}");
-                                                                          print(
-                                                                              " 6: ${alamatController.text} ${idKodePosS2Controller.text} ${int.tryParse(idAreaS2Controller.text)}");
-                                                                          print(
-                                                                              " 7: ${emailController.text} ${idCustTypeS2Controller.text} ${jabatanController.text}");
-                                                                          print(
-                                                                              " 8: ${hKendaraanController.text} ${tipePelangganController.text} ${vGroupController.text}");
-                                                                          print(
-                                                                              " 9: ${tahunController.text} ${vFuelController.text} ${vTransmisiController.text}");
-                                                                          print(
-                                                                              " 10: ${vGroup2Controller.text} ${tahun2Controller.text} ${vFuel2Controller.text}");
-                                                                          print(
-                                                                              " 11: ${vTransmisi2Controller.text} ${cashLeasingController.text} ${dPController.text}");
+                                                                          // print(
+                                                                          //     " 1: ${tglContactController.text} ${prospectHIdController.text} ${prospectCodeController.text}");
+                                                                          // print(
+                                                                          //     " 2: ${lokasiBertemuController.text} ${idKodePosController.text} ${idAreaController.text}");
+                                                                          // print(
+                                                                          //     " 3: ${sumberDataController.text} ${int.tryParse(rencanaPembelianController.text)} ${nameContactContactController.text}");
+                                                                          // print(
+                                                                          //     " 4: ${int.tryParse(prospectStatusController.text)} ${int.tryParse(rencanaPembelianController.text)} ${nameContactContactController.text}");
+                                                                          // print(
+                                                                          //     " 5: ${noHP1ContactController.text} ${noHP2ContactController.text} ${int.tryParse(jKController.text)}");
+                                                                          // print(
+                                                                          //     " 6: ${alamatController.text} ${idKodePosS2Controller.text} ${int.tryParse(idAreaS2Controller.text)}");
+                                                                          // print(
+                                                                          //     " 7: ${emailController.text} ${idCustTypeS2Controller.text} ${jabatanController.text}");
+                                                                          // print(
+                                                                          //     " 8: ${hKendaraanController.text} ${tipePelangganController.text} ${vGroupController.text}");
+                                                                          // print(
+                                                                          //     " 9: ${tahunController.text} ${vFuelController.text} ${vTransmisiController.text}");
+                                                                          // print(
+                                                                          //     " 10: ${vGroup2Controller.text} ${tahun2Controller.text} ${vFuel2Controller.text}");
+                                                                          // print(
+                                                                          //     " 11: ${vTransmisi2Controller.text} ${cashLeasingController.text} ${dPController.text}");
                                                                           print(
                                                                               " 12: ${tenorController.text} ${int.tryParse(q1Controller.text)} ${int.tryParse(q2Controller.text)}");
                                                                           print(

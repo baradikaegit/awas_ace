@@ -440,6 +440,16 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
   String? sid;
   String? branchID;
 
+  final List<Color> indicatorColors = [
+    const Color.fromARGB(255, 109, 149, 79), // Warna untuk Step 1
+    const Color.fromARGB(255, 15, 70, 128), // Warna untuk Step 2
+    const Color.fromARGB(255, 215, 156, 18), // Warna untuk Step 3
+    const Color.fromARGB(255, 150, 11, 18), // Warna untuk Step 4
+  ];
+
+  Color currentIndicatorColor =
+      const Color.fromARGB(255, 109, 149, 79); // Default warna Step 1
+
   @override
   void initState() {
     super.initState();
@@ -452,13 +462,19 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
     q5Controller.text = '0';
     q6Controller.text = '0';
     alasanLostProspectController.text = '0';
-    _tabController = TabController(vsync: this, length: 4);
-    _tabController.addListener(_handleTabSelection);
+    _tabController = TabController(length: 4, vsync: this);
+    _tabController.addListener(() {
+      setState(() {
+        currentIndicatorColor = indicatorColors[_tabController.index];
+      });
+    });
     loadSharedPreference();
   }
 
-  void _handleTabSelection() {
-    setState(() {});
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
   }
 
   loadSharedPreference() async {
@@ -472,337 +488,6 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
       salesmanIDController.text = sid!.toUpperCase();
     });
   }
-
-  TabBar get _tabBar => TabBar(
-        controller: _tabController,
-        dividerHeight: 0,
-        indicatorColor: _tabController.index == 0
-            ? const Color.fromARGB(
-                255,
-                134,
-                134,
-                134,
-              )
-            : _tabController.index == 1
-                ? const Color.fromARGB(
-                    255,
-                    1,
-                    53,
-                    131,
-                  )
-                : _tabController.index == 2
-                    ? const Color.fromARGB(
-                        255,
-                        202,
-                        109,
-                        2,
-                      )
-                    : const Color.fromARGB(
-                        255,
-                        146,
-                        2,
-                        2,
-                      ),
-        labelColor: Colors.white,
-        unselectedLabelColor: Colors.white70,
-        isScrollable: false,
-        indicatorPadding: const EdgeInsets.symmetric(
-          horizontal: 0,
-        ),
-        labelPadding: const EdgeInsets.symmetric(
-          horizontal: 0,
-        ),
-        tabs: [
-          Tab(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              decoration: BoxDecoration(
-                color: _tabController.index == 0
-                    ? const Color.fromARGB(
-                        255,
-                        134,
-                        134,
-                        134,
-                      )
-                    : const Color.fromARGB(
-                        255,
-                        3,
-                        116,
-                        18,
-                      ),
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: Center(
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "STEP 1 ",
-                    style: TextStyle(
-                      color: _tabController.index == 0
-                          ? Colors.white
-                          : Colors.amber,
-                      fontSize: ResponsiveValue<double>(
-                        context,
-                        conditionalValues: [
-                          const Condition.equals(
-                              name: TABLET, value: 16.0, landscapeValue: 16.0),
-                          const Condition.largerThan(
-                              name: TABLET,
-                              value: 20.0,
-                              landscapeValue: 20.0,
-                              breakpoint: 800),
-                        ],
-                        defaultValue: 12.0,
-                      ).value,
-                    ),
-                    children: [
-                      WidgetSpan(
-                        child: Icon(
-                          Icons.sticky_note_2_outlined,
-                          color: _tabController.index == 0
-                              ? Colors.white
-                              : Colors.amber,
-                          size: ResponsiveValue<double>(
-                            context,
-                            conditionalValues: [
-                              const Condition.equals(
-                                  name: TABLET,
-                                  value: 20.0,
-                                  landscapeValue: 20.0),
-                              const Condition.largerThan(
-                                  name: TABLET,
-                                  value: 24.0,
-                                  landscapeValue: 24.0,
-                                  breakpoint: 800),
-                            ],
-                            defaultValue: 15.0,
-                          ).value,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Tab(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              decoration: BoxDecoration(
-                color: _tabController.index == 1
-                    ? const Color.fromARGB(
-                        255,
-                        1,
-                        53,
-                        131,
-                      )
-                    : const Color.fromARGB(
-                        255,
-                        3,
-                        116,
-                        18,
-                      ),
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: Center(
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "STEP 2 ",
-                    style: TextStyle(
-                      color: _tabController.index == 1
-                          ? Colors.white
-                          : Colors.amber,
-                      fontSize: ResponsiveValue<double>(
-                        context,
-                        conditionalValues: [
-                          const Condition.equals(
-                              name: TABLET, value: 16.0, landscapeValue: 16.0),
-                          const Condition.largerThan(
-                              name: TABLET,
-                              value: 20.0,
-                              landscapeValue: 20.0,
-                              breakpoint: 800),
-                        ],
-                        defaultValue: 12.0,
-                      ).value,
-                    ),
-                    children: [
-                      WidgetSpan(
-                        child: Icon(
-                          Icons.person_add_alt_outlined,
-                          color: _tabController.index == 1
-                              ? Colors.white
-                              : Colors.amber,
-                          size: ResponsiveValue<double>(
-                            context,
-                            conditionalValues: [
-                              const Condition.equals(
-                                  name: TABLET,
-                                  value: 20.0,
-                                  landscapeValue: 20.0),
-                              const Condition.largerThan(
-                                  name: TABLET,
-                                  value: 24.0,
-                                  landscapeValue: 24.0,
-                                  breakpoint: 800),
-                            ],
-                            defaultValue: 15.0,
-                          ).value,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Tab(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              decoration: BoxDecoration(
-                color: _tabController.index == 2
-                    ? const Color.fromARGB(
-                        255,
-                        202,
-                        109,
-                        2,
-                      )
-                    : const Color.fromARGB(
-                        255,
-                        3,
-                        116,
-                        18,
-                      ),
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: Center(
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "STEP 3 ",
-                    style: TextStyle(
-                      color: _tabController.index == 2
-                          ? Colors.white
-                          : Colors.amber,
-                      fontSize: ResponsiveValue<double>(
-                        context,
-                        conditionalValues: [
-                          const Condition.equals(
-                              name: TABLET, value: 16.0, landscapeValue: 16.0),
-                          const Condition.largerThan(
-                              name: TABLET,
-                              value: 20.0,
-                              landscapeValue: 20.0,
-                              breakpoint: 800),
-                        ],
-                        defaultValue: 12.0,
-                      ).value,
-                    ),
-                    children: [
-                      WidgetSpan(
-                        child: Icon(
-                          Icons.directions_car,
-                          color: _tabController.index == 2
-                              ? Colors.white
-                              : Colors.amber,
-                          size: ResponsiveValue<double>(
-                            context,
-                            conditionalValues: [
-                              const Condition.equals(
-                                  name: TABLET,
-                                  value: 20.0,
-                                  landscapeValue: 20.0),
-                              const Condition.largerThan(
-                                  name: TABLET,
-                                  value: 24.0,
-                                  landscapeValue: 24.0,
-                                  breakpoint: 800),
-                            ],
-                            defaultValue: 15.0,
-                          ).value,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Tab(
-            child: Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-              decoration: BoxDecoration(
-                color: _tabController.index == 3
-                    ? const Color.fromARGB(
-                        255,
-                        146,
-                        2,
-                        2,
-                      )
-                    : const Color.fromARGB(
-                        255,
-                        3,
-                        116,
-                        18,
-                      ),
-                borderRadius: BorderRadius.circular(0),
-              ),
-              child: Center(
-                child: RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    text: "STEP 4 ",
-                    style: TextStyle(
-                      color: _tabController.index == 2
-                          ? Colors.white
-                          : Colors.amber,
-                      fontSize: ResponsiveValue<double>(
-                        context,
-                        conditionalValues: [
-                          const Condition.equals(
-                              name: TABLET, value: 16.0, landscapeValue: 16.0),
-                          const Condition.largerThan(
-                              name: TABLET,
-                              value: 20.0,
-                              landscapeValue: 20.0,
-                              breakpoint: 800),
-                        ],
-                        defaultValue: 12.0,
-                      ).value,
-                    ),
-                    children: [
-                      WidgetSpan(
-                        child: Icon(
-                          Icons.handshake,
-                          color: _tabController.index == 2
-                              ? Colors.white
-                              : Colors.amber,
-                          size: ResponsiveValue<double>(
-                            context,
-                            conditionalValues: [
-                              const Condition.equals(
-                                  name: TABLET,
-                                  value: 20.0,
-                                  landscapeValue: 20.0),
-                              const Condition.largerThan(
-                                  name: TABLET,
-                                  value: 24.0,
-                                  landscapeValue: 24.0,
-                                  breakpoint: 800),
-                            ],
-                            defaultValue: 15.0,
-                          ).value,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      );
 
   @override
   Widget build(BuildContext context) {
@@ -839,7 +524,7 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
             ),
             iconTheme: const IconThemeData(color: Colors.white),
             bottom: PreferredSize(
-              preferredSize: _tabBar.preferredSize,
+              preferredSize: const Size(double.infinity, kToolbarHeight),
               child: Material(
                 color: const Color.fromARGB(
                   255,
@@ -856,7 +541,273 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                       18,
                     ),
                   ),
-                  child: _tabBar,
+                  child: TabBar(
+                    dividerHeight: 0,
+                    indicatorColor: Colors.transparent,
+                    labelColor: Colors.white,
+                    unselectedLabelColor: Colors.green,
+                    isScrollable: false,
+                    indicatorPadding: const EdgeInsets.symmetric(
+                      horizontal: 0,
+                    ),
+                    labelPadding: const EdgeInsets.symmetric(
+                      horizontal: 0,
+                    ),
+                    tabs: [
+                      Tab(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(
+                              255,
+                              109,
+                              149,
+                              79,
+                            ),
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          child: Center(
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text: "STEP 1 ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ResponsiveValue<double>(
+                                    context,
+                                    conditionalValues: [
+                                      const Condition.equals(
+                                          name: TABLET,
+                                          value: 16.0,
+                                          landscapeValue: 16.0),
+                                      const Condition.largerThan(
+                                          name: TABLET,
+                                          value: 20.0,
+                                          landscapeValue: 20.0,
+                                          breakpoint: 800),
+                                    ],
+                                    defaultValue: 12.0,
+                                  ).value,
+                                ),
+                                children: [
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.sticky_note_2_outlined,
+                                      color: Colors.white,
+                                      size: ResponsiveValue<double>(
+                                        context,
+                                        conditionalValues: [
+                                          const Condition.equals(
+                                              name: TABLET,
+                                              value: 20.0,
+                                              landscapeValue: 20.0),
+                                          const Condition.largerThan(
+                                              name: TABLET,
+                                              value: 24.0,
+                                              landscapeValue: 24.0,
+                                              breakpoint: 800),
+                                        ],
+                                        defaultValue: 15.0,
+                                      ).value,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(
+                              255,
+                              15,
+                              70,
+                              128,
+                            ),
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          child: Center(
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text: "STEP 2 ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ResponsiveValue<double>(
+                                    context,
+                                    conditionalValues: [
+                                      const Condition.equals(
+                                          name: TABLET,
+                                          value: 16.0,
+                                          landscapeValue: 16.0),
+                                      const Condition.largerThan(
+                                          name: TABLET,
+                                          value: 20.0,
+                                          landscapeValue: 20.0,
+                                          breakpoint: 800),
+                                    ],
+                                    defaultValue: 12.0,
+                                  ).value,
+                                ),
+                                children: [
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.person_add_alt_outlined,
+                                      color: Colors.white,
+                                      size: ResponsiveValue<double>(
+                                        context,
+                                        conditionalValues: [
+                                          const Condition.equals(
+                                              name: TABLET,
+                                              value: 20.0,
+                                              landscapeValue: 20.0),
+                                          const Condition.largerThan(
+                                              name: TABLET,
+                                              value: 24.0,
+                                              landscapeValue: 24.0,
+                                              breakpoint: 800),
+                                        ],
+                                        defaultValue: 15.0,
+                                      ).value,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(
+                              255,
+                              215,
+                              156,
+                              18,
+                            ),
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          child: Center(
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text: "STEP 3 ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ResponsiveValue<double>(
+                                    context,
+                                    conditionalValues: [
+                                      const Condition.equals(
+                                          name: TABLET,
+                                          value: 16.0,
+                                          landscapeValue: 16.0),
+                                      const Condition.largerThan(
+                                          name: TABLET,
+                                          value: 20.0,
+                                          landscapeValue: 20.0,
+                                          breakpoint: 800),
+                                    ],
+                                    defaultValue: 12.0,
+                                  ).value,
+                                ),
+                                children: [
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.directions_car,
+                                      color: Colors.white,
+                                      size: ResponsiveValue<double>(
+                                        context,
+                                        conditionalValues: [
+                                          const Condition.equals(
+                                              name: TABLET,
+                                              value: 20.0,
+                                              landscapeValue: 20.0),
+                                          const Condition.largerThan(
+                                              name: TABLET,
+                                              value: 24.0,
+                                              landscapeValue: 24.0,
+                                              breakpoint: 800),
+                                        ],
+                                        defaultValue: 15.0,
+                                      ).value,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Tab(
+                        child: Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          decoration: BoxDecoration(
+                            color: const Color.fromARGB(
+                              255,
+                              150,
+                              11,
+                              18,
+                            ),
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          child: Center(
+                            child: RichText(
+                              textAlign: TextAlign.center,
+                              text: TextSpan(
+                                text: "STEP 4 ",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: ResponsiveValue<double>(
+                                    context,
+                                    conditionalValues: [
+                                      const Condition.equals(
+                                          name: TABLET,
+                                          value: 16.0,
+                                          landscapeValue: 16.0),
+                                      const Condition.largerThan(
+                                          name: TABLET,
+                                          value: 20.0,
+                                          landscapeValue: 20.0,
+                                          breakpoint: 800),
+                                    ],
+                                    defaultValue: 12.0,
+                                  ).value,
+                                ),
+                                children: [
+                                  WidgetSpan(
+                                    child: Icon(
+                                      Icons.handshake,
+                                      color: Colors.white,
+                                      size: ResponsiveValue<double>(
+                                        context,
+                                        conditionalValues: [
+                                          const Condition.equals(
+                                              name: TABLET,
+                                              value: 20.0,
+                                              landscapeValue: 20.0),
+                                          const Condition.largerThan(
+                                              name: TABLET,
+                                              value: 24.0,
+                                              landscapeValue: 24.0,
+                                              breakpoint: 800),
+                                        ],
+                                        defaultValue: 15.0,
+                                      ).value,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -877,15 +828,14 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
           body: Stack(
             children: [
               TabBarView(
-                controller: _tabController,
                 children: [
                   Container(
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(
                         255,
-                        134,
-                        134,
-                        134,
+                        109,
+                        149,
+                        79,
                       ),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(0),
@@ -2798,9 +2748,9 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(
                         255,
-                        1,
-                        53,
-                        131,
+                        15,
+                        70,
+                        128,
                       ),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(0),
@@ -3234,9 +3184,9 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   decoration: BoxDecoration(
                                                     color: const Color.fromARGB(
                                                       255,
-                                                      1,
-                                                      53,
-                                                      131,
+                                                      15,
+                                                      70,
+                                                      128,
                                                     ),
                                                     borderRadius:
                                                         const BorderRadius.all(
@@ -5621,9 +5571,9 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(
                         255,
-                        202,
-                        109,
-                        2,
+                        215,
+                        156,
+                        18,
                       ),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(0),
@@ -7540,9 +7490,9 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(
                         255,
-                        146,
-                        2,
-                        2,
+                        150,
+                        11,
+                        18,
                       ),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(0),
@@ -7666,9 +7616,9 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   decoration: BoxDecoration(
                                                     color: const Color.fromARGB(
                                                       255,
-                                                      146,
-                                                      2,
-                                                      2,
+                                                      150,
+                                                      11,
+                                                      18,
                                                     ),
                                                     borderRadius:
                                                         const BorderRadius.all(
