@@ -437,6 +437,12 @@ class _HotProspectTabState extends State<HotProspectTab> {
   List<ProspectSalesListResponse> listProspectSalesRes = [];
   TextEditingController searchController = TextEditingController();
 
+  List<TextEditingController> prospectCodeControllers = [];
+  List<bool> checkedItems = [];
+  List<TextEditingController> checkControllers = [];
+
+  bool checkQ1 = false;
+
   String? roles;
 
   @override
@@ -510,6 +516,26 @@ class _HotProspectTabState extends State<HotProspectTab> {
                       data: (dataGrafik) {
                         listProspectSalesRes.clear();
                         listProspectSalesRes.add(dataGrafik);
+                        final listProspect = dataGrafik.listProspectSales ?? [];
+
+                        // Jika checkedItems masih kosong atau ukurannya tidak sesuai, perbarui ukurannya
+                        if (checkedItems.isEmpty ||
+                            checkedItems.length != listProspect.length) {
+                          checkedItems =
+                              List<bool>.filled(listProspect.length, false);
+                          checkControllers = List.generate(listProspect.length,
+                              (index) => TextEditingController(text: "0"));
+                        }
+
+                        if (prospectCodeControllers.isEmpty ||
+                            prospectCodeControllers.length !=
+                                listProspect.length) {
+                          prospectCodeControllers = List.generate(
+                            listProspect.length,
+                            (index) => TextEditingController(
+                                text: listProspect[index].prospectCode),
+                          );
+                        }
 
                         return ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
@@ -555,7 +581,7 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                         ),
                                       ),
                                     ],
-                                    legend: Legend(
+                                    legend: const Legend(
                                       iconWidth: 25,
                                       isVisible: true,
                                       width: '300%',
@@ -563,8 +589,7 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                       position: LegendPosition.right,
                                       overflowMode:
                                           LegendItemOverflowMode.scroll,
-                                      textStyle:
-                                          const TextStyle(color: Colors.white),
+                                      textStyle: TextStyle(color: Colors.white),
                                     ),
                                     series: <CircularSeries>[
                                       DoughnutSeries<ChartData, String>(
@@ -638,6 +663,9 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                       initialList:
                                           dataGrafik.listProspectSales!,
                                       itemBuilder: (item) {
+                                        int currentIndex = dataGrafik
+                                            .listProspectSales!
+                                            .indexOf(item);
                                         return item.type == 'List' &&
                                                 item.prospectStatusName == 'HOT'
                                             ? Padding(
@@ -671,11 +699,142 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10.0),
-                                                    // color: const Color.fromARGB(
-                                                    //     176, 130, 131, 128),
                                                   ),
                                                   child: Column(
                                                     children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                          0,
+                                                          0,
+                                                          10,
+                                                          0,
+                                                        ),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Checkbox(
+                                                                activeColor:
+                                                                    Colors
+                                                                        .white,
+                                                                checkColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                  176,
+                                                                  115,
+                                                                  184,
+                                                                  51,
+                                                                ),
+                                                                side: const BorderSide(
+                                                                    color: Colors
+                                                                        .white),
+                                                                value: checkedItems[
+                                                                    currentIndex],
+                                                                onChanged:
+                                                                    (bool?
+                                                                        value) {
+                                                                  setState(() {
+                                                                    checkedItems[
+                                                                            currentIndex] =
+                                                                        value!;
+
+                                                                    checkControllers[currentIndex]
+                                                                            .text =
+                                                                        value
+                                                                            ? "1"
+                                                                            : "0";
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  'Check to send',
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Visibility(
+                                                        visible: true,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              checkControllers[
+                                                                  currentIndex],
+                                                          autocorrect: false,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText: 'Check',
+                                                            hintStyle:
+                                                                textStyleColorWhite,
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Visibility(
+                                                        visible: true,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              prospectCodeControllers[
+                                                                  currentIndex],
+                                                          autocorrect: false,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                'Prospect Code',
+                                                            hintStyle:
+                                                                textStyleColorWhite,
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -850,6 +1009,12 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
   List<ProspectSalesListResponse> listProspectSalesRes = [];
   TextEditingController searchController = TextEditingController();
 
+  List<TextEditingController> prospectCodeControllers = [];
+  List<bool> checkedItems = [];
+  List<TextEditingController> checkControllers = [];
+
+  bool checkQ1 = false;
+
   String? roles;
 
   @override
@@ -923,6 +1088,27 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
                         listProspectSalesRes.clear();
                         listProspectSalesRes.add(dataGrafik);
 
+                        final listProspect = dataGrafik.listProspectSales ?? [];
+
+                        // Jika checkedItems masih kosong atau ukurannya tidak sesuai, perbarui ukurannya
+                        if (checkedItems.isEmpty ||
+                            checkedItems.length != listProspect.length) {
+                          checkedItems =
+                              List<bool>.filled(listProspect.length, false);
+                          checkControllers = List.generate(listProspect.length,
+                              (index) => TextEditingController(text: "0"));
+                        }
+
+                        if (prospectCodeControllers.isEmpty ||
+                            prospectCodeControllers.length !=
+                                listProspect.length) {
+                          prospectCodeControllers = List.generate(
+                            listProspect.length,
+                            (index) => TextEditingController(
+                                text: listProspect[index].prospectCode),
+                          );
+                        }
+
                         return ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: 1,
@@ -967,7 +1153,7 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
                                         ),
                                       ),
                                     ],
-                                    legend: Legend(
+                                    legend: const Legend(
                                       iconWidth: 25,
                                       isVisible: true,
                                       width: '300%',
@@ -975,8 +1161,7 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
                                       position: LegendPosition.right,
                                       overflowMode:
                                           LegendItemOverflowMode.scroll,
-                                      textStyle:
-                                          const TextStyle(color: Colors.white),
+                                      textStyle: TextStyle(color: Colors.white),
                                     ),
                                     series: <CircularSeries>[
                                       DoughnutSeries<ChartData, String>(
@@ -1050,6 +1235,9 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
                                       initialList:
                                           dataGrafik.listProspectSales!,
                                       itemBuilder: (item) {
+                                        int currentIndex = dataGrafik
+                                            .listProspectSales!
+                                            .indexOf(item);
                                         return item.type == 'List' &&
                                                 item.prospectStatusName ==
                                                     'MEDIUM'
@@ -1089,6 +1277,139 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
                                                   ),
                                                   child: Column(
                                                     children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                          0,
+                                                          0,
+                                                          10,
+                                                          0,
+                                                        ),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Checkbox(
+                                                                activeColor:
+                                                                    Colors
+                                                                        .white,
+                                                                checkColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                  176,
+                                                                  115,
+                                                                  184,
+                                                                  51,
+                                                                ),
+                                                                side: const BorderSide(
+                                                                    color: Colors
+                                                                        .white),
+                                                                value: checkedItems[
+                                                                    currentIndex],
+                                                                onChanged:
+                                                                    (bool?
+                                                                        value) {
+                                                                  setState(() {
+                                                                    checkedItems[
+                                                                            currentIndex] =
+                                                                        value!;
+
+                                                                    checkControllers[currentIndex]
+                                                                            .text =
+                                                                        value
+                                                                            ? "1"
+                                                                            : "0";
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  'Check to send',
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Visibility(
+                                                        visible: true,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              checkControllers[
+                                                                  currentIndex],
+                                                          autocorrect: false,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText: 'Check',
+                                                            hintStyle:
+                                                                textStyleColorWhite,
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Visibility(
+                                                        visible: true,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              prospectCodeControllers[
+                                                                  currentIndex],
+                                                          autocorrect: false,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                'Prospect Code',
+                                                            hintStyle:
+                                                                textStyleColorWhite,
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
@@ -1263,11 +1584,18 @@ class _LowProspectTabState extends State<LowProspectTab> {
   List<ProspectSalesListResponse> listProspectSalesRes = [];
   TextEditingController searchController = TextEditingController();
 
+  List<TextEditingController> prospectCodeControllers = [];
+  List<bool> checkedItems = [];
+  List<TextEditingController> checkControllers = [];
+
+  bool checkQ1 = false;
+
   String? roles;
 
   @override
   void initState() {
     super.initState();
+    // checkController.text = '0';
     loadSharedPreference();
   }
 
@@ -1336,6 +1664,27 @@ class _LowProspectTabState extends State<LowProspectTab> {
                         listProspectSalesRes.clear();
                         listProspectSalesRes.add(dataGrafik);
 
+                        final listProspect = dataGrafik.listProspectSales ?? [];
+
+                        // Jika checkedItems masih kosong atau ukurannya tidak sesuai, perbarui ukurannya
+                        if (checkedItems.isEmpty ||
+                            checkedItems.length != listProspect.length) {
+                          checkedItems =
+                              List<bool>.filled(listProspect.length, false);
+                          checkControllers = List.generate(listProspect.length,
+                              (index) => TextEditingController(text: "0"));
+                        }
+
+                        if (prospectCodeControllers.isEmpty ||
+                            prospectCodeControllers.length !=
+                                listProspect.length) {
+                          prospectCodeControllers = List.generate(
+                            listProspect.length,
+                            (index) => TextEditingController(
+                                text: listProspect[index].prospectCode),
+                          );
+                        }
+
                         return ListView.builder(
                           physics: const AlwaysScrollableScrollPhysics(),
                           itemCount: 1,
@@ -1380,7 +1729,7 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                         ),
                                       ),
                                     ],
-                                    legend: Legend(
+                                    legend: const Legend(
                                       iconWidth: 25,
                                       isVisible: true,
                                       width: '300%',
@@ -1388,8 +1737,7 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                       position: LegendPosition.right,
                                       overflowMode:
                                           LegendItemOverflowMode.scroll,
-                                      textStyle:
-                                          const TextStyle(color: Colors.white),
+                                      textStyle: TextStyle(color: Colors.white),
                                     ),
                                     series: <CircularSeries>[
                                       DoughnutSeries<ChartData, String>(
@@ -1463,6 +1811,9 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                       initialList:
                                           dataGrafik.listProspectSales!,
                                       itemBuilder: (item) {
+                                        int currentIndex = dataGrafik
+                                            .listProspectSales!
+                                            .indexOf(item);
                                         return item.type == 'List' &&
                                                 item.prospectStatusName == 'LOW'
                                             ? Padding(
@@ -1476,14 +1827,18 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                                 child: Container(
                                                   constraints:
                                                       const BoxConstraints(
-                                                    minHeight: 110,
+                                                    minHeight: 160,
                                                     minWidth: double.infinity,
                                                   ),
                                                   decoration: BoxDecoration(
                                                     boxShadow: const [
                                                       BoxShadow(
                                                         color: Color.fromARGB(
-                                                            176, 115, 184, 51),
+                                                          176,
+                                                          115,
+                                                          184,
+                                                          51,
+                                                        ),
                                                         blurRadius: 3.0,
                                                         offset: Offset(0, 0),
                                                         spreadRadius: 1.1,
@@ -1496,11 +1851,142 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             10.0),
-                                                    // color: const Color.fromARGB(
-                                                    //     176, 130, 131, 128),
                                                   ),
                                                   child: Column(
                                                     children: [
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                          0,
+                                                          0,
+                                                          10,
+                                                          0,
+                                                        ),
+                                                        child: Align(
+                                                          alignment: Alignment
+                                                              .centerLeft,
+                                                          child: Row(
+                                                            children: <Widget>[
+                                                              Checkbox(
+                                                                activeColor:
+                                                                    Colors
+                                                                        .white,
+                                                                checkColor:
+                                                                    const Color
+                                                                        .fromARGB(
+                                                                  176,
+                                                                  115,
+                                                                  184,
+                                                                  51,
+                                                                ),
+                                                                side: const BorderSide(
+                                                                    color: Colors
+                                                                        .white),
+                                                                value: checkedItems[
+                                                                    currentIndex],
+                                                                onChanged:
+                                                                    (bool?
+                                                                        value) {
+                                                                  setState(() {
+                                                                    checkedItems[
+                                                                            currentIndex] =
+                                                                        value!;
+
+                                                                    checkControllers[currentIndex]
+                                                                            .text =
+                                                                        value
+                                                                            ? "1"
+                                                                            : "0";
+                                                                  });
+                                                                },
+                                                              ),
+                                                              Expanded(
+                                                                child: Text(
+                                                                  'Check to send',
+                                                                  style:
+                                                                      textStyleColorWhite,
+                                                                  maxLines: 2,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Visibility(
+                                                        visible: true,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              checkControllers[
+                                                                  currentIndex],
+                                                          autocorrect: false,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText: 'Check',
+                                                            hintStyle:
+                                                                textStyleColorWhite,
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Visibility(
+                                                        visible: true,
+                                                        child: TextFormField(
+                                                          controller:
+                                                              prospectCodeControllers[
+                                                                  currentIndex],
+                                                          autocorrect: false,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .white),
+                                                          textInputAction:
+                                                              TextInputAction
+                                                                  .next,
+                                                          decoration:
+                                                              InputDecoration(
+                                                            hintText:
+                                                                'Prospect Code',
+                                                            hintStyle:
+                                                                textStyleColorWhite,
+                                                            enabledBorder:
+                                                                const OutlineInputBorder(
+                                                              borderSide:
+                                                                  BorderSide(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                  255,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
                                                       Padding(
                                                         padding:
                                                             const EdgeInsets
