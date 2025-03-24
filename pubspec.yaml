@@ -46,6 +46,7 @@ dependencies:
   intl: ^0.18.1
   loading_animation_widget: ^1.2.1
   marquee: ^2.2.3
+  page_transition: ^2.2.1
   responsive_framework: ^1.4.0
   searchable_listview: ^2.15.0
   shared_preferences: ^2.5.2

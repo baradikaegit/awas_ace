@@ -33,6 +33,10 @@ class ModelSelect {
 class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
     with TickerProviderStateMixin {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
+  TextEditingController searchController = TextEditingController();
+
+  List<bool> checkedItems = [];
+  List<TextEditingController> checkControllers = [];
 
   late TabController _tabController;
   bool isDisabled = true;
@@ -64,6 +68,9 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
   void _handleTabSelection() {
     setState(() {});
   }
+
+  String selectedProspectCode = "";
+  String selectedCheckValue = "";
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +108,16 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
               "Prospect Sales",
               style: TextStyle(color: Colors.white),
             ),
+            actions: <Widget>[
+              Builder(
+                builder: (context) => IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                  icon: const Icon(Icons.send),
+                ),
+              ),
+            ],
             iconTheme: const IconThemeData(color: Colors.white),
             elevation: 0,
             backgroundColor: const Color.fromARGB(
@@ -108,6 +125,279 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
               3,
               116,
               18,
+            ),
+          ),
+          endDrawer: Drawer(
+            child: Stack(
+              children: [
+                Consumer(builder: (context, WidgetRef ref, child) {
+                  final dataSales = ref.watch(prospectSales);
+
+                  return Center(
+                    child: Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Expanded(
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  return ref.refresh(prospectSales);
+                                },
+                                child: dataSales.when(
+                                  data: (dataSendTask) {
+                                    print("📌 Data dari API:");
+                                    for (var item
+                                        in dataSendTask.listProspectSales!) {
+                                      print(
+                                          "   - ${item.prospectCode} | ${item.salesman}");
+                                    }
+
+                                    if (checkControllers.isEmpty ||
+                                        checkControllers.length !=
+                                            dataSendTask
+                                                .listProspectSales!.length) {
+                                      checkControllers = List.generate(
+                                        dataSendTask.listProspectSales!.length,
+                                        (index) =>
+                                            TextEditingController(text: "0"),
+                                      );
+                                      print(
+                                          "📌 checkControllers diperbarui: ${checkControllers.length} items");
+                                    }
+
+                                    return Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        5,
+                                        20,
+                                        5,
+                                        0,
+                                      ),
+                                      child: SearchableList<ListProspectSales>(
+                                        initialList:
+                                            dataSendTask.listProspectSales!,
+                                        itemBuilder: (item) {
+                                          // int currentIndex = dataSendTask
+                                          //     .listProspectSales!
+                                          //     .indexOf(item);
+
+                                          // int currentIndex = dataSendTask
+                                          //     .listProspectSales!
+                                          //     .indexWhere((element) =>
+                                          //         element.prospectCode ==
+                                          //         item.prospectCode);
+
+                                          // if (currentIndex == -1) {
+                                          //   print(
+                                          //       "Item tidak ditemukan dalam listProspectSales!");
+                                          //   return const SizedBox(); // Tidak menampilkan item yang tidak valid
+                                          // }
+
+                                          // bool isChecked =
+                                          //     checkControllers.isNotEmpty &&
+                                          //         currentIndex <
+                                          //             checkControllers.length &&
+                                          //         checkControllers[currentIndex]
+                                          //                 .text ==
+                                          //             "1";
+
+                                          // int currentIndex = dataSendTask
+                                          //     .listProspectSales!
+                                          //     .indexWhere((element) =>
+                                          //         element.prospectCode ==
+                                          //         item.prospectCode);
+
+                                          // if (currentIndex == -1) {
+                                          //   print(
+                                          //       "Item tidak ditemukan dalam listProspectSales!");
+                                          //   return const SizedBox(); // Tidak menampilkan item yang tidak valid
+                                          // }
+
+                                          // print(
+                                          //     "Item Valid -> Prospect Code: ${item.prospectCode}, Index: $currentIndex");
+
+                                          // bool isChecked =
+                                          //     checkControllers.isNotEmpty &&
+                                          //         currentIndex <
+                                          //             checkControllers.length &&
+                                          //         checkControllers[currentIndex]
+                                          //                 .text ==
+                                          //             "1";
+
+                                          // Debugging tambahan untuk memastikan `item.prospectCode` ada
+                                          print(
+                                              "Membangun Item: ${item.prospectCode} | ${item.salesman}");
+
+                                          // Cek apakah item valid
+                                          int currentIndex = dataSendTask
+                                              .listProspectSales!
+                                              .indexWhere((element) =>
+                                                  element.prospectCode ==
+                                                  item.prospectCode);
+
+                                          if (currentIndex == -1) {
+                                            print(
+                                                "Item tidak ditemukan dalam listProspectSales!");
+                                            return const SizedBox(); // Jangan tampilkan item yang tidak valid
+                                          }
+
+                                          bool isChecked =
+                                              checkControllers.isNotEmpty &&
+                                                  currentIndex <
+                                                      checkControllers.length &&
+                                                  checkControllers[currentIndex]
+                                                          .text ==
+                                                      "1";
+
+                                          return item.type == 'List'
+                                              ? Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(8.0),
+                                                  child: Container(
+                                                    constraints:
+                                                        const BoxConstraints(
+                                                      minHeight: 50,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      boxShadow: const [
+                                                        BoxShadow(
+                                                          color:
+                                                              Color(0x50D6D6D6),
+                                                          blurRadius: 8.0,
+                                                          offset: Offset(0, 0),
+                                                          spreadRadius: 5.1,
+                                                        ),
+                                                      ],
+                                                      border: Border.all(
+                                                          color: const Color(
+                                                              0xFFDEDEE2),
+                                                          width: 2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12.0),
+                                                      color: const Color(
+                                                          0x5AF2F2F2),
+                                                    ),
+                                                    child: ListTile(
+                                                      title: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Expanded(
+                                                            child: Text(
+                                                              item.salesman,
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      subtitle: isChecked
+                                                          ? Text(
+                                                              '${item.prospectStatusName} ${item.prospectCode}',
+                                                            )
+                                                          : null,
+                                                      onTap: () {
+                                                        print(
+                                                            "Klik Item: ${item.prospectCode}, Index: $currentIndex, Status: ${checkControllers[currentIndex].text}");
+                                                        if (checkControllers[
+                                                                    currentIndex]
+                                                                .text ==
+                                                            "1") {
+                                                          print("data ke send");
+                                                        } else {
+                                                          print(
+                                                              "Data belum dicentang!");
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                                )
+                                              : const Center();
+                                        },
+                                        searchTextController: searchController,
+                                        // filter: (searchController) {
+                                        //   return dataSendTask.listProspectSales!
+                                        //       .where(
+                                        //         (element) =>
+                                        //             element.prospectCode
+                                        //                 .toLowerCase()
+                                        //                 .contains(
+                                        //                   searchController
+                                        //                       .toString()
+                                        //                       .toLowerCase(),
+                                        //                 ) ||
+                                        //             element.salesman
+                                        //                 .toLowerCase()
+                                        //                 .contains(
+                                        //                   searchController
+                                        //                       .toString()
+                                        //                       .toLowerCase(),
+                                        //                 ),
+                                        //       )
+                                        //       .toList();
+                                        // },
+                                        filter: (query) {
+                                          return dataSendTask.listProspectSales!
+                                              .where(
+                                                (element) =>
+                                                    element.prospectCode
+                                                        .toLowerCase()
+                                                        .contains(query
+                                                            .toLowerCase()) ||
+                                                    element.salesman
+                                                        .toLowerCase()
+                                                        .contains(query
+                                                            .toLowerCase()),
+                                              )
+                                              .toList();
+                                        },
+                                        keyboardAction: TextInputAction.search,
+                                        emptyWidget: const EmptyView(),
+                                        inputDecoration: InputDecoration(
+                                          contentPadding:
+                                              const EdgeInsets.symmetric(
+                                                  horizontal: 8.0),
+                                          labelText: "Search..",
+                                          labelStyle: const TextStyle(
+                                            color: Color.fromARGB(255, 0, 0, 0),
+                                          ),
+                                          fillColor: Colors.white,
+                                          focusedBorder: OutlineInputBorder(
+                                            gapPadding: 15.0,
+                                            borderSide: const BorderSide(
+                                              color: Color.fromARGB(
+                                                255,
+                                                153,
+                                                153,
+                                                153,
+                                              ),
+                                              width: 1.0,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  error: (err, stack) => Text('Error $err'),
+                                  loading: () => const Center(
+                                    child: Column(
+                                      children: [loadingAnimation()],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                }),
+              ],
             ),
           ),
           backgroundColor: const Color.fromARGB(
@@ -344,6 +634,8 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                               LowProspectTab(
                                                                 linkPageObj:
                                                                     linkPageObj,
+                                                                checkControllers:
+                                                                    checkControllers, // 🔹 Kirim controller ke LowProspectTab
                                                               ),
                                                             ],
                                                           ),
@@ -1574,7 +1866,10 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
 
 class LowProspectTab extends StatefulWidget {
   final Object? linkPageObj;
-  const LowProspectTab({super.key, required this.linkPageObj});
+  final List<TextEditingController> checkControllers; // 🔹 Menerima dari parent
+
+  const LowProspectTab(
+      {super.key, required this.linkPageObj, required this.checkControllers});
 
   @override
   State<LowProspectTab> createState() => _LowProspectTabState();
@@ -1587,6 +1882,8 @@ class _LowProspectTabState extends State<LowProspectTab> {
   List<TextEditingController> prospectCodeControllers = [];
   List<bool> checkedItems = [];
   List<TextEditingController> checkControllers = [];
+
+  List<ListProspectSales> selectedProspects = [];
 
   bool checkQ1 = false;
 
@@ -1889,15 +2186,35 @@ class _LowProspectTabState extends State<LowProspectTab> {
                                                                     (bool?
                                                                         value) {
                                                                   setState(() {
-                                                                    checkedItems[
-                                                                            currentIndex] =
-                                                                        value!;
+                                                                    // checkedItems[
+                                                                    //         currentIndex] =
+                                                                    //     value!;
 
-                                                                    checkControllers[currentIndex]
-                                                                            .text =
-                                                                        value
-                                                                            ? "1"
-                                                                            : "0";
+                                                                    // checkControllers[currentIndex]
+                                                                    //         .text =
+                                                                    //     value
+                                                                    //         ? "1"
+                                                                    //         : "0";
+                                                                    // print(
+                                                                    //     "Checkbox diubah: ${item.prospectCode} -> ${checkControllers[index].text}");
+                                                                    if (currentIndex <
+                                                                        checkControllers
+                                                                            .length) {
+                                                                      checkedItems[
+                                                                              currentIndex] =
+                                                                          value!;
+                                                                      checkControllers[currentIndex]
+                                                                              .text =
+                                                                          value
+                                                                              ? "1"
+                                                                              : "0";
+
+                                                                      print(
+                                                                          "Checkbox diubah: ${item.prospectCode} -> ${checkControllers[currentIndex].text}");
+                                                                    } else {
+                                                                      print(
+                                                                          "Indeks $currentIndex tidak valid!");
+                                                                    }
                                                                   });
                                                                 },
                                                               ),

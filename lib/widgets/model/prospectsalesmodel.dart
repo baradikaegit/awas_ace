@@ -1,5 +1,7 @@
 // ignore_for_file: no_leading_underscores_for_local_identifiers
 
+import 'dart:convert';
+
 class ProspectSalesListResponse {
   ProspectSalesListResponse({
     required this.statusCode,
@@ -11,6 +13,7 @@ class ProspectSalesListResponse {
   late final List<ListProspectSales>? listProspectSales;
 
   ProspectSalesListResponse.fromJson(Map<String, dynamic> json) {
+    print("Response API: ${jsonEncode(json)}");
     statusCode = json['statusCode'];
     statusMessage = json['statusMessage'];
     listProspectSales = (json['listProspectSales'] != null)

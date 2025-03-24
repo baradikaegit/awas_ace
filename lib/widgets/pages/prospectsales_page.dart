@@ -542,15 +542,14 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                         ),
                                       ),
                                     ],
-                                    legend: Legend(
+                                    legend: const Legend(
                                       isVisible: true,
                                       width: '300%',
                                       itemPadding: 0,
                                       position: LegendPosition.right,
                                       overflowMode:
                                           LegendItemOverflowMode.scroll,
-                                      textStyle:
-                                          const TextStyle(color: Colors.white),
+                                      textStyle: TextStyle(color: Colors.white),
                                     ),
                                     series: <CircularSeries>[
                                       DoughnutSeries<ChartData, String>(
