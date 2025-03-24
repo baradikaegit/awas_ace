@@ -145,7 +145,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                 },
                                 child: dataSales.when(
                                   data: (dataSendTask) {
-                                    print("📌 Data dari API:");
+                                    print("Data dari API:");
                                     for (var item
                                         in dataSendTask.listProspectSales!) {
                                       print(
@@ -162,7 +162,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                             TextEditingController(text: "0"),
                                       );
                                       print(
-                                          "📌 checkControllers diperbarui: ${checkControllers.length} items");
+                                          "checkControllers diperbarui: ${checkControllers.length} items");
                                     }
 
                                     return Padding(
@@ -176,53 +176,6 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                         initialList:
                                             dataSendTask.listProspectSales!,
                                         itemBuilder: (item) {
-                                          // int currentIndex = dataSendTask
-                                          //     .listProspectSales!
-                                          //     .indexOf(item);
-
-                                          // int currentIndex = dataSendTask
-                                          //     .listProspectSales!
-                                          //     .indexWhere((element) =>
-                                          //         element.prospectCode ==
-                                          //         item.prospectCode);
-
-                                          // if (currentIndex == -1) {
-                                          //   print(
-                                          //       "Item tidak ditemukan dalam listProspectSales!");
-                                          //   return const SizedBox(); // Tidak menampilkan item yang tidak valid
-                                          // }
-
-                                          // bool isChecked =
-                                          //     checkControllers.isNotEmpty &&
-                                          //         currentIndex <
-                                          //             checkControllers.length &&
-                                          //         checkControllers[currentIndex]
-                                          //                 .text ==
-                                          //             "1";
-
-                                          // int currentIndex = dataSendTask
-                                          //     .listProspectSales!
-                                          //     .indexWhere((element) =>
-                                          //         element.prospectCode ==
-                                          //         item.prospectCode);
-
-                                          // if (currentIndex == -1) {
-                                          //   print(
-                                          //       "Item tidak ditemukan dalam listProspectSales!");
-                                          //   return const SizedBox(); // Tidak menampilkan item yang tidak valid
-                                          // }
-
-                                          // print(
-                                          //     "Item Valid -> Prospect Code: ${item.prospectCode}, Index: $currentIndex");
-
-                                          // bool isChecked =
-                                          //     checkControllers.isNotEmpty &&
-                                          //         currentIndex <
-                                          //             checkControllers.length &&
-                                          //         checkControllers[currentIndex]
-                                          //                 .text ==
-                                          //             "1";
-
                                           // Debugging tambahan untuk memastikan `item.prospectCode` ada
                                           print(
                                               "Membangun Item: ${item.prospectCode} | ${item.salesman}");
@@ -1866,7 +1819,7 @@ class _MediumProspectTabState extends State<MediumProspectTab> {
 
 class LowProspectTab extends StatefulWidget {
   final Object? linkPageObj;
-  final List<TextEditingController> checkControllers; // 🔹 Menerima dari parent
+  final List<TextEditingController> checkControllers; // Menerima dari parent
 
   const LowProspectTab(
       {super.key, required this.linkPageObj, required this.checkControllers});
