@@ -274,6 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     final grafikPs = ref.watch(grafikProspectSales);
@@ -527,11 +528,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                                 point,
                                                                             int index) {
                                                                           return Padding(
-                                                                            padding: const EdgeInsets.fromLTRB(
-                                                                                0,
-                                                                                5,
-                                                                                0,
-                                                                                0,),
+                                                                            padding:
+                                                                                const EdgeInsets.fromLTRB(
+                                                                              0,
+                                                                              5,
+                                                                              0,
+                                                                              0,
+                                                                            ),
                                                                             child:
                                                                                 SizedBox(
                                                                               height: 20,
@@ -834,7 +837,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
 
