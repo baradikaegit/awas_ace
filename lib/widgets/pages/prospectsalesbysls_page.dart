@@ -34,6 +34,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
     with TickerProviderStateMixin {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController searchController = TextEditingController();
+  TextEditingController searchControllerDrawer = TextEditingController();
   List<ProspectSalesListResponse> listProspectSalesRes = [];
   List<TextEditingController> prospectCodeControllers = [];
 
@@ -42,31 +43,13 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
 
   int? currentIndex;
 
-  TextEditingController check1 = TextEditingController();
-
   late TabController _tabController;
-  bool isDisabled = true;
-  bool _isDrawerOpen = false;
 
   String dateNow = DateFormat('MM/dd/yyyy').format(DateTime.now());
   String? userName;
   String? sid;
   String? branchID;
   String? roles;
-
-  void _toggleDrawer() {
-    setState(() {
-      _isDrawerOpen = !_isDrawerOpen;
-    });
-  }
-
-  void _closeDrawer() {
-    if (_isDrawerOpen) {
-      setState(() {
-        _isDrawerOpen = false;
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -91,7 +74,6 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
   }
 
   String selectedProspectCode = "";
-  String selectedCheckValue = "";
 
   @override
   Widget build(BuildContext context) {
@@ -170,9 +152,17 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
               style: TextStyle(color: Colors.white),
             ),
             actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.send),
-                onPressed: _toggleDrawer,
+              // IconButton(
+              //   icon: const Icon(Icons.send),
+              //   onPressed: _toggleDrawer,
+              // ),
+              Builder(
+                builder: (context) => IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                  icon: const Icon(Icons.send),
+                ),
               ),
             ],
             iconTheme: const IconThemeData(color: Colors.white),
@@ -184,6 +174,275 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
               18,
             ),
           ),
+          endDrawer: Drawer(
+            child: Stack(
+              children: [
+                Consumer(builder: (context, WidgetRef ref, child) {
+                  final dataSales = ref.watch(prospectSales);
+
+                  return Center(
+                    child: Stack(
+                      children: [
+                        Column(
+                          children: [
+                            Expanded(
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  return ref.refresh(prospectSales);
+                                },
+                                child: dataSales.when(
+                                  data: (dataSendTask) {
+                                    return Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                        5,
+                                        20,
+                                        5,
+                                        0,
+                                      ),
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            child: SearchableList<
+                                                ListProspectSales>(
+                                              initialList: dataSendTask
+                                                  .listProspectSales!,
+                                              itemBuilder: (item) {
+                                                return item.type == 'List'
+                                                    ? Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(8.0),
+                                                        child: Container(
+                                                          constraints:
+                                                              const BoxConstraints(
+                                                            minHeight: 50,
+                                                          ),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            boxShadow: const [
+                                                              BoxShadow(
+                                                                color: Color(
+                                                                    0x50D6D6D6),
+                                                                blurRadius: 8.0,
+                                                                offset: Offset(
+                                                                    0, 0),
+                                                                spreadRadius:
+                                                                    5.1,
+                                                              ),
+                                                            ],
+                                                            border: Border.all(
+                                                                color: const Color(
+                                                                    0xFFDEDEE2),
+                                                                width: 2),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        12.0),
+                                                            color: const Color(
+                                                                0x5AF2F2F2),
+                                                          ),
+                                                          child: Column(
+                                                            children: [
+                                                              ListTile(
+                                                                title: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Expanded(
+                                                                      child:
+                                                                          Text(
+                                                                        item.salesman,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                subtitle:
+                                                                    Builder(
+                                                                  builder:
+                                                                      (context) {
+                                                                    // print("Menampilkan subtitle untuk currentIndex: $currentIndex");
+
+                                                                    if (checkControllers
+                                                                            .isEmpty ||
+                                                                        prospectCodeControllers
+                                                                            .isEmpty) {
+                                                                      return const Text(
+                                                                          "Pilih item terlebih dahulu");
+                                                                    }
+
+                                                                    List<String>
+                                                                        selectedProspectCodes =
+                                                                        [];
+
+                                                                    for (int i =
+                                                                            0;
+                                                                        i < checkControllers.length;
+                                                                        i++) {
+                                                                      if (checkControllers[i]
+                                                                              .text ==
+                                                                          "1") {
+                                                                        selectedProspectCodes
+                                                                            .add(prospectCodeControllers[i].text);
+                                                                      }
+                                                                    }
+
+                                                                    return selectedProspectCodes
+                                                                            .isNotEmpty
+                                                                        ? Text(
+                                                                            "1 ${selectedProspectCodes.join(', ')} ")
+                                                                        : const SizedBox();
+                                                                  },
+                                                                ),
+                                                                onTap: () {
+                                                                  List<String>
+                                                                      selectedProspects =
+                                                                      [];
+                                                                  for (int i =
+                                                                          0;
+                                                                      i <
+                                                                          checkControllers
+                                                                              .length;
+                                                                      i++) {
+                                                                    if (checkControllers[i]
+                                                                            .text ==
+                                                                        "1") {
+                                                                      selectedProspects.add(
+                                                                          prospectCodeControllers[i]
+                                                                              .text);
+                                                                    }
+                                                                  }
+                                                                  print(
+                                                                      "Prospect Code Tapped: $selectedProspects");
+                                                                },
+                                                              ),
+                                                              Column(
+                                                                children: List.generate(
+                                                                    prospectCodeControllers
+                                                                        .length,
+                                                                    (index) {
+                                                                  if (checkControllers[
+                                                                              index]
+                                                                          .text ==
+                                                                      "1") {
+                                                                    return Padding(
+                                                                      padding: const EdgeInsets
+                                                                          .symmetric(
+                                                                          vertical:
+                                                                              4.0),
+                                                                      child:
+                                                                          TextFormField(
+                                                                        controller:
+                                                                            prospectCodeControllers[index],
+                                                                        autocorrect:
+                                                                            false,
+                                                                        style: const TextStyle(
+                                                                            color:
+                                                                                Colors.black),
+                                                                        textInputAction:
+                                                                            TextInputAction.next,
+                                                                        decoration:
+                                                                            InputDecoration(
+                                                                          hintText:
+                                                                              'Prospect Code',
+                                                                          hintStyle:
+                                                                              textStyleColorWhite,
+                                                                          enabledBorder:
+                                                                              const OutlineInputBorder(
+                                                                            borderSide:
+                                                                                BorderSide(
+                                                                              color: Color.fromARGB(255, 0, 0, 0),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  } else {
+                                                                    return const SizedBox
+                                                                        .shrink(); // Tidak menampilkan jika tidak dicentang
+                                                                  }
+                                                                }),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      )
+                                                    : const Center();
+                                              },
+                                              searchTextController:
+                                                  searchControllerDrawer,
+                                              filter: (query) {
+                                                return dataSendTask
+                                                    .listProspectSales!
+                                                    .where(
+                                                      (element) =>
+                                                          element.prospectCode
+                                                              .toLowerCase()
+                                                              .contains(query
+                                                                  .toLowerCase()) ||
+                                                          element.salesman
+                                                              .toLowerCase()
+                                                              .contains(query
+                                                                  .toLowerCase()),
+                                                    )
+                                                    .toList();
+                                              },
+                                              keyboardAction:
+                                                  TextInputAction.search,
+                                              emptyWidget: const EmptyView(),
+                                              inputDecoration: InputDecoration(
+                                                contentPadding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 8.0),
+                                                labelText: "Search..",
+                                                labelStyle: const TextStyle(
+                                                  color: Color.fromARGB(
+                                                      255, 0, 0, 0),
+                                                ),
+                                                fillColor: Colors.white,
+                                                focusedBorder:
+                                                    OutlineInputBorder(
+                                                  gapPadding: 15.0,
+                                                  borderSide: const BorderSide(
+                                                    color: Color.fromARGB(
+                                                      255,
+                                                      153,
+                                                      153,
+                                                      153,
+                                                    ),
+                                                    width: 1.0,
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  },
+                                  error: (err, stack) => Text('Error $err'),
+                                  loading: () => const Center(
+                                    child: Column(
+                                      children: [loadingAnimation()],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                }),
+              ],
+            ),
+          ),
           backgroundColor: const Color.fromARGB(
             255,
             134,
@@ -193,6 +452,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
           body: Center(
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -579,7 +839,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                           textStyle:
                                                                               const TextStyle(color: Colors.white),
                                                                           initialList:
-                                                                              dataProspectSales.listProspectSales! ?? [],
+                                                                              dataProspectSales.listProspectSales!,
                                                                           itemBuilder:
                                                                               (item) {
                                                                             // int currentIndex =
@@ -663,7 +923,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                                                           checkControllers[index].text = value ? "1" : "0";
                                                                                                           currentIndex = index; // Pastikan currentIndex diperbarui dan tidak hilang setelah rebuild
 
-                                                                                                          print("Checkbox diubah: ${dataProspectSales!.listProspectSales![index].prospectCode} -> ${checkControllers[index].text}");
+                                                                                                          print("Checkbox diubah: ${dataProspectSales.listProspectSales![index].prospectCode} -> ${checkControllers[index].text}");
                                                                                                           print("currentIndex setelah checkbox diklik: $currentIndex");
                                                                                                         } else {
                                                                                                           print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
@@ -864,99 +1124,11 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                               ),
                             ],
                           ),
-                          if (_isDrawerOpen)
-                            Positioned.fill(
-                              child: GestureDetector(
-                                behavior: HitTestBehavior
-                                    .translucent, // Tidak menghalangi input ke TabBar
-                                onTap: _closeDrawer,
-                                child: Container(
-                                  color: _isDrawerOpen
-                                      ? Colors.black.withOpacity(0.5)
-                                      : Colors.transparent,
-                                ), // Hindari AnimatedContainer
-                              ),
-                            ),
-                          AnimatedPositioned(
-                            duration: const Duration(milliseconds: 300),
-                            right: _isDrawerOpen
-                                ? 0
-                                : -300, // Drawer muncul dari kanan
-                            top: 0,
-                            bottom: 0,
-                            child: Container(
-                              width: 300,
-                              color: Colors.white,
-                              padding: const EdgeInsets.all(16),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  const Text(
-                                    "Custom Drawer",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  const SizedBox(height: 20),
-                                  ListTile(
-                                    title: const Text("Check Value"),
-                                    subtitle: Builder(
-                                      builder: (context) {
-                                        print(
-                                            "Menampilkan subtitle untuk currentIndex: $currentIndex");
-
-                                        if (checkControllers.isEmpty ||
-                                            prospectCodeControllers.isEmpty) {
-                                          return const Text(
-                                              "Pilih item terlebih dahulu");
-                                        }
-
-                                        List<String> selectedProspectCodes = [];
-
-                                        for (int i = 0;
-                                            i < checkControllers.length;
-                                            i++) {
-                                          if (checkControllers[i].text == "1") {
-                                            selectedProspectCodes.add(
-                                                prospectCodeControllers[i]
-                                                    .text);
-                                          }
-                                        }
-
-                                        return selectedProspectCodes.isNotEmpty
-                                            ? Text(
-                                                "1 ${selectedProspectCodes.join(', ')} Muncul")
-                                            : const SizedBox();
-                                      },
-                                    ),
-                                    onTap: () {
-                                      if (currentIndex != null &&
-                                          currentIndex! <
-                                              checkControllers.length) {
-                                        print(
-                                            "Check Value: ${checkControllers[currentIndex!].text}");
-                                      } else {
-                                        print("Index tidak valid");
-                                      }
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: const Text("Item 2"),
-                                    onTap: () {
-                                      print('list 2');
-                                    },
-                                  ),
-                                  const Spacer(),
-                                ],
-                              ),
-                            ),
-                          ),
                         ],
                       ),
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),
