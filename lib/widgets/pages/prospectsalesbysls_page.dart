@@ -215,7 +215,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                         child: Container(
                                                           constraints:
                                                               const BoxConstraints(
-                                                            minHeight: 50,
+                                                            minHeight: 20,
                                                           ),
                                                           decoration:
                                                               BoxDecoration(
@@ -259,47 +259,46 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                     ),
                                                                   ],
                                                                 ),
-                                                                subtitle:
-                                                                    Builder(
-                                                                  builder:
-                                                                      (context) {
-                                                                    // print("Menampilkan subtitle untuk currentIndex: $currentIndex");
-
-                                                                    if (checkControllers
-                                                                            .isEmpty ||
-                                                                        prospectCodeControllers
-                                                                            .isEmpty) {
-                                                                      return const Text(
-                                                                          "Pilih item terlebih dahulu");
-                                                                    }
-
-                                                                    List<String>
-                                                                        selectedProspectCodes =
-                                                                        [];
-
-                                                                    for (int i =
-                                                                            0;
-                                                                        i < checkControllers.length;
-                                                                        i++) {
-                                                                      if (checkControllers[i]
-                                                                              .text ==
-                                                                          "1") {
-                                                                        selectedProspectCodes
-                                                                            .add(prospectCodeControllers[i].text);
-                                                                      }
-                                                                    }
-
-                                                                    return selectedProspectCodes
-                                                                            .isNotEmpty
-                                                                        ? Text(
-                                                                            "1 ${selectedProspectCodes.join(', ')} ")
-                                                                        : const SizedBox();
-                                                                  },
-                                                                ),
+                                                                subtitle: Text(
+                                                                    item.prospectStatusName
+                                                                    //     Builder(
+                                                                    //   builder:
+                                                                    //       (context) {
+                                                                    //     if (checkControllers
+                                                                    //             .isEmpty ||
+                                                                    //         prospectCodeControllers
+                                                                    //             .isEmpty) {
+                                                                    //       return const Text(
+                                                                    //           "Pilih item terlebih dahulu");
+                                                                    //     }
+                                                                    //     List<String>
+                                                                    //         selectedProspectCodes =
+                                                                    //         [];
+                                                                    //     for (int i =
+                                                                    //             0;
+                                                                    //         i < checkControllers.length;
+                                                                    //         i++) {
+                                                                    //       if (checkControllers[i]
+                                                                    //               .text ==
+                                                                    //           "1") {
+                                                                    //         selectedProspectCodes
+                                                                    //             .add(prospectCodeControllers[i].text);
+                                                                    //       }
+                                                                    //     }
+                                                                    //     return selectedProspectCodes
+                                                                    //             .isNotEmpty
+                                                                    //         ? Text(
+                                                                    //             "1 ${selectedProspectCodes.join(', ')} ")
+                                                                    //         : const SizedBox();
+                                                                    //   },
+                                                                    ),
                                                                 onTap: () {
-                                                                  List<String>
+                                                                  List<TextEditingController>
                                                                       selectedProspects =
                                                                       [];
+
+                                                                  String?
+                                                                      checkVal;
                                                                   for (int i =
                                                                           0;
                                                                       i <
@@ -309,62 +308,80 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                     if (checkControllers[i]
                                                                             .text ==
                                                                         "1") {
-                                                                      selectedProspects.add(
-                                                                          prospectCodeControllers[i]
-                                                                              .text);
+                                                                      selectedProspects
+                                                                          .add(
+                                                                              TextEditingController(
+                                                                        text: prospectCodeControllers[i]
+                                                                            .text,
+                                                                      ));
+
+                                                                      checkVal =
+                                                                          checkControllers[i]
+                                                                              .text;
                                                                     }
                                                                   }
-                                                                  print(
-                                                                      "Prospect Code Tapped: $selectedProspects");
+
+                                                                  for (var controller
+                                                                      in selectedProspects) {
+                                                                    print(
+                                                                        checkVal);
+                                                                    print(controller
+                                                                        .text);
+                                                                    print(item
+                                                                        .salesman);
+                                                                  }
                                                                 },
                                                               ),
-                                                              Column(
-                                                                children: List.generate(
-                                                                    prospectCodeControllers
-                                                                        .length,
-                                                                    (index) {
-                                                                  if (checkControllers[
-                                                                              index]
-                                                                          .text ==
-                                                                      "1") {
-                                                                    return Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .symmetric(
-                                                                          vertical:
-                                                                              4.0),
-                                                                      child:
-                                                                          TextFormField(
-                                                                        controller:
-                                                                            prospectCodeControllers[index],
-                                                                        autocorrect:
-                                                                            false,
-                                                                        style: const TextStyle(
-                                                                            color:
-                                                                                Colors.black),
-                                                                        textInputAction:
-                                                                            TextInputAction.next,
-                                                                        decoration:
-                                                                            InputDecoration(
-                                                                          hintText:
-                                                                              'Prospect Code',
-                                                                          hintStyle:
-                                                                              textStyleColorWhite,
-                                                                          enabledBorder:
-                                                                              const OutlineInputBorder(
-                                                                            borderSide:
-                                                                                BorderSide(
-                                                                              color: Color.fromARGB(255, 0, 0, 0),
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                    );
-                                                                  } else {
-                                                                    return const SizedBox
-                                                                        .shrink(); // Tidak menampilkan jika tidak dicentang
-                                                                  }
-                                                                }),
-                                                              ),
+                                                              // Column(
+                                                              //   children: List.generate(
+                                                              //       prospectCodeControllers
+                                                              //           .length,
+                                                              //       (index) {
+                                                              //     if (checkControllers[
+                                                              //                 index]
+                                                              //             .text ==
+                                                              //         "1") {
+                                                              //       return Padding(
+                                                              //         padding: const EdgeInsets
+                                                              //             .symmetric(
+                                                              //             vertical:
+                                                              //                 4.0),
+                                                              //         child:
+                                                              //             Visibility(
+                                                              //           visible:
+                                                              //               false,
+                                                              //           child:
+                                                              //               TextFormField(
+                                                              //             controller:
+                                                              //                 prospectCodeControllers[index],
+                                                              //             autocorrect:
+                                                              //                 false,
+                                                              //             style:
+                                                              //                 const TextStyle(color: Colors.black),
+                                                              //             textInputAction:
+                                                              //                 TextInputAction.next,
+                                                              //             decoration:
+                                                              //                 InputDecoration(
+                                                              //               hintText:
+                                                              //                   'Prospect Code',
+                                                              //               hintStyle:
+                                                              //                   textStyleColorWhite,
+                                                              //               enabledBorder:
+                                                              //                   const OutlineInputBorder(
+                                                              //                 borderSide: BorderSide(
+                                                              //                   color: Color.fromARGB(255, 0, 0, 0),
+                                                              //                 ),
+                                                              //               ),
+                                                              //             ),
+                                                              //           ),
+                                                              //         ),
+                                                              //       );
+                                                              //     } else {
+                                                              //       return const SizedBox
+                                                              //           .shrink();
+                                                              //     }
+                                                              //   }),
+                                                              // ),
                                                             ],
                                                           ),
                                                         ),
