@@ -165,3 +165,24 @@ final updateProspectFormProviderDetail =
     ChangeNotifierProvider.autoDispose<UpdateProspectFormNotifier>((ref) {
   return UpdateProspectFormNotifier(ref as ProviderElementBase);
 });
+
+//update send prospect
+class UpdateSendProspectFormNotifier extends ChangeNotifier {
+  UpdateSendProspectFormNotifier(this.ref) : super();
+
+  final ProviderElementBase ref;
+
+  Future<SendProspectResponse> onUpdateSendProspect(
+      ListSendProspect upSendProspect) async {
+    final repositorysendprospect = ref.read(prospectRepositoryProvider);
+    late SendProspectResponse resp;
+
+    resp = await repositorysendprospect.updateSendProspect(upSendProspect);
+    return resp;
+  }
+}
+
+final updateSendProspectFormProvider =
+    ChangeNotifierProvider.autoDispose<UpdateSendProspectFormNotifier>((ref) {
+  return UpdateSendProspectFormNotifier(ref as ProviderElementBase);
+});

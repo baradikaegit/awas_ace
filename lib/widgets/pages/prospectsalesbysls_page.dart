@@ -2,10 +2,12 @@
 
 import 'package:awas_ace/provider/prospect_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
+import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
+import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -292,7 +294,8 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                     //         : const SizedBox();
                                                                     //   },
                                                                     ),
-                                                                onTap: () {
+                                                                onTap:
+                                                                    () async {
                                                                   List<TextEditingController>
                                                                       selectedProspects =
                                                                       [];
@@ -323,12 +326,64 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
 
                                                                   for (var controller
                                                                       in selectedProspects) {
+                                                                    var upSendProspect =
+                                                                        ListSendProspect(
+                                                                      prospectCode:
+                                                                          controller
+                                                                              .text,
+                                                                      salesCode:
+                                                                          item.salesCode,
+                                                                    );
+                                                                    try {
+                                                                      //var resp =
+                                                                      await ref
+                                                                          .read(
+                                                                              updateSendProspectFormProvider)
+                                                                          .onUpdateSendProspect(
+                                                                              upSendProspect);
+
+                                                                      // if (resp.statusMessage ==
+                                                                      //     "Success Updated") {
+                                                                      //   ketController
+                                                                      //       .clear();
+                                                                      // }
+
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pushAndRemoveUntil(
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              const HomePage(),
+                                                                        ),
+                                                                        (route) =>
+                                                                            false,
+                                                                      );
+
+                                                                      notifUpdated(
+                                                                          context);
+                                                                    } catch (e) {
+                                                                      Navigator.of(
+                                                                              context)
+                                                                          .pushAndRemoveUntil(
+                                                                        MaterialPageRoute(
+                                                                          builder: (context) =>
+                                                                              const HomePage(),
+                                                                        ),
+                                                                        (route) =>
+                                                                            false,
+                                                                      );
+
+                                                                      catchError(
+                                                                        context,
+                                                                        e,
+                                                                      );
+                                                                    }
                                                                     print(
                                                                         checkVal);
                                                                     print(controller
                                                                         .text);
-                                                                    print(item
-                                                                        .salesman);
+                                                                    print(
+                                                                        '${item.salesman} - ${item.salesCode}');
                                                                   }
                                                                 },
                                                               ),
@@ -416,7 +471,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                 labelText: "Search..",
                                                 labelStyle: const TextStyle(
                                                   color: Color.fromARGB(
-                                                      255, 0, 0, 0),
+                                                      255, 255, 255, 255),
                                                 ),
                                                 fillColor: Colors.white,
                                                 focusedBorder:
@@ -965,52 +1020,6 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                                               ),
                                                                                             ),
                                                                                           ),
-                                                                                          // Visibility(
-                                                                                          //   visible: true,
-                                                                                          //   child: TextFormField(
-                                                                                          //     controller: checkControllers[currentIndex!],
-                                                                                          //     autocorrect: false,
-                                                                                          //     style: const TextStyle(color: Colors.white),
-                                                                                          //     textInputAction: TextInputAction.next,
-                                                                                          //     decoration: InputDecoration(
-                                                                                          //       hintText: 'Check',
-                                                                                          //       hintStyle: textStyleColorWhite,
-                                                                                          //       enabledBorder: const OutlineInputBorder(
-                                                                                          //         borderSide: BorderSide(
-                                                                                          //           color: Color.fromARGB(
-                                                                                          //             255,
-                                                                                          //             255,
-                                                                                          //             255,
-                                                                                          //             255,
-                                                                                          //           ),
-                                                                                          //         ),
-                                                                                          //       ),
-                                                                                          //     ),
-                                                                                          //   ),
-                                                                                          // ),
-                                                                                          // Visibility(
-                                                                                          //   visible: true,
-                                                                                          //   child: TextFormField(
-                                                                                          //     controller: prospectCodeControllers[currentIndex!],
-                                                                                          //     autocorrect: false,
-                                                                                          //     style: const TextStyle(color: Colors.white),
-                                                                                          //     textInputAction: TextInputAction.next,
-                                                                                          //     decoration: InputDecoration(
-                                                                                          //       hintText: 'Prospect Code',
-                                                                                          //       hintStyle: textStyleColorWhite,
-                                                                                          //       enabledBorder: const OutlineInputBorder(
-                                                                                          //         borderSide: BorderSide(
-                                                                                          //           color: Color.fromARGB(
-                                                                                          //             255,
-                                                                                          //             255,
-                                                                                          //             255,
-                                                                                          //             255,
-                                                                                          //           ),
-                                                                                          //         ),
-                                                                                          //       ),
-                                                                                          //     ),
-                                                                                          //   ),
-                                                                                          // ),
                                                                                           Padding(
                                                                                             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                                                                                             child: Align(
@@ -1150,6 +1159,26 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void notifUpdated(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        duration: Duration(milliseconds: 2000),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: ("Success Updated" == "Success Updated")
+            ? Color.fromARGB(
+                255,
+                1,
+                209,
+                29,
+              )
+            : Colors.red,
+        content: Text(("Success Updated" == "Success Updated")
+            ? "Send Berhasil"
+            : "Send Gagal"),
       ),
     );
   }

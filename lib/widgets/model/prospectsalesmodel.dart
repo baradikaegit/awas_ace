@@ -98,3 +98,55 @@ class ListProspectSales {
     return _data;
   }
 }
+
+//update send prospect
+class ListSendProspect {
+  ListSendProspect({
+    this.prospectCode,
+    this.salesCode,
+  });
+
+  late String? prospectCode;
+  late String? salesCode;
+
+  ListSendProspect.fromJson(Map<String, dynamic> djson) {
+    prospectCode = djson['prospectCode'];
+    salesCode = djson['salesCode'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['prospectCode'] = prospectCode;
+    _data['salesCode'] = salesCode;
+
+    return _data;
+  }
+}
+
+class SendProspectResponse {
+  SendProspectResponse({
+    this.statusCode,
+    this.statusMessage,
+    this.data,
+  });
+  late int? statusCode;
+  late String? statusMessage;
+  late ListSendProspect? data;
+
+  SendProspectResponse.fromJson(Map<String, dynamic> json) {
+    statusCode = (json['statusCode'] != null) ? json['statusCode'] : null;
+    statusMessage =
+        (json['statusMessage'] != null) ? json['statusMessage'] : null;
+    data = (json['data'] != null)
+        ? ListSendProspect.fromJson(json['data'][0])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['statusCode'] = statusCode;
+    _data['statusMessage'] = statusMessage;
+    _data['listSendProspect'] = data!.toJson();
+    return _data;
+  }
+}

@@ -31,6 +31,8 @@ abstract class IProspectRepository {
       String linkObj);
   Future<UpdateProspectResponse> updateNewProspectSales(
       ListProspectUpdateResponse updateProspect);
+  Future<SendProspectResponse> updateSendProspect(
+      ListSendProspect upSendProspect);
 }
 
 class ProspectRepositories implements IProspectRepository {
@@ -303,5 +305,35 @@ class ProspectRepositories implements IProspectRepository {
     var responseUpdateProspect =
         UpdateProspectResponse.fromJson(jsonObjectUpdateProspect);
     return responseUpdateProspect;
+  }
+
+  //update send prospect
+  @override
+  Future<SendProspectResponse> updateSendProspect(
+      ListSendProspect upSendProspect) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    final Map<String, String> headers = {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    };
+
+    var urlUpdateSendProspect = "${_host}SendProspect";
+    var body = jsonEncode(upSendProspect);
+
+    var resultUpdateSendProspect = await http.put(
+      Uri.parse(urlUpdateSendProspect),
+      body: body,
+      headers: headers,
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    final jsonObjectUpdateSendProspect =
+        json.decode(resultUpdateSendProspect.body);
+    var responseUpdateSendProspect =
+        SendProspectResponse.fromJson(jsonObjectUpdateSendProspect);
+    return responseUpdateSendProspect;
   }
 }

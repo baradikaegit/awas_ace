@@ -620,6 +620,8 @@ class _HotProspectTabState extends State<HotProspectTab> {
                                     padding: const EdgeInsets.fromLTRB(
                                         20, 0, 20, 130),
                                     child: SearchableList(
+                                      textStyle:
+                                          const TextStyle(color: Colors.white),
                                       initialList:
                                           dataGrafik.listProspectSales!,
                                       itemBuilder: (item) {
