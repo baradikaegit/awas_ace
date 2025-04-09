@@ -83,6 +83,7 @@ class _BodyRepairSlsPageState extends State<BodyRepairSlsPage> {
           ),
           child: Stack(
             children: [
+              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   final dataBodyRepair = ref.watch(bodyRepairSls);
@@ -150,8 +151,8 @@ class _BodyRepairSlsPageState extends State<BodyRepairSlsPage> {
                                                         color: const Color
                                                             .fromARGB(
                                                           167,
-                                                          36,
-                                                          80,
+                                                          15,
+                                                          70,
                                                           128,
                                                         ),
                                                       ),
@@ -357,7 +358,6 @@ class _BodyRepairSlsPageState extends State<BodyRepairSlsPage> {
                   );
                 },
               ),
-              const Watermark(),
             ],
           ),
         ),

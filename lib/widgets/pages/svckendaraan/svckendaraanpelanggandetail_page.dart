@@ -216,6 +216,7 @@ class _SvcKendaraanPelangganDetailPageState
           ),
           child: Stack(
             children: [
+              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   var linkObj = widget.linkObject.toString();
@@ -344,8 +345,8 @@ class _SvcKendaraanPelangganDetailPageState
                                                                   color: const Color
                                                                       .fromARGB(
                                                                     167,
-                                                                    36,
-                                                                    80,
+                                                                    15,
+                                                                    70,
                                                                     128,
                                                                   ),
                                                                 ),
@@ -509,8 +510,8 @@ class _SvcKendaraanPelangganDetailPageState
                                                                   color: const Color
                                                                       .fromARGB(
                                                                     167,
-                                                                    36,
-                                                                    80,
+                                                                    15,
+                                                                    70,
                                                                     128,
                                                                   ),
                                                                 ),
@@ -1332,7 +1333,6 @@ class _SvcKendaraanPelangganDetailPageState
                   );
                 },
               ),
-              const Watermark(),
             ],
           ),
         ),

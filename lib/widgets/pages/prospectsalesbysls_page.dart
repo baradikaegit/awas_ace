@@ -338,56 +338,6 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                       context);
                                                                 },
                                                               ),
-                                                              // Column(
-                                                              //   children: List.generate(
-                                                              //       prospectCodeControllers
-                                                              //           .length,
-                                                              //       (index) {
-                                                              //     if (checkControllers[
-                                                              //                 index]
-                                                              //             .text ==
-                                                              //         "1") {
-                                                              //       return Padding(
-                                                              //         padding: const EdgeInsets
-                                                              //             .symmetric(
-                                                              //             vertical:
-                                                              //                 4.0),
-                                                              //         child:
-                                                              //             Visibility(
-                                                              //           visible:
-                                                              //               false,
-                                                              //           child:
-                                                              //               TextFormField(
-                                                              //             controller:
-                                                              //                 prospectCodeControllers[index],
-                                                              //             autocorrect:
-                                                              //                 false,
-                                                              //             style:
-                                                              //                 const TextStyle(color: Colors.black),
-                                                              //             textInputAction:
-                                                              //                 TextInputAction.next,
-                                                              //             decoration:
-                                                              //                 InputDecoration(
-                                                              //               hintText:
-                                                              //                   'Prospect Code',
-                                                              //               hintStyle:
-                                                              //                   textStyleColorWhite,
-                                                              //               enabledBorder:
-                                                              //                   const OutlineInputBorder(
-                                                              //                 borderSide: BorderSide(
-                                                              //                   color: Color.fromARGB(255, 0, 0, 0),
-                                                              //                 ),
-                                                              //               ),
-                                                              //             ),
-                                                              //           ),
-                                                              //         ),
-                                                              //       );
-                                                              //     } else {
-                                                              //       return const SizedBox
-                                                              //           .shrink();
-                                                              //     }
-                                                              //   }),
-                                                              // ),
                                                             ],
                                                           ),
                                                         ),
@@ -422,7 +372,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                 labelText: "Search..",
                                                 labelStyle: const TextStyle(
                                                   color: Color.fromARGB(
-                                                      255, 255, 255, 255),
+                                                      255, 146, 138, 138),
                                                 ),
                                                 fillColor: Colors.white,
                                                 focusedBorder:

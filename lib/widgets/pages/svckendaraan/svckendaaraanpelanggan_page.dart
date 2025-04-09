@@ -84,6 +84,7 @@ class _SvcKendaraanPelangganPageState extends State<SvcKendaraanPelangganPage> {
           ),
           child: Stack(
             children: [
+              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   final dataSvcKendaraan = ref.watch(svckendaraanpelanggan);
@@ -150,11 +151,7 @@ class _SvcKendaraanPelangganPageState extends State<SvcKendaraanPelangganPage> {
                                                                 .circular(10.0),
                                                         color: const Color
                                                             .fromARGB(
-                                                          167,
-                                                          36,
-                                                          80,
-                                                          128,
-                                                        ),
+                                                            167, 15, 70, 128),
                                                       ),
                                                       child: Column(
                                                         children: [
@@ -339,7 +336,6 @@ class _SvcKendaraanPelangganPageState extends State<SvcKendaraanPelangganPage> {
                   );
                 },
               ),
-              const Watermark(),
             ],
           ),
         ),
