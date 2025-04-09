@@ -262,46 +262,14 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                   ],
                                                                 ),
                                                                 subtitle: Text(
-                                                                    item.prospectStatusName
-                                                                    //     Builder(
-                                                                    //   builder:
-                                                                    //       (context) {
-                                                                    //     if (checkControllers
-                                                                    //             .isEmpty ||
-                                                                    //         prospectCodeControllers
-                                                                    //             .isEmpty) {
-                                                                    //       return const Text(
-                                                                    //           "Pilih item terlebih dahulu");
-                                                                    //     }
-                                                                    //     List<String>
-                                                                    //         selectedProspectCodes =
-                                                                    //         [];
-                                                                    //     for (int i =
-                                                                    //             0;
-                                                                    //         i < checkControllers.length;
-                                                                    //         i++) {
-                                                                    //       if (checkControllers[i]
-                                                                    //               .text ==
-                                                                    //           "1") {
-                                                                    //         selectedProspectCodes
-                                                                    //             .add(prospectCodeControllers[i].text);
-                                                                    //       }
-                                                                    //     }
-                                                                    //     return selectedProspectCodes
-                                                                    //             .isNotEmpty
-                                                                    //         ? Text(
-                                                                    //             "1 ${selectedProspectCodes.join(', ')} ")
-                                                                    //         : const SizedBox();
-                                                                    //   },
-                                                                    ),
+                                                                  item.prospectStatusName,
+                                                                ),
                                                                 onTap:
                                                                     () async {
                                                                   List<TextEditingController>
                                                                       selectedProspects =
                                                                       [];
 
-                                                                  String?
-                                                                      checkVal;
                                                                   for (int i =
                                                                           0;
                                                                       i <
@@ -317,10 +285,6 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                         text: prospectCodeControllers[i]
                                                                             .text,
                                                                       ));
-
-                                                                      checkVal =
-                                                                          checkControllers[i]
-                                                                              .text;
                                                                     }
                                                                   }
 
@@ -335,32 +299,11 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                           item.salesCode,
                                                                     );
                                                                     try {
-                                                                      //var resp =
                                                                       await ref
                                                                           .read(
                                                                               updateSendProspectFormProvider)
                                                                           .onUpdateSendProspect(
                                                                               upSendProspect);
-
-                                                                      // if (resp.statusMessage ==
-                                                                      //     "Success Updated") {
-                                                                      //   ketController
-                                                                      //       .clear();
-                                                                      // }
-
-                                                                      Navigator.of(
-                                                                              context)
-                                                                          .pushAndRemoveUntil(
-                                                                        MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              const HomePage(),
-                                                                        ),
-                                                                        (route) =>
-                                                                            false,
-                                                                      );
-
-                                                                      notifUpdated(
-                                                                          context);
                                                                     } catch (e) {
                                                                       Navigator.of(
                                                                               context)
@@ -378,13 +321,21 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                         e,
                                                                       );
                                                                     }
-                                                                    print(
-                                                                        checkVal);
-                                                                    print(controller
-                                                                        .text);
-                                                                    print(
-                                                                        '${item.salesman} - ${item.salesCode}');
                                                                   }
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pushAndRemoveUntil(
+                                                                    MaterialPageRoute(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              const HomePage(),
+                                                                    ),
+                                                                    (route) =>
+                                                                        false,
+                                                                  );
+
+                                                                  notifUpdated(
+                                                                      context);
                                                                 },
                                                               ),
                                                               // Column(
@@ -588,10 +539,6 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                   itemCount: 1,
                                                   itemBuilder:
                                                       (context, index) {
-                                                    var linkPageObj = widget
-                                                        .linkPageObj
-                                                        .toString();
-
                                                     return Column(
                                                       children: [
                                                         ResponsiveRowColumnItem(
@@ -770,16 +717,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                             controller:
                                                                 _tabController,
                                                             children: <Widget>[
-                                                              HotProspectTab(
-                                                                linkPageObj:
-                                                                    linkPageObj,
-                                                              ),
-                                                              // MediumProspectTab(
-                                                              //   linkPageObj:
-                                                              //       linkPageObj,
-                                                              // ),
-                                                              Column(),
-
+                                                              //HOT
                                                               SingleChildScrollView(
                                                                 child: Column(
                                                                   children: [
@@ -935,7 +873,7 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                               return const SizedBox(); // Hindari error index out of range
                                                                             }
 
-                                                                            return item.type == 'List' && item.prospectStatusName == 'LOW'
+                                                                            return item.type == 'List' && item.prospectStatusName == 'HOT'
                                                                                 ? Padding(
                                                                                     padding: const EdgeInsets.fromLTRB(
                                                                                       0,
@@ -997,6 +935,694 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
 
                                                                                                           print("Checkbox diubah: ${dataProspectSales.listProspectSales![index].prospectCode} -> ${checkControllers[index].text}");
                                                                                                           print("currentIndex setelah checkbox diklik: $currentIndex");
+                                                                                                        } else {
+                                                                                                          print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
+                                                                                                        }
+                                                                                                      });
+                                                                                                      Future.delayed(const Duration(milliseconds: 50), () {
+                                                                                                        if (mounted) {
+                                                                                                          setState(() {});
+                                                                                                        }
+                                                                                                      });
+                                                                                                    },
+                                                                                                  ),
+                                                                                                  Expanded(
+                                                                                                    child: Text(
+                                                                                                      'Check to send',
+                                                                                                      style: textStyleColorWhiteList,
+                                                                                                      maxLines: 2,
+                                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                                                                            child: Align(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              child: Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                children: [
+                                                                                                  Text(
+                                                                                                    item.prospectCode,
+                                                                                                    style: textStyleColorWhiteBI,
+                                                                                                  ),
+                                                                                                  Container(
+                                                                                                    decoration: BoxDecoration(
+                                                                                                      color: Colors.grey,
+                                                                                                      border: Border.all(color: Colors.grey),
+                                                                                                      borderRadius: const BorderRadius.all(
+                                                                                                        Radius.circular(10.0),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                    child: Padding(
+                                                                                                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                                                                                      child: Text(
+                                                                                                        item.prospectDate,
+                                                                                                        style: textStyleColorWhiteList,
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                                                                            child: Align(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              child: Text(
+                                                                                                item.customerName,
+                                                                                                style: textStyleColorWhiteList,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                                                                            child: Align(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              child: Text(
+                                                                                                item.meetingPoint,
+                                                                                                style: textStyleColorWhiteList,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  )
+                                                                                : const Center();
+                                                                          },
+                                                                          searchTextController:
+                                                                              searchController,
+                                                                          filter:
+                                                                              (searchController) {
+                                                                            return dataProspectSales.listProspectSales!
+                                                                                .where(
+                                                                                  (element) =>
+                                                                                      element.customerName.toLowerCase().contains(
+                                                                                            searchController.toString().toLowerCase(),
+                                                                                          ) ||
+                                                                                      element.prospectCode.toLowerCase().contains(
+                                                                                            searchController.toString().toLowerCase(),
+                                                                                          ),
+                                                                                )
+                                                                                .toList();
+                                                                          },
+                                                                          keyboardAction:
+                                                                              TextInputAction.search,
+                                                                          emptyWidget:
+                                                                              const EmptyView(),
+                                                                          inputDecoration:
+                                                                              InputDecoration(
+                                                                            contentPadding:
+                                                                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                                                            labelText:
+                                                                                "Search..",
+                                                                            labelStyle:
+                                                                                const TextStyle(
+                                                                              color: Color.fromARGB(255, 102, 107, 94),
+                                                                            ),
+                                                                            fillColor:
+                                                                                Colors.white,
+                                                                            focusedBorder:
+                                                                                OutlineInputBorder(
+                                                                              gapPadding: 15.0,
+                                                                              borderSide: const BorderSide(
+                                                                                color: Color.fromARGB(255, 91, 97, 83),
+                                                                                width: 1.0,
+                                                                              ),
+                                                                              borderRadius: BorderRadius.circular(10.0),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              //MEDIUM
+                                                              SingleChildScrollView(
+                                                                child: Column(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .fromLTRB(
+                                                                        0,
+                                                                        0,
+                                                                        50,
+                                                                        0,
+                                                                      ),
+                                                                      child:
+                                                                          SfCircularChart(
+                                                                        tooltipBehavior:
+                                                                            TooltipBehavior(
+                                                                          enable:
+                                                                              true,
+                                                                        ),
+                                                                        annotations: [
+                                                                          CircularChartAnnotation(
+                                                                            widget:
+                                                                                Text(
+                                                                              textAlign: TextAlign.center,
+                                                                              "${dataProspectSales.listProspectSales![4].prospectStatusName} \nPROSPECT",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontSize: ResponsiveValue<double>(
+                                                                                  context,
+                                                                                  conditionalValues: [
+                                                                                    const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
+                                                                                    const Condition.largerThan(name: TABLET, value: 25.0, landscapeValue: 25.0, breakpoint: 800),
+                                                                                  ],
+                                                                                  defaultValue: 10.0,
+                                                                                ).value,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                        legend:
+                                                                            const Legend(
+                                                                          iconWidth:
+                                                                              25,
+                                                                          isVisible:
+                                                                              true,
+                                                                          width:
+                                                                              '300%',
+                                                                          itemPadding:
+                                                                              0,
+                                                                          position:
+                                                                              LegendPosition.right,
+                                                                          overflowMode:
+                                                                              LegendItemOverflowMode.scroll,
+                                                                          textStyle:
+                                                                              TextStyle(color: Colors.white),
+                                                                        ),
+                                                                        series: <CircularSeries>[
+                                                                          DoughnutSeries<
+                                                                              ChartData,
+                                                                              String>(
+                                                                            dataSource:
+                                                                                toDynamic(listProspectSalesRes[0].listProspectSales!),
+                                                                            legendIconType:
+                                                                                LegendIconType.rectangle,
+                                                                            xValueMapper: (ChartData data, _) =>
+                                                                                data.x,
+                                                                            yValueMapper: (ChartData data, _) =>
+                                                                                data.y,
+                                                                            pointColorMapper: (ChartData data, _) => data.x == 'Comunnity'
+                                                                                ? data.colorCommunity
+                                                                                : data.x == 'Walk In Customer'
+                                                                                    ? data.colorWalkIn
+                                                                                    : data.x == 'Mobile/canvasing'
+                                                                                        ? data.colorMobileCanvasing
+                                                                                        : data.x == 'Reference'
+                                                                                            ? data.colorReference
+                                                                                            : data.x == 'Moving Exhibition'
+                                                                                                ? data.colorMovingEx
+                                                                                                : data.x == 'Call In'
+                                                                                                    ? data.colorCallin
+                                                                                                    : data.x == 'Database'
+                                                                                                        ? data.colorDatabase
+                                                                                                        : data.x == 'Iklan & Media Sosial'
+                                                                                                            ? data.colorIklanMedia
+                                                                                                            : data.x == 'Repeat Order Retail'
+                                                                                                                ? data.colorRepeatOrderRetail
+                                                                                                                : data.colorRepeatOrderFleet,
+                                                                            innerRadius:
+                                                                                '60%',
+                                                                            radius:
+                                                                                '70%',
+                                                                            explode:
+                                                                                true,
+                                                                            explodeGesture:
+                                                                                ActivationMode.singleTap,
+                                                                            explodeOffset:
+                                                                                '5',
+                                                                            dataLabelSettings:
+                                                                                const DataLabelSettings(
+                                                                              showZeroValue: false,
+                                                                              isVisible: false,
+                                                                              labelAlignment: ChartDataLabelAlignment.middle,
+                                                                              overflowMode: OverflowMode.trim,
+                                                                              textStyle: TextStyle(color: Colors.white),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: MediaQuery.of(context)
+                                                                              .size
+                                                                              .height -
+                                                                          Scaffold.of(context)
+                                                                              .appBarMaxHeight! -
+                                                                          kToolbarHeight -
+                                                                          16,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .fromLTRB(
+                                                                            20,
+                                                                            0,
+                                                                            20,
+                                                                            130),
+                                                                        child:
+                                                                            SearchableList(
+                                                                          textStyle:
+                                                                              const TextStyle(color: Colors.white),
+                                                                          initialList:
+                                                                              dataProspectSales.listProspectSales!,
+                                                                          itemBuilder:
+                                                                              (item) {
+                                                                            if (dataProspectSales.listProspectSales == null ||
+                                                                                dataProspectSales.listProspectSales!.isEmpty) {
+                                                                              return const Center(
+                                                                                child: Text("Tidak ada data"),
+                                                                              );
+                                                                            }
+
+                                                                            int index =
+                                                                                dataProspectSales.listProspectSales!.indexWhere(
+                                                                              (element) => element.prospectCode == item.prospectCode,
+                                                                            );
+
+                                                                            if (index == -1 ||
+                                                                                index >= checkedItems.length ||
+                                                                                index >= checkControllers.length) {
+                                                                              return const SizedBox();
+                                                                            }
+
+                                                                            return item.type == 'List' && item.prospectStatusName == 'MEDIUM'
+                                                                                ? Padding(
+                                                                                    padding: const EdgeInsets.fromLTRB(
+                                                                                      0,
+                                                                                      10,
+                                                                                      0,
+                                                                                      10,
+                                                                                    ),
+                                                                                    child: Container(
+                                                                                      constraints: const BoxConstraints(
+                                                                                        minHeight: 160,
+                                                                                        minWidth: double.infinity,
+                                                                                      ),
+                                                                                      decoration: BoxDecoration(
+                                                                                        boxShadow: const [
+                                                                                          BoxShadow(
+                                                                                            color: Color.fromARGB(
+                                                                                              176,
+                                                                                              115,
+                                                                                              184,
+                                                                                              51,
+                                                                                            ),
+                                                                                            blurRadius: 3.0,
+                                                                                            offset: Offset(0, 0),
+                                                                                            spreadRadius: 1.1,
+                                                                                          ),
+                                                                                        ],
+                                                                                        border: Border.all(color: Colors.transparent, width: 2),
+                                                                                        borderRadius: BorderRadius.circular(10.0),
+                                                                                      ),
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                              0,
+                                                                                              0,
+                                                                                              10,
+                                                                                              0,
+                                                                                            ),
+                                                                                            child: Align(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              child: Row(
+                                                                                                children: <Widget>[
+                                                                                                  Checkbox(
+                                                                                                    activeColor: Colors.white,
+                                                                                                    checkColor: const Color.fromARGB(
+                                                                                                      176,
+                                                                                                      115,
+                                                                                                      184,
+                                                                                                      51,
+                                                                                                    ),
+                                                                                                    side: const BorderSide(color: Colors.white),
+                                                                                                    value: (index < checkedItems.length) ? checkedItems[index] : false,
+                                                                                                    onChanged: (bool? value) {
+                                                                                                      setState(() {
+                                                                                                        if (index < checkControllers.length && index < checkedItems.length) {
+                                                                                                          checkedItems[index] = value!;
+                                                                                                          checkControllers[index].text = value ? "1" : "0";
+                                                                                                          currentIndex = index;
+                                                                                                        } else {
+                                                                                                          print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
+                                                                                                        }
+                                                                                                      });
+                                                                                                      Future.delayed(const Duration(milliseconds: 50), () {
+                                                                                                        if (mounted) {
+                                                                                                          setState(() {});
+                                                                                                        }
+                                                                                                      });
+                                                                                                    },
+                                                                                                  ),
+                                                                                                  Expanded(
+                                                                                                    child: Text(
+                                                                                                      'Check to send',
+                                                                                                      style: textStyleColorWhiteList,
+                                                                                                      maxLines: 2,
+                                                                                                      overflow: TextOverflow.ellipsis,
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                                                                            child: Align(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              child: Row(
+                                                                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                                                                children: [
+                                                                                                  Text(
+                                                                                                    item.prospectCode,
+                                                                                                    style: textStyleColorWhiteBI,
+                                                                                                  ),
+                                                                                                  Container(
+                                                                                                    decoration: BoxDecoration(
+                                                                                                      color: Colors.grey,
+                                                                                                      border: Border.all(color: Colors.grey),
+                                                                                                      borderRadius: const BorderRadius.all(
+                                                                                                        Radius.circular(10.0),
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                    child: Padding(
+                                                                                                      padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                                                                                      child: Text(
+                                                                                                        item.prospectDate,
+                                                                                                        style: textStyleColorWhiteList,
+                                                                                                      ),
+                                                                                                    ),
+                                                                                                  ),
+                                                                                                ],
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                                                                            child: Align(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              child: Text(
+                                                                                                item.customerName,
+                                                                                                style: textStyleColorWhiteList,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                                                                                            child: Align(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              child: Text(
+                                                                                                item.meetingPoint,
+                                                                                                style: textStyleColorWhiteList,
+                                                                                              ),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  )
+                                                                                : const Center();
+                                                                          },
+                                                                          searchTextController:
+                                                                              searchController,
+                                                                          filter:
+                                                                              (searchController) {
+                                                                            return dataProspectSales.listProspectSales!
+                                                                                .where(
+                                                                                  (element) =>
+                                                                                      element.customerName.toLowerCase().contains(
+                                                                                            searchController.toString().toLowerCase(),
+                                                                                          ) ||
+                                                                                      element.prospectCode.toLowerCase().contains(
+                                                                                            searchController.toString().toLowerCase(),
+                                                                                          ),
+                                                                                )
+                                                                                .toList();
+                                                                          },
+                                                                          keyboardAction:
+                                                                              TextInputAction.search,
+                                                                          emptyWidget:
+                                                                              const EmptyView(),
+                                                                          inputDecoration:
+                                                                              InputDecoration(
+                                                                            contentPadding:
+                                                                                const EdgeInsets.symmetric(horizontal: 8.0),
+                                                                            labelText:
+                                                                                "Search..",
+                                                                            labelStyle:
+                                                                                const TextStyle(
+                                                                              color: Color.fromARGB(255, 102, 107, 94),
+                                                                            ),
+                                                                            fillColor:
+                                                                                Colors.white,
+                                                                            focusedBorder:
+                                                                                OutlineInputBorder(
+                                                                              gapPadding: 15.0,
+                                                                              borderSide: const BorderSide(
+                                                                                color: Color.fromARGB(255, 91, 97, 83),
+                                                                                width: 1.0,
+                                                                              ),
+                                                                              borderRadius: BorderRadius.circular(10.0),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    const SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ),
+                                                              //LOW
+                                                              SingleChildScrollView(
+                                                                child: Column(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets
+                                                                              .fromLTRB(
+                                                                        0,
+                                                                        0,
+                                                                        50,
+                                                                        0,
+                                                                      ),
+                                                                      child:
+                                                                          SfCircularChart(
+                                                                        tooltipBehavior:
+                                                                            TooltipBehavior(
+                                                                          enable:
+                                                                              true,
+                                                                        ),
+                                                                        annotations: [
+                                                                          CircularChartAnnotation(
+                                                                            widget:
+                                                                                Text(
+                                                                              textAlign: TextAlign.center,
+                                                                              "${dataProspectSales.listProspectSales![4].prospectStatusName} \nPROSPECT",
+                                                                              style: TextStyle(
+                                                                                color: Colors.white,
+                                                                                fontSize: ResponsiveValue<double>(
+                                                                                  context,
+                                                                                  conditionalValues: [
+                                                                                    const Condition.equals(name: TABLET, value: 12.0, landscapeValue: 12.0),
+                                                                                    const Condition.largerThan(name: TABLET, value: 25.0, landscapeValue: 25.0, breakpoint: 800),
+                                                                                  ],
+                                                                                  defaultValue: 10.0,
+                                                                                ).value,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                        legend:
+                                                                            const Legend(
+                                                                          iconWidth:
+                                                                              25,
+                                                                          isVisible:
+                                                                              true,
+                                                                          width:
+                                                                              '300%',
+                                                                          itemPadding:
+                                                                              0,
+                                                                          position:
+                                                                              LegendPosition.right,
+                                                                          overflowMode:
+                                                                              LegendItemOverflowMode.scroll,
+                                                                          textStyle:
+                                                                              TextStyle(color: Colors.white),
+                                                                        ),
+                                                                        series: <CircularSeries>[
+                                                                          DoughnutSeries<
+                                                                              ChartData,
+                                                                              String>(
+                                                                            dataSource:
+                                                                                toDynamic(listProspectSalesRes[0].listProspectSales!),
+                                                                            legendIconType:
+                                                                                LegendIconType.rectangle,
+                                                                            xValueMapper: (ChartData data, _) =>
+                                                                                data.x,
+                                                                            yValueMapper: (ChartData data, _) =>
+                                                                                data.y,
+                                                                            pointColorMapper: (ChartData data, _) => data.x == 'Comunnity'
+                                                                                ? data.colorCommunity
+                                                                                : data.x == 'Walk In Customer'
+                                                                                    ? data.colorWalkIn
+                                                                                    : data.x == 'Mobile/canvasing'
+                                                                                        ? data.colorMobileCanvasing
+                                                                                        : data.x == 'Reference'
+                                                                                            ? data.colorReference
+                                                                                            : data.x == 'Moving Exhibition'
+                                                                                                ? data.colorMovingEx
+                                                                                                : data.x == 'Call In'
+                                                                                                    ? data.colorCallin
+                                                                                                    : data.x == 'Database'
+                                                                                                        ? data.colorDatabase
+                                                                                                        : data.x == 'Iklan & Media Sosial'
+                                                                                                            ? data.colorIklanMedia
+                                                                                                            : data.x == 'Repeat Order Retail'
+                                                                                                                ? data.colorRepeatOrderRetail
+                                                                                                                : data.colorRepeatOrderFleet,
+                                                                            innerRadius:
+                                                                                '60%',
+                                                                            radius:
+                                                                                '70%',
+                                                                            explode:
+                                                                                true,
+                                                                            explodeGesture:
+                                                                                ActivationMode.singleTap,
+                                                                            explodeOffset:
+                                                                                '5',
+                                                                            dataLabelSettings:
+                                                                                const DataLabelSettings(
+                                                                              showZeroValue: false,
+                                                                              isVisible: false,
+                                                                              labelAlignment: ChartDataLabelAlignment.middle,
+                                                                              overflowMode: OverflowMode.trim,
+                                                                              textStyle: TextStyle(color: Colors.white),
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height: MediaQuery.of(context)
+                                                                              .size
+                                                                              .height -
+                                                                          Scaffold.of(context)
+                                                                              .appBarMaxHeight! -
+                                                                          kToolbarHeight -
+                                                                          16,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .fromLTRB(
+                                                                            20,
+                                                                            0,
+                                                                            20,
+                                                                            130),
+                                                                        child:
+                                                                            SearchableList(
+                                                                          textStyle:
+                                                                              const TextStyle(color: Colors.white),
+                                                                          initialList:
+                                                                              dataProspectSales.listProspectSales!,
+                                                                          itemBuilder:
+                                                                              (item) {
+                                                                            if (dataProspectSales.listProspectSales == null ||
+                                                                                dataProspectSales.listProspectSales!.isEmpty) {
+                                                                              return const Center(
+                                                                                child: Text("Tidak ada data"),
+                                                                              );
+                                                                            }
+
+                                                                            int index =
+                                                                                dataProspectSales.listProspectSales!.indexWhere(
+                                                                              (element) => element.prospectCode == item.prospectCode,
+                                                                            );
+
+                                                                            if (index == -1 ||
+                                                                                index >= checkedItems.length ||
+                                                                                index >= checkControllers.length) {
+                                                                              return const SizedBox();
+                                                                            }
+
+                                                                            return item.type == 'List' && item.prospectStatusName == 'LOW'
+                                                                                ? Padding(
+                                                                                    padding: const EdgeInsets.fromLTRB(
+                                                                                      0,
+                                                                                      10,
+                                                                                      0,
+                                                                                      10,
+                                                                                    ),
+                                                                                    child: Container(
+                                                                                      constraints: const BoxConstraints(
+                                                                                        minHeight: 160,
+                                                                                        minWidth: double.infinity,
+                                                                                      ),
+                                                                                      decoration: BoxDecoration(
+                                                                                        boxShadow: const [
+                                                                                          BoxShadow(
+                                                                                            color: Color.fromARGB(
+                                                                                              176,
+                                                                                              115,
+                                                                                              184,
+                                                                                              51,
+                                                                                            ),
+                                                                                            blurRadius: 3.0,
+                                                                                            offset: Offset(0, 0),
+                                                                                            spreadRadius: 1.1,
+                                                                                          ),
+                                                                                        ],
+                                                                                        border: Border.all(color: Colors.transparent, width: 2),
+                                                                                        borderRadius: BorderRadius.circular(10.0),
+                                                                                      ),
+                                                                                      child: Column(
+                                                                                        children: [
+                                                                                          Padding(
+                                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                              0,
+                                                                                              0,
+                                                                                              10,
+                                                                                              0,
+                                                                                            ),
+                                                                                            child: Align(
+                                                                                              alignment: Alignment.centerLeft,
+                                                                                              child: Row(
+                                                                                                children: <Widget>[
+                                                                                                  Checkbox(
+                                                                                                    activeColor: Colors.white,
+                                                                                                    checkColor: const Color.fromARGB(
+                                                                                                      176,
+                                                                                                      115,
+                                                                                                      184,
+                                                                                                      51,
+                                                                                                    ),
+                                                                                                    side: const BorderSide(color: Colors.white),
+                                                                                                    value: (index < checkedItems.length) ? checkedItems[index] : false,
+                                                                                                    onChanged: (bool? value) {
+                                                                                                      setState(() {
+                                                                                                        if (index < checkControllers.length && index < checkedItems.length) {
+                                                                                                          checkedItems[index] = value!;
+                                                                                                          checkControllers[index].text = value ? "1" : "0";
+                                                                                                          currentIndex = index;
                                                                                                         } else {
                                                                                                           print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
                                                                                                         }
@@ -1224,1755 +1850,6 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
           ),
         ),
       ),
-    );
-  }
-}
-
-class HotProspectTab extends StatefulWidget {
-  final Object? linkPageObj;
-  const HotProspectTab({super.key, required this.linkPageObj});
-
-  @override
-  State<HotProspectTab> createState() => _HotProspectTabState();
-}
-
-class _HotProspectTabState extends State<HotProspectTab> {
-  List<ProspectSalesListResponse> listProspectSalesRes = [];
-  TextEditingController searchController = TextEditingController();
-
-  List<TextEditingController> prospectCodeControllers = [];
-  List<bool> checkedItems = [];
-  List<TextEditingController> checkControllers = [];
-
-  bool checkQ1 = false;
-
-  String? roles;
-
-  @override
-  void initState() {
-    super.initState();
-    loadSharedPreference();
-  }
-
-  loadSharedPreference() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      roles = prefs.getString('Roles');
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var textStyleColorWhiteBI = TextStyle(
-      color: const Color.fromARGB(
-        255,
-        255,
-        255,
-        255,
-      ),
-      fontSize: ResponsiveValue<double>(
-        context,
-        conditionalValues: [
-          const Condition.equals(
-              name: TABLET, value: 17.5, landscapeValue: 17.5),
-          const Condition.largerThan(
-              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
-        ],
-        defaultValue: 10.5,
-      ).value,
-      fontWeight: FontWeight.bold,
-      fontStyle: FontStyle.italic,
-    );
-
-    var textStyleColorWhite = TextStyle(
-      color: const Color.fromARGB(
-        255,
-        255,
-        255,
-        255,
-      ),
-      fontSize: ResponsiveValue<double>(
-        context,
-        conditionalValues: [
-          const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
-          const Condition.largerThan(
-              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
-        ],
-        defaultValue: 10.5,
-      ).value,
-    );
-    return Consumer(
-      builder: (context, ref, child) {
-        var linkPageObj = widget.linkPageObj.toString();
-
-        final rptProspectSalesGrafik =
-            ref.watch(prospectSalesBySls(linkPageObj));
-
-        return Stack(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: rptProspectSalesGrafik.when(
-                      data: (dataGrafik) {
-                        listProspectSalesRes.clear();
-                        listProspectSalesRes.add(dataGrafik);
-                        final listProspect = dataGrafik.listProspectSales ?? [];
-
-                        // Jika checkedItems masih kosong atau ukurannya tidak sesuai, perbarui ukurannya
-                        if (checkedItems.isEmpty ||
-                            checkedItems.length != listProspect.length) {
-                          checkedItems =
-                              List<bool>.filled(listProspect.length, false);
-                          checkControllers = List.generate(listProspect.length,
-                              (index) => TextEditingController(text: "0"));
-                        }
-
-                        if (prospectCodeControllers.isEmpty ||
-                            prospectCodeControllers.length !=
-                                listProspect.length) {
-                          prospectCodeControllers = List.generate(
-                            listProspect.length,
-                            (index) => TextEditingController(
-                                text: listProspect[index].prospectCode),
-                          );
-                        }
-
-                        return ListView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    0,
-                                    0,
-                                    50,
-                                    0,
-                                  ),
-                                  child: SfCircularChart(
-                                    tooltipBehavior: TooltipBehavior(
-                                      enable: true,
-                                    ),
-                                    annotations: [
-                                      CircularChartAnnotation(
-                                        widget: Text(
-                                          textAlign: TextAlign.center,
-                                          "${dataGrafik.listProspectSales![4].prospectStatusName} \nPROSPECT",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ResponsiveValue<double>(
-                                              context,
-                                              conditionalValues: [
-                                                const Condition.equals(
-                                                    name: TABLET,
-                                                    value: 12.0,
-                                                    landscapeValue: 12.0),
-                                                const Condition.largerThan(
-                                                    name: TABLET,
-                                                    value: 25.0,
-                                                    landscapeValue: 25.0,
-                                                    breakpoint: 800),
-                                              ],
-                                              defaultValue: 10.0,
-                                            ).value,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                    legend: const Legend(
-                                      iconWidth: 25,
-                                      isVisible: true,
-                                      width: '300%',
-                                      itemPadding: 0,
-                                      position: LegendPosition.right,
-                                      overflowMode:
-                                          LegendItemOverflowMode.scroll,
-                                      textStyle: TextStyle(color: Colors.white),
-                                    ),
-                                    series: <CircularSeries>[
-                                      DoughnutSeries<ChartData, String>(
-                                        dataSource: toDynamic(
-                                            listProspectSalesRes[0]
-                                                .listProspectSales!),
-                                        legendIconType:
-                                            LegendIconType.rectangle,
-                                        xValueMapper: (ChartData data, _) =>
-                                            data.x,
-                                        yValueMapper: (ChartData data, _) =>
-                                            data.y,
-                                        pointColorMapper: (ChartData data, _) => data
-                                                    .x ==
-                                                'Comunnity'
-                                            ? data.colorCommunity
-                                            : data.x == 'Walk In Customer'
-                                                ? data.colorWalkIn
-                                                : data.x == 'Mobile/canvasing'
-                                                    ? data.colorMobileCanvasing
-                                                    : data.x == 'Reference'
-                                                        ? data.colorReference
-                                                        : data.x ==
-                                                                'Moving Exhibition'
-                                                            ? data.colorMovingEx
-                                                            : data.x ==
-                                                                    'Call In'
-                                                                ? data
-                                                                    .colorCallin
-                                                                : data.x ==
-                                                                        'Database'
-                                                                    ? data
-                                                                        .colorDatabase
-                                                                    : data.x ==
-                                                                            'Iklan & Media Sosial'
-                                                                        ? data
-                                                                            .colorIklanMedia
-                                                                        : data.x ==
-                                                                                'Repeat Order Retail'
-                                                                            ? data.colorRepeatOrderRetail
-                                                                            : data.colorRepeatOrderFleet,
-                                        innerRadius: '60%',
-                                        radius: '70%',
-                                        explode: true,
-                                        explodeGesture:
-                                            ActivationMode.singleTap,
-                                        explodeOffset: '5',
-                                        dataLabelSettings:
-                                            const DataLabelSettings(
-                                          showZeroValue: false,
-                                          isVisible: false,
-                                          labelAlignment:
-                                              ChartDataLabelAlignment.middle,
-                                          overflowMode: OverflowMode.trim,
-                                          textStyle:
-                                              TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height -
-                                      Scaffold.of(context).appBarMaxHeight! -
-                                      kToolbarHeight -
-                                      16,
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20, 0, 20, 130),
-                                    child: SearchableList(
-                                      initialList:
-                                          dataGrafik.listProspectSales!,
-                                      itemBuilder: (item) {
-                                        int currentIndex = dataGrafik
-                                            .listProspectSales!
-                                            .indexOf(item);
-                                        return item.type == 'List' &&
-                                                item.prospectStatusName == 'HOT'
-                                            ? Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                  0,
-                                                  10,
-                                                  0,
-                                                  10,
-                                                ),
-                                                child: Container(
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                    minHeight: 110,
-                                                    minWidth: double.infinity,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: const [
-                                                      BoxShadow(
-                                                        color: Color.fromARGB(
-                                                            176, 115, 184, 51),
-                                                        blurRadius: 3.0,
-                                                        offset: Offset(0, 0),
-                                                        spreadRadius: 1.1,
-                                                      ),
-                                                    ],
-                                                    border: Border.all(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 2),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                          0,
-                                                          0,
-                                                          10,
-                                                          0,
-                                                        ),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Checkbox(
-                                                                activeColor:
-                                                                    Colors
-                                                                        .white,
-                                                                checkColor:
-                                                                    const Color
-                                                                        .fromARGB(
-                                                                  176,
-                                                                  115,
-                                                                  184,
-                                                                  51,
-                                                                ),
-                                                                side: const BorderSide(
-                                                                    color: Colors
-                                                                        .white),
-                                                                value: checkedItems[
-                                                                    currentIndex],
-                                                                onChanged:
-                                                                    (bool?
-                                                                        value) {
-                                                                  setState(() {
-                                                                    checkedItems[
-                                                                            currentIndex] =
-                                                                        value!;
-
-                                                                    checkControllers[currentIndex]
-                                                                            .text =
-                                                                        value
-                                                                            ? "1"
-                                                                            : "0";
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Expanded(
-                                                                child: Text(
-                                                                  'Check to send',
-                                                                  style:
-                                                                      textStyleColorWhite,
-                                                                  maxLines: 2,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Visibility(
-                                                        visible: true,
-                                                        child: TextFormField(
-                                                          controller:
-                                                              checkControllers[
-                                                                  currentIndex],
-                                                          autocorrect: false,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .next,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText: 'Check',
-                                                            hintStyle:
-                                                                textStyleColorWhite,
-                                                            enabledBorder:
-                                                                const OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Visibility(
-                                                        visible: true,
-                                                        child: TextFormField(
-                                                          controller:
-                                                              prospectCodeControllers[
-                                                                  currentIndex],
-                                                          autocorrect: false,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .next,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                'Prospect Code',
-                                                            hintStyle:
-                                                                textStyleColorWhite,
-                                                            enabledBorder:
-                                                                const OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                item.prospectCode,
-                                                                style:
-                                                                    textStyleColorWhiteBI,
-                                                              ),
-                                                              Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  border: Border.all(
-                                                                      color: Colors
-                                                                          .grey),
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius.circular(
-                                                                        10.0),
-                                                                  ),
-                                                                ),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .fromLTRB(
-                                                                          5,
-                                                                          0,
-                                                                          5,
-                                                                          0),
-                                                                  child: Text(
-                                                                    item.prospectDate,
-                                                                    style:
-                                                                        textStyleColorWhite,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            item.customerName,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            item.meetingPoint,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            : const Center();
-                                      },
-                                      searchTextController: searchController,
-                                      filter: (searchController) {
-                                        return dataGrafik.listProspectSales!
-                                            .where(
-                                              (element) =>
-                                                  element.salesman
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ) ||
-                                                  element.prospectStatusName
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ),
-                                            )
-                                            .toList();
-                                      },
-                                      keyboardAction: TextInputAction.search,
-                                      emptyWidget: const EmptyView(),
-                                      inputDecoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                        labelText: "Search..",
-                                        labelStyle: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 102, 107, 94),
-                                        ),
-                                        fillColor: Colors.white,
-                                        focusedBorder: OutlineInputBorder(
-                                          gapPadding: 15.0,
-                                          borderSide: const BorderSide(
-                                            color:
-                                                Color.fromARGB(255, 91, 97, 83),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      error: (err, stack) => Text('Error $err'),
-                      loading: () => const Center(
-                        child: Column(
-                          children: [loadingAnimation()],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class MediumProspectTab extends StatefulWidget {
-  final Object? linkPageObj;
-  const MediumProspectTab({super.key, required this.linkPageObj});
-
-  @override
-  State<MediumProspectTab> createState() => _MediumProspectTabState();
-}
-
-class _MediumProspectTabState extends State<MediumProspectTab> {
-  List<ProspectSalesListResponse> listProspectSalesRes = [];
-  TextEditingController searchController = TextEditingController();
-
-  List<TextEditingController> prospectCodeControllers = [];
-  List<bool> checkedItems = [];
-  List<TextEditingController> checkControllers = [];
-
-  bool checkQ1 = false;
-
-  String? roles;
-
-  @override
-  void initState() {
-    super.initState();
-    loadSharedPreference();
-  }
-
-  loadSharedPreference() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      roles = prefs.getString('Roles');
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var textStyleColorWhiteBI = TextStyle(
-      color: const Color.fromARGB(
-        255,
-        255,
-        255,
-        255,
-      ),
-      fontSize: ResponsiveValue<double>(
-        context,
-        conditionalValues: [
-          const Condition.equals(
-              name: TABLET, value: 17.5, landscapeValue: 17.5),
-          const Condition.largerThan(
-              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
-        ],
-        defaultValue: 10.5,
-      ).value,
-      fontWeight: FontWeight.bold,
-      fontStyle: FontStyle.italic,
-    );
-
-    var textStyleColorWhite = TextStyle(
-      color: const Color.fromARGB(
-        255,
-        255,
-        255,
-        255,
-      ),
-      fontSize: ResponsiveValue<double>(
-        context,
-        conditionalValues: [
-          const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
-          const Condition.largerThan(
-              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
-        ],
-        defaultValue: 10.5,
-      ).value,
-    );
-    return Consumer(
-      builder: (context, ref, child) {
-        var linkPageObj = widget.linkPageObj.toString();
-        final rptProspectSalesGrafik =
-            ref.watch(prospectSalesBySls(linkPageObj));
-
-        return Stack(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: rptProspectSalesGrafik.when(
-                      data: (dataGrafik) {
-                        listProspectSalesRes.clear();
-                        listProspectSalesRes.add(dataGrafik);
-
-                        final listProspect = dataGrafik.listProspectSales ?? [];
-
-                        // Jika checkedItems masih kosong atau ukurannya tidak sesuai, perbarui ukurannya
-                        if (checkedItems.isEmpty ||
-                            checkedItems.length != listProspect.length) {
-                          checkedItems =
-                              List<bool>.filled(listProspect.length, false);
-                          checkControllers = List.generate(listProspect.length,
-                              (index) => TextEditingController(text: "0"));
-                        }
-
-                        if (prospectCodeControllers.isEmpty ||
-                            prospectCodeControllers.length !=
-                                listProspect.length) {
-                          prospectCodeControllers = List.generate(
-                            listProspect.length,
-                            (index) => TextEditingController(
-                                text: listProspect[index].prospectCode),
-                          );
-                        }
-
-                        return ListView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    0,
-                                    0,
-                                    50,
-                                    0,
-                                  ),
-                                  child: SfCircularChart(
-                                    tooltipBehavior: TooltipBehavior(
-                                      enable: true,
-                                    ),
-                                    annotations: [
-                                      CircularChartAnnotation(
-                                        widget: Text(
-                                          textAlign: TextAlign.center,
-                                          "${dataGrafik.listProspectSales![4].prospectStatusName} \nPROSPECT",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ResponsiveValue<double>(
-                                              context,
-                                              conditionalValues: [
-                                                const Condition.equals(
-                                                    name: TABLET,
-                                                    value: 12.0,
-                                                    landscapeValue: 12.0),
-                                                const Condition.largerThan(
-                                                    name: TABLET,
-                                                    value: 25.0,
-                                                    landscapeValue: 25.0,
-                                                    breakpoint: 800),
-                                              ],
-                                              defaultValue: 10.0,
-                                            ).value,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                    legend: const Legend(
-                                      iconWidth: 25,
-                                      isVisible: true,
-                                      width: '300%',
-                                      itemPadding: 0,
-                                      position: LegendPosition.right,
-                                      overflowMode:
-                                          LegendItemOverflowMode.scroll,
-                                      textStyle: TextStyle(color: Colors.white),
-                                    ),
-                                    series: <CircularSeries>[
-                                      DoughnutSeries<ChartData, String>(
-                                        dataSource: toDynamic(
-                                            listProspectSalesRes[0]
-                                                .listProspectSales!),
-                                        legendIconType:
-                                            LegendIconType.rectangle,
-                                        xValueMapper: (ChartData data, _) =>
-                                            data.x,
-                                        yValueMapper: (ChartData data, _) =>
-                                            data.y,
-                                        pointColorMapper: (ChartData data, _) => data
-                                                    .x ==
-                                                'Comunnity'
-                                            ? data.colorCommunity
-                                            : data.x == 'Walk In Customer'
-                                                ? data.colorWalkIn
-                                                : data.x == 'Mobile/canvasing'
-                                                    ? data.colorMobileCanvasing
-                                                    : data.x == 'Reference'
-                                                        ? data.colorReference
-                                                        : data.x ==
-                                                                'Moving Exhibition'
-                                                            ? data.colorMovingEx
-                                                            : data.x ==
-                                                                    'Call In'
-                                                                ? data
-                                                                    .colorCallin
-                                                                : data.x ==
-                                                                        'Database'
-                                                                    ? data
-                                                                        .colorDatabase
-                                                                    : data.x ==
-                                                                            'Iklan & Media Sosial'
-                                                                        ? data
-                                                                            .colorIklanMedia
-                                                                        : data.x ==
-                                                                                'Repeat Order Retail'
-                                                                            ? data.colorRepeatOrderRetail
-                                                                            : data.colorRepeatOrderFleet,
-                                        innerRadius: '60%',
-                                        radius: '70%',
-                                        explode: true,
-                                        explodeGesture:
-                                            ActivationMode.singleTap,
-                                        explodeOffset: '5',
-                                        dataLabelSettings:
-                                            const DataLabelSettings(
-                                          showZeroValue: false,
-                                          isVisible: false,
-                                          labelAlignment:
-                                              ChartDataLabelAlignment.middle,
-                                          overflowMode: OverflowMode.trim,
-                                          textStyle:
-                                              TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height -
-                                      Scaffold.of(context).appBarMaxHeight! -
-                                      kToolbarHeight -
-                                      16,
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20, 0, 20, 130),
-                                    child: SearchableList(
-                                      initialList:
-                                          dataGrafik.listProspectSales!,
-                                      itemBuilder: (item) {
-                                        int currentIndex = dataGrafik
-                                            .listProspectSales!
-                                            .indexOf(item);
-                                        return item.type == 'List' &&
-                                                item.prospectStatusName ==
-                                                    'MEDIUM'
-                                            ? Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                  0,
-                                                  10,
-                                                  0,
-                                                  10,
-                                                ),
-                                                child: Container(
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                    minHeight: 110,
-                                                    minWidth: double.infinity,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: const [
-                                                      BoxShadow(
-                                                        color: Color.fromARGB(
-                                                            176, 115, 184, 51),
-                                                        blurRadius: 3.0,
-                                                        offset: Offset(0, 0),
-                                                        spreadRadius: 1.1,
-                                                      ),
-                                                    ],
-                                                    border: Border.all(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 2),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                    // color: const Color.fromARGB(
-                                                    //     176, 130, 131, 128),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                          0,
-                                                          0,
-                                                          10,
-                                                          0,
-                                                        ),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Checkbox(
-                                                                activeColor:
-                                                                    Colors
-                                                                        .white,
-                                                                checkColor:
-                                                                    const Color
-                                                                        .fromARGB(
-                                                                  176,
-                                                                  115,
-                                                                  184,
-                                                                  51,
-                                                                ),
-                                                                side: const BorderSide(
-                                                                    color: Colors
-                                                                        .white),
-                                                                value: checkedItems[
-                                                                    currentIndex],
-                                                                onChanged:
-                                                                    (bool?
-                                                                        value) {
-                                                                  setState(() {
-                                                                    checkedItems[
-                                                                            currentIndex] =
-                                                                        value!;
-
-                                                                    checkControllers[currentIndex]
-                                                                            .text =
-                                                                        value
-                                                                            ? "1"
-                                                                            : "0";
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Expanded(
-                                                                child: Text(
-                                                                  'Check to send',
-                                                                  style:
-                                                                      textStyleColorWhite,
-                                                                  maxLines: 2,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Visibility(
-                                                        visible: true,
-                                                        child: TextFormField(
-                                                          controller:
-                                                              checkControllers[
-                                                                  currentIndex],
-                                                          autocorrect: false,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .next,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText: 'Check',
-                                                            hintStyle:
-                                                                textStyleColorWhite,
-                                                            enabledBorder:
-                                                                const OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Visibility(
-                                                        visible: true,
-                                                        child: TextFormField(
-                                                          controller:
-                                                              prospectCodeControllers[
-                                                                  currentIndex],
-                                                          autocorrect: false,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .next,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                'Prospect Code',
-                                                            hintStyle:
-                                                                textStyleColorWhite,
-                                                            enabledBorder:
-                                                                const OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                item.prospectCode,
-                                                                style:
-                                                                    textStyleColorWhiteBI,
-                                                              ),
-                                                              Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  border: Border.all(
-                                                                      color: Colors
-                                                                          .grey),
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius.circular(
-                                                                        10.0),
-                                                                  ),
-                                                                ),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .fromLTRB(
-                                                                          5,
-                                                                          0,
-                                                                          5,
-                                                                          0),
-                                                                  child: Text(
-                                                                    item.prospectDate,
-                                                                    style:
-                                                                        textStyleColorWhite,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            item.customerName,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            item.meetingPoint,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            : const Center();
-                                      },
-                                      searchTextController: searchController,
-                                      filter: (searchController) {
-                                        return dataGrafik.listProspectSales!
-                                            .where(
-                                              (element) =>
-                                                  element.customerName
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ) ||
-                                                  element.prospectCode
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ),
-                                            )
-                                            .toList();
-                                      },
-                                      keyboardAction: TextInputAction.search,
-                                      emptyWidget: const EmptyView(),
-                                      inputDecoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                        labelText: "Search..",
-                                        labelStyle: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 102, 107, 94),
-                                        ),
-                                        fillColor: Colors.white,
-                                        focusedBorder: OutlineInputBorder(
-                                          gapPadding: 15.0,
-                                          borderSide: const BorderSide(
-                                            color:
-                                                Color.fromARGB(255, 91, 97, 83),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      error: (err, stack) => Text('Error $err'),
-                      loading: () => const Center(
-                        child: Column(
-                          children: [loadingAnimation()],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-class LowProspectTab extends StatefulWidget {
-  final Object? linkPageObj;
-  final List<TextEditingController> checkControllers; // Menerima dari parent
-
-  const LowProspectTab(
-      {super.key, required this.linkPageObj, required this.checkControllers});
-
-  @override
-  State<LowProspectTab> createState() => _LowProspectTabState();
-}
-
-class _LowProspectTabState extends State<LowProspectTab> {
-  List<ProspectSalesListResponse> listProspectSalesRes = [];
-  TextEditingController searchController = TextEditingController();
-
-  List<TextEditingController> prospectCodeControllers = [];
-  List<bool> checkedItems = [];
-  List<TextEditingController> checkControllers = [];
-
-  List<ListProspectSales> selectedProspects = [];
-
-  bool checkQ1 = false;
-
-  String? roles;
-
-  @override
-  void initState() {
-    super.initState();
-    // checkController.text = '0';
-    loadSharedPreference();
-  }
-
-  loadSharedPreference() async {
-    final prefs = await SharedPreferences.getInstance();
-    setState(() {
-      roles = prefs.getString('Roles');
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    var textStyleColorWhiteBI = TextStyle(
-      color: const Color.fromARGB(
-        255,
-        255,
-        255,
-        255,
-      ),
-      fontSize: ResponsiveValue<double>(
-        context,
-        conditionalValues: [
-          const Condition.equals(
-              name: TABLET, value: 17.5, landscapeValue: 17.5),
-          const Condition.largerThan(
-              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
-        ],
-        defaultValue: 10.5,
-      ).value,
-      fontWeight: FontWeight.bold,
-      fontStyle: FontStyle.italic,
-    );
-
-    var textStyleColorWhite = TextStyle(
-      color: const Color.fromARGB(
-        255,
-        255,
-        255,
-        255,
-      ),
-      fontSize: ResponsiveValue<double>(
-        context,
-        conditionalValues: [
-          const Condition.equals(
-              name: TABLET, value: 12.5, landscapeValue: 12.5),
-          const Condition.largerThan(
-              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
-        ],
-        defaultValue: 10.5,
-      ).value,
-    );
-    return Consumer(
-      builder: (context, ref, child) {
-        var linkPageObj = widget.linkPageObj.toString();
-
-        final rptProspectSalesGrafik =
-            ref.watch(prospectSalesBySls(linkPageObj));
-        return Stack(
-          children: [
-            Center(
-              child: Column(
-                children: [
-                  Expanded(
-                    child: rptProspectSalesGrafik.when(
-                      data: (dataGrafik) {
-                        listProspectSalesRes.clear();
-                        listProspectSalesRes.add(dataGrafik);
-
-                        final listProspect = dataGrafik.listProspectSales ?? [];
-
-                        // Jika checkedItems masih kosong atau ukurannya tidak sesuai, perbarui ukurannya
-                        if (checkedItems.isEmpty ||
-                            checkedItems.length != listProspect.length) {
-                          checkedItems =
-                              List<bool>.filled(listProspect.length, false);
-                          checkControllers = List.generate(listProspect.length,
-                              (index) => TextEditingController(text: "0"));
-                        }
-
-                        if (prospectCodeControllers.isEmpty ||
-                            prospectCodeControllers.length !=
-                                listProspect.length) {
-                          prospectCodeControllers = List.generate(
-                            listProspect.length,
-                            (index) => TextEditingController(
-                                text: listProspect[index].prospectCode),
-                          );
-                        }
-
-                        return ListView.builder(
-                          physics: const AlwaysScrollableScrollPhysics(),
-                          itemCount: 1,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(
-                                    0,
-                                    0,
-                                    50,
-                                    0,
-                                  ),
-                                  child: SfCircularChart(
-                                    tooltipBehavior: TooltipBehavior(
-                                      enable: true,
-                                    ),
-                                    annotations: [
-                                      CircularChartAnnotation(
-                                        widget: Text(
-                                          textAlign: TextAlign.center,
-                                          "${dataGrafik.listProspectSales![4].prospectStatusName} \nPROSPECT",
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: ResponsiveValue<double>(
-                                              context,
-                                              conditionalValues: [
-                                                const Condition.equals(
-                                                    name: TABLET,
-                                                    value: 12.0,
-                                                    landscapeValue: 12.0),
-                                                const Condition.largerThan(
-                                                    name: TABLET,
-                                                    value: 25.0,
-                                                    landscapeValue: 25.0,
-                                                    breakpoint: 800),
-                                              ],
-                                              defaultValue: 10.0,
-                                            ).value,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                    legend: const Legend(
-                                      iconWidth: 25,
-                                      isVisible: true,
-                                      width: '300%',
-                                      itemPadding: 0,
-                                      position: LegendPosition.right,
-                                      overflowMode:
-                                          LegendItemOverflowMode.scroll,
-                                      textStyle: TextStyle(color: Colors.white),
-                                    ),
-                                    series: <CircularSeries>[
-                                      DoughnutSeries<ChartData, String>(
-                                        dataSource: toDynamic(
-                                            listProspectSalesRes[0]
-                                                .listProspectSales!),
-                                        legendIconType:
-                                            LegendIconType.rectangle,
-                                        xValueMapper: (ChartData data, _) =>
-                                            data.x,
-                                        yValueMapper: (ChartData data, _) =>
-                                            data.y,
-                                        pointColorMapper: (ChartData data, _) => data
-                                                    .x ==
-                                                'Comunnity'
-                                            ? data.colorCommunity
-                                            : data.x == 'Walk In Customer'
-                                                ? data.colorWalkIn
-                                                : data.x == 'Mobile/canvasing'
-                                                    ? data.colorMobileCanvasing
-                                                    : data.x == 'Reference'
-                                                        ? data.colorReference
-                                                        : data.x ==
-                                                                'Moving Exhibition'
-                                                            ? data.colorMovingEx
-                                                            : data.x ==
-                                                                    'Call In'
-                                                                ? data
-                                                                    .colorCallin
-                                                                : data.x ==
-                                                                        'Database'
-                                                                    ? data
-                                                                        .colorDatabase
-                                                                    : data.x ==
-                                                                            'Iklan & Media Sosial'
-                                                                        ? data
-                                                                            .colorIklanMedia
-                                                                        : data.x ==
-                                                                                'Repeat Order Retail'
-                                                                            ? data.colorRepeatOrderRetail
-                                                                            : data.colorRepeatOrderFleet,
-                                        innerRadius: '60%',
-                                        radius: '70%',
-                                        explode: true,
-                                        explodeGesture:
-                                            ActivationMode.singleTap,
-                                        explodeOffset: '5',
-                                        dataLabelSettings:
-                                            const DataLabelSettings(
-                                          showZeroValue: false,
-                                          isVisible: false,
-                                          labelAlignment:
-                                              ChartDataLabelAlignment.middle,
-                                          overflowMode: OverflowMode.trim,
-                                          textStyle:
-                                              TextStyle(color: Colors.white),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: MediaQuery.of(context).size.height -
-                                      Scaffold.of(context).appBarMaxHeight! -
-                                      kToolbarHeight -
-                                      16,
-                                  child: Padding(
-                                    padding: const EdgeInsets.fromLTRB(
-                                        20, 0, 20, 130),
-                                    child: SearchableList(
-                                      initialList:
-                                          dataGrafik.listProspectSales!,
-                                      itemBuilder: (item) {
-                                        int currentIndex = dataGrafik
-                                            .listProspectSales!
-                                            .indexOf(item);
-                                        return item.type == 'List' &&
-                                                item.prospectStatusName == 'LOW'
-                                            ? Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                  0,
-                                                  10,
-                                                  0,
-                                                  10,
-                                                ),
-                                                child: Container(
-                                                  constraints:
-                                                      const BoxConstraints(
-                                                    minHeight: 160,
-                                                    minWidth: double.infinity,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    boxShadow: const [
-                                                      BoxShadow(
-                                                        color: Color.fromARGB(
-                                                          176,
-                                                          115,
-                                                          184,
-                                                          51,
-                                                        ),
-                                                        blurRadius: 3.0,
-                                                        offset: Offset(0, 0),
-                                                        spreadRadius: 1.1,
-                                                      ),
-                                                    ],
-                                                    border: Border.all(
-                                                        color:
-                                                            Colors.transparent,
-                                                        width: 2),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            10.0),
-                                                  ),
-                                                  child: Column(
-                                                    children: [
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                          0,
-                                                          0,
-                                                          10,
-                                                          0,
-                                                        ),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Checkbox(
-                                                                activeColor:
-                                                                    Colors
-                                                                        .white,
-                                                                checkColor:
-                                                                    const Color
-                                                                        .fromARGB(
-                                                                  176,
-                                                                  115,
-                                                                  184,
-                                                                  51,
-                                                                ),
-                                                                side: const BorderSide(
-                                                                    color: Colors
-                                                                        .white),
-                                                                value: checkedItems[
-                                                                    currentIndex],
-                                                                onChanged:
-                                                                    (bool?
-                                                                        value) {
-                                                                  setState(() {
-                                                                    // checkedItems[
-                                                                    //         currentIndex] =
-                                                                    //     value!;
-
-                                                                    // checkControllers[currentIndex]
-                                                                    //         .text =
-                                                                    //     value
-                                                                    //         ? "1"
-                                                                    //         : "0";
-                                                                    // print(
-                                                                    //     "Checkbox diubah: ${item.prospectCode} -> ${checkControllers[index].text}");
-                                                                    if (currentIndex <
-                                                                        checkControllers
-                                                                            .length) {
-                                                                      checkedItems[
-                                                                              currentIndex] =
-                                                                          value!;
-                                                                      checkControllers[currentIndex]
-                                                                              .text =
-                                                                          value
-                                                                              ? "1"
-                                                                              : "0";
-
-                                                                      print(
-                                                                          "Checkbox diubah: ${item.prospectCode} -> ${checkControllers[currentIndex].text}");
-                                                                    } else {
-                                                                      print(
-                                                                          "Indeks $currentIndex tidak valid!");
-                                                                    }
-                                                                  });
-                                                                },
-                                                              ),
-                                                              Expanded(
-                                                                child: Text(
-                                                                  'Check to send',
-                                                                  style:
-                                                                      textStyleColorWhite,
-                                                                  maxLines: 2,
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Visibility(
-                                                        visible: true,
-                                                        child: TextFormField(
-                                                          controller:
-                                                              checkControllers[
-                                                                  currentIndex],
-                                                          autocorrect: false,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .next,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText: 'Check',
-                                                            hintStyle:
-                                                                textStyleColorWhite,
-                                                            enabledBorder:
-                                                                const OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Visibility(
-                                                        visible: true,
-                                                        child: TextFormField(
-                                                          controller:
-                                                              prospectCodeControllers[
-                                                                  currentIndex],
-                                                          autocorrect: false,
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .next,
-                                                          decoration:
-                                                              InputDecoration(
-                                                            hintText:
-                                                                'Prospect Code',
-                                                            hintStyle:
-                                                                textStyleColorWhite,
-                                                            enabledBorder:
-                                                                const OutlineInputBorder(
-                                                              borderSide:
-                                                                  BorderSide(
-                                                                color: Color
-                                                                    .fromARGB(
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                  255,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                item.prospectCode,
-                                                                style:
-                                                                    textStyleColorWhiteBI,
-                                                              ),
-                                                              Container(
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                      .grey,
-                                                                  border: Border.all(
-                                                                      color: Colors
-                                                                          .grey),
-                                                                  borderRadius:
-                                                                      const BorderRadius
-                                                                          .all(
-                                                                    Radius.circular(
-                                                                        10.0),
-                                                                  ),
-                                                                ),
-                                                                child: Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                          .fromLTRB(
-                                                                          5,
-                                                                          0,
-                                                                          5,
-                                                                          0),
-                                                                  child: Text(
-                                                                    item.prospectDate,
-                                                                    style:
-                                                                        textStyleColorWhite,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            item.customerName,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                                10, 10, 10, 0),
-                                                        child: Align(
-                                                          alignment: Alignment
-                                                              .centerLeft,
-                                                          child: Text(
-                                                            item.meetingPoint,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              )
-                                            : const Center();
-                                      },
-                                      searchTextController: searchController,
-                                      filter: (searchController) {
-                                        return dataGrafik.listProspectSales!
-                                            .where(
-                                              (element) =>
-                                                  element.customerName
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ) ||
-                                                  element.prospectCode
-                                                      .toLowerCase()
-                                                      .contains(
-                                                        searchController
-                                                            .toString()
-                                                            .toLowerCase(),
-                                                      ),
-                                            )
-                                            .toList();
-                                      },
-                                      keyboardAction: TextInputAction.search,
-                                      emptyWidget: const EmptyView(),
-                                      inputDecoration: InputDecoration(
-                                        contentPadding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 8.0),
-                                        labelText: "Search..",
-                                        labelStyle: const TextStyle(
-                                          color:
-                                              Color.fromARGB(255, 102, 107, 94),
-                                        ),
-                                        fillColor: Colors.white,
-                                        focusedBorder: OutlineInputBorder(
-                                          gapPadding: 15.0,
-                                          borderSide: const BorderSide(
-                                            color:
-                                                Color.fromARGB(255, 91, 97, 83),
-                                            width: 1.0,
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(10.0),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                const SizedBox(
-                                  height: 10,
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                      error: (err, stack) => Text('Error $err'),
-                      loading: () => const Center(
-                        child: Column(
-                          children: [loadingAnimation()],
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
     );
   }
 }

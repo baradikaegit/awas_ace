@@ -12229,14 +12229,14 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                           //     " 10: ${vGroup2Controller.text} ${tahun2Controller.text} ${vFuel2Controller.text}");
                                                                           // print(
                                                                           //     " 11: ${vTransmisi2Controller.text} ${cashLeasingController.text} ${dPController.text}");
-                                                                          print(
-                                                                              " 12: ${tenorController.text} ${int.tryParse(q1Controller.text)} ${int.tryParse(q2Controller.text)}");
-                                                                          print(
-                                                                              " 13: ${int.tryParse(q3Controller.text)} ${int.tryParse(q4Controller.text)} ${int.tryParse(q5Controller.text)}");
-                                                                          print(
-                                                                              " 14: ${int.tryParse(q6Controller.text)} ${int.tryParse(statusController.text)} ${int.tryParse(alasanLostProspectController.text)}");
-                                                                          print(
-                                                                              " 15: ${keteranganController.text} ");
+                                                                          // print(
+                                                                          //     " 12: ${tenorController.text} ${int.tryParse(q1Controller.text)} ${int.tryParse(q2Controller.text)}");
+                                                                          // print(
+                                                                          //     " 13: ${int.tryParse(q3Controller.text)} ${int.tryParse(q4Controller.text)} ${int.tryParse(q5Controller.text)}");
+                                                                          // print(
+                                                                          //     " 14: ${int.tryParse(q6Controller.text)} ${int.tryParse(statusController.text)} ${int.tryParse(alasanLostProspectController.text)}");
+                                                                          // print(
+                                                                          //     " 15: ${keteranganController.text} ");
 
                                                                           if (resp.statusMessage ==
                                                                               "Success Updated") {
