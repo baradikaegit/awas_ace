@@ -664,13 +664,11 @@ class _ReminderSTNKDetailPageState extends State<ReminderSTNKDetailPage> {
                                                                       BoxDecoration(
                                                                     boxShadow: const [
                                                                       BoxShadow(
-                                                                        color: Color
-                                                                            .fromARGB(
-                                                                          167,
-                                                                          253,
-                                                                          181,
-                                                                          19,
-                                                                        ),
+                                                                        color: Color.fromARGB(
+                                                                            62,
+                                                                            253,
+                                                                            183,
+                                                                            19),
                                                                         blurRadius:
                                                                             3.0,
                                                                         offset:
@@ -1160,7 +1158,7 @@ class _ReminderSTNKDetailPageState extends State<ReminderSTNKDetailPage> {
                                                                             1.0,
                                                                         color: Color
                                                                             .fromARGB(
-                                                                          255,
+                                                                          167,
                                                                           253,
                                                                           181,
                                                                           19,

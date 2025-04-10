@@ -19,6 +19,7 @@ abstract class IReminderRepository {
     ListReminderUpdate updateReminder,
   );
   Future<ListReminderGetSalesResponse> fecthListDataGetSales();
+  Future<SendTaskResponse> updateSendTask(ListSendTask upSendTask);
 }
 
 class ReminderRepositories implements IReminderRepository {
@@ -156,5 +157,33 @@ class ReminderRepositories implements IReminderRepository {
 
     var responseGetSales = ListReminderGetSalesResponse.fromJson(jsonObjSales);
     return responseGetSales;
+  }
+
+  //update send task
+  @override
+  Future<SendTaskResponse> updateSendTask(ListSendTask upSendTask) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    final Map<String, String> headers = {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    };
+
+    var urlUpdateSendTask = "${_host}SendTaskReminder";
+    var body = jsonEncode(upSendTask);
+
+    var resultUpdateSendTask = await http.put(
+      Uri.parse(urlUpdateSendTask),
+      body: body,
+      headers: headers,
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    final jsonObjectUpdateSendTask = json.decode(resultUpdateSendTask.body);
+    var responseUpdateSendTask =
+        SendTaskResponse.fromJson(jsonObjectUpdateSendTask);
+    return responseUpdateSendTask;
   }
 }

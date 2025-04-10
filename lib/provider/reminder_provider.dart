@@ -61,3 +61,23 @@ final getSales =
   final repositoryGetSales = ref.watch(reminderRepositoryProvider);
   return repositoryGetSales.fecthListDataGetSales();
 });
+
+//update send task
+class UpdateSendTaskFormNotifier extends ChangeNotifier {
+  UpdateSendTaskFormNotifier(this.ref) : super();
+
+  final ProviderElementBase ref;
+
+  Future<SendTaskResponse> onUpdateSendTask(ListSendTask upSendTask) async {
+    final repositorysendtask = ref.read(reminderRepositoryProvider);
+    late SendTaskResponse resp;
+
+    resp = await repositorysendtask.updateSendTask(upSendTask);
+    return resp;
+  }
+}
+
+final updateSendTaskFormProvider =
+    ChangeNotifierProvider.autoDispose<UpdateSendTaskFormNotifier>((ref) {
+  return UpdateSendTaskFormNotifier(ref as ProviderElementBase);
+});

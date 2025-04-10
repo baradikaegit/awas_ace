@@ -33,6 +33,7 @@ class ListReminder {
     required this.iD,
     required this.taskDateView,
     required this.taskView,
+    required this.taskStatusACEID,
     required this.custName,
     required this.vtype,
     required this.policeNumber,
@@ -40,10 +41,12 @@ class ListReminder {
     required this.info,
     required this.statusName,
     required this.userBranch,
+    required this.taskBranchID,
   });
   late final String iD;
   late final String taskDateView;
   late final String taskView;
+  late final String taskStatusACEID;
   late final String custName;
   late final String vtype;
   late final String policeNumber;
@@ -51,11 +54,13 @@ class ListReminder {
   late final String info;
   late final String statusName;
   late final String userBranch;
+  late final String taskBranchID;
 
   ListReminder.fromJson(Map<String, dynamic> json) {
     iD = json['iD'];
     taskDateView = json['taskDateView'];
     taskView = json['taskView'];
+    taskStatusACEID = json['taskStatusACEID'];
     custName = json['custName'];
     vtype = json['vtype'];
     policeNumber = json['policeNumber'];
@@ -63,6 +68,7 @@ class ListReminder {
     info = json['info'];
     statusName = json['statusName'];
     userBranch = json['userBranch'];
+    taskBranchID = json['taskBranchID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -70,6 +76,7 @@ class ListReminder {
     _data['iD'] = iD;
     _data['taskDateView'] = taskDateView;
     _data['taskView'] = taskView;
+    _data['taskStatusACEID'] = taskStatusACEID;
     _data['custName'] = custName;
     _data['vtype'] = vtype;
     _data['policeNumber'] = policeNumber;
@@ -77,6 +84,70 @@ class ListReminder {
     _data['info'] = info;
     _data['statusName'] = statusName;
     _data['userBranch'] = userBranch;
+    _data['taskBranchID'] = taskBranchID;
+    return _data;
+  }
+}
+
+//update send task
+class ListSendTask {
+  ListSendTask({
+    this.iD,
+    this.taskStatusACEID,
+    this.taskView,
+    this.taskBranchID,
+    this.taskNote,
+  });
+
+  late String? iD;
+  late String? taskStatusACEID;
+  late String? taskView;
+  late String? taskBranchID;
+  late String? taskNote;
+
+  ListSendTask.fromJson(Map<String, dynamic> djson) {
+    iD = djson['iD'];
+    taskStatusACEID = djson['taskStatusACEID'];
+    taskView = djson['taskView'];
+    taskBranchID = djson['taskBranchID'];
+    taskNote = djson['taskNote'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['iD'] = iD;
+    _data['taskStatusACEID'] = taskStatusACEID;
+    _data['taskView'] = taskView;
+    _data['taskBranchID'] = taskBranchID;
+    _data['taskNote'] = taskNote;
+
+    return _data;
+  }
+}
+
+class SendTaskResponse {
+  SendTaskResponse({
+    this.statusCode,
+    this.statusMessage,
+    this.data,
+  });
+  late int? statusCode;
+  late String? statusMessage;
+  late ListSendTask? data;
+
+  SendTaskResponse.fromJson(Map<String, dynamic> json) {
+    statusCode = (json['statusCode'] != null) ? json['statusCode'] : null;
+    statusMessage =
+        (json['statusMessage'] != null) ? json['statusMessage'] : null;
+    data =
+        (json['data'] != null) ? ListSendTask.fromJson(json['data'][0]) : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['statusCode'] = statusCode;
+    _data['statusMessage'] = statusMessage;
+    _data['listReminderUpdateSendTask'] = data!.toJson();
     return _data;
   }
 }

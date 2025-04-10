@@ -2,11 +2,13 @@
 
 import 'package:awas_ace/provider/reminder_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
+import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/remindergetsalesmodel.dart';
 import 'package:awas_ace/widgets/model/remindermodel.dart';
+import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/reminder/stnkdetail_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -189,76 +191,236 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
                                                           item.kodeJabatan,
                                                         ),
                                                         onTap: () async {
-                                                          List<TextEditingController>
-                                                              selectedProspects =
-                                                              [];
+                                                          showDialog(
+                                                            context: context,
+                                                            builder:
+                                                                (context) =>
+                                                                    AlertDialog(
+                                                              shape:
+                                                                  RoundedRectangleBorder(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            15),
+                                                              ),
+                                                              title: Text(
+                                                                "Send Task",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      ResponsiveValue<
+                                                                          double>(
+                                                                    context,
+                                                                    conditionalValues: [
+                                                                      const Condition
+                                                                          .equals(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              17.0,
+                                                                          landscapeValue:
+                                                                              17.0),
+                                                                      const Condition
+                                                                          .largerThan(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              25.0,
+                                                                          landscapeValue:
+                                                                              25.0,
+                                                                          breakpoint:
+                                                                              800),
+                                                                    ],
+                                                                    defaultValue:
+                                                                        12.0,
+                                                                  ).value,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                              content: Text(
+                                                                "Task ini akan dikirim ke ${item.salesName.toUpperCase()}",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize:
+                                                                      ResponsiveValue<
+                                                                          double>(
+                                                                    context,
+                                                                    conditionalValues: [
+                                                                      const Condition
+                                                                          .equals(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              14.5,
+                                                                          landscapeValue:
+                                                                              14.5),
+                                                                      const Condition
+                                                                          .largerThan(
+                                                                          name:
+                                                                              TABLET,
+                                                                          value:
+                                                                              17.0,
+                                                                          landscapeValue:
+                                                                              17.0,
+                                                                          breakpoint:
+                                                                              800),
+                                                                    ],
+                                                                    defaultValue:
+                                                                        12.0,
+                                                                  ).value,
+                                                                ),
+                                                              ),
+                                                              actionsPadding:
+                                                                  const EdgeInsets
+                                                                      .symmetric(
+                                                                horizontal: 16,
+                                                              ),
+                                                              actions: <Widget>[
+                                                                Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceBetween,
+                                                                  children: [
+                                                                    OutlinedButton(
+                                                                      onPressed:
+                                                                          () {
+                                                                        Navigator.pop(
+                                                                            context);
+                                                                      },
+                                                                      style: OutlinedButton
+                                                                          .styleFrom(
+                                                                        side: BorderSide
+                                                                            .none,
+                                                                      ),
+                                                                      child:
+                                                                          const Text(
+                                                                        "BATAL",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Color(0xFF119D90),
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                    OutlinedButton(
+                                                                      onPressed:
+                                                                          () async {
+                                                                        List<TextEditingController>
+                                                                            selectedProspects =
+                                                                            [];
 
-                                                          for (int i = 0;
-                                                              i <
-                                                                  checkControllers
-                                                                      .length;
-                                                              i++) {
-                                                            if (checkControllers[
-                                                                        i]
-                                                                    .text ==
-                                                                "1") {
-                                                              selectedProspects.add(
-                                                                  TextEditingController(
-                                                                text:
-                                                                    taskControllers[
-                                                                            i]
-                                                                        .text,
-                                                              ));
-                                                            }
-                                                          }
+                                                                        for (int i =
+                                                                                0;
+                                                                            i < checkControllers.length;
+                                                                            i++) {
+                                                                          if (checkControllers[i].text ==
+                                                                              "1") {
+                                                                            selectedProspects.add(TextEditingController(
+                                                                              text: taskControllers[i].text,
+                                                                            ));
+                                                                          }
+                                                                        }
 
-                                                          for (var controller
-                                                              in selectedProspects) {
-                                                            print(
-                                                                '${controller.text} - ${item.salesName}');
-                                                            //   var upSendProspect =
-                                                            //       ListSendProspect(
-                                                            //     prospectCode:
-                                                            //         controller
-                                                            //             .text,
-                                                            //     salesCode: item
-                                                            //         .salesCode,
-                                                            //   );
-                                                            //   try {
-                                                            //     await ref
-                                                            //         .read(
-                                                            //             updateSendProspectFormProvider)
-                                                            //         .onUpdateSendProspect(
-                                                            //             upSendProspect);
-                                                            //   } catch (e) {
-                                                            //     Navigator.of(
-                                                            //             context)
-                                                            //         .pushAndRemoveUntil(
-                                                            //       MaterialPageRoute(
-                                                            //         builder:
-                                                            //             (context) =>
-                                                            //                 const HomePage(),
-                                                            //       ),
-                                                            //       (route) =>
-                                                            //           false,
-                                                            //     );
+                                                                        for (var controller
+                                                                            in selectedProspects) {
+                                                                          String
+                                                                              taskStatusACEID =
+                                                                              '';
+                                                                          String
+                                                                              taskBranch =
+                                                                              '';
+                                                                          String
+                                                                              taskView =
+                                                                              '';
+                                                                          final reminderState =
+                                                                              ref.read(stnk);
+                                                                          if (reminderState
+                                                                              is AsyncData) {
+                                                                            final list =
+                                                                                reminderState.value?.listReminder ?? [];
+                                                                            try {
+                                                                              final match = list.firstWhere((e) => e.iD == controller.text);
+                                                                              taskStatusACEID = match.taskStatusACEID;
+                                                                              taskBranch = match.taskBranchID;
+                                                                              taskView = match.taskView;
+                                                                            } catch (_) {}
+                                                                          }
 
-                                                            //     catchError(
-                                                            //       context,
-                                                            //       e,
-                                                            //     );
-                                                            //   }
-                                                          }
-                                                          // Navigator.of(context)
-                                                          //     .pushAndRemoveUntil(
-                                                          //   MaterialPageRoute(
-                                                          //     builder: (context) =>
-                                                          //         const HomePage(),
-                                                          //   ),
-                                                          //   (route) => false,
-                                                          // );
+                                                                          print(
+                                                                            '${controller.text} - $taskStatusACEID - $taskBranch - ${item.salesCode} - Send By $taskView to ${item.salesCode}',
+                                                                          );
 
-                                                          // notifUpdated(context);
+                                                                          String
+                                                                              taskNote =
+                                                                              'Send By $taskView to ${item.salesCode}';
+
+                                                                          var upSendTask =
+                                                                              ListSendTask(
+                                                                            iD: controller.text,
+                                                                            taskStatusACEID:
+                                                                                taskStatusACEID,
+                                                                            taskBranchID:
+                                                                                taskBranch,
+                                                                            taskView:
+                                                                                item.salesCode,
+                                                                            taskNote:
+                                                                                taskNote,
+                                                                          );
+
+                                                                          try {
+                                                                            await ref.read(updateSendTaskFormProvider).onUpdateSendTask(upSendTask);
+                                                                          } catch (e) {
+                                                                            Navigator.of(context).pushAndRemoveUntil(
+                                                                              MaterialPageRoute(
+                                                                                builder: (context) => const HomePage(),
+                                                                              ),
+                                                                              (route) => false,
+                                                                            );
+
+                                                                            catchError(
+                                                                              context,
+                                                                              e,
+                                                                            );
+                                                                          }
+                                                                          Navigator.of(context)
+                                                                              .pushAndRemoveUntil(
+                                                                            MaterialPageRoute(
+                                                                              builder: (context) => const HomePage(),
+                                                                            ),
+                                                                            (route) =>
+                                                                                false,
+                                                                          );
+
+                                                                          notifUpdated(
+                                                                              context);
+                                                                        }
+                                                                      },
+                                                                      style: OutlinedButton
+                                                                          .styleFrom(
+                                                                        side: BorderSide
+                                                                            .none,
+                                                                      ),
+                                                                      child:
+                                                                          const Text(
+                                                                        "KIRIM",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              Color(0xFF119D90),
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          );
                                                         },
                                                       ),
                                                     ],
@@ -1049,6 +1211,26 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void notifUpdated(BuildContext context) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        duration: Duration(milliseconds: 2000),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: ("Success Updated" == "Success Updated")
+            ? Color.fromARGB(
+                255,
+                1,
+                209,
+                29,
+              )
+            : Colors.red,
+        content: Text(("Success Updated" == "Success Updated")
+            ? "Send Berhasil"
+            : "Send Gagal"),
       ),
     );
   }
