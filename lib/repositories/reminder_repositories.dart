@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/reminderdetailmodel.dart';
+import 'package:awas_ace/widgets/model/remindergetsalesmodel.dart';
 import 'package:awas_ace/widgets/model/remindermodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +18,7 @@ abstract class IReminderRepository {
   Future<UpdateReminderResponse> updateNewReminder(
     ListReminderUpdate updateReminder,
   );
+  Future<ListReminderGetSalesResponse> fecthListDataGetSales();
 }
 
 class ReminderRepositories implements IReminderRepository {
@@ -134,5 +136,25 @@ class ReminderRepositories implements IReminderRepository {
     var responseUpdateReminder =
         UpdateReminderResponse.fromJson(jsonObjectUpdateReminder);
     return responseUpdateReminder;
+  }
+
+  //Get Sales
+  @override
+  Future<ListReminderGetSalesResponse> fecthListDataGetSales() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetSales = "${_host}GetSalesReminder";
+
+    var resultGetSales = await http.get(Uri.parse(urlGetSales), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjSales = jsonDecode(resultGetSales.body);
+
+    var responseGetSales = ListReminderGetSalesResponse.fromJson(jsonObjSales);
+    return responseGetSales;
   }
 }

@@ -1,5 +1,6 @@
 import 'package:awas_ace/repositories/reminder_repositories.dart';
 import 'package:awas_ace/widgets/model/reminderdetailmodel.dart';
+import 'package:awas_ace/widgets/model/remindergetsalesmodel.dart';
 import 'package:awas_ace/widgets/model/remindermodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -52,4 +53,11 @@ class UpdateReminderFormNotifier extends ChangeNotifier {
 final updateReminderFormProviderDetail =
     ChangeNotifierProvider.autoDispose<UpdateReminderFormNotifier>((ref) {
   return UpdateReminderFormNotifier(ref as ProviderElementBase);
+});
+
+//list get sales
+final getSales =
+    FutureProvider.autoDispose<ListReminderGetSalesResponse>((ref) async {
+  final repositoryGetSales = ref.watch(reminderRepositoryProvider);
+  return repositoryGetSales.fecthListDataGetSales();
 });

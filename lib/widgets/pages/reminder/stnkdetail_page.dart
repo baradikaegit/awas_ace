@@ -343,9 +343,9 @@ class _ReminderSTNKDetailPageState extends State<ReminderSTNKDetailPage> {
                                                                   color: const Color
                                                                       .fromARGB(
                                                                     167,
-                                                                    253,
-                                                                    181,
-                                                                    19,
+                                                                    235,
+                                                                    182,
+                                                                    68,
                                                                   ),
                                                                 ),
                                                                 child: Column(
@@ -508,9 +508,9 @@ class _ReminderSTNKDetailPageState extends State<ReminderSTNKDetailPage> {
                                                                   color: const Color
                                                                       .fromARGB(
                                                                     167,
-                                                                    253,
-                                                                    181,
-                                                                    19,
+                                                                    235,
+                                                                    182,
+                                                                    68,
                                                                   ),
                                                                 ),
                                                                 child: Column(
