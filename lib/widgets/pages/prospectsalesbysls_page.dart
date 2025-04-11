@@ -890,8 +890,8 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                                                           checkControllers[index].text = value ? "1" : "0";
                                                                                                           currentIndex = index; // Pastikan currentIndex diperbarui dan tidak hilang setelah rebuild
 
-                                                                                                          print("Checkbox diubah: ${dataProspectSales.listProspectSales![index].prospectCode} -> ${checkControllers[index].text}");
-                                                                                                          print("currentIndex setelah checkbox diklik: $currentIndex");
+                                                                                                          // print("Checkbox diubah: ${dataProspectSales.listProspectSales![index].prospectCode} -> ${checkControllers[index].text}");
+                                                                                                          // print("currentIndex setelah checkbox diklik: $currentIndex");
                                                                                                         } else {
                                                                                                           print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
                                                                                                         }
