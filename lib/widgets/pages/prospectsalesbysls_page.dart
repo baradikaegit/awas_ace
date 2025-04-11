@@ -2,7 +2,6 @@
 
 import 'package:awas_ace/provider/prospect_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
-import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
@@ -154,10 +153,6 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
               style: TextStyle(color: Colors.white),
             ),
             actions: <Widget>[
-              // IconButton(
-              //   icon: const Icon(Icons.send),
-              //   onPressed: _toggleDrawer,
-              // ),
               Builder(
                 builder: (context) => IconButton(
                   onPressed: () {
@@ -288,6 +283,11 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                     }
                                                                   }
 
+                                                                  int successCount =
+                                                                      0;
+                                                                  int failCount =
+                                                                      0;
+
                                                                   for (var controller
                                                                       in selectedProspects) {
                                                                     var upSendProspect =
@@ -304,22 +304,9 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                               updateSendProspectFormProvider)
                                                                           .onUpdateSendProspect(
                                                                               upSendProspect);
+                                                                      successCount++;
                                                                     } catch (e) {
-                                                                      Navigator.of(
-                                                                              context)
-                                                                          .pushAndRemoveUntil(
-                                                                        MaterialPageRoute(
-                                                                          builder: (context) =>
-                                                                              const HomePage(),
-                                                                        ),
-                                                                        (route) =>
-                                                                            false,
-                                                                      );
-
-                                                                      catchError(
-                                                                        context,
-                                                                        e,
-                                                                      );
+                                                                      failCount++;
                                                                     }
                                                                   }
                                                                   Navigator.of(
@@ -334,8 +321,28 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
                                                                         false,
                                                                   );
 
-                                                                  notifUpdated(
-                                                                      context);
+                                                                  if (successCount >
+                                                                          0 &&
+                                                                      failCount ==
+                                                                          0) {
+                                                                    notifUpdated(
+                                                                        context,
+                                                                        "Send Berhasil",
+                                                                        true);
+                                                                  } else if (successCount >
+                                                                          0 &&
+                                                                      failCount >
+                                                                          0) {
+                                                                    notifUpdated(
+                                                                        context,
+                                                                        "Send sebagian berhasil, Send sebagian gagal",
+                                                                        false);
+                                                                  } else {
+                                                                    notifUpdated(
+                                                                        context,
+                                                                        "Send gagal dikirim",
+                                                                        false);
+                                                                  }
                                                                 },
                                                               ),
                                                             ],
@@ -1739,22 +1746,20 @@ class _ProspectSalesBySlsPageState extends ConsumerState<ProspectSalesBySlsPage>
     );
   }
 
-  void notifUpdated(BuildContext context) {
+  void notifUpdated(BuildContext context, String message, bool success) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        duration: Duration(milliseconds: 2000),
+      SnackBar(
+        duration: const Duration(milliseconds: 2000),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: ("Success Updated" == "Success Updated")
-            ? Color.fromARGB(
+        backgroundColor: success
+            ? const Color.fromARGB(
                 255,
                 1,
                 209,
                 29,
               )
             : Colors.red,
-        content: Text(("Success Updated" == "Success Updated")
-            ? "Send Berhasil"
-            : "Send Gagal"),
+        content: Text(message),
       ),
     );
   }

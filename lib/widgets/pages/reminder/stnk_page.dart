@@ -2,7 +2,6 @@
 
 import 'package:awas_ace/provider/reminder_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
-import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
@@ -187,8 +186,269 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
                                                             ),
                                                           ],
                                                         ),
-                                                        subtitle: Text(
-                                                          item.kodeJabatan,
+                                                        subtitle: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          children: [
+                                                            Expanded(
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .only(
+                                                                  right: 8,
+                                                                ),
+                                                                child: Text(
+                                                                  item.kodeJabatan,
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      right: 8),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color:
+                                                                    Colors.grey,
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0),
+                                                                ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        5,
+                                                                        2,
+                                                                        5,
+                                                                        2),
+                                                                child: RichText(
+                                                                  text:
+                                                                      TextSpan(
+                                                                    children: [
+                                                                      WidgetSpan(
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .assignment_outlined,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          size:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 20.0, landscapeValue: 20.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                12.0,
+                                                                          ).value,
+                                                                        ),
+                                                                      ),
+                                                                      TextSpan(
+                                                                        text:
+                                                                            " ${item.totalStatus1.toString()}",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              const Color.fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                          ),
+                                                                          fontSize:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 20.0, landscapeValue: 20.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                12.0,
+                                                                          ).value,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              margin:
+                                                                  const EdgeInsets
+                                                                      .only(
+                                                                      right: 8),
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color:
+                                                                    Colors.grey,
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0),
+                                                                ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        5,
+                                                                        2,
+                                                                        5,
+                                                                        2),
+                                                                child: RichText(
+                                                                  text:
+                                                                      TextSpan(
+                                                                    children: [
+                                                                      WidgetSpan(
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .assignment_turned_in_outlined,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          size:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 20.0, landscapeValue: 20.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                12.0,
+                                                                          ).value,
+                                                                        ),
+                                                                      ),
+                                                                      TextSpan(
+                                                                        text:
+                                                                            " ${item.totalStatus2.toString()}",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              const Color.fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                          ),
+                                                                          fontSize:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 20.0, landscapeValue: 20.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                12.0,
+                                                                          ).value,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                color:
+                                                                    Colors.grey,
+                                                                border:
+                                                                    Border.all(
+                                                                  color: Colors
+                                                                      .grey,
+                                                                ),
+                                                                borderRadius:
+                                                                    const BorderRadius
+                                                                        .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          10.0),
+                                                                ),
+                                                              ),
+                                                              child: Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        5,
+                                                                        2,
+                                                                        5,
+                                                                        2),
+                                                                child: RichText(
+                                                                  text:
+                                                                      TextSpan(
+                                                                    children: [
+                                                                      WidgetSpan(
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .attach_money_outlined,
+                                                                          color:
+                                                                              Colors.white,
+                                                                          size:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 20.0, landscapeValue: 20.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                12.0,
+                                                                          ).value,
+                                                                        ),
+                                                                      ),
+                                                                      TextSpan(
+                                                                        text:
+                                                                            "0",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          color:
+                                                                              const Color.fromARGB(
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                            255,
+                                                                          ),
+                                                                          fontSize:
+                                                                              ResponsiveValue<double>(
+                                                                            context,
+                                                                            conditionalValues: [
+                                                                              const Condition.equals(name: TABLET, value: 14.0, landscapeValue: 14.0),
+                                                                              const Condition.largerThan(name: TABLET, value: 20.0, landscapeValue: 20.0, breakpoint: 800),
+                                                                            ],
+                                                                            defaultValue:
+                                                                                12.0,
+                                                                          ).value,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
                                                         onTap: () async {
                                                           showDialog(
@@ -325,6 +585,11 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
                                                                           }
                                                                         }
 
+                                                                        int successCount =
+                                                                            0;
+                                                                        int failCount =
+                                                                            0;
+
                                                                         for (var controller
                                                                             in selectedProspects) {
                                                                           String
@@ -373,18 +638,9 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
 
                                                                           try {
                                                                             await ref.read(updateSendTaskFormProvider).onUpdateSendTask(upSendTask);
+                                                                            successCount++;
                                                                           } catch (e) {
-                                                                            Navigator.of(context).pushAndRemoveUntil(
-                                                                              MaterialPageRoute(
-                                                                                builder: (context) => const HomePage(),
-                                                                              ),
-                                                                              (route) => false,
-                                                                            );
-
-                                                                            catchError(
-                                                                              context,
-                                                                              e,
-                                                                            );
+                                                                            failCount++;
                                                                           }
                                                                         }
                                                                         Navigator.of(context)
@@ -397,8 +653,28 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
                                                                               false,
                                                                         );
 
-                                                                        notifUpdated(
-                                                                            context);
+                                                                        if (successCount >
+                                                                                0 &&
+                                                                            failCount ==
+                                                                                0) {
+                                                                          notifUpdated(
+                                                                              context,
+                                                                              "Send Berhasil",
+                                                                              true);
+                                                                        } else if (successCount >
+                                                                                0 &&
+                                                                            failCount >
+                                                                                0) {
+                                                                          notifUpdated(
+                                                                              context,
+                                                                              "Send sebagian berhasil, Send sebagian gagal",
+                                                                              false);
+                                                                        } else {
+                                                                          notifUpdated(
+                                                                              context,
+                                                                              "Send gagal dikirim",
+                                                                              false);
+                                                                        }
                                                                       },
                                                                       style: OutlinedButton
                                                                           .styleFrom(
@@ -1216,22 +1492,20 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
     );
   }
 
-  void notifUpdated(BuildContext context) {
+  void notifUpdated(BuildContext context, String message, bool success) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        duration: Duration(milliseconds: 2000),
+      SnackBar(
+        duration: const Duration(milliseconds: 2000),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: ("Success Updated" == "Success Updated")
-            ? Color.fromARGB(
+        backgroundColor: success
+            ? const Color.fromARGB(
                 255,
                 1,
                 209,
                 29,
               )
             : Colors.red,
-        content: Text(("Success Updated" == "Success Updated")
-            ? "Send Berhasil"
-            : "Send Gagal"),
+        content: Text(message),
       ),
     );
   }
