@@ -943,8 +943,8 @@ class _ReminderBirthdayPageState extends State<ReminderBirthdayPage> {
                                                                                   checkControllers[index].text = value ? "1" : "0";
                                                                                   currentIndex = index; // Pastikan currentIndex diperbarui dan tidak hilang setelah rebuild
 
-                                                                                  print("Checkbox diubah: ${dataReminderBirthday.listReminder![index].taskStatusACEID} -> ${checkControllers[index].text}");
-                                                                                  print("currentIndex setelah checkbox diklik: $currentIndex");
+                                                                                  // print("Checkbox diubah: ${dataReminderBirthday.listReminder![index].taskStatusACEID} -> ${checkControllers[index].text}");
+                                                                                  // print("currentIndex setelah checkbox diklik: $currentIndex");
                                                                                 } else {
                                                                                   print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
                                                                                 }

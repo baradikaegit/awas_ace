@@ -354,9 +354,9 @@ class _ReminderLeasingBerakhirPageState
                                                                             } catch (_) {}
                                                                           }
 
-                                                                          print(
-                                                                            '${controller.text} - $taskStatusACEID - $taskBranch - ${item.salesCode} - Send By $taskView to ${item.salesCode}',
-                                                                          );
+                                                                          // print(
+                                                                          //   '${controller.text} - $taskStatusACEID - $taskBranch - ${item.salesCode} - Send By $taskView to ${item.salesCode}',
+                                                                          // );
 
                                                                           String
                                                                               taskNote =
@@ -986,8 +986,8 @@ class _ReminderLeasingBerakhirPageState
                                                                                   checkControllers[index].text = value ? "1" : "0";
                                                                                   currentIndex = index; // Pastikan currentIndex diperbarui dan tidak hilang setelah rebuild
 
-                                                                                  print("Checkbox diubah: ${dataReminderLeasingBerakhir.listReminder![index].taskStatusACEID} -> ${checkControllers[index].text}");
-                                                                                  print("currentIndex setelah checkbox diklik: $currentIndex");
+                                                                                  // print("Checkbox diubah: ${dataReminderLeasingBerakhir.listReminder![index].taskStatusACEID} -> ${checkControllers[index].text}");
+                                                                                  // print("currentIndex setelah checkbox diklik: $currentIndex");
                                                                                 } else {
                                                                                   print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
                                                                                 }
