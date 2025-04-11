@@ -275,7 +275,7 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
                                                               actionsPadding:
                                                                   const EdgeInsets
                                                                       .symmetric(
-                                                                horizontal: 16,
+                                                                horizontal: 0,
                                                               ),
                                                               actions: <Widget>[
                                                                 Row(
@@ -350,9 +350,9 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
                                                                             } catch (_) {}
                                                                           }
 
-                                                                          print(
-                                                                            '${controller.text} - $taskStatusACEID - $taskBranch - ${item.salesCode} - Send By $taskView to ${item.salesCode}',
-                                                                          );
+                                                                          // print(
+                                                                          //   '${controller.text} - $taskStatusACEID - $taskBranch - ${item.salesCode} - Send By $taskView to ${item.salesCode}',
+                                                                          // );
 
                                                                           String
                                                                               taskNote =
@@ -386,18 +386,19 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
                                                                               e,
                                                                             );
                                                                           }
-                                                                          Navigator.of(context)
-                                                                              .pushAndRemoveUntil(
-                                                                            MaterialPageRoute(
-                                                                              builder: (context) => const HomePage(),
-                                                                            ),
-                                                                            (route) =>
-                                                                                false,
-                                                                          );
-
-                                                                          notifUpdated(
-                                                                              context);
                                                                         }
+                                                                        Navigator.of(context)
+                                                                            .pushAndRemoveUntil(
+                                                                          MaterialPageRoute(
+                                                                            builder: (context) =>
+                                                                                const HomePage(),
+                                                                          ),
+                                                                          (route) =>
+                                                                              false,
+                                                                        );
+
+                                                                        notifUpdated(
+                                                                            context);
                                                                       },
                                                                       style: OutlinedButton
                                                                           .styleFrom(
@@ -975,8 +976,8 @@ class _ReminderSTNKPageState extends State<ReminderSTNKPage> {
                                                                                   checkControllers[index].text = value ? "1" : "0";
                                                                                   currentIndex = index; // Pastikan currentIndex diperbarui dan tidak hilang setelah rebuild
 
-                                                                                  print("Checkbox diubah: ${dataReminderSTNK.listReminder![index].taskDateView} -> ${checkControllers[index].text}");
-                                                                                  print("currentIndex setelah checkbox diklik: $currentIndex");
+                                                                                  // print("Checkbox diubah: ${dataReminderSTNK.listReminder![index].taskDateView} -> ${checkControllers[index].text}");
+                                                                                  // print("currentIndex setelah checkbox diklik: $currentIndex");
                                                                                 } else {
                                                                                   print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
                                                                                 }
