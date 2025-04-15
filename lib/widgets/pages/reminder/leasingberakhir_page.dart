@@ -7,6 +7,7 @@ import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/remindergetsalesmodel.dart';
 import 'package:awas_ace/widgets/model/remindermodel.dart';
+import 'package:awas_ace/widgets/model/sendtaskmodel.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/reminder/leasingberakhirdetail_page.dart';
 import 'package:flutter/material.dart';
@@ -641,7 +642,7 @@ class _ReminderLeasingBerakhirPageState
                                                                           );
 
                                                                           try {
-                                                                            await ref.read(updateSendTaskFormProvider).onUpdateSendTask(upSendTask);
+                                                                            await ref.read(updateReminderSendTaskFormProvider).onUpdateReminderSendTask(upSendTask);
                                                                             successCount++;
                                                                           } catch (e) {
                                                                             failCount++;

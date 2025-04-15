@@ -34,6 +34,7 @@ class ListSvcKendaraan {
     required this.iD,
     required this.taskDateView,
     required this.taskView,
+    required this.taskStatusACEID,
     required this.custName,
     required this.vtype,
     required this.policeNumber,
@@ -41,10 +42,12 @@ class ListSvcKendaraan {
     required this.info,
     required this.statusName,
     required this.userBranch,
+    required this.taskBranchID,
   });
   late final String iD;
   late final String taskDateView;
   late final String taskView;
+  late final String taskStatusACEID;
   late final String custName;
   late final String vtype;
   late final String policeNumber;
@@ -52,11 +55,13 @@ class ListSvcKendaraan {
   late final String info;
   late final String statusName;
   late final String userBranch;
+  late final String taskBranchID;
 
   ListSvcKendaraan.fromJson(Map<String, dynamic> json) {
     iD = json['iD'];
     taskDateView = json['taskDateView'];
     taskView = json['taskView'];
+    taskStatusACEID = json['taskStatusACEID'];
     custName = json['custName'];
     vtype = json['vtype'];
     policeNumber = json['policeNumber'];
@@ -64,6 +69,7 @@ class ListSvcKendaraan {
     info = json['info'];
     statusName = json['statusName'];
     userBranch = json['userBranch'];
+    taskBranchID = json['taskBranchID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -71,6 +77,7 @@ class ListSvcKendaraan {
     _data['iD'] = iD;
     _data['taskDateView'] = taskDateView;
     _data['taskView'] = taskView;
+    _data['taskStatusACEID'] = taskStatusACEID;
     _data['custName'] = custName;
     _data['vtype'] = vtype;
     _data['policeNumber'] = policeNumber;
@@ -78,6 +85,7 @@ class ListSvcKendaraan {
     _data['info'] = info;
     _data['statusName'] = statusName;
     _data['userBranch'] = userBranch;
+    _data['taskBranchID'] = taskBranchID;
     return _data;
   }
 }

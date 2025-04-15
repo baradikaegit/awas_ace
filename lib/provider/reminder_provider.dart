@@ -2,6 +2,7 @@ import 'package:awas_ace/repositories/reminder_repositories.dart';
 import 'package:awas_ace/widgets/model/reminderdetailmodel.dart';
 import 'package:awas_ace/widgets/model/remindergetsalesmodel.dart';
 import 'package:awas_ace/widgets/model/remindermodel.dart';
+import 'package:awas_ace/widgets/model/sendtaskmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -63,21 +64,23 @@ final getSales =
 });
 
 //update send task
-class UpdateSendTaskFormNotifier extends ChangeNotifier {
-  UpdateSendTaskFormNotifier(this.ref) : super();
+class UpdateReminderSendTaskFormNotifier extends ChangeNotifier {
+  UpdateReminderSendTaskFormNotifier(this.ref) : super();
 
   final ProviderElementBase ref;
 
-  Future<SendTaskResponse> onUpdateSendTask(ListSendTask upSendTask) async {
+  Future<SendTaskResponse> onUpdateReminderSendTask(
+      ListSendTask upReminderSendTask) async {
     final repositorysendtask = ref.read(reminderRepositoryProvider);
     late SendTaskResponse resp;
 
-    resp = await repositorysendtask.updateSendTask(upSendTask);
+    resp = await repositorysendtask.updateReminderSendTask(upReminderSendTask);
     return resp;
   }
 }
 
-final updateSendTaskFormProvider =
-    ChangeNotifierProvider.autoDispose<UpdateSendTaskFormNotifier>((ref) {
-  return UpdateSendTaskFormNotifier(ref as ProviderElementBase);
+final updateReminderSendTaskFormProvider =
+    ChangeNotifierProvider.autoDispose<UpdateReminderSendTaskFormNotifier>(
+        (ref) {
+  return UpdateReminderSendTaskFormNotifier(ref as ProviderElementBase);
 });

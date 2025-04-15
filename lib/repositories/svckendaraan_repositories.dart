@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/widgets/model/sendtaskmodel.dart';
 import 'package:awas_ace/widgets/model/svccountmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraandetailmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraanmodel.dart';
@@ -19,6 +20,7 @@ abstract class ISvcKendaraanRepository {
     ListSvcKendaraanUpdate updateSvcKendaraan,
   );
   Future<ListSVCCountResponse> fecthListDataCount();
+  Future<SendTaskResponse> updateSvcSendTask(ListSendTask upSendTask);
 }
 
 class SvckendaraanRepositories implements ISvcKendaraanRepository {
@@ -164,5 +166,33 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
 
     var responseGetSvcCount = ListSVCCountResponse.fromJson(jsonObjSvcCount);
     return responseGetSvcCount;
+  }
+
+  //update send task
+  @override
+  Future<SendTaskResponse> updateSvcSendTask(ListSendTask upSendTask) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    final Map<String, String> headers = {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    };
+
+    var urlUpdateSendTask = "${_host}SendTaskSvc";
+    var body = jsonEncode(upSendTask);
+
+    var resultUpdateSendTask = await http.put(
+      Uri.parse(urlUpdateSendTask),
+      body: body,
+      headers: headers,
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    final jsonObjectUpdateSendTask = json.decode(resultUpdateSendTask.body);
+    var responseUpdateSendTask =
+        SendTaskResponse.fromJson(jsonObjectUpdateSendTask);
+    return responseUpdateSendTask;
   }
 }

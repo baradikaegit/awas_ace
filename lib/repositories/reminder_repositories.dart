@@ -5,6 +5,7 @@ import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/reminderdetailmodel.dart';
 import 'package:awas_ace/widgets/model/remindergetsalesmodel.dart';
 import 'package:awas_ace/widgets/model/remindermodel.dart';
+import 'package:awas_ace/widgets/model/sendtaskmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -19,7 +20,7 @@ abstract class IReminderRepository {
     ListReminderUpdate updateReminder,
   );
   Future<ListReminderGetSalesResponse> fecthListDataGetSales();
-  Future<SendTaskResponse> updateSendTask(ListSendTask upSendTask);
+  Future<SendTaskResponse> updateReminderSendTask(ListSendTask upSendTask);
 }
 
 class ReminderRepositories implements IReminderRepository {
@@ -161,7 +162,8 @@ class ReminderRepositories implements IReminderRepository {
 
   //update send task
   @override
-  Future<SendTaskResponse> updateSendTask(ListSendTask upSendTask) async {
+  Future<SendTaskResponse> updateReminderSendTask(
+      ListSendTask upSendTask) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
 

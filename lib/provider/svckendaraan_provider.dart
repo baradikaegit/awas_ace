@@ -1,4 +1,5 @@
 import 'package:awas_ace/repositories/svckendaraan_repositories.dart';
+import 'package:awas_ace/widgets/model/sendtaskmodel.dart';
 import 'package:awas_ace/widgets/model/svccountmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraandetailmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraanmodel.dart';
@@ -64,4 +65,25 @@ final updateSvcKendaraanFormProviderDetail =
 final svcCount = FutureProvider.autoDispose<ListSVCCountResponse>((ref) async {
   final repositorySvcCount = ref.watch(svcKendaraanRepositoryProvider);
   return repositorySvcCount.fecthListDataCount();
+});
+
+//update send task
+class UpdateSvcSendTaskFormNotifier extends ChangeNotifier {
+  UpdateSvcSendTaskFormNotifier(this.ref) : super();
+
+  final ProviderElementBase ref;
+
+  Future<SendTaskResponse> onUpdateSvcSendTask(
+      ListSendTask upSvcSendTask) async {
+    final repositorysendtask = ref.read(svcKendaraanRepositoryProvider);
+    late SendTaskResponse resp;
+
+    resp = await repositorysendtask.updateSvcSendTask(upSvcSendTask);
+    return resp;
+  }
+}
+
+final updateSvcSendTaskFormProvider =
+    ChangeNotifierProvider.autoDispose<UpdateSvcSendTaskFormNotifier>((ref) {
+  return UpdateSvcSendTaskFormNotifier(ref as ProviderElementBase);
 });
