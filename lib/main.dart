@@ -76,6 +76,7 @@ import 'package:awas_ace/widgets/pages/sales/monitoringvolmaker.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekuebp.dart';
 import 'package:awas_ace/widgets/pages/sales/prospekvalidtospk.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual.dart';
+import 'package:awas_ace/widgets/pages/settings/teamsaya_page.dart';
 import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairgr_page.dart';
 import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairgrdetail_page.dart';
 import 'package:awas_ace/widgets/pages/svckendaraan/bodyrepairsls_page.dart';
@@ -361,6 +362,7 @@ class MyApp extends StatelessWidget {
             MonitoringPoinHistoryPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
+        TeamSayaPage.routeName: (context) => const TeamSayaPage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
       },

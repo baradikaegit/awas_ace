@@ -29,7 +29,37 @@ class _SettingPageState extends State<SettingPage> {
     'padlock.png',
     'logout.png'
   ];
-  List linkPage = ['/', '/', '/rulesOftheGamePage', '/changePassPage', '/'];
+  List linkPage = [
+    '/',
+    '/teamSayaPage',
+    '/rulesOftheGamePage',
+    '/changePassPage',
+    '/'
+  ];
+
+  List menuRoles2 = [
+    'Profile',
+    'Rules Of The Game',
+    'Change Password',
+    'LogOut',
+  ];
+  List image2 = ['profile.png', 'piala.png', 'padlock.png', 'logout.png'];
+  List linkPage2 = ['/', '/rulesOftheGamePage', '/changePassPage', '/'];
+
+  String? roles;
+
+  @override
+  void initState() {
+    super.initState();
+    loadSharedPreference();
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      roles = prefs.getString('Roles');
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +142,9 @@ class _SettingPageState extends State<SettingPage> {
                             childAspectRatio: 5 / 6,
                           ),
                           shrinkWrap: true,
-                          itemCount: menuRoles.length,
+                          itemCount: roles == 'PD' || roles == 'OD'
+                              ? menuRoles2.length
+                              : menuRoles.length,
                           itemBuilder: (context, index) {
                             return AnimationConfiguration.staggeredGrid(
                               duration: const Duration(milliseconds: 1500),
@@ -120,10 +152,17 @@ class _SettingPageState extends State<SettingPage> {
                               columnCount: 2,
                               child: FlipAnimation(
                                 child: InkWell(
-                                  onTap: () => menuRoles[index] == 'LogOut'
-                                      ? myAlertDialog(context)
-                                      : Navigator.pushNamed(
-                                          context, linkPage[index]),
+                                  onTap: () {
+                                    roles == 'OD' || roles == 'PD'
+                                        ? menuRoles2[index] == 'LogOut'
+                                            ? myAlertDialog(context)
+                                            : Navigator.pushNamed(
+                                                context, linkPage2[index])
+                                        : menuRoles[index] == 'LogOut'
+                                            ? myAlertDialog(context)
+                                            : Navigator.pushNamed(
+                                                context, linkPage[index]);
+                                  },
                                   child: Column(
                                     children: <Widget>[
                                       const SizedBox(
@@ -190,10 +229,15 @@ class _SettingPageState extends State<SettingPage> {
                                             ),
                                           ),
                                           padding: const EdgeInsets.all(0.0),
-                                          child: Image.asset(
-                                            'assets/images/menu/${image[index]}',
-                                            fit: BoxFit.fill,
-                                          ),
+                                          child: roles == 'OD' || roles == 'PD'
+                                              ? Image.asset(
+                                                  'assets/images/menu/${image2[index]}',
+                                                  fit: BoxFit.fill,
+                                                )
+                                              : Image.asset(
+                                                  'assets/images/menu/${image[index]}',
+                                                  fit: BoxFit.fill,
+                                                ),
                                         ),
                                       ),
                                       Padding(
@@ -201,7 +245,9 @@ class _SettingPageState extends State<SettingPage> {
                                             5, 10, 5, 0),
                                         child: Center(
                                           child: Text(
-                                            menuRoles[index],
+                                            roles == 'OD' || roles == 'PD'
+                                                ? menuRoles2[index]
+                                                : menuRoles[index],
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               color: Colors.black,
