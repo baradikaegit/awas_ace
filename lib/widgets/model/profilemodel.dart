@@ -3,18 +3,18 @@ class ListProfileResponse {
   ListProfileResponse({
     required this.statusCode,
     required this.statusMessage,
-    required this.listGetProfileTeam,
+    required this.listGetProfile,
   });
   late final int statusCode;
   late final String statusMessage;
-  late final List<ListGetProfileTeam>? listGetProfileTeam;
+  late final List<ListGetProfile>? listGetProfile;
 
   ListProfileResponse.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];
     statusMessage = json['statusMessage'];
-    listGetProfileTeam = (json['listGetProfileTeam'] != null)
-        ? List.from(json['listGetProfileTeam'])
-            .map((e) => ListGetProfileTeam.fromJson(e))
+    listGetProfile = (json['listGetProfile'] != null)
+        ? List.from(json['listGetProfile'])
+            .map((e) => ListGetProfile.fromJson(e))
             .toList()
         : null;
   }
@@ -23,57 +23,100 @@ class ListProfileResponse {
     final _data = <String, dynamic>{};
     _data['statusCode'] = statusCode;
     _data['statusMessage'] = statusMessage;
-    _data['listGetProfileTeam'] =
-        listGetProfileTeam!.map((e) => e.toJson()).toList();
+    _data['listGetProfile'] = listGetProfile!.map((e) => e.toJson()).toList();
     return _data;
   }
 }
 
-class ListGetProfileTeam {
-  ListGetProfileTeam({
-    required this.branch,
-    required this.salesCode,
-    required this.salesName,
-    required this.ssCode,
-    required this.ssName,
-    required this.kodeJabatan,
-    required this.totalStatus1,
-    required this.totalStatus2,
-    required this.totalStatus3,
+class ListGetProfile {
+  ListGetProfile({
+    required this.userCode,
+    required this.email,
+    required this.phoneNumber,
+    required this.userName,
+    required this.profilePicture,
+    required this.totalPoin,
+    required this.totalLevel,
   });
-  late final String branch;
-  late final String salesCode;
-  late final String salesName;
-  late final String ssCode;
-  late final String ssName;
-  late final String kodeJabatan;
-  late final int totalStatus1;
-  late final int totalStatus2;
-  late final int totalStatus3;
+  late final String userCode;
+  late final String email;
+  late final String phoneNumber;
+  late final String userName;
+  late final String profilePicture;
+  late final int totalPoin;
+  late final int totalLevel;
 
-  ListGetProfileTeam.fromJson(Map<String, dynamic> json) {
-    branch = json['branch'];
-    salesCode = json['salesCode'];
-    salesName = json['salesName'];
-    ssCode = json['ssCode'];
-    ssName = json['ssName'];
-    kodeJabatan = json['kodeJabatan'];
-    totalStatus1 = json['totalStatus1'];
-    totalStatus2 = json['totalStatus2'];
-    totalStatus3 = json['totalStatus3'];
+  ListGetProfile.fromJson(Map<String, dynamic> json) {
+    userCode = json['userCode'];
+    email = json['email'];
+    phoneNumber = json['phoneNumber'];
+    userName = json['userName'];
+    profilePicture = json['profilePicture'];
+    totalPoin = json['totalPoin'];
+    totalLevel = json['totalLevel'];
   }
 
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
-    _data['branch'] = branch;
-    _data['salesCode'] = salesCode;
-    _data['salesName'] = salesName;
-    _data['ssCode'] = ssCode;
-    _data['ssName'] = ssName;
-    _data['kodeJabatan'] = kodeJabatan;
-    _data['totalStatus1'] = totalStatus1;
-    _data['totalStatus2'] = totalStatus2;
-    _data['totalStatus3'] = totalStatus3;
+    _data['userCode'] = userCode;
+    _data['email'] = email;
+    _data['phoneNumber'] = phoneNumber;
+    _data['userName'] = userName;
+    _data['profilePicture'] = profilePicture;
+    _data['totalPoin'] = totalPoin;
+    _data['totalLevel'] = totalLevel;
+    return _data;
+  }
+}
+
+//update
+class ListUpdateProfile {
+  ListUpdateProfile({
+    this.email,
+    this.phoneNumber,
+  });
+
+  late String? email;
+  late String? phoneNumber;
+
+  ListUpdateProfile.fromJson(Map<String, dynamic> djson) {
+    email = djson['email'];
+    phoneNumber = djson['phoneNumber'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['email'] = email;
+    _data['phoneNumber'] = phoneNumber;
+
+    return _data;
+  }
+}
+
+class UpdateProfileResponse {
+  UpdateProfileResponse({
+    this.statusCode,
+    this.statusMessage,
+    this.data,
+  });
+  late int? statusCode;
+  late String? statusMessage;
+  late ListUpdateProfile? data;
+
+  UpdateProfileResponse.fromJson(Map<String, dynamic> json) {
+    statusCode = (json['statusCode'] != null) ? json['statusCode'] : null;
+    statusMessage =
+        (json['statusMessage'] != null) ? json['statusMessage'] : null;
+    data = (json['data'] != null)
+        ? ListUpdateProfile.fromJson(json['data'][0])
+        : null;
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['statusCode'] = statusCode;
+    _data['statusMessage'] = statusMessage;
+    _data['listProfileUpdate'] = data!.toJson();
     return _data;
   }
 }

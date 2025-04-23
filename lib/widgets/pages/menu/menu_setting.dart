@@ -30,7 +30,7 @@ class _SettingPageState extends State<SettingPage> {
     'logout.png'
   ];
   List linkPage = [
-    '/',
+    '/profilePage',
     '/teamSayaPage',
     '/rulesOftheGamePage',
     '/changePassPage',
@@ -44,7 +44,12 @@ class _SettingPageState extends State<SettingPage> {
     'LogOut',
   ];
   List image2 = ['profile.png', 'piala.png', 'padlock.png', 'logout.png'];
-  List linkPage2 = ['/', '/rulesOftheGamePage', '/changePassPage', '/'];
+  List linkPage2 = [
+    '/profilePage',
+    '/rulesOftheGamePage',
+    '/changePassPage',
+    '/'
+  ];
 
   String? roles;
 

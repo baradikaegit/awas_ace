@@ -5,7 +5,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/model/profilemodel.dart';
+import 'package:awas_ace/widgets/model/profileteammodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';

@@ -68,6 +68,7 @@ import 'package:awas_ace/widgets/pages/sales/stockbymodel_vcolor.dart';
 import 'package:awas_ace/widgets/pages/sales/stockbymodel_vtype.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byss.dart';
 import 'package:awas_ace/widgets/pages/sales/targetsalesvsactual_byssales.dart';
+import 'package:awas_ace/widgets/pages/settings/profile_page.dart';
 import 'package:awas_ace/widgets/pages/settings/rotg_page.dart';
 import 'package:awas_ace/widgets/pages/sales/dotogatepass.dart';
 import 'package:awas_ace/widgets/pages/sales/funneling.dart';
@@ -363,6 +364,7 @@ class MyApp extends StatelessWidget {
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         TeamSayaPage.routeName: (context) => const TeamSayaPage(),
+        ProfilePage.routeName: (context) => const ProfilePage(),
         RulesOftheGamePage.routeName: (context) => const RulesOftheGamePage(),
         ChangepassPage.routeName: (context) => const ChangepassPage(),
       },
