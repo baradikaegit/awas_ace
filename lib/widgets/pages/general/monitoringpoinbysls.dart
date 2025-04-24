@@ -84,8 +84,8 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                 81,
               ),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(0),
-                topRight: Radius.circular(0),
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
             ),
             child: Stack(
@@ -102,152 +102,163 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                         children: [
                           Column(
                             children: [
-                              SizedBox(
-                                child: rptMonitoringPoin.when(
-                                  data: (data) => (data
-                                              .listRptGeneralMonitoringPoin !=
-                                          null)
-                                      ? Column(
-                                          children: [
-                                            AppBar(
-                                              automaticallyImplyLeading: false,
-                                              centerTitle: true,
-                                              title: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(
-                                                      0,
-                                                      15,
-                                                      0,
-                                                      0,
-                                                    ),
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        "CABANG ${data.listRptGeneralMonitoringPoin![0].title.replaceAll('\\n', '\n')}",
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              ResponsiveValue<
-                                                                  double>(
-                                                            context,
-                                                            conditionalValues: [
-                                                              const Condition
-                                                                  .equals(
-                                                                  name: TABLET,
-                                                                  value: 14.0,
-                                                                  landscapeValue:
-                                                                      14.0),
-                                                              const Condition
-                                                                  .largerThan(
-                                                                  name: TABLET,
-                                                                  value: 14.5,
-                                                                  landscapeValue:
-                                                                      14.5,
-                                                                  breakpoint:
-                                                                      800),
-                                                            ],
-                                                            defaultValue: 12.0,
-                                                          ).value,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              backgroundColor:
-                                                  const Color.fromARGB(
-                                                255,
-                                                33,
-                                                44,
-                                                81,
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                for (int i = 0;
-                                                    i <
-                                                        data.listRptGeneralMonitoringPoin!
-                                                            .length;
-                                                    i++)
-                                                  if (data
-                                                          .listRptGeneralMonitoringPoin![
-                                                              i]
-                                                          .tipe !=
-                                                      'List')
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
+                                child: SizedBox(
+                                  child: rptMonitoringPoin.when(
+                                    data: (data) => (data
+                                                .listRptGeneralMonitoringPoin !=
+                                            null)
+                                        ? Column(
+                                            children: [
+                                              AppBar(
+                                                automaticallyImplyLeading:
+                                                    false,
+                                                centerTitle: true,
+                                                title: Column(
+                                                  children: [
                                                     Padding(
                                                       padding: const EdgeInsets
                                                           .fromLTRB(
+                                                        0,
                                                         15,
-                                                        15,
-                                                        15,
-                                                        20,
+                                                        0,
+                                                        0,
                                                       ),
-                                                      child: Column(
-                                                        children: [
-                                                          CircleAvatar(
-                                                            backgroundColor:
-                                                                const Color
-                                                                    .fromARGB(
-                                                              255,
-                                                              3,
-                                                              116,
-                                                              18,
-                                                            ),
-                                                            minRadius: 30,
-                                                            maxRadius: 50,
-                                                            child: Image.asset(
-                                                              'assets/images/user.png',
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                      child: Align(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        child: Text(
+                                                          textAlign:
+                                                              TextAlign.center,
+                                                          "CABANG ${data.listRptGeneralMonitoringPoin![0].title.replaceAll('\\n', '\n')}",
+                                                          style: TextStyle(
+                                                            fontSize:
+                                                                ResponsiveValue<
+                                                                    double>(
+                                                              context,
+                                                              conditionalValues: [
+                                                                const Condition
+                                                                    .equals(
+                                                                    name:
+                                                                        TABLET,
+                                                                    value: 14.0,
+                                                                    landscapeValue:
+                                                                        14.0),
+                                                                const Condition
+                                                                    .largerThan(
+                                                                    name:
+                                                                        TABLET,
+                                                                    value: 14.5,
+                                                                    landscapeValue:
+                                                                        14.5,
+                                                                    breakpoint:
+                                                                        800),
+                                                              ],
+                                                              defaultValue:
+                                                                  12.0,
+                                                            ).value,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: Colors.white,
                                                           ),
-                                                          const SizedBox(
-                                                            height: 15,
-                                                          ),
-                                                          Text(
-                                                            data
-                                                                .listRptGeneralMonitoringPoin![
-                                                                    i]
-                                                                .data3,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                          Text(
-                                                            data
-                                                                .listRptGeneralMonitoringPoin![
-                                                                    i]
-                                                                .headerCode,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                          Text(
-                                                            data
-                                                                .listRptGeneralMonitoringPoin![
-                                                                    i]
-                                                                .data2,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                     ),
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      : const Column(
-                                          children: [],
-                                        ),
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
+                                                  ],
+                                                ),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                  255,
+                                                  33,
+                                                  44,
+                                                  81,
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  for (int i = 0;
+                                                      i <
+                                                          data.listRptGeneralMonitoringPoin!
+                                                              .length;
+                                                      i++)
+                                                    if (data
+                                                            .listRptGeneralMonitoringPoin![
+                                                                i]
+                                                            .tipe !=
+                                                        'List')
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                          15,
+                                                          15,
+                                                          15,
+                                                          20,
+                                                        ),
+                                                        child: Column(
+                                                          children: [
+                                                            CircleAvatar(
+                                                              backgroundColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                255,
+                                                                3,
+                                                                116,
+                                                                18,
+                                                              ),
+                                                              minRadius: 30,
+                                                              maxRadius: 50,
+                                                              child:
+                                                                  Image.asset(
+                                                                'assets/images/user.png',
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 15,
+                                                            ),
+                                                            Text(
+                                                              data
+                                                                  .listRptGeneralMonitoringPoin![
+                                                                      i]
+                                                                  .data3,
+                                                              style:
+                                                                  textStyleColorWhite,
+                                                            ),
+                                                            Text(
+                                                              data
+                                                                  .listRptGeneralMonitoringPoin![
+                                                                      i]
+                                                                  .headerCode,
+                                                              style:
+                                                                  textStyleColorWhite,
+                                                            ),
+                                                            Text(
+                                                              data
+                                                                  .listRptGeneralMonitoringPoin![
+                                                                      i]
+                                                                  .data2,
+                                                              style:
+                                                                  textStyleColorWhite,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                        : const Column(
+                                            children: [],
+                                          ),
+                                    error: (err, stack) => Text('Error $err'),
+                                    loading: () =>
+                                        const Center(child: Text('')),
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -563,7 +574,7 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                               MonitoringPoinHistoryPage.routeName,
                                                                               arguments: linkPage,
                                                                             );
-                                                                            print(linkPage);
+                                                                            // print(linkPage);
                                                                           },
                                                                           child:
                                                                               Padding(

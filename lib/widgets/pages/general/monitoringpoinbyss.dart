@@ -83,8 +83,8 @@ class _MonitoringPoinBySSPageState extends State<MonitoringPoinBySSPage> {
                 81,
               ),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(0),
-                topRight: Radius.circular(0),
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
             ),
             child: Stack(
@@ -101,146 +101,154 @@ class _MonitoringPoinBySSPageState extends State<MonitoringPoinBySSPage> {
                         children: [
                           Column(
                             children: [
-                              SizedBox(
-                                child: rptMonitoringPoin.when(
-                                  data: (data) => (data
-                                              .listRptGeneralMonitoringPoin !=
-                                          null)
-                                      ? Column(
-                                          children: [
-                                            AppBar(
-                                              automaticallyImplyLeading: false,
-                                              centerTitle: true,
-                                              title: Column(
-                                                children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(
-                                                      0,
-                                                      5,
-                                                      0,
-                                                      0,
-                                                    ),
-                                                    child: Text(
-                                                      "CABANG ${data.listRptGeneralMonitoringPoin![0].title}",
-                                                      style: TextStyle(
-                                                        fontSize:
-                                                            ResponsiveValue<
-                                                                double>(
-                                                          context,
-                                                          conditionalValues: [
-                                                            const Condition
-                                                                .equals(
-                                                                name: TABLET,
-                                                                value: 14.0,
-                                                                landscapeValue:
-                                                                    14.0),
-                                                            const Condition
-                                                                .largerThan(
-                                                                name: TABLET,
-                                                                value: 14.5,
-                                                                landscapeValue:
-                                                                    14.5,
-                                                                breakpoint:
-                                                                    800),
-                                                          ],
-                                                          defaultValue: 12.0,
-                                                        ).value,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.white,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              backgroundColor:
-                                                  const Color.fromARGB(
-                                                255,
-                                                33,
-                                                44,
-                                                81,
-                                              ),
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                for (int i = 0;
-                                                    i <
-                                                        data.listRptGeneralMonitoringPoin!
-                                                            .length;
-                                                    i++)
-                                                  if (data
-                                                          .listRptGeneralMonitoringPoin![
-                                                              i]
-                                                          .tipe !=
-                                                      'List')
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
+                                child: SizedBox(
+                                  child: rptMonitoringPoin.when(
+                                    data: (data) => (data
+                                                .listRptGeneralMonitoringPoin !=
+                                            null)
+                                        ? Column(
+                                            children: [
+                                              AppBar(
+                                                automaticallyImplyLeading:
+                                                    false,
+                                                centerTitle: true,
+                                                title: Column(
+                                                  children: [
                                                     Padding(
                                                       padding: const EdgeInsets
                                                           .fromLTRB(
-                                                        15,
-                                                        10,
-                                                        15,
-                                                        20,
+                                                        0,
+                                                        5,
+                                                        0,
+                                                        0,
                                                       ),
-                                                      child: Column(
-                                                        children: [
-                                                          CircleAvatar(
-                                                            backgroundColor:
-                                                                const Color
-                                                                    .fromARGB(
-                                                              255,
-                                                              3,
-                                                              116,
-                                                              18,
-                                                            ),
-                                                            minRadius: 30,
-                                                            maxRadius: 50,
-                                                            child: Image.asset(
-                                                              'assets/images/user.png',
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                          const SizedBox(
-                                                            height: 15,
-                                                          ),
-                                                          Text(
-                                                            data
-                                                                .listRptGeneralMonitoringPoin![
-                                                                    i]
-                                                                .data3,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                          Text(
-                                                            data
-                                                                .listRptGeneralMonitoringPoin![
-                                                                    i]
-                                                                .headerCode,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                          Text(
-                                                            data
-                                                                .listRptGeneralMonitoringPoin![
-                                                                    i]
-                                                                .data2,
-                                                            style:
-                                                                textStyleColorWhite,
-                                                          ),
-                                                        ],
+                                                      child: Text(
+                                                        "CABANG ${data.listRptGeneralMonitoringPoin![0].title}",
+                                                        style: TextStyle(
+                                                          fontSize:
+                                                              ResponsiveValue<
+                                                                  double>(
+                                                            context,
+                                                            conditionalValues: [
+                                                              const Condition
+                                                                  .equals(
+                                                                  name: TABLET,
+                                                                  value: 14.0,
+                                                                  landscapeValue:
+                                                                      14.0),
+                                                              const Condition
+                                                                  .largerThan(
+                                                                  name: TABLET,
+                                                                  value: 14.5,
+                                                                  landscapeValue:
+                                                                      14.5,
+                                                                  breakpoint:
+                                                                      800),
+                                                            ],
+                                                            defaultValue: 12.0,
+                                                          ).value,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          color: Colors.white,
+                                                        ),
                                                       ),
                                                     ),
-                                              ],
-                                            ),
-                                          ],
-                                        )
-                                      : const Column(
-                                          children: [],
-                                        ),
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
+                                                  ],
+                                                ),
+                                                backgroundColor:
+                                                    const Color.fromARGB(
+                                                  255,
+                                                  33,
+                                                  44,
+                                                  81,
+                                                ),
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  for (int i = 0;
+                                                      i <
+                                                          data.listRptGeneralMonitoringPoin!
+                                                              .length;
+                                                      i++)
+                                                    if (data
+                                                            .listRptGeneralMonitoringPoin![
+                                                                i]
+                                                            .tipe !=
+                                                        'List')
+                                                      Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                          15,
+                                                          10,
+                                                          15,
+                                                          20,
+                                                        ),
+                                                        child: Column(
+                                                          children: [
+                                                            CircleAvatar(
+                                                              backgroundColor:
+                                                                  const Color
+                                                                      .fromARGB(
+                                                                255,
+                                                                3,
+                                                                116,
+                                                                18,
+                                                              ),
+                                                              minRadius: 30,
+                                                              maxRadius: 50,
+                                                              child:
+                                                                  Image.asset(
+                                                                'assets/images/user.png',
+                                                                fit: BoxFit
+                                                                    .cover,
+                                                              ),
+                                                            ),
+                                                            const SizedBox(
+                                                              height: 15,
+                                                            ),
+                                                            Text(
+                                                              data
+                                                                  .listRptGeneralMonitoringPoin![
+                                                                      i]
+                                                                  .data3,
+                                                              style:
+                                                                  textStyleColorWhite,
+                                                            ),
+                                                            Text(
+                                                              data
+                                                                  .listRptGeneralMonitoringPoin![
+                                                                      i]
+                                                                  .headerCode,
+                                                              style:
+                                                                  textStyleColorWhite,
+                                                            ),
+                                                            Text(
+                                                              data
+                                                                  .listRptGeneralMonitoringPoin![
+                                                                      i]
+                                                                  .data2,
+                                                              style:
+                                                                  textStyleColorWhite,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                ],
+                                              ),
+                                            ],
+                                          )
+                                        : const Column(
+                                            children: [],
+                                          ),
+                                    error: (err, stack) => Text('Error $err'),
+                                    loading: () =>
+                                        const Center(child: Text('')),
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -553,7 +561,7 @@ class _MonitoringPoinBySSPageState extends State<MonitoringPoinBySSPage> {
                                                                               MonitoringPoinBySalesPage.routeName,
                                                                               arguments: '$branchCode/$ssCode',
                                                                             );
-                                                                            print('${branchCode} , ${ssCode}');
+                                                                            // print('${branchCode} , ${ssCode}');
                                                                           },
                                                                           child:
                                                                               Padding(

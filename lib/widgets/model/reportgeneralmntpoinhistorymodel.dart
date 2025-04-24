@@ -43,6 +43,7 @@ class ListRptGeneralMonitoringPoinHistory {
     required this.totalPoin,
     required this.totalRedeem,
     required this.poinTipe,
+    required this.poinName,
     required this.iD,
   });
 
@@ -56,6 +57,7 @@ class ListRptGeneralMonitoringPoinHistory {
   late final int totalPoin;
   late final int totalRedeem;
   late final String poinTipe;
+  late final String poinName;
   late final String iD;
 
   ListRptGeneralMonitoringPoinHistory.fromJson(Map<String, dynamic> json) {
@@ -69,6 +71,7 @@ class ListRptGeneralMonitoringPoinHistory {
     totalPoin = json['totalPoin'];
     totalRedeem = json['totalRedeem'];
     poinTipe = json['poinTipe'];
+    poinName = json['poinName'];
     iD = json['iD'];
   }
 
@@ -84,6 +87,7 @@ class ListRptGeneralMonitoringPoinHistory {
     _data['totalPoin'] = totalPoin;
     _data['totalRedeem'] = totalRedeem;
     _data['poinTipe'] = poinTipe;
+    _data['poinName'] = poinName;
     _data['iD'] = iD;
 
     return _data;
