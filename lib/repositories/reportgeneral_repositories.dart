@@ -13,6 +13,8 @@ abstract class IReportGeneralRepository {
   Future<ListRptGeneralMntPoinResponse> fecthListDataMonitoringPoin();
   Future<ListRptGeneralMntPoinResponse> fecthListDataMonitoringPoinBySS(
       String linkPageObj);
+  Future<ListRptGeneralMntPoinResponse> fecthListDataMonitoringPoinBySvc(
+      String linkPageObj);
   Future<ListRptGeneralMntPoinResponse> fecthListDataMonitoringPoinBySales(
       String linkPageObj);
   Future<ListRptGeneralMntPoinHistoryResponse>
@@ -72,6 +74,31 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
     var responseGetMonitPoinBySS =
         ListRptGeneralMntPoinResponse.fromJson(jsonObjRptMonitPoinBySS);
     return responseGetMonitPoinBySS;
+  }
+
+  //Monitoring Poin by Svc
+  @override
+  Future<ListRptGeneralMntPoinResponse> fecthListDataMonitoringPoinBySvc(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitPoinBySvc =
+        "${_host}GetReportMonitoringPoinBySvc/$linkPageObj";
+
+    var resultGetRptMonitPoinBySvc =
+        await http.get(Uri.parse(urlGetRptMonitPoinBySvc), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitPoinBySvc =
+        jsonDecode(resultGetRptMonitPoinBySvc.body);
+
+    var responseGetMonitPoinBySvc =
+        ListRptGeneralMntPoinResponse.fromJson(jsonObjRptMonitPoinBySvc);
+    return responseGetMonitPoinBySvc;
   }
 
   //Monitoring Poin by Sales

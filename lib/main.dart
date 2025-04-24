@@ -22,6 +22,7 @@ import 'package:awas_ace/widgets/pages/entrypropectuebp_page.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoin.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoinbysls.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoinbyss.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringpoinbysvc.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoinhistory.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeem.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembysls.dart';
@@ -343,6 +344,9 @@ class MyApp extends StatelessWidget {
             ),
         MonitoringPoinPage.routeName: (context) => const MonitoringPoinPage(),
         MonitoringPoinBySSPage.routeName: (context) => MonitoringPoinBySSPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitoringPoinBySvcPage.routeName: (context) => MonitoringPoinBySvcPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         MonitoringPoinBySalesPage.routeName: (context) =>

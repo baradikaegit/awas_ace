@@ -27,6 +27,16 @@ final reportMonitPoinBySS =
   },
 );
 
+//list report monitoring poin by svc
+final reportMonitPoinBySvc =
+    FutureProvider.autoDispose.family<ListRptGeneralMntPoinResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryMonitPoinBySvc = ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitPoinBySvc
+        .fecthListDataMonitoringPoinBySvc(linkPageObj);
+  },
+);
+
 //list report monitoring poin by sales
 final reportMonitPoinBySales =
     FutureProvider.autoDispose.family<ListRptGeneralMntPoinResponse, String>(

@@ -4,6 +4,7 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoinbyss.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringpoinbysvc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -1076,12 +1077,11 @@ class _MonitoringPoinPageState extends State<MonitoringPoinPage>
                                                                                 onTap: () {
                                                                                   String branchCode = dataMonitoringPoin.listRptGeneralMonitoringPoin![i].headerCode;
 
-                                                                                  // Navigator.pushNamed(
-                                                                                  //   context,
-                                                                                  //   MonitoringPoinBySSPage.routeName,
-                                                                                  //   arguments: branchCode,
-                                                                                  // );
-                                                                                  print(branchCode);
+                                                                                  Navigator.pushNamed(
+                                                                                    context,
+                                                                                    MonitoringPoinBySvcPage.routeName,
+                                                                                    arguments: branchCode,
+                                                                                  );
                                                                                 },
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets.only(

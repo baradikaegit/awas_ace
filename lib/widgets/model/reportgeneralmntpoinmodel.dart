@@ -35,6 +35,7 @@ class ListRptGeneralMonitoringPoin {
     required this.num,
     required this.headerCode,
     required this.headerName,
+    required this.headerGroup,
     required this.data1,
     required this.data2,
     required this.data3,
@@ -45,6 +46,7 @@ class ListRptGeneralMonitoringPoin {
   late final int num;
   late final String headerCode;
   late final String headerName;
+  late final String headerGroup;
   late final String data1;
   late final String data2;
   late final String data3;
@@ -56,6 +58,7 @@ class ListRptGeneralMonitoringPoin {
     num = json['num'];
     headerCode = json['headerCode'];
     headerName = json['headerName'];
+    headerGroup = json['headerGroup'];
     data1 = json['data1'];
     data2 = json['data2'];
     data3 = json['data3'];
@@ -69,6 +72,7 @@ class ListRptGeneralMonitoringPoin {
     _data['num'] = num;
     _data['headerCode'] = headerCode;
     _data['headerName'] = headerName;
+    _data['headerGroup'] = headerGroup;
     _data['data1'] = data1;
     _data['data2'] = data2;
     _data['data3'] = data3;
