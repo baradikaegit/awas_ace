@@ -3,6 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeembyhistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -84,8 +85,8 @@ class _MonitoringRedeemBySalesPageState
                 81,
               ),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(0),
-                topRight: Radius.circular(0),
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
             ),
             child: Stack(
@@ -101,80 +102,94 @@ class _MonitoringRedeemBySalesPageState
                         children: [
                           Column(
                             children: [
-                              SizedBox(
-                                child: rptMonitoringRedeem.when(
-                                  data: (data) => (data
-                                              .listRptGeneralMonitoringRedeem !=
-                                          null)
-                                      ? Column(
-                                          children: [
-                                            AppBar(
-                                              automaticallyImplyLeading: false,
-                                              centerTitle: true,
-                                              title: Column(
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
+                                child: SizedBox(
+                                  child: rptMonitoringRedeem.when(
+                                    data: (data) =>
+                                        (data.listRptGeneralMonitoringRedeem !=
+                                                null)
+                                            ? Column(
                                                 children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(
-                                                      0,
-                                                      5,
-                                                      0,
-                                                      0,
-                                                    ),
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      child: Text(
-                                                        "CABANG ${data.listRptGeneralMonitoringRedeem![0].title.replaceAll('\\n', '\n')}",
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style: TextStyle(
-                                                          fontSize:
-                                                              ResponsiveValue<
-                                                                  double>(
-                                                            context,
-                                                            conditionalValues: [
-                                                              const Condition
-                                                                  .equals(
-                                                                  name: TABLET,
-                                                                  value: 14.0,
-                                                                  landscapeValue:
-                                                                      14.0),
-                                                              const Condition
-                                                                  .largerThan(
-                                                                  name: TABLET,
-                                                                  value: 14.5,
-                                                                  landscapeValue:
-                                                                      14.5,
-                                                                  breakpoint:
-                                                                      800),
-                                                            ],
-                                                            defaultValue: 12.0,
-                                                          ).value,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: Colors.white,
+                                                  AppBar(
+                                                    automaticallyImplyLeading:
+                                                        false,
+                                                    centerTitle: true,
+                                                    title: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                            0,
+                                                            5,
+                                                            0,
+                                                            0,
+                                                          ),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Text(
+                                                              "CABANG ${data.listRptGeneralMonitoringRedeem![0].title.replaceAll('\\n', '\n')}",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                fontSize:
+                                                                    ResponsiveValue<
+                                                                        double>(
+                                                                  context,
+                                                                  conditionalValues: [
+                                                                    const Condition
+                                                                        .equals(
+                                                                        name:
+                                                                            TABLET,
+                                                                        value:
+                                                                            14.0,
+                                                                        landscapeValue:
+                                                                            14.0),
+                                                                    const Condition
+                                                                        .largerThan(
+                                                                        name:
+                                                                            TABLET,
+                                                                        value:
+                                                                            14.5,
+                                                                        landscapeValue:
+                                                                            14.5,
+                                                                        breakpoint:
+                                                                            800),
+                                                                  ],
+                                                                  defaultValue:
+                                                                      12.0,
+                                                                ).value,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
+                                                          ),
                                                         ),
-                                                      ),
+                                                      ],
+                                                    ),
+                                                    backgroundColor:
+                                                        const Color.fromARGB(
+                                                      255,
+                                                      33,
+                                                      44,
+                                                      81,
                                                     ),
                                                   ),
                                                 ],
+                                              )
+                                            : const Column(
+                                                children: [],
                                               ),
-                                              backgroundColor:
-                                                  const Color.fromARGB(
-                                                255,
-                                                33,
-                                                44,
-                                                81,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : const Column(
-                                          children: [],
-                                        ),
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
+                                    error: (err, stack) => Text('Error $err'),
+                                    loading: () =>
+                                        const Center(child: Text('')),
+                                  ),
                                 ),
                               ),
                               Expanded(
@@ -487,18 +502,14 @@ class _MonitoringRedeemBySalesPageState
                                                                           onTap:
                                                                               () {
                                                                             String
-                                                                                branchCode =
-                                                                                dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].title.replaceAll(' \\n', '/');
-                                                                            String
-                                                                                ssCode =
+                                                                                userCode =
                                                                                 dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
 
-                                                                            // Navigator.pushNamed(
-                                                                            //   context,
-                                                                            //   MonitoringPoinBySSPage.routeName,
-                                                                            //   arguments: branchCode,
-                                                                            // );
-                                                                            print('$branchCode/$ssCode');
+                                                                            Navigator.pushNamed(
+                                                                              context,
+                                                                              MonitoringRedeemByHistoryPage.routeName,
+                                                                              arguments: userCode,
+                                                                            );
                                                                           },
                                                                           child:
                                                                               Padding(

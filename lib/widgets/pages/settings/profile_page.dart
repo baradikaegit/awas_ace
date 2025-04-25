@@ -688,8 +688,6 @@ class _ProfilePageState extends State<ProfilePage> {
                                                                             ),
                                                                             onPressed:
                                                                                 () async {
-                                                                              print('${emailController.text} ${phoneController.text}');
-
                                                                               var updateProfile = ListUpdateProfile(
                                                                                 email: emailController.text,
                                                                                 phoneNumber: phoneController.text,

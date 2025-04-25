@@ -25,6 +25,7 @@ import 'package:awas_ace/widgets/pages/general/monitoringpoinbyss.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoinbysvc.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringpoinhistory.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeem.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeembyhistory.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembysls.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembyss.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringsaldo.dart';
@@ -360,6 +361,10 @@ class MyApp extends StatelessWidget {
                 linkPageObj: ModalRoute.of(context)!.settings.arguments),
         MonitoringRedeemBySalesPage.routeName: (context) =>
             MonitoringRedeemBySalesPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitoringRedeemByHistoryPage.routeName: (context) =>
+            MonitoringRedeemByHistoryPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         MonitoringSaldoPage.routeName: (context) => const MonitoringSaldoPage(),

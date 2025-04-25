@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntredeemhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +24,8 @@ abstract class IReportGeneralRepository {
   Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeemBySS(
       String linkPageObj);
   Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeemBySales(
+      String linkPageObj);
+  Future<ListRptRedeemHistoryResponse> fecthListDataMonitoringRedeemByHistory(
       String linkPageObj);
   Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldo();
 }
@@ -223,6 +226,31 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
     var responseGetMonitRedeemBySales =
         ListRptGeneralMntRedeemResponse.fromJson(jsonObjRptMonitRedeemBySales);
     return responseGetMonitRedeemBySales;
+  }
+
+  //Monitoring Redeem by history
+  @override
+  Future<ListRptRedeemHistoryResponse> fecthListDataMonitoringRedeemByHistory(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitRedeemByHistory =
+        "${_host}GetReportMonitoringRedeemByHistroy/$linkPageObj";
+
+    var resultGetRptMonitRedeemByHistory =
+        await http.get(Uri.parse(urlGetRptMonitRedeemByHistory), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitRedeemByHistory =
+        jsonDecode(resultGetRptMonitRedeemByHistory.body);
+
+    var responseGetMonitRedeemByHistory =
+        ListRptRedeemHistoryResponse.fromJson(jsonObjRptMonitRedeemByHistory);
+    return responseGetMonitRedeemByHistory;
   }
 
   //Monitoring Saldo

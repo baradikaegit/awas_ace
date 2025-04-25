@@ -1,6 +1,7 @@
 import 'package:awas_ace/repositories/reportgeneral_repositories.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntredeemhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -96,5 +97,16 @@ final reportMonitPoinHistory = FutureProvider.autoDispose
         ref.watch(reportGeneralRepositoryProvider);
     return repositoryMonitPoinHistory
         .fecthListDataMonitoringPoinHistory(linkPageObj);
+  },
+);
+
+//list report monitoring redeem by history
+final reportMonitRedeemByHistory =
+    FutureProvider.autoDispose.family<ListRptRedeemHistoryResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryMonitRedeemByHistory =
+        ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitRedeemByHistory
+        .fecthListDataMonitoringRedeemByHistory(linkPageObj);
   },
 );

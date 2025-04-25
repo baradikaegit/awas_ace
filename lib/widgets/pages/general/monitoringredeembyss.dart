@@ -85,8 +85,8 @@ class _MonitoringRedeemBySSPageState extends State<MonitoringRedeemBySSPage>
                 81,
               ),
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(0),
-                topRight: Radius.circular(0),
+                topLeft: Radius.circular(25),
+                topRight: Radius.circular(25),
               ),
             ),
             child: Stack(
@@ -102,74 +102,86 @@ class _MonitoringRedeemBySSPageState extends State<MonitoringRedeemBySSPage>
                         children: [
                           Column(
                             children: [
-                              SizedBox(
-                                child: rptMonitoringRedeem.when(
-                                  data: (data) => (data
-                                              .listRptGeneralMonitoringRedeem !=
-                                          null)
-                                      ? Column(
-                                          children: [
-                                            AppBar(
-                                              automaticallyImplyLeading: false,
-                                              centerTitle: true,
-                                              title: Column(
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
+                                child: SizedBox(
+                                  child: rptMonitoringRedeem.when(
+                                    data: (data) =>
+                                        (data.listRptGeneralMonitoringRedeem !=
+                                                null)
+                                            ? Column(
                                                 children: [
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(
-                                                      0,
-                                                      5,
-                                                      0,
-                                                      0,
+                                                  AppBar(
+                                                    automaticallyImplyLeading:
+                                                        false,
+                                                    centerTitle: true,
+                                                    title: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                            0,
+                                                            5,
+                                                            0,
+                                                            0,
+                                                          ),
+                                                          child: Text(
+                                                            "CABANG ${data.listRptGeneralMonitoringRedeem![0].title}",
+                                                            style: TextStyle(
+                                                              fontSize:
+                                                                  ResponsiveValue<
+                                                                      double>(
+                                                                context,
+                                                                conditionalValues: [
+                                                                  const Condition
+                                                                      .equals(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          14.0,
+                                                                      landscapeValue:
+                                                                          14.0),
+                                                                  const Condition.largerThan(
+                                                                      name:
+                                                                          TABLET,
+                                                                      value:
+                                                                          14.5,
+                                                                      landscapeValue:
+                                                                          14.5,
+                                                                      breakpoint:
+                                                                          800),
+                                                                ],
+                                                                defaultValue:
+                                                                    12.0,
+                                                              ).value,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              color:
+                                                                  Colors.white,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
-                                                    child: Text(
-                                                      "CABANG ${data.listRptGeneralMonitoringRedeem![0].title}",
-                                                      style: TextStyle(
-                                                        fontSize:
-                                                            ResponsiveValue<
-                                                                double>(
-                                                          context,
-                                                          conditionalValues: [
-                                                            const Condition
-                                                                .equals(
-                                                                name: TABLET,
-                                                                value: 14.0,
-                                                                landscapeValue:
-                                                                    14.0),
-                                                            const Condition
-                                                                .largerThan(
-                                                                name: TABLET,
-                                                                value: 14.5,
-                                                                landscapeValue:
-                                                                    14.5,
-                                                                breakpoint:
-                                                                    800),
-                                                          ],
-                                                          defaultValue: 12.0,
-                                                        ).value,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: Colors.white,
-                                                      ),
+                                                    backgroundColor:
+                                                        const Color.fromARGB(
+                                                      255,
+                                                      33,
+                                                      44,
+                                                      81,
                                                     ),
                                                   ),
                                                 ],
+                                              )
+                                            : const Column(
+                                                children: [],
                                               ),
-                                              backgroundColor:
-                                                  const Color.fromARGB(
-                                                255,
-                                                33,
-                                                44,
-                                                81,
-                                              ),
-                                            ),
-                                          ],
-                                        )
-                                      : const Column(
-                                          children: [],
-                                        ),
-                                  error: (err, stack) => Text('Error $err'),
-                                  loading: () => const Center(child: Text('')),
+                                    error: (err, stack) => Text('Error $err'),
+                                    loading: () =>
+                                        const Center(child: Text('')),
+                                  ),
                                 ),
                               ),
                               Expanded(
