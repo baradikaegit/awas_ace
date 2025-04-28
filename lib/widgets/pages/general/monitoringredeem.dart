@@ -3,8 +3,8 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/pages/general/monitoringredeembysls.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembyss.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeembysvc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -902,12 +902,11 @@ class _MonitoringRedeemPageState extends State<MonitoringRedeemPage>
                                                                               InkWell(
                                                                                 onTap: () {
                                                                                   String branchCode = dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
-                                                                                  String ssCode = 'SVC';
 
                                                                                   Navigator.pushNamed(
                                                                                     context,
-                                                                                    MonitoringRedeemBySalesPage.routeName,
-                                                                                    arguments: '$branchCode/$ssCode',
+                                                                                    MonitoringRedeemBySvcPage.routeName,
+                                                                                    arguments: branchCode,
                                                                                   );
                                                                                   print(branchCode);
                                                                                 },

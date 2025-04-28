@@ -28,6 +28,7 @@ import 'package:awas_ace/widgets/pages/general/monitoringredeem.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembyhistory.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembysls.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembyss.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeembysvc.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringsaldo.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
@@ -142,10 +143,12 @@ class MyApp extends StatelessWidget {
       routes: {
         ResetPassword.routeName: (context) => const ResetPassword(),
         CallPage.routeName: (context) => CallPage(
-            callDateObject: ModalRoute.of(context)!.settings.arguments),
+              callDateObject: ModalRoute.of(context)!.settings.arguments,
+            ),
         ProspectSalesPage.routeName: (context) => const ProspectSalesPage(),
         ProspectSalesBySlsPage.routeName: (context) => ProspectSalesBySlsPage(
-            linkPageObj: ModalRoute.of(context)!.settings.arguments),
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         TargetsalesPage.routeName: (context) => const TargetsalesPage(),
         TargetsalesEntryPage.routeName: (context) => TargetsalesEntryPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
@@ -300,9 +303,11 @@ class MyApp extends StatelessWidget {
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         ProspekSaGRPage.routeName: (context) => ProspekSaGRPage(
-            linkPageObj: ModalRoute.of(context)!.settings.arguments),
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         ProspekSaGRBySANamePage.routeName: (context) => ProspekSaGRBySANamePage(
-            linkPageObj: ModalRoute.of(context)!.settings.arguments),
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         ProspekSaBPPage.routeName: (context) => ProspekSaBPPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
@@ -358,7 +363,12 @@ class MyApp extends StatelessWidget {
             const MonitoringRedeemPage(),
         MonitoringRedeemBySSPage.routeName: (context) =>
             MonitoringRedeemBySSPage(
-                linkPageObj: ModalRoute.of(context)!.settings.arguments),
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitoringRedeemBySvcPage.routeName: (context) =>
+            MonitoringRedeemBySvcPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
         MonitoringRedeemBySalesPage.routeName: (context) =>
             MonitoringRedeemBySalesPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,

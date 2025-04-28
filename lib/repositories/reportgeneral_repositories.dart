@@ -23,6 +23,8 @@ abstract class IReportGeneralRepository {
   Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeem();
   Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeemBySS(
       String linkPageObj);
+  Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeemBySvc(
+      String linkPageObj);
   Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeemBySales(
       String linkPageObj);
   Future<ListRptRedeemHistoryResponse> fecthListDataMonitoringRedeemByHistory(
@@ -201,6 +203,31 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
     var responseGetMonitRedeemBySS =
         ListRptGeneralMntRedeemResponse.fromJson(jsonObjRptMonitRedeemBySS);
     return responseGetMonitRedeemBySS;
+  }
+
+  //Monitoring Redeem by svc
+  @override
+  Future<ListRptGeneralMntRedeemResponse> fecthListDataMonitoringRedeemBySvc(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitRedeemBySvc =
+        "${_host}GetReportMonitoringRedeemBySvc/$linkPageObj";
+
+    var resultGetRptMonitRedeemBySvc =
+        await http.get(Uri.parse(urlGetRptMonitRedeemBySvc), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitRedeemBySvc =
+        jsonDecode(resultGetRptMonitRedeemBySvc.body);
+
+    var responseGetMonitRedeemBySvc =
+        ListRptGeneralMntRedeemResponse.fromJson(jsonObjRptMonitRedeemBySvc);
+    return responseGetMonitRedeemBySvc;
   }
 
   //Monitoring Redeem by sales

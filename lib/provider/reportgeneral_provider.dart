@@ -69,6 +69,17 @@ final reportMonitRedeemBySS =
   },
 );
 
+//list report monitoring redeem by svc
+final reportMonitRedeemBySvc =
+    FutureProvider.autoDispose.family<ListRptGeneralMntRedeemResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryMonitRedeemBySvc =
+        ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitRedeemBySvc
+        .fecthListDataMonitoringRedeemBySvc(linkPageObj);
+  },
+);
+
 //list report monitoring redeem by sales
 final reportMonitRedeemBySales =
     FutureProvider.autoDispose.family<ListRptGeneralMntRedeemResponse, String>(
