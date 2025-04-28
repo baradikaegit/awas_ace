@@ -512,15 +512,17 @@ class _MonitoringRedeemPageState extends State<MonitoringRedeemPage>
                                                                           cells: <DataCell>[
                                                                             DataCell(
                                                                               InkWell(
-                                                                                onTap: () {
-                                                                                  String branchCode = dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
+                                                                                onTap: dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].data1 == '0'
+                                                                                    ? () {}
+                                                                                    : () {
+                                                                                        String branchCode = dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
 
-                                                                                  Navigator.pushNamed(
-                                                                                    context,
-                                                                                    MonitoringRedeemBySSPage.routeName,
-                                                                                    arguments: branchCode,
-                                                                                  );
-                                                                                },
+                                                                                        Navigator.pushNamed(
+                                                                                          context,
+                                                                                          MonitoringRedeemBySSPage.routeName,
+                                                                                          arguments: branchCode,
+                                                                                        );
+                                                                                      },
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets.only(
                                                                                     left: 10,
@@ -900,16 +902,17 @@ class _MonitoringRedeemPageState extends State<MonitoringRedeemPage>
                                                                           cells: <DataCell>[
                                                                             DataCell(
                                                                               InkWell(
-                                                                                onTap: () {
-                                                                                  String branchCode = dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
+                                                                                onTap: dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].data1 == '0'
+                                                                                    ? () {}
+                                                                                    : () {
+                                                                                        String branchCode = dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
 
-                                                                                  Navigator.pushNamed(
-                                                                                    context,
-                                                                                    MonitoringRedeemBySvcPage.routeName,
-                                                                                    arguments: branchCode,
-                                                                                  );
-                                                                                  print(branchCode);
-                                                                                },
+                                                                                        Navigator.pushNamed(
+                                                                                          context,
+                                                                                          MonitoringRedeemBySvcPage.routeName,
+                                                                                          arguments: branchCode,
+                                                                                        );
+                                                                                      },
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets.only(
                                                                                     left: 10,

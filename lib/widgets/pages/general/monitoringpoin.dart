@@ -603,15 +603,17 @@ class _MonitoringPoinPageState extends State<MonitoringPoinPage>
                                                                           cells: <DataCell>[
                                                                             DataCell(
                                                                               InkWell(
-                                                                                onTap: () {
-                                                                                  String branchCode = dataMonitoringPoin.listRptGeneralMonitoringPoin![i].headerCode;
+                                                                                onTap: dataMonitoringPoin.listRptGeneralMonitoringPoin![i].data1 == '0'
+                                                                                    ? () {}
+                                                                                    : () {
+                                                                                        String branchCode = dataMonitoringPoin.listRptGeneralMonitoringPoin![i].headerCode;
 
-                                                                                  Navigator.pushNamed(
-                                                                                    context,
-                                                                                    MonitoringPoinBySSPage.routeName,
-                                                                                    arguments: branchCode,
-                                                                                  );
-                                                                                },
+                                                                                        Navigator.pushNamed(
+                                                                                          context,
+                                                                                          MonitoringPoinBySSPage.routeName,
+                                                                                          arguments: branchCode,
+                                                                                        );
+                                                                                      },
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets.only(
                                                                                     left: 10,
@@ -1074,15 +1076,17 @@ class _MonitoringPoinPageState extends State<MonitoringPoinPage>
                                                                           cells: <DataCell>[
                                                                             DataCell(
                                                                               InkWell(
-                                                                                onTap: () {
-                                                                                  String branchCode = dataMonitoringPoin.listRptGeneralMonitoringPoin![i].headerCode;
+                                                                                onTap: dataMonitoringPoin.listRptGeneralMonitoringPoin![i].data1 == '0'
+                                                                                    ? () {}
+                                                                                    : () {
+                                                                                        String branchCode = dataMonitoringPoin.listRptGeneralMonitoringPoin![i].headerCode;
 
-                                                                                  Navigator.pushNamed(
-                                                                                    context,
-                                                                                    MonitoringPoinBySvcPage.routeName,
-                                                                                    arguments: branchCode,
-                                                                                  );
-                                                                                },
+                                                                                        Navigator.pushNamed(
+                                                                                          context,
+                                                                                          MonitoringPoinBySvcPage.routeName,
+                                                                                          arguments: branchCode,
+                                                                                        );
+                                                                                      },
                                                                                 child: Padding(
                                                                                   padding: const EdgeInsets.only(
                                                                                     left: 10,

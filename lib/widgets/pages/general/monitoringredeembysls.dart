@@ -499,18 +499,17 @@ class _MonitoringRedeemBySalesPageState
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap:
-                                                                              () {
-                                                                            String
-                                                                                userCode =
-                                                                                dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
+                                                                          onTap: dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].data2 == '0'
+                                                                              ? () {}
+                                                                              : () {
+                                                                                  String userCode = dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
 
-                                                                            Navigator.pushNamed(
-                                                                              context,
-                                                                              MonitoringRedeemByHistoryPage.routeName,
-                                                                              arguments: userCode,
-                                                                            );
-                                                                          },
+                                                                                  Navigator.pushNamed(
+                                                                                    context,
+                                                                                    MonitoringRedeemByHistoryPage.routeName,
+                                                                                    arguments: userCode,
+                                                                                  );
+                                                                                },
                                                                           child:
                                                                               Padding(
                                                                             padding:

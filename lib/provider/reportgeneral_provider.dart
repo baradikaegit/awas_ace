@@ -100,6 +100,17 @@ final reportMonitSaldo =
   },
 );
 
+//list report monitoring saldo by user
+final reportMonitSaldoByUser =
+    FutureProvider.autoDispose.family<ListRptGeneralMntSaldoResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryMonitSaldoByUser =
+        ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitSaldoByUser
+        .fecthListDataMonitoringSaldoByUser(linkPageObj);
+  },
+);
+
 //list report monitoring history
 final reportMonitPoinHistory = FutureProvider.autoDispose
     .family<ListRptGeneralMntPoinHistoryResponse, String>(

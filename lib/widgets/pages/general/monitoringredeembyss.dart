@@ -467,21 +467,18 @@ class _MonitoringRedeemBySSPageState extends State<MonitoringRedeemBySSPage>
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap:
-                                                                              () {
-                                                                            String
-                                                                                branchCode =
-                                                                                dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].title;
-                                                                            String
-                                                                                ssCode =
-                                                                                dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
+                                                                          onTap: dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].data1 == '0'
+                                                                              ? () {}
+                                                                              : () {
+                                                                                  String branchCode = dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].title;
+                                                                                  String ssCode = dataMonitoringRedeem.listRptGeneralMonitoringRedeem![i].headerCode;
 
-                                                                            Navigator.pushNamed(
-                                                                              context,
-                                                                              MonitoringRedeemBySalesPage.routeName,
-                                                                              arguments: '$branchCode/$ssCode',
-                                                                            );
-                                                                          },
+                                                                                  Navigator.pushNamed(
+                                                                                    context,
+                                                                                    MonitoringRedeemBySalesPage.routeName,
+                                                                                    arguments: '$branchCode/$ssCode',
+                                                                                  );
+                                                                                },
                                                                           child:
                                                                               Padding(
                                                                             padding:

@@ -30,6 +30,8 @@ abstract class IReportGeneralRepository {
   Future<ListRptRedeemHistoryResponse> fecthListDataMonitoringRedeemByHistory(
       String linkPageObj);
   Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldo();
+  Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldoByUser(
+      String linkPageObj);
 }
 
 class ReportGeneralRepositories implements IReportGeneralRepository {
@@ -300,5 +302,30 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
     var responseGetMonitSaldo =
         ListRptGeneralMntSaldoResponse.fromJson(jsonObjRptMonitSaldo);
     return responseGetMonitSaldo;
+  }
+
+  //Monitoring Saldo by user
+  @override
+  Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldoByUser(
+      String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitSaldoByUser =
+        "${_host}GetReportMonitoringSaldoByUser/$linkPageObj";
+
+    var resultGetRptMonitSaldoByUser =
+        await http.get(Uri.parse(urlGetRptMonitSaldoByUser), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitSaldoByUser =
+        jsonDecode(resultGetRptMonitSaldoByUser.body);
+
+    var responseGetMonitSaldoByUser =
+        ListRptGeneralMntSaldoResponse.fromJson(jsonObjRptMonitSaldoByUser);
+    return responseGetMonitSaldoByUser;
   }
 }

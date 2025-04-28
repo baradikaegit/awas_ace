@@ -547,22 +547,19 @@ class _MonitoringPoinBySSPageState extends State<MonitoringPoinBySSPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap:
-                                                                              () {
-                                                                            String
-                                                                                branchCode =
-                                                                                dataRptMonitoring.title;
-                                                                            String
-                                                                                ssCode =
-                                                                                dataRptMonitoring.headerCode;
+                                                                          onTap: dataRptMonitoring.data3 == '0'
+                                                                              ? () {}
+                                                                              : () {
+                                                                                  String branchCode = dataRptMonitoring.title;
+                                                                                  String ssCode = dataRptMonitoring.headerCode;
 
-                                                                            Navigator.pushNamed(
-                                                                              context,
-                                                                              MonitoringPoinBySalesPage.routeName,
-                                                                              arguments: '$branchCode/$ssCode',
-                                                                            );
-                                                                            // print('${branchCode} , ${ssCode}');
-                                                                          },
+                                                                                  Navigator.pushNamed(
+                                                                                    context,
+                                                                                    MonitoringPoinBySalesPage.routeName,
+                                                                                    arguments: '$branchCode/$ssCode',
+                                                                                  );
+                                                                                  // print('${branchCode} , ${ssCode}');
+                                                                                },
                                                                           child:
                                                                               Padding(
                                                                             padding:

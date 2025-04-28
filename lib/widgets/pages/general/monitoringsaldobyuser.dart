@@ -3,24 +3,24 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
-import 'package:awas_ace/widgets/pages/general/monitoringpoinhistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 
-class MonitoringPoinBySalesPage extends StatefulWidget {
+class MonitoringSaldoByUserPage extends StatefulWidget {
   final Object? linkPageObj;
-  const MonitoringPoinBySalesPage({super.key, required this.linkPageObj});
+  const MonitoringSaldoByUserPage({super.key, required this.linkPageObj});
 
-  static const String routeName = "/monitoringPoinBySalesPage";
+  static const String routeName = "/monitoringSaldoByUserPage";
   @override
-  State<MonitoringPoinBySalesPage> createState() =>
-      _MonitoringPoinBySalesPageState();
+  State<MonitoringSaldoByUserPage> createState() =>
+      _MonitoringSaldoByUserPageState();
 }
 
-class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
+class _MonitoringSaldoByUserPageState extends State<MonitoringSaldoByUserPage>
+    with TickerProviderStateMixin {
   Widget titleBar = const Text(
-    "Monitoring Poin",
+    "Monitoring Saldo",
     style: TextStyle(color: Colors.white),
   );
 
@@ -93,9 +93,8 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
-
-                    final rptMonitoringPoin =
-                        ref.watch(reportMonitPoinBySales(linkPageObj));
+                    final rptMonitoringSaldo =
+                        ref.watch(reportMonitSaldoByUser(linkPageObj));
 
                     return Center(
                       child: Stack(
@@ -105,156 +104,87 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 20, 5, 0),
                                 child: SizedBox(
-                                  child: rptMonitoringPoin.when(
-                                    data: (data) => (data
-                                                .listRptGeneralMonitoringPoin !=
-                                            null)
-                                        ? Column(
-                                            children: [
-                                              AppBar(
-                                                automaticallyImplyLeading:
-                                                    false,
-                                                centerTitle: true,
-                                                title: Column(
-                                                  children: [
-                                                    Padding(
-                                                      padding: const EdgeInsets
-                                                          .fromLTRB(
-                                                        0,
-                                                        15,
-                                                        0,
-                                                        0,
-                                                      ),
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          "CABANG ${data.listRptGeneralMonitoringPoin![0].title.replaceAll('\\n', '\n')}",
-                                                          style: TextStyle(
-                                                            fontSize:
-                                                                ResponsiveValue<
-                                                                    double>(
-                                                              context,
-                                                              conditionalValues: [
-                                                                const Condition
-                                                                    .equals(
-                                                                    name:
-                                                                        TABLET,
-                                                                    value: 14.0,
-                                                                    landscapeValue:
-                                                                        14.0),
-                                                                const Condition
-                                                                    .largerThan(
-                                                                    name:
-                                                                        TABLET,
-                                                                    value: 14.5,
-                                                                    landscapeValue:
-                                                                        14.5,
-                                                                    breakpoint:
-                                                                        800),
-                                                              ],
-                                                              defaultValue:
-                                                                  12.0,
-                                                            ).value,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: Colors.white,
+                                  child: rptMonitoringSaldo.when(
+                                    data: (data) =>
+                                        (data.listRptGeneralMonitoringSaldo !=
+                                                null)
+                                            ? Column(
+                                                children: [
+                                                  AppBar(
+                                                    automaticallyImplyLeading:
+                                                        false,
+                                                    centerTitle: true,
+                                                    title: Column(
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                              const EdgeInsets
+                                                                  .fromLTRB(
+                                                            0,
+                                                            5,
+                                                            0,
+                                                            0,
+                                                          ),
+                                                          child: Align(
+                                                            alignment: Alignment
+                                                                .center,
+                                                            child: Text(
+                                                              "CABANG ${data.listRptGeneralMonitoringSaldo![0].title.replaceAll('\\n', '\n')}",
+                                                              textAlign:
+                                                                  TextAlign
+                                                                      .center,
+                                                              style: TextStyle(
+                                                                fontSize:
+                                                                    ResponsiveValue<
+                                                                        double>(
+                                                                  context,
+                                                                  conditionalValues: [
+                                                                    const Condition
+                                                                        .equals(
+                                                                        name:
+                                                                            TABLET,
+                                                                        value:
+                                                                            14.0,
+                                                                        landscapeValue:
+                                                                            14.0),
+                                                                    const Condition
+                                                                        .largerThan(
+                                                                        name:
+                                                                            TABLET,
+                                                                        value:
+                                                                            14.5,
+                                                                        landscapeValue:
+                                                                            14.5,
+                                                                        breakpoint:
+                                                                            800),
+                                                                  ],
+                                                                  defaultValue:
+                                                                      12.0,
+                                                                ).value,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                      ],
                                                     ),
-                                                  ],
-                                                ),
-                                                backgroundColor:
-                                                    const Color.fromARGB(
-                                                  255,
-                                                  33,
-                                                  44,
-                                                  81,
-                                                ),
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  for (int i = 0;
-                                                      i <
-                                                          data.listRptGeneralMonitoringPoin!
-                                                              .length;
-                                                      i++)
-                                                    if (data
-                                                            .listRptGeneralMonitoringPoin![
-                                                                i]
-                                                            .tipe !=
-                                                        'List')
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .fromLTRB(
-                                                          15,
-                                                          15,
-                                                          15,
-                                                          20,
-                                                        ),
-                                                        child: Column(
-                                                          children: [
-                                                            CircleAvatar(
-                                                              backgroundColor:
-                                                                  const Color
-                                                                      .fromARGB(
-                                                                255,
-                                                                3,
-                                                                116,
-                                                                18,
-                                                              ),
-                                                              minRadius: 30,
-                                                              maxRadius: 50,
-                                                              child:
-                                                                  Image.asset(
-                                                                'assets/images/user.png',
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                              ),
-                                                            ),
-                                                            const SizedBox(
-                                                              height: 15,
-                                                            ),
-                                                            Text(
-                                                              data
-                                                                  .listRptGeneralMonitoringPoin![
-                                                                      i]
-                                                                  .data3,
-                                                              style:
-                                                                  textStyleColorWhite,
-                                                            ),
-                                                            Text(
-                                                              data
-                                                                  .listRptGeneralMonitoringPoin![
-                                                                      i]
-                                                                  .headerCode,
-                                                              style:
-                                                                  textStyleColorWhite,
-                                                            ),
-                                                            Text(
-                                                              data
-                                                                  .listRptGeneralMonitoringPoin![
-                                                                      i]
-                                                                  .data2,
-                                                              style:
-                                                                  textStyleColorWhite,
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
+                                                    backgroundColor:
+                                                        const Color.fromARGB(
+                                                      255,
+                                                      33,
+                                                      44,
+                                                      81,
+                                                    ),
+                                                  ),
                                                 ],
+                                              )
+                                            : const Column(
+                                                children: [],
                                               ),
-                                            ],
-                                          )
-                                        : const Column(
-                                            children: [],
-                                          ),
                                     error: (err, stack) => Text('Error $err'),
                                     loading: () =>
                                         const Center(child: Text('')),
@@ -265,16 +195,16 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                 child: RefreshIndicator(
                                   onRefresh: () async {
                                     return ref.refresh(
-                                      reportMonitPoinBySales(linkPageObj),
+                                      reportMonitSaldoByUser(linkPageObj),
                                     );
                                   },
-                                  child: rptMonitoringPoin.when(
-                                    data: (dataMonitoringPoin) {
-                                      return (dataMonitoringPoin
-                                                  .listRptGeneralMonitoringPoin !=
+                                  child: rptMonitoringSaldo.when(
+                                    data: (dataMonitoringSaldo) {
+                                      return (dataMonitoringSaldo
+                                                  .listRptGeneralMonitoringSaldo !=
                                               null)
-                                          ? dataMonitoringPoin
-                                                  .listRptGeneralMonitoringPoin!
+                                          ? dataMonitoringSaldo
+                                                  .listRptGeneralMonitoringSaldo!
                                                   .isNotEmpty
                                               ? ListView.builder(
                                                   physics:
@@ -282,6 +212,31 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                   itemCount: 1,
                                                   itemBuilder:
                                                       (context, index) {
+                                                    var textStyleDataTable =
+                                                        TextStyle(
+                                                      color: Colors.blue,
+                                                      fontSize: ResponsiveValue<
+                                                          double>(
+                                                        context,
+                                                        conditionalValues: [
+                                                          const Condition
+                                                              .equals(
+                                                              name: TABLET,
+                                                              value: 12.0,
+                                                              landscapeValue:
+                                                                  12.0),
+                                                          const Condition
+                                                              .largerThan(
+                                                              name: TABLET,
+                                                              value: 14.0,
+                                                              landscapeValue:
+                                                                  14.0,
+                                                              breakpoint: 800),
+                                                        ],
+                                                        defaultValue: 11.0,
+                                                      ).value,
+                                                    );
+
                                                     return Column(
                                                       children: [
                                                         Padding(
@@ -397,10 +352,10 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                   label: Align(
                                                                     alignment:
                                                                         Alignment
-                                                                            .topLeft,
+                                                                            .topCenter,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 95,
+                                                                      width: 65,
                                                                       child:
                                                                           Padding(
                                                                         padding:
@@ -410,6 +365,8 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                         ),
                                                                         child:
                                                                             Text(
+                                                                          textAlign:
+                                                                              TextAlign.center,
                                                                           "NIK",
                                                                           style:
                                                                               textStyleColorWhiteB,
@@ -426,7 +383,7 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                   label: Align(
                                                                     alignment:
                                                                         Alignment
-                                                                            .topCenter,
+                                                                            .topLeft,
                                                                     child:
                                                                         SizedBox(
                                                                       width:
@@ -434,8 +391,31 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                       child:
                                                                           Text(
                                                                         textAlign:
-                                                                            TextAlign.center,
-                                                                        "TERTINGGI",
+                                                                            TextAlign.left,
+                                                                        "NAMA",
+                                                                        style:
+                                                                            textStyleColorWhiteB,
+                                                                        maxLines:
+                                                                            2,
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                DataColumn(
+                                                                  label: Align(
+                                                                    alignment:
+                                                                        Alignment
+                                                                            .topLeft,
+                                                                    child:
+                                                                        SizedBox(
+                                                                      width: 50,
+                                                                      child:
+                                                                          Text(
+                                                                        textAlign:
+                                                                            TextAlign.left,
+                                                                        "JABATAN",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -453,13 +433,12 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                             .topCenter,
                                                                     child:
                                                                         SizedBox(
-                                                                      width:
-                                                                          100,
+                                                                      width: 60,
                                                                       child:
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "TERENDAH",
+                                                                        "SALDO",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -477,16 +456,16 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                             .topCenter,
                                                                     child:
                                                                         SizedBox(
-                                                                      width: 80,
+                                                                      width: 75,
                                                                       child:
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "TOTAL POIN",
+                                                                        "SISA SALDO",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
-                                                                            2,
+                                                                            3,
                                                                         overflow:
                                                                             TextOverflow.ellipsis,
                                                                       ),
@@ -494,55 +473,17 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                   ),
                                                                 ),
                                                               ],
-                                                              rows: List<
-                                                                  DataRow>.generate(
-                                                                dataMonitoringPoin
-                                                                        .listRptGeneralMonitoringPoin!
-                                                                        .length -
-                                                                    3,
-                                                                (indexObj) {
-                                                                  final dataRptMonitoring =
-                                                                      dataMonitoringPoin
-                                                                              .listRptGeneralMonitoringPoin![
-                                                                          indexObj];
-
-                                                                  var textStyleDataTable =
-                                                                      TextStyle(
-                                                                    color: Colors
-                                                                        .blue,
-                                                                    fontSize:
-                                                                        ResponsiveValue<
-                                                                            double>(
-                                                                      context,
-                                                                      conditionalValues: [
-                                                                        const Condition
-                                                                            .equals(
-                                                                            name:
-                                                                                TABLET,
-                                                                            value:
-                                                                                12.0,
-                                                                            landscapeValue:
-                                                                                12.0),
-                                                                        const Condition
-                                                                            .largerThan(
-                                                                            name:
-                                                                                TABLET,
-                                                                            value:
-                                                                                14.0,
-                                                                            landscapeValue:
-                                                                                14.0,
-                                                                            breakpoint:
-                                                                                800),
-                                                                      ],
-                                                                      defaultValue:
-                                                                          11.0,
-                                                                    ).value,
-                                                                  );
-
-                                                                  return DataRow(
+                                                              rows: [
+                                                                for (int i = 0;
+                                                                    i <
+                                                                        dataMonitoringSaldo
+                                                                            .listRptGeneralMonitoringSaldo!
+                                                                            .length;
+                                                                    i++)
+                                                                  DataRow(
                                                                     color: MaterialStateColor
                                                                         .resolveWith(
-                                                                      (states) => indexObj
+                                                                      (states) => i
                                                                               .isEven
                                                                           ? const Color
                                                                               .fromARGB(
@@ -557,20 +498,17 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                     cells: <DataCell>[
                                                                       DataCell(
                                                                         InkWell(
-                                                                          onTap: dataRptMonitoring.data3 == '0'
+                                                                          onTap: dataMonitoringSaldo.listRptGeneralMonitoringSaldo![i].data1 == '0'
                                                                               ? () {}
                                                                               : () {
-                                                                                  String userCode = dataRptMonitoring.headerCode;
-                                                                                  int tipe = 0;
+                                                                                  String userCode = dataMonitoringSaldo.listRptGeneralMonitoringSaldo![i].headerCode;
 
-                                                                                  String linkPage = '$userCode/$tipe';
-
-                                                                                  Navigator.pushNamed(
-                                                                                    context,
-                                                                                    MonitoringPoinHistoryPage.routeName,
-                                                                                    arguments: linkPage,
-                                                                                  );
-                                                                                  // print(linkPage);
+                                                                                  // Navigator.pushNamed(
+                                                                                  //   context,
+                                                                                  //   MonitoringRedeemByHistoryPage.routeName,
+                                                                                  //   arguments: userCode,
+                                                                                  // );
+                                                                                  print(userCode);
                                                                                 },
                                                                           child:
                                                                               Padding(
@@ -579,9 +517,13 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                               left: 10,
                                                                             ),
                                                                             child:
-                                                                                Text(
-                                                                              dataRptMonitoring.headerName,
-                                                                              style: textStyleDataTable,
+                                                                                Align(
+                                                                              alignment: Alignment.centerLeft,
+                                                                              child: Text(
+                                                                                dataMonitoringSaldo.listRptGeneralMonitoringSaldo![i].headerCode,
+                                                                                textAlign: TextAlign.left,
+                                                                                style: textStyleDataTable,
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
@@ -589,10 +531,38 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                       DataCell(
                                                                         Align(
                                                                           alignment:
+                                                                              Alignment.centerLeft,
+                                                                          child:
+                                                                              Text(
+                                                                            dataMonitoringSaldo.listRptGeneralMonitoringSaldo![i].headerName,
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            style:
+                                                                                textStyleColorWhite,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
+                                                                              Alignment.centerLeft,
+                                                                          child:
+                                                                              Text(
+                                                                            dataMonitoringSaldo.listRptGeneralMonitoringSaldo![i].headerGroup,
+                                                                            textAlign:
+                                                                                TextAlign.left,
+                                                                            style:
+                                                                                textStyleColorWhite,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      DataCell(
+                                                                        Align(
+                                                                          alignment:
                                                                               Alignment.center,
                                                                           child:
                                                                               Text(
-                                                                            dataRptMonitoring.data1.toString(),
+                                                                            dataMonitoringSaldo.listRptGeneralMonitoringSaldo![i].data1,
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -606,21 +576,7 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                               Alignment.center,
                                                                           child:
                                                                               Text(
-                                                                            dataRptMonitoring.data2.toString(),
-                                                                            textAlign:
-                                                                                TextAlign.center,
-                                                                            style:
-                                                                                textStyleColorWhite,
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      DataCell(
-                                                                        Align(
-                                                                          alignment:
-                                                                              Alignment.center,
-                                                                          child:
-                                                                              Text(
-                                                                            dataRptMonitoring.data3.toString(),
+                                                                            dataMonitoringSaldo.listRptGeneralMonitoringSaldo![i].data2,
                                                                             textAlign:
                                                                                 TextAlign.center,
                                                                             style:
@@ -629,9 +585,8 @@ class _MonitoringPoinBySalesPageState extends State<MonitoringPoinBySalesPage> {
                                                                         ),
                                                                       ),
                                                                     ],
-                                                                  );
-                                                                },
-                                                              ),
+                                                                  ),
+                                                              ],
                                                             ),
                                                           ),
                                                         ),
