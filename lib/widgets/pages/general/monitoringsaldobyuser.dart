@@ -3,6 +3,7 @@ import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringsaldohistory.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -95,7 +96,6 @@ class _MonitoringSaldoByUserPageState extends State<MonitoringSaldoByUserPage>
                     var linkPageObj = widget.linkPageObj.toString();
                     final rptMonitoringSaldo =
                         ref.watch(reportMonitSaldoByUser(linkPageObj));
-
                     return Center(
                       child: Stack(
                         children: [
@@ -502,13 +502,15 @@ class _MonitoringSaldoByUserPageState extends State<MonitoringSaldoByUserPage>
                                                                               ? () {}
                                                                               : () {
                                                                                   String userCode = dataMonitoringSaldo.listRptGeneralMonitoringSaldo![i].headerCode;
+                                                                                  int tipe = 0;
 
-                                                                                  // Navigator.pushNamed(
-                                                                                  //   context,
-                                                                                  //   MonitoringRedeemByHistoryPage.routeName,
-                                                                                  //   arguments: userCode,
-                                                                                  // );
-                                                                                  print(userCode);
+                                                                                  String linkPage = '$userCode/$tipe';
+
+                                                                                  Navigator.pushNamed(
+                                                                                    context,
+                                                                                    MonitoringSaldoHistoryPage.routeName,
+                                                                                    arguments: linkPage,
+                                                                                  );
                                                                                 },
                                                                           child:
                                                                               Padding(

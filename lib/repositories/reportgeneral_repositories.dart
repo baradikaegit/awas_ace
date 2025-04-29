@@ -6,6 +6,7 @@ import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntsaldohistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -32,6 +33,8 @@ abstract class IReportGeneralRepository {
   Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldo();
   Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldoByUser(
       String linkPageObj);
+  Future<ListRptGeneralMntSaldoHistoryResponse>
+      fecthListDataMonitoringSaldoHistory(String linkPageObj);
 }
 
 class ReportGeneralRepositories implements IReportGeneralRepository {
@@ -327,5 +330,31 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
     var responseGetMonitSaldoByUser =
         ListRptGeneralMntSaldoResponse.fromJson(jsonObjRptMonitSaldoByUser);
     return responseGetMonitSaldoByUser;
+  }
+
+  //Monitoring Saldo history
+  @override
+  Future<ListRptGeneralMntSaldoHistoryResponse>
+      fecthListDataMonitoringSaldoHistory(String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitSaldoHistory =
+        "${_host}GetReportMonitoringSaldoByHistory/$linkPageObj";
+
+    var resultGetRptMonitSaldoHistory =
+        await http.get(Uri.parse(urlGetRptMonitSaldoHistory), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitSaldoHistory =
+        jsonDecode(resultGetRptMonitSaldoHistory.body);
+
+    var responseGetMonitSaldoHistory =
+        ListRptGeneralMntSaldoHistoryResponse.fromJson(
+            jsonObjRptMonitSaldoHistory);
+    return responseGetMonitSaldoHistory;
   }
 }

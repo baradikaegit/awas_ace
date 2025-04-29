@@ -31,6 +31,7 @@ import 'package:awas_ace/widgets/pages/general/monitoringredeembyss.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembysvc.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringsaldo.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringsaldobyuser.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringsaldohistory.dart';
 import 'package:awas_ace/widgets/pages/menu/menu_lainnya.dart';
 import 'package:awas_ace/widgets/pages/prospect_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkel_page.dart';
@@ -385,6 +386,10 @@ class MyApp extends StatelessWidget {
             ),
         MonitoringPoinHistoryPage.routeName: (context) =>
             MonitoringPoinHistoryPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitoringSaldoHistoryPage.routeName: (context) =>
+            MonitoringSaldoHistoryPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         TeamSayaPage.routeName: (context) => const TeamSayaPage(),
