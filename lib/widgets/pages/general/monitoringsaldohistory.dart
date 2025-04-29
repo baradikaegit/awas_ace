@@ -23,14 +23,14 @@ class TreeNode {
   final String key;
   final int? amount;
   final String? amountIDR;
-  final String? totalAmount;
+  final String? totalAmountIDR;
   final List<TreeNode> children;
 
   TreeNode({
     required this.key,
     this.amount,
     this.amountIDR,
-    this.totalAmount,
+    this.totalAmountIDR,
     List<TreeNode>? children,
   }) : children = children ?? [];
 }
@@ -68,7 +68,8 @@ List<TreeNode> buildTree(List<ListRptGeneralMonitoringSaldoHistory> data) {
             key: subsubmenu.title.replaceAll('\\n', '\n'),
             amount: subsubmenu.amount,
             amountIDR: CurrencyFormat.convertToIdr(subsubmenu.amount, 0),
-            totalAmount: CurrencyFormat.convertToIdr(subsubmenu.totalAmount, 0),
+            totalAmountIDR:
+                CurrencyFormat.convertToIdr(subsubmenu.totalAmount, 0),
           ),
         );
       }
@@ -78,7 +79,7 @@ List<TreeNode> buildTree(List<ListRptGeneralMonitoringSaldoHistory> data) {
           key: submenu.title.replaceAll('\\n', '\n'),
           amount: submenu.amount,
           amountIDR: CurrencyFormat.convertToIdr(submenu.amount, 0),
-          totalAmount: CurrencyFormat.convertToIdr(submenu.totalAmount, 0),
+          totalAmountIDR: CurrencyFormat.convertToIdr(submenu.totalAmount, 0),
           children: subsubmenuNodes,
         ),
       );
@@ -89,7 +90,7 @@ List<TreeNode> buildTree(List<ListRptGeneralMonitoringSaldoHistory> data) {
         key: menu.title.replaceAll('\\n', '\n'),
         amount: menu.amount,
         amountIDR: CurrencyFormat.convertToIdr(menu.amount, 0),
-        totalAmount: CurrencyFormat.convertToIdr(menu.totalAmount, 0),
+        totalAmountIDR: CurrencyFormat.convertToIdr(menu.totalAmount, 0),
         children: submenuNodes,
       ),
     );
@@ -341,7 +342,7 @@ class _MonitoringSaldoHistoryPageState
                                                                       .amount! <
                                                                   0)
                                                                 Text(
-                                                                  ' ${entry.node.totalAmount}',
+                                                                  ' ${entry.node.totalAmountIDR}',
                                                                   style:
                                                                       textStyleColorWhiteBI,
                                                                 ),
