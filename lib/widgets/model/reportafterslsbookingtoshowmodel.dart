@@ -37,6 +37,7 @@ class ListRptBookingToShow {
     required this.month,
     required this.year,
     required this.headerCode,
+    required this.headerName,
     required this.booking,
     required this.show,
     required this.persen,
@@ -47,6 +48,7 @@ class ListRptBookingToShow {
   late final int month;
   late final int year;
   late final String headerCode;
+  late final String headerName;
   late final int booking;
   late final int show;
   late final int persen;
@@ -58,6 +60,7 @@ class ListRptBookingToShow {
     month = json['month'];
     year = json['year'];
     headerCode = json['headerCode'];
+    headerName = json['headerName'];
     booking = json['booking'];
     show = json['show'];
     persen = json['persen'];
@@ -71,6 +74,7 @@ class ListRptBookingToShow {
     _data['month'] = month;
     _data['year'] = year;
     _data['headerCode'] = headerCode;
+    _data['headerName'] = headerName;
     _data['booking'] = booking;
     _data['show'] = show;
     _data['persen'] = persen;

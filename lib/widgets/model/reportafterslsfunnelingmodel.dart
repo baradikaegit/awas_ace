@@ -46,6 +46,7 @@ class ListRptAfterSalesFunneling {
     required this.perContacted,
     required this.perCai,
     required this.tipe,
+    required this.title,
   });
   late final int num;
   late final String periodTipe;
@@ -62,6 +63,7 @@ class ListRptAfterSalesFunneling {
   late final int perContacted;
   late final int perCai;
   late final String tipe;
+  late final String title;
 
   ListRptAfterSalesFunneling.fromJson(Map<String, dynamic> json) {
     num = json['num'];
@@ -79,6 +81,7 @@ class ListRptAfterSalesFunneling {
     perContacted = json['perContacted'];
     perCai = json['perCai'];
     tipe = json['tipe'];
+    title = json['title'];
   }
 
   Map<String, dynamic> toJson() {
@@ -98,6 +101,7 @@ class ListRptAfterSalesFunneling {
     _data['perContacted'] = perContacted;
     _data['perCai'] = perCai;
     _data['tipe'] = tipe;
+    _data['title'] = title;
     return _data;
   }
 }

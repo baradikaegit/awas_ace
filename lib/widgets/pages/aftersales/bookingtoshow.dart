@@ -1127,7 +1127,7 @@ class _BookingToShowPageState extends State<BookingToShowPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              dataRptBookingToShow.headerCode,
+                                                                              dataRptBookingToShow.headerName,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),

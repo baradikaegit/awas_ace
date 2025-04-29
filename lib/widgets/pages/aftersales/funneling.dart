@@ -1786,7 +1786,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              dataRptFunneling.headerCode,
+                                                                              dataRptFunneling.headerName,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),
@@ -1925,9 +1925,9 @@ dynamic toDynamic(List<ListRptAfterSalesFunneling> objList) {
   List<DataFunnelingColumn> barData = [];
 
   for (var i = 1; i < objList.length + 1; i++) {
-    if (objList[objList.length - i].headerCode != 'TOTAL') {
+    if (objList[objList.length - i].headerName != 'TOTAL') {
       barData.add(DataFunnelingColumn(
-        objList[objList.length - i].headerCode,
+        objList[objList.length - i].headerName,
         objList[objList.length - i].data1,
         objList[objList.length - i].connected,
         objList[objList.length - i].contacted,

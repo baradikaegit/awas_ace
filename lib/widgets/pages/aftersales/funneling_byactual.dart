@@ -590,7 +590,7 @@ class _FunnelingByActualAfterSalesPageState
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      "Cabang ${dataSelectOpt.listRptAfterSalesFunneling![0].headerCode}",
+                                                      "Cabang ${dataSelectOpt.listRptAfterSalesFunneling![1].headerCode}",
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -1410,8 +1410,7 @@ class _FunnelingByActualAfterSalesPageState
                                                                       ).value,
                                                                     ),
                                                                   ),
-                                                                  series: 
-                                                                  <CartesianSeries>[
+                                                                  series: <CartesianSeries>[
                                                                     //memanggil isi grafik
 
                                                                     StackedBarSeries<

@@ -576,7 +576,7 @@ class _FunnelingByBranchAfterSalesPageState
                                                 child: Column(
                                                   children: [
                                                     Text(
-                                                      "Cabang ${dataSelectOpt.listRptAfterSalesFunneling![0].headerCode}",
+                                                      "Cabang ${dataSelectOpt.listRptAfterSalesFunneling![1].headerCode}",
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,
@@ -1851,7 +1851,7 @@ class _FunnelingByBranchAfterSalesPageState
                                                                                   var month = dataFunnelingList.listRptAfterSalesFunneling![indexObj].month.toString();
                                                                                   var year = dataFunnelingList.listRptAfterSalesFunneling![indexObj].year.toString();
                                                                                   var periodTipe = dataFunnelingList.listRptAfterSalesFunneling![indexObj].periodTipe;
-                                                                                  var branchCode = dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerCode;
+                                                                                  var branchCode = dataFunnelingList.listRptAfterSalesFunneling![indexObj].title;
                                                                                   var actual = dataFunnelingList.listRptAfterSalesFunneling![indexObj].headerName;
 
                                                                                   Navigator.pushNamed(
@@ -1859,7 +1859,6 @@ class _FunnelingByBranchAfterSalesPageState
                                                                                     FunnelingByActualAfterSalesPage.routeName,
                                                                                     arguments: '$month/$year/$periodTipe/$branchCode/$actual',
                                                                                   );
-                                                                                  // print('$month/$year/$periodTipe/$branchCode/$actual');
                                                                                 }
                                                                               : () {},
                                                                           child:
