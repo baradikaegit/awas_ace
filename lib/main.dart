@@ -29,6 +29,8 @@ import 'package:awas_ace/widgets/pages/general/monitoringredeembyhistory.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembysls.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembyss.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringredeembysvc.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeemitem.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeemitembydetail.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringsaldo.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringsaldobyuser.dart';
 import 'package:awas_ace/widgets/pages/general/monitoringsaldohistory.dart';
@@ -377,6 +379,12 @@ class MyApp extends StatelessWidget {
             ),
         MonitoringRedeemByHistoryPage.routeName: (context) =>
             MonitoringRedeemByHistoryPage(
+              linkPageObj: ModalRoute.of(context)!.settings.arguments,
+            ),
+        MonitoringRedeemItemPage.routeName: (context) =>
+            const MonitoringRedeemItemPage(),
+        MonitoringRedeemItemByDetailPage.routeName: (context) =>
+            MonitoringRedeemItemByDetailPage(
               linkPageObj: ModalRoute.of(context)!.settings.arguments,
             ),
         MonitoringSaldoPage.routeName: (context) => const MonitoringSaldoPage(),

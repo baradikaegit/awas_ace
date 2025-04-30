@@ -37,6 +37,7 @@ class _MonitoringRedeemByHistoryPageState
         255,
         255,
       ),
+      fontWeight: FontWeight.bold,
       fontSize: ResponsiveValue<double>(
         context,
         conditionalValues: [

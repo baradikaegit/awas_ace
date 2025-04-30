@@ -5,6 +5,7 @@ import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemhistorymodel.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntredeemitemmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldohistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
@@ -30,6 +31,12 @@ abstract class IReportGeneralRepository {
       String linkPageObj);
   Future<ListRptRedeemHistoryResponse> fecthListDataMonitoringRedeemByHistory(
       String linkPageObj);
+  Future<ListRptGeneralMntRedeemItemResponse>
+      fecthListDataMonitoringRedeemItem();
+  Future<ListRptGeneralMntRedeemItemResponse>
+      fecthListDataMonitoringRedeemItemByDetail(String linkPageObj);
+  Future<EntryRedeemPoinResponse> createNewRedeemPoin(
+      ListEntryRedeemPoin redeempoin);
   Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldo();
   Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldoByUser(
       String linkPageObj);
@@ -283,6 +290,84 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
     var responseGetMonitRedeemByHistory =
         ListRptRedeemHistoryResponse.fromJson(jsonObjRptMonitRedeemByHistory);
     return responseGetMonitRedeemByHistory;
+  }
+
+  //Monitoring Redeem item
+  @override
+  Future<ListRptGeneralMntRedeemItemResponse>
+      fecthListDataMonitoringRedeemItem() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitRedeemItem = "${_host}GetReportMonitoringRedeemItem";
+
+    var resultGetRptMonitRedeemItem =
+        await http.get(Uri.parse(urlGetRptMonitRedeemItem), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitRedeemItem =
+        jsonDecode(resultGetRptMonitRedeemItem.body);
+
+    var responseGetMonitRedeemitem =
+        ListRptGeneralMntRedeemItemResponse.fromJson(jsonObjRptMonitRedeemItem);
+    return responseGetMonitRedeemitem;
+  }
+
+  //Monitoring Redeem item
+  @override
+  Future<ListRptGeneralMntRedeemItemResponse>
+      fecthListDataMonitoringRedeemItemByDetail(String linkPageObj) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetRptMonitRedeemItemByDetail =
+        "${_host}GetReportMonitoringRedeemItemByDetail/$linkPageObj";
+
+    var resultGetRptMonitRedeemItemByDetail =
+        await http.get(Uri.parse(urlGetRptMonitRedeemItemByDetail), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjRptMonitRedeemItemBYDetail =
+        jsonDecode(resultGetRptMonitRedeemItemByDetail.body);
+
+    var responseGetMonitRedeemitemByDetail =
+        ListRptGeneralMntRedeemItemResponse.fromJson(
+            jsonObjRptMonitRedeemItemBYDetail);
+    return responseGetMonitRedeemitemByDetail;
+  }
+
+//Monitoring redeem poin
+  @override
+  Future<EntryRedeemPoinResponse> createNewRedeemPoin(
+      ListEntryRedeemPoin redeempoin) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    final Map<String, String> headers = {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    };
+
+    var url = "${_host}EntryMonitoringRedeemPoin";
+    var body = json.encode(redeempoin);
+
+    var results = await http.post(
+      Uri.parse(url),
+      body: body,
+      headers: headers,
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    final jsonObject = json.decode(results.body);
+    var response = EntryRedeemPoinResponse.fromJson(jsonObject);
+    return response;
   }
 
   //Monitoring Saldo

@@ -2,9 +2,11 @@ import 'package:awas_ace/repositories/reportgeneral_repositories.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemhistorymodel.dart';
+import 'package:awas_ace/widgets/model/reportgeneralmntredeemitemmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldohistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final reportGeneralRepositoryProvider = Provider(
@@ -92,6 +94,27 @@ final reportMonitRedeemBySales =
   },
 );
 
+//list report monitoring redeem item
+final reportMonitRedeemItem =
+    FutureProvider.autoDispose<ListRptGeneralMntRedeemItemResponse>(
+  (ref) async {
+    final repositoryMonitRedeemitem =
+        ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitRedeemitem.fecthListDataMonitoringRedeemItem();
+  },
+);
+
+//list report monitoring redeem item detail
+final reportMonitRedeemItemDetail = FutureProvider.autoDispose
+    .family<ListRptGeneralMntRedeemItemResponse, String>(
+  (ref, linkPageObj) async {
+    final repositoryMonitRedeemItemDetail =
+        ref.watch(reportGeneralRepositoryProvider);
+    return repositoryMonitRedeemItemDetail
+        .fecthListDataMonitoringRedeemItemByDetail(linkPageObj);
+  },
+);
+
 //list report monitoring saldo
 final reportMonitSaldo =
     FutureProvider.autoDispose<ListRptGeneralMntSaldoResponse>(
@@ -144,3 +167,29 @@ final reportMonitSaldoHistory = FutureProvider.autoDispose
         .fecthListDataMonitoringSaldoHistory(linkPageObj);
   },
 );
+
+//add monitoring redeem poin
+class RedeemPoinFormNotifier extends ChangeNotifier {
+  RedeemPoinFormNotifier(this.ref) : super();
+
+  final ProviderElementBase ref;
+
+  Future<EntryRedeemPoinResponse> onSubmitRedeemPoin(
+      ListEntryRedeemPoin redeempoin) async {
+    final repositoryredeempoin = ref.read(reportGeneralRepositoryProvider);
+    late EntryRedeemPoinResponse resp;
+
+    try {
+      resp = await repositoryredeempoin.createNewRedeemPoin(redeempoin);
+    } catch (e) {
+      print("kesalahan: $e");
+    }
+
+    return resp;
+  }
+}
+
+final entryRedeemPoinFormProvider =
+    ChangeNotifierProvider.autoDispose<RedeemPoinFormNotifier>((ref) {
+  return RedeemPoinFormNotifier(ref as ProviderElementBase);
+});

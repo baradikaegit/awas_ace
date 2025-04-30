@@ -7,6 +7,7 @@ import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/profilemodel.dart';
+import 'package:awas_ace/widgets/pages/general/monitoringredeemitem.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bootstrap/flutter_bootstrap.dart';
@@ -300,109 +301,112 @@ class _ProfilePageState extends State<ProfilePage> {
                                                               10,
                                                               0,
                                                             ),
-                                                            child: Container(
-                                                              constraints:
-                                                                  BoxConstraints(
-                                                                minHeight:
-                                                                    screenWidth *
-                                                                        0.20,
-                                                                minWidth: double
-                                                                    .infinity,
-                                                              ),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                boxShadow: const [
-                                                                  BoxShadow(
-                                                                    color: Color
-                                                                        .fromARGB(
-                                                                      167,
-                                                                      17,
-                                                                      157,
-                                                                      144,
+                                                            child: InkWell(
+                                                              onTap: () {
+                                                                Navigator
+                                                                    .pushNamed(
+                                                                  context,
+                                                                  MonitoringRedeemItemPage
+                                                                      .routeName,
+                                                                );
+                                                              },
+                                                              child: Container(
+                                                                constraints:
+                                                                    BoxConstraints(
+                                                                  minHeight:
+                                                                      screenWidth *
+                                                                          0.20,
+                                                                  minWidth: double
+                                                                      .infinity,
+                                                                ),
+                                                                decoration:
+                                                                    BoxDecoration(
+                                                                  boxShadow: const [
+                                                                    BoxShadow(
+                                                                      color: Color
+                                                                          .fromARGB(
+                                                                        167,
+                                                                        17,
+                                                                        157,
+                                                                        144,
+                                                                      ),
+                                                                      blurRadius:
+                                                                          3.0,
+                                                                      offset:
+                                                                          Offset(
+                                                                              0,
+                                                                              0),
+                                                                      spreadRadius:
+                                                                          1.1,
                                                                     ),
-                                                                    blurRadius:
-                                                                        3.0,
-                                                                    offset:
-                                                                        Offset(
-                                                                            0,
-                                                                            0),
-                                                                    spreadRadius:
-                                                                        1.1,
-                                                                  ),
-                                                                ],
-                                                                border:
-                                                                    Border.all(
-                                                                  color: Colors
-                                                                      .transparent,
-                                                                  width: 0,
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            0.0),
-                                                                color: const Color
-                                                                    .fromARGB(
-                                                                  167,
-                                                                  17,
-                                                                  157,
-                                                                  144,
-                                                                ),
-                                                              ),
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceAround,
-                                                                children: [
-                                                                  Column(
-                                                                    children: [
-                                                                      Text(
-                                                                        'Reward Poin',
-                                                                        style:
-                                                                            textStyleColorWhiteH,
-                                                                      ),
-                                                                      Text(
-                                                                        dataProfileGet
-                                                                            .listGetProfile![index]
-                                                                            .totalPoin
-                                                                            .toString(),
-                                                                        style:
-                                                                            textStyleColorWhiteH,
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                  FaIcon(
-                                                                    FontAwesomeIcons
-                                                                        .gift,
+                                                                  ],
+                                                                  border: Border
+                                                                      .all(
                                                                     color: Colors
-                                                                        .white,
-                                                                    size: ResponsiveValue<
-                                                                        double>(
-                                                                      context,
-                                                                      conditionalValues: [
-                                                                        const Condition
-                                                                            .equals(
-                                                                            name:
-                                                                                TABLET,
-                                                                            value:
-                                                                                60.0,
-                                                                            landscapeValue:
-                                                                                60.0),
-                                                                        const Condition
-                                                                            .largerThan(
-                                                                            name:
-                                                                                TABLET,
-                                                                            value:
-                                                                                80.0,
-                                                                            landscapeValue:
-                                                                                80.0,
-                                                                            breakpoint:
-                                                                                800),
-                                                                      ],
-                                                                      defaultValue:
-                                                                          50.0,
-                                                                    ).value,
+                                                                        .transparent,
+                                                                    width: 0,
                                                                   ),
-                                                                ],
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              0.0),
+                                                                  color: const Color
+                                                                      .fromARGB(
+                                                                    167,
+                                                                    17,
+                                                                    157,
+                                                                    144,
+                                                                  ),
+                                                                ),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .spaceAround,
+                                                                  children: [
+                                                                    Column(
+                                                                      children: [
+                                                                        Text(
+                                                                          'Reward Poin',
+                                                                          style:
+                                                                              textStyleColorWhiteH,
+                                                                        ),
+                                                                        Text(
+                                                                          dataProfileGet
+                                                                              .listGetProfile![index]
+                                                                              .totalPoin
+                                                                              .toString(),
+                                                                          style:
+                                                                              textStyleColorWhiteH,
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    FaIcon(
+                                                                      FontAwesomeIcons
+                                                                          .gift,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      size: ResponsiveValue<
+                                                                          double>(
+                                                                        context,
+                                                                        conditionalValues: [
+                                                                          const Condition
+                                                                              .equals(
+                                                                              name: TABLET,
+                                                                              value: 60.0,
+                                                                              landscapeValue: 60.0),
+                                                                          const Condition
+                                                                              .largerThan(
+                                                                              name: TABLET,
+                                                                              value: 80.0,
+                                                                              landscapeValue: 80.0,
+                                                                              breakpoint: 800),
+                                                                        ],
+                                                                        defaultValue:
+                                                                            50.0,
+                                                                      ).value,
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               ),
                                                             ),
                                                           ),
