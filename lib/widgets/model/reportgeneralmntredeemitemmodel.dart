@@ -39,6 +39,7 @@ class ListRptGeneralMonitoringRedeemItem {
     required this.poinIDR,
     required this.poin,
     required this.images,
+    required this.totalPoin,
   });
   late final String iD;
   late final String title;
@@ -46,6 +47,7 @@ class ListRptGeneralMonitoringRedeemItem {
   late final String poinIDR;
   late final int poin;
   late final String images;
+  late final int totalPoin;
 
   ListRptGeneralMonitoringRedeemItem.fromJson(Map<String, dynamic> json) {
     iD = json['iD'];
@@ -54,6 +56,7 @@ class ListRptGeneralMonitoringRedeemItem {
     poinIDR = json['poinIDR'];
     poin = json['poin'];
     images = json['images'];
+    totalPoin = json['totalPoin'];
   }
 
   Map<String, dynamic> toJson() {
@@ -64,6 +67,7 @@ class ListRptGeneralMonitoringRedeemItem {
     _data['poinIDR'] = poinIDR;
     _data['poin'] = poin;
     _data['images'] = images;
+    _data['totalPoin'] = totalPoin;
     return _data;
   }
 }

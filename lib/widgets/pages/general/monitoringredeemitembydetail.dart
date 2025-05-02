@@ -2,7 +2,6 @@
 
 import 'package:awas_ace/provider/reportgeneral_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
-import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
@@ -237,7 +236,7 @@ class _MonitoringRedeemItemByDetailPageState
                                                                       Alignment
                                                                           .center,
                                                                   child: Text(
-                                                                    '${dataMonitoringRedeemItem.listRptGeneralMonitoringRedeemItem![i].poin} POIN',
+                                                                    '${dataMonitoringRedeemItem.listRptGeneralMonitoringRedeemItem![i].poinIDR} POIN',
                                                                     style:
                                                                         textStyleColorWhite,
                                                                     textAlign:
@@ -336,7 +335,94 @@ class _MonitoringRedeemItemByDetailPageState
                                                                     ),
                                                                     onPressed:
                                                                         () async {
-                                                                      try {
+                                                                      int successCount =
+                                                                          0;
+                                                                      int failCount =
+                                                                          0;
+                                                                      String
+                                                                          item =
+                                                                          dataMonitoringRedeemItem
+                                                                              .listRptGeneralMonitoringRedeemItem![i]
+                                                                              .title;
+                                                                      String
+                                                                          idrPoin =
+                                                                          dataMonitoringRedeemItem
+                                                                              .listRptGeneralMonitoringRedeemItem![i]
+                                                                              .poinIDR;
+
+                                                                      int totalPoin = dataMonitoringRedeemItem
+                                                                          .listRptGeneralMonitoringRedeemItem![
+                                                                              i]
+                                                                          .totalPoin;
+                                                                      int poin = dataMonitoringRedeemItem
+                                                                          .listRptGeneralMonitoringRedeemItem![
+                                                                              i]
+                                                                          .poin;
+
+                                                                      if (totalPoin <
+                                                                          poin) {
+                                                                        showDialog(
+                                                                          context:
+                                                                              context,
+                                                                          builder: (context) =>
+                                                                              AlertDialog(
+                                                                            shape:
+                                                                                RoundedRectangleBorder(
+                                                                              borderRadius: BorderRadius.circular(15),
+                                                                            ),
+                                                                            title:
+                                                                                Text(
+                                                                              "Info",
+                                                                              style: TextStyle(
+                                                                                fontSize: ResponsiveValue<double>(
+                                                                                  context,
+                                                                                  conditionalValues: [
+                                                                                    const Condition.equals(name: TABLET, value: 17.0, landscapeValue: 17.0),
+                                                                                    const Condition.largerThan(name: TABLET, value: 25.0, landscapeValue: 25.0, breakpoint: 800),
+                                                                                  ],
+                                                                                  defaultValue: 12.0,
+                                                                                ).value,
+                                                                                fontWeight: FontWeight.bold,
+                                                                              ),
+                                                                            ),
+                                                                            content:
+                                                                                Text(
+                                                                              "Redeem Poin Anda Tidak Mencukupi.",
+                                                                              style: TextStyle(
+                                                                                fontSize: ResponsiveValue<double>(
+                                                                                  context,
+                                                                                  conditionalValues: [
+                                                                                    const Condition.equals(name: TABLET, value: 14.5, landscapeValue: 14.5),
+                                                                                    const Condition.largerThan(name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+                                                                                  ],
+                                                                                  defaultValue: 12.0,
+                                                                                ).value,
+                                                                              ),
+                                                                            ),
+                                                                            actionsPadding:
+                                                                                const EdgeInsets.symmetric(
+                                                                              horizontal: 0,
+                                                                            ),
+                                                                            actions: <Widget>[
+                                                                              OutlinedButton(
+                                                                                onPressed: () {
+                                                                                  Navigator.pop(context);
+                                                                                },
+                                                                                style: OutlinedButton.styleFrom(
+                                                                                  side: BorderSide.none,
+                                                                                ),
+                                                                                child: const Text(
+                                                                                  "OK",
+                                                                                  style: TextStyle(
+                                                                                    color: Color(0xFF119D90),
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        );
+                                                                      } else {
                                                                         var redeempoin =
                                                                             ListEntryRedeemPoin(
                                                                           redeemItemID: dataMonitoringRedeemItem
@@ -350,35 +436,39 @@ class _MonitoringRedeemItemByDetailPageState
                                                                               .title,
                                                                         );
 
-                                                                        await ref
-                                                                            .read(entryRedeemPoinFormProvider)
-                                                                            .onSubmitRedeemPoin(redeempoin);
+                                                                        try {
+                                                                          await ref
+                                                                              .read(entryRedeemPoinFormProvider)
+                                                                              .onSubmitRedeemPoin(redeempoin);
+                                                                          successCount++;
+                                                                        } catch (e) {
+                                                                          failCount++;
+                                                                        }
 
                                                                         Navigator.of(context).pushAndRemoveUntil(
                                                                             MaterialPageRoute(builder: (context) => const HomePage()),
                                                                             (route) => false);
 
-                                                                        notifUpdated(
-                                                                            context);
-
-                                                                        // print(redeempoin
-                                                                        //     .toString());
-                                                                      } catch (e) {
-                                                                        Navigator.of(context)
-                                                                            .pushAndRemoveUntil(
-                                                                          MaterialPageRoute(
-                                                                            builder: (context) =>
-                                                                                const HomePage(),
-                                                                          ),
-                                                                          (route) =>
-                                                                              false,
-                                                                        );
-
-                                                                        catchError(
-                                                                          context,
-                                                                          e,
-                                                                        );
+                                                                        if (successCount >
+                                                                                0 &&
+                                                                            failCount ==
+                                                                                0) {
+                                                                          notifUpdated(
+                                                                            context,
+                                                                            "Redeem poin berhasil dilakukan untuk item $item sebesar $idrPoin poin",
+                                                                            true,
+                                                                          );
+                                                                        } else {
+                                                                          notifUpdated(
+                                                                            context,
+                                                                            "Redeem poin gagal",
+                                                                            false,
+                                                                          );
+                                                                        }
                                                                       }
+
+                                                                      // print(redeempoin
+                                                                      //     .toString());
                                                                     },
                                                                     child:
                                                                         Stack(
@@ -434,22 +524,20 @@ class _MonitoringRedeemItemByDetailPageState
     );
   }
 
-  void notifUpdated(BuildContext context) {
+  void notifUpdated(BuildContext context, String message, bool success) {
     ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        duration: Duration(milliseconds: 2000),
+      SnackBar(
+        duration: const Duration(milliseconds: 2000),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: ("Success" == "Success")
-            ? Color.fromARGB(
+        backgroundColor: success
+            ? const Color.fromARGB(
                 255,
                 1,
                 209,
                 29,
               )
             : Colors.red,
-        content: Text(("Success" == "Success")
-            ? "Redeem poin berhasil dilakukan untuk item "
-            : "Redeem poin gagal "),
+        content: Text(message),
       ),
     );
   }

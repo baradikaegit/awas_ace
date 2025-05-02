@@ -243,7 +243,7 @@ class _MonitoringRedeemItemPageState extends State<MonitoringRedeemItemPage> {
                                                                                 style: textStyleColorWhiteBH,
                                                                               ),
                                                                               Text(
-                                                                                '${item.poin} Poin',
+                                                                                '${item.poinIDR} Poin',
                                                                                 style: textStyleColorGrey,
                                                                               ),
                                                                             ],
