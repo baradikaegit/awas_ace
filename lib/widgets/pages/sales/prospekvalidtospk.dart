@@ -1183,7 +1183,7 @@ class _ProspekVtoSpkPageState extends State<ProspekVtoSpkPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptProspekVSpk.headerName : dataRptProspekVSpk.headerCode,
+                                                                              roles == 'SS' || roles == 'KACAB' ? dataRptProspekVSpk.headerName : dataRptProspekVSpk.headerCode,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),

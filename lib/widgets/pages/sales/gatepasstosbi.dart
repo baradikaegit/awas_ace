@@ -1156,7 +1156,7 @@ class _GatePasstoSBIPageState extends State<GatePasstoSBIPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptGatepasstoSBI.headerName : dataRptGatepasstoSBI.headerCode,
+                                                                              roles == 'SS' || roles == 'KACAB' ? dataRptGatepasstoSBI.headerName : dataRptGatepasstoSBI.headerCode,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),

@@ -1302,7 +1302,7 @@ class _MonitFoaPMAPageState extends State<MonitFoaPMAPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptDoToGatepass.headerName : dataRptDoToGatepass.headerCode,
+                                                                              roles == 'SS' || roles == 'KACAB' ? dataRptDoToGatepass.headerName : dataRptDoToGatepass.headerCode,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),

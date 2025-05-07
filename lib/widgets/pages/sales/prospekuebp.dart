@@ -1157,7 +1157,7 @@ class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptProspekUeBP.headerName : dataRptProspekUeBP.headerCode,
+                                                                              roles == 'SS' || roles == 'KACAB' ? dataRptProspekUeBP.headerName : dataRptProspekUeBP.headerCode,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),

@@ -1151,7 +1151,7 @@ class _DOtoGatePassPageState extends State<DOtoGatePassPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptDoToGatepass.headerName : dataRptDoToGatepass.headerCode,
+                                                                              roles == 'SS' || roles == 'KACAB' ? dataRptDoToGatepass.headerName : dataRptDoToGatepass.headerCode,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),

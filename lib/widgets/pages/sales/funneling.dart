@@ -1345,7 +1345,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                                 Text(
                                                                               roles == 'SALESMAN'
                                                                                   ? "TANGGAL"
-                                                                                  : roles == 'SALES SUPERVISOR'
+                                                                                  : roles == 'SS'
                                                                                       ? "SALES"
                                                                                       : roles == 'KACAB'
                                                                                           ? "SS"
@@ -1604,7 +1604,7 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                                                   left: 10,
                                                                                 ),
                                                                                 child: Text(
-                                                                                  roles == 'SALESMAN' || roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptFunneling.headerName : dataRptFunneling.branchCode,
+                                                                                  roles == 'SALESMAN' || roles == 'SS' || roles == 'KACAB' ? dataRptFunneling.headerName : dataRptFunneling.branchCode,
                                                                                   style: textStyleDataTable,
                                                                                 ),
                                                                               ),

@@ -1555,7 +1555,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                roles == 'SS' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
@@ -1787,7 +1787,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                roles == 'SS' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
@@ -2019,7 +2019,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                roles == 'SS' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
@@ -2251,7 +2251,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                roles == 'SS' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
@@ -2483,7 +2483,7 @@ class _TargetSalesActualPageState extends State<TargetSalesActualPage>
                                                                                                           );
                                                                                                         },
                                                                                               child: Text(
-                                                                                                roles == 'SALES SUPERVISOR' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
+                                                                                                roles == 'SS' || roles == 'KACAB' ? dataRptTSalesActual.headerName : dataRptTSalesActual.headerCode,
                                                                                                 style: textStyleDataTable,
                                                                                               ),
                                                                                             ),
