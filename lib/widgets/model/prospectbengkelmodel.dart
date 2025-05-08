@@ -42,6 +42,8 @@ class ListProspectBengkel {
     required this.statusName,
     required this.userName,
     required this.userBranch,
+    required this.taskStatusACEID,
+    required this.taskBranchID,
   });
   late final String iD;
   late final String taskDateView;
@@ -54,6 +56,8 @@ class ListProspectBengkel {
   late final String statusName;
   late final String userName;
   late final String userBranch;
+  late final String taskStatusACEID;
+  late final String taskBranchID;
 
   ListProspectBengkel.fromJson(Map<String, dynamic> json) {
     iD = json['iD'];
@@ -67,6 +71,8 @@ class ListProspectBengkel {
     statusName = json['statusName'];
     userName = json['userName'];
     userBranch = json['userBranch'];
+    taskStatusACEID = json['taskStatusACEID'];
+    taskBranchID = json['taskBranchID'];
   }
 
   Map<String, dynamic> toJson() {
@@ -82,6 +88,8 @@ class ListProspectBengkel {
     _data['statusName'] = statusName;
     _data['userName'] = userName;
     _data['userBranch'] = userBranch;
+    _data['taskStatusACEID'] = taskStatusACEID;
+    _data['taskBranchID'] = taskBranchID;
     return _data;
   }
 }

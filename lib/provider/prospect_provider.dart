@@ -2,11 +2,13 @@ import 'package:awas_ace/repositories/prospect_repositories.dart';
 import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkeldetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
+import 'package:awas_ace/widgets/model/prospectgetsalessvcmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesdetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:awas_ace/widgets/model/prospectupdatemodel.dart';
+import 'package:awas_ace/widgets/model/sendtaskprospectsvcmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -185,4 +187,34 @@ class UpdateSendProspectFormNotifier extends ChangeNotifier {
 final updateSendProspectFormProvider =
     ChangeNotifierProvider.autoDispose<UpdateSendProspectFormNotifier>((ref) {
   return UpdateSendProspectFormNotifier(ref as ProviderElementBase);
+});
+
+//list  get prospect sales dari bengkel
+final getSalesProspectSvc =
+    FutureProvider.autoDispose<ListProspectGetSalesSvcResponse>((ref) async {
+  final repositoryGetProspectSlsSvc = ref.watch(prospectRepositoryProvider);
+  return repositoryGetProspectSlsSvc.fecthListDataGetProspectSalesSvc();
+});
+
+//update send task prospect sales svc
+class UpdateProspectSendTaskFormNotifier extends ChangeNotifier {
+  UpdateProspectSendTaskFormNotifier(this.ref) : super();
+
+  final ProviderElementBase ref;
+
+  Future<SendTaskProspectResponse> onUpdateProspectSendTask(
+      ListSendTaskProspect upProspectSalesSvcSendTask) async {
+    final repositorysendtask = ref.read(prospectRepositoryProvider);
+    late SendTaskProspectResponse resp;
+
+    resp = await repositorysendtask
+        .updateReminderSendTask(upProspectSalesSvcSendTask);
+    return resp;
+  }
+}
+
+final updateProspectSendTaskFormProvider =
+    ChangeNotifierProvider.autoDispose<UpdateProspectSendTaskFormNotifier>(
+        (ref) {
+  return UpdateProspectSendTaskFormNotifier(ref as ProviderElementBase);
 });

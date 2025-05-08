@@ -5,11 +5,13 @@ import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkeldetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
+import 'package:awas_ace/widgets/model/prospectgetsalessvcmodel.dart';
 import 'package:awas_ace/widgets/model/prospectmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesdetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectuebpmodel.dart';
 import 'package:awas_ace/widgets/model/prospectupdatemodel.dart';
+import 'package:awas_ace/widgets/model/sendtaskprospectsvcmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -33,6 +35,9 @@ abstract class IProspectRepository {
       ListProspectUpdateResponse updateProspect);
   Future<SendProspectResponse> updateSendProspect(
       ListSendProspect upSendProspect);
+  Future<ListProspectGetSalesSvcResponse> fecthListDataGetProspectSalesSvc();
+  Future<SendTaskProspectResponse> updateReminderSendTask(
+      ListSendTaskProspect upSendTask);
 }
 
 class ProspectRepositories implements IProspectRepository {
@@ -335,5 +340,57 @@ class ProspectRepositories implements IProspectRepository {
     var responseUpdateSendProspect =
         SendProspectResponse.fromJson(jsonObjectUpdateSendProspect);
     return responseUpdateSendProspect;
+  }
+
+  //Get Sales Prospect Svc
+  @override
+  Future<ListProspectGetSalesSvcResponse>
+      fecthListDataGetProspectSalesSvc() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    var urlGetProspectBengkel = "${_host}GetSalesProspectSvc";
+
+    var resultGetProspectBengkel =
+        await http.get(Uri.parse(urlGetProspectBengkel), headers: {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    });
+
+    final jsonObjProspectBengkel = jsonDecode(resultGetProspectBengkel.body);
+
+    var responseGetProspectBengkel =
+        ListProspectGetSalesSvcResponse.fromJson(jsonObjProspectBengkel);
+    return responseGetProspectBengkel;
+  }
+
+  //update send task prospect sales svc
+  @override
+  Future<SendTaskProspectResponse> updateReminderSendTask(
+      ListSendTaskProspect upSendTask) async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    String? token = pref.getString("login");
+
+    final Map<String, String> headers = {
+      HttpHeaders.acceptHeader: "application/json",
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: "Bearer $token",
+    };
+
+    var urlUpdateSendTask = "${_host}SendTaskProspectSvc";
+    var body = jsonEncode(upSendTask);
+
+    var resultUpdateSendTask = await http.put(
+      Uri.parse(urlUpdateSendTask),
+      body: body,
+      headers: headers,
+      encoding: Encoding.getByName("utf-8"),
+    );
+
+    final jsonObjectUpdateSendTask = json.decode(resultUpdateSendTask.body);
+    var responseUpdateSendTask =
+        SendTaskProspectResponse.fromJson(jsonObjectUpdateSendTask);
+    return responseUpdateSendTask;
   }
 }
