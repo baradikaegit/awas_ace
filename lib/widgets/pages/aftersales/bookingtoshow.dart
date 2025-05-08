@@ -151,6 +151,7 @@ class _BookingToShowPageState extends State<BookingToShowPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -1205,7 +1206,6 @@ class _BookingToShowPageState extends State<BookingToShowPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

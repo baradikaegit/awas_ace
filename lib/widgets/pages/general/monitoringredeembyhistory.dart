@@ -111,6 +111,7 @@ class _MonitoringRedeemByHistoryPageState
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -394,7 +395,6 @@ class _MonitoringRedeemByHistoryPageState
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

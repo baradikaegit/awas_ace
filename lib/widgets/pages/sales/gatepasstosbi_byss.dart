@@ -152,6 +152,7 @@ class _GatePasstoSBIBySSPageState extends State<GatePasstoSBIBySSPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -1234,7 +1235,6 @@ class _GatePasstoSBIBySSPageState extends State<GatePasstoSBIBySSPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

@@ -827,6 +827,7 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
           ),
           body: Stack(
             children: [
+              const Watermark(),
               TabBarView(
                 children: [
                   Container(
@@ -10087,7 +10088,6 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                   ),
                 ],
               ),
-              const Watermark(),
             ],
           ),
         ),

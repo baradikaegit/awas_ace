@@ -240,6 +240,7 @@ class _ProspectDariBengkeDetailPageState
           ),
           child: Stack(
             children: [
+              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   var linkObj = widget.linkObject.toString();
@@ -1752,7 +1753,6 @@ class _ProspectDariBengkeDetailPageState
                   );
                 },
               ),
-              const Watermark(),
             ],
           ),
         ),

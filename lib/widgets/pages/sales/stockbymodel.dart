@@ -122,6 +122,7 @@ class _StockByModelPageState extends State<StockByModelPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     final String dateNow =
@@ -978,7 +979,6 @@ class _StockByModelPageState extends State<StockByModelPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

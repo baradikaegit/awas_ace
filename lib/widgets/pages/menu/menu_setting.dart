@@ -85,6 +85,7 @@ class _SettingPageState extends State<SettingPage> {
         ),
         child: Stack(
           children: [
+            const Watermark(),
             ListView(
               padding: const EdgeInsets.only(top: 10.0),
               children: [
@@ -292,7 +293,6 @@ class _SettingPageState extends State<SettingPage> {
                 )
               ],
             ),
-            const Watermark(),
           ],
         ),
       ),

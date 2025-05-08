@@ -91,6 +91,7 @@ class _MonitoringRedeemBySSPageState extends State<MonitoringRedeemBySSPage>
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -564,7 +565,6 @@ class _MonitoringRedeemBySSPageState extends State<MonitoringRedeemBySSPage>
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

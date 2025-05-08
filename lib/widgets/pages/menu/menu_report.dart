@@ -162,6 +162,7 @@ class _ReportPageState extends State<ReportPage> {
         ),
         child: Stack(
           children: [
+            const Watermark(),
             ListView(
               padding: const EdgeInsets.only(top: 10.0),
               children: [
@@ -1020,7 +1021,6 @@ class _ReportPageState extends State<ReportPage> {
                 )
               ],
             ),
-            const Watermark(),
           ],
         ),
       ),

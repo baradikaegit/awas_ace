@@ -165,6 +165,7 @@ class _MonitoringPoinHistoryPageState extends State<MonitoringPoinHistoryPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -496,7 +497,6 @@ class _MonitoringPoinHistoryPageState extends State<MonitoringPoinHistoryPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

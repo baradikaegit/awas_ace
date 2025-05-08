@@ -164,6 +164,7 @@ class _BocCaiBySalesSSPageState extends State<BocCaiBySalesSSPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -1860,7 +1861,6 @@ class _BocCaiBySalesSSPageState extends State<BocCaiBySalesSSPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

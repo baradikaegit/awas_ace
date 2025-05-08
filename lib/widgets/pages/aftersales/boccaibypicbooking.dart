@@ -148,6 +148,7 @@ class _BocCaiByPicBookingPageState extends State<BocCaiByPicBookingPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -1672,7 +1673,6 @@ class _BocCaiByPicBookingPageState extends State<BocCaiByPicBookingPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

@@ -197,6 +197,7 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -1887,7 +1888,6 @@ class _FunnelingAfterSalesPageState extends State<FunnelingAfterSalesPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

@@ -95,6 +95,7 @@ class _MonitoringRedeemItemPageState extends State<MonitoringRedeemItemPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     final rptMonitoringRedeem =
@@ -351,7 +352,6 @@ class _MonitoringRedeemItemPageState extends State<MonitoringRedeemItemPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

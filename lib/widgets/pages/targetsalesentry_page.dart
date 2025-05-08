@@ -172,6 +172,7 @@ class _TargetsalesEntryPageState extends ConsumerState<TargetsalesEntryPage>
           ),
           child: Stack(
             children: [
+              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   var linkPageObj = widget.linkPageObj.toString();
@@ -1610,7 +1611,6 @@ class _TargetsalesEntryPageState extends ConsumerState<TargetsalesEntryPage>
                   );
                 },
               ),
-              const Watermark(),
             ],
           ),
         ),

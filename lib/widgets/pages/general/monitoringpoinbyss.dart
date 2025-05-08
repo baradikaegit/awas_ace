@@ -89,6 +89,7 @@ class _MonitoringPoinBySSPageState extends State<MonitoringPoinBySSPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -646,7 +647,6 @@ class _MonitoringPoinBySSPageState extends State<MonitoringPoinBySSPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

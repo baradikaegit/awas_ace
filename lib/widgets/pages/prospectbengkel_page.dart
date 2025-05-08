@@ -31,6 +31,10 @@ class _ProspectDariBengkelPageState extends State<ProspectDariBengkelPage> {
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
   TextEditingController searchController = TextEditingController();
 
+  List<bool> checkedItems = [];
+  List<TextEditingController> checkControllers = [];
+  int? currentIndex;
+
   @override
   Widget build(BuildContext context) {
     var textStyleColorWhite = TextStyle(
@@ -84,6 +88,7 @@ class _ProspectDariBengkelPageState extends State<ProspectDariBengkelPage> {
           ),
           child: Stack(
             children: [
+              const Watermark(),
               Consumer(
                 builder: (context, WidgetRef ref, child) {
                   final datapb = ref.watch(prospectDariBengkel);
@@ -95,267 +100,381 @@ class _ProspectDariBengkelPageState extends State<ProspectDariBengkelPage> {
                           children: [
                             Expanded(
                               child: datapb.when(
-                                data: (datapb) => (datapb.listProspectBengkel !=
-                                        null)
-                                    ? datapb.listProspectBengkel!.isNotEmpty
-                                        ? Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 20, 20, 0),
-                                            child: SearchableList<
-                                                ListProspectBengkel>(
-                                              initialList:
-                                                  datapb.listProspectBengkel!,
-                                              itemBuilder: (item) {
-                                                return InkWell(
-                                                  onTap: () {
-                                                    Navigator.pushNamed(
-                                                      context,
-                                                      ProspectDariBengkeDetailPage
-                                                          .routeName,
-                                                      arguments: item.iD,
+                                data: (datapb) =>
+                                    (datapb.listProspectBengkel != null)
+                                        ? datapb.listProspectBengkel!.isNotEmpty
+                                            ? Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        20, 20, 20, 0),
+                                                child: SearchableList<
+                                                    ListProspectBengkel>(
+                                                  initialList: datapb
+                                                      .listProspectBengkel!,
+                                                  itemBuilder: (item) {
+                                                    if (datapb.listProspectBengkel ==
+                                                            null ||
+                                                        datapb
+                                                            .listProspectBengkel!
+                                                            .isEmpty) {
+                                                      return const Center(
+                                                        child: Text(
+                                                            "Tidak ada data"),
+                                                      );
+                                                    }
+
+                                                    int index = datapb
+                                                        .listProspectBengkel!
+                                                        .indexWhere(
+                                                      (element) =>
+                                                          element.iD == item.iD,
                                                     );
-                                                  },
-                                                  child: Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 10, 0, 10),
-                                                    child: Container(
-                                                      constraints:
-                                                          const BoxConstraints(
-                                                        minHeight: 90,
-                                                        minWidth:
-                                                            double.infinity,
-                                                      ),
-                                                      decoration: BoxDecoration(
-                                                        boxShadow: const [
-                                                          BoxShadow(
-                                                            color:
-                                                                Color.fromARGB(
-                                                              197,
-                                                              3,
-                                                              116,
-                                                              18,
-                                                            ),
-                                                            blurRadius: 3.0,
-                                                            offset:
-                                                                Offset(0, 0),
-                                                            spreadRadius: 1.1,
+
+                                                    if (index == -1 ||
+                                                        index >=
+                                                            checkedItems
+                                                                .length ||
+                                                        index >=
+                                                            checkControllers
+                                                                .length) {
+                                                      return const SizedBox(); // Hindari error index out of range
+                                                    }
+
+                                                    return InkWell(
+                                                      onTap: () {
+                                                        Navigator.pushNamed(
+                                                          context,
+                                                          ProspectDariBengkeDetailPage
+                                                              .routeName,
+                                                          arguments: item.iD,
+                                                        );
+                                                      },
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .fromLTRB(
+                                                                0, 10, 0, 10),
+                                                        child: Container(
+                                                          constraints:
+                                                              const BoxConstraints(
+                                                            minHeight: 90,
+                                                            minWidth:
+                                                                double.infinity,
                                                           ),
-                                                        ],
-                                                        border: Border.all(
-                                                            color: Colors
-                                                                .transparent,
-                                                            width: 2),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(10.0),
-                                                        color: const Color
-                                                            .fromARGB(
-                                                          167,
-                                                          19,
-                                                          160,
-                                                          0,
-                                                        ),
-                                                      ),
-                                                      child: Column(
-                                                        children: [
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                              10,
-                                                              10,
-                                                              10,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            boxShadow: const [
+                                                              BoxShadow(
+                                                                color: Color
+                                                                    .fromARGB(
+                                                                  197,
+                                                                  3,
+                                                                  116,
+                                                                  18,
+                                                                ),
+                                                                blurRadius: 3.0,
+                                                                offset: Offset(
+                                                                    0, 0),
+                                                                spreadRadius:
+                                                                    1.1,
+                                                              ),
+                                                            ],
+                                                            border: Border.all(
+                                                                color: Colors
+                                                                    .transparent,
+                                                                width: 2),
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        10.0),
+                                                            color: const Color
+                                                                .fromARGB(
+                                                              167,
+                                                              19,
+                                                              160,
                                                               0,
                                                             ),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Row(
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .spaceBetween,
-                                                                children: [
-                                                                  Text(
-                                                                    item.policeNumber,
-                                                                    style:
-                                                                        textStyleColorWhite,
-                                                                  ),
-                                                                  Container(
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      border: Border.all(
-                                                                          color:
-                                                                              Colors.grey),
-                                                                      borderRadius:
-                                                                          const BorderRadius
-                                                                              .all(
-                                                                        Radius.circular(
-                                                                            10.0),
+                                                          ),
+                                                          child: Column(
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                  0,
+                                                                  0,
+                                                                  10,
+                                                                  0,
+                                                                ),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child: Row(
+                                                                    children: <Widget>[
+                                                                      Checkbox(
+                                                                        activeColor:
+                                                                            Colors.white,
+                                                                        checkColor:
+                                                                            const Color.fromARGB(
+                                                                          176,
+                                                                          115,
+                                                                          184,
+                                                                          51,
+                                                                        ),
+                                                                        side: const BorderSide(
+                                                                            color:
+                                                                                Colors.white),
+                                                                        value: (index <
+                                                                                checkedItems.length)
+                                                                            ? checkedItems[index]
+                                                                            : false,
+                                                                        onChanged:
+                                                                            (bool?
+                                                                                value) {
+                                                                          setState(
+                                                                              () {
+                                                                            if (index < checkControllers.length &&
+                                                                                index < checkedItems.length) {
+                                                                              checkedItems[index] = value!;
+                                                                              checkControllers[index].text = value ? "1" : "0";
+                                                                              currentIndex = index; // Pastikan currentIndex diperbarui dan tidak hilang setelah rebuild
+
+                                                                              // print("Checkbox diubah: ${dataProspectSales.listProspectSales![index].prospectCode} -> ${checkControllers[index].text}");
+                                                                              // print("currentIndex setelah checkbox diklik: $currentIndex");
+                                                                            } else {
+                                                                              print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
+                                                                            }
+                                                                          });
+                                                                          Future.delayed(
+                                                                              const Duration(milliseconds: 50),
+                                                                              () {
+                                                                            if (mounted) {
+                                                                              setState(() {});
+                                                                            }
+                                                                          });
+                                                                        },
                                                                       ),
-                                                                    ),
-                                                                    child:
-                                                                        Padding(
-                                                                      padding: const EdgeInsets
-                                                                          .fromLTRB(
-                                                                          5,
-                                                                          0,
-                                                                          5,
-                                                                          0),
-                                                                      child:
-                                                                          Text(
-                                                                        item.statusName,
+                                                                      Expanded(
+                                                                        child:
+                                                                            Text(
+                                                                          'Check to send',
+                                                                          style:
+                                                                              textStyleColorWhite,
+                                                                          maxLines:
+                                                                              2,
+                                                                          overflow:
+                                                                              TextOverflow.ellipsis,
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                  10,
+                                                                  10,
+                                                                  10,
+                                                                  0,
+                                                                ),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: [
+                                                                      Text(
+                                                                        item.policeNumber,
                                                                         style:
                                                                             textStyleColorWhite,
                                                                       ),
-                                                                    ),
+                                                                      Container(
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              Colors.grey,
+                                                                          border:
+                                                                              Border.all(color: Colors.grey),
+                                                                          borderRadius:
+                                                                              const BorderRadius.all(
+                                                                            Radius.circular(10.0),
+                                                                          ),
+                                                                        ),
+                                                                        child:
+                                                                            Padding(
+                                                                          padding: const EdgeInsets
+                                                                              .fromLTRB(
+                                                                              5,
+                                                                              0,
+                                                                              5,
+                                                                              0),
+                                                                          child:
+                                                                              Text(
+                                                                            item.statusName,
+                                                                            style:
+                                                                                textStyleColorWhite,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
                                                                   ),
-                                                                ],
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                item.vtype
-                                                                    .toUpperCase(),
-                                                                style:
-                                                                    textStyleColorWhite,
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        10,
+                                                                        10,
+                                                                        10,
+                                                                        0),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child: Text(
+                                                                    item.vtype
+                                                                        .toUpperCase(),
+                                                                    style:
+                                                                        textStyleColorWhite,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                item.taskDateView,
-                                                                style:
-                                                                    textStyleColorWhite,
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        10,
+                                                                        10,
+                                                                        10,
+                                                                        0),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child: Text(
+                                                                    item.taskDateView,
+                                                                    style:
+                                                                        textStyleColorWhite,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    0),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                "${item.taskView} - ${item.userName} (${item.userBranch})",
-                                                                style:
-                                                                    textStyleColorWhite,
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        10,
+                                                                        10,
+                                                                        10,
+                                                                        0),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child: Text(
+                                                                    "${item.taskView} - ${item.userName} (${item.userBranch})",
+                                                                    style:
+                                                                        textStyleColorWhite,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                    .fromLTRB(
-                                                                    10,
-                                                                    10,
-                                                                    10,
-                                                                    10),
-                                                            child: Align(
-                                                              alignment: Alignment
-                                                                  .centerLeft,
-                                                              child: Text(
-                                                                item.custName,
-                                                                style:
-                                                                    textStyleColorWhite,
+                                                              Padding(
+                                                                padding:
+                                                                    const EdgeInsets
+                                                                        .fromLTRB(
+                                                                        10,
+                                                                        10,
+                                                                        10,
+                                                                        10),
+                                                                child: Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .centerLeft,
+                                                                  child: Text(
+                                                                    item.custName,
+                                                                    style:
+                                                                        textStyleColorWhite,
+                                                                  ),
+                                                                ),
                                                               ),
-                                                            ),
+                                                            ],
                                                           ),
-                                                        ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                  searchTextController:
+                                                      searchController,
+                                                  filter: (searchController) {
+                                                    return datapb
+                                                        .listProspectBengkel!
+                                                        .where(
+                                                          (element) =>
+                                                              element.custName
+                                                                  .toLowerCase()
+                                                                  .contains(
+                                                                    searchController
+                                                                        .toString()
+                                                                        .toLowerCase(),
+                                                                  ) ||
+                                                              element.vtype
+                                                                  .toLowerCase()
+                                                                  .contains(
+                                                                    searchController
+                                                                        .toString()
+                                                                        .toLowerCase(),
+                                                                  ),
+                                                        )
+                                                        .toList();
+                                                  },
+                                                  keyboardAction:
+                                                      TextInputAction.search,
+                                                  emptyWidget:
+                                                      const EmptyView(),
+                                                  inputDecoration:
+                                                      InputDecoration(
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                            horizontal: 8.0),
+                                                    labelText: "Search..",
+                                                    labelStyle: const TextStyle(
+                                                      color: Color.fromARGB(
+                                                        255,
+                                                        3,
+                                                        116,
+                                                        18,
                                                       ),
                                                     ),
-                                                  ),
-                                                );
-                                              },
-                                              searchTextController:
-                                                  searchController,
-                                              filter: (searchController) {
-                                                return datapb
-                                                    .listProspectBengkel!
-                                                    .where(
-                                                      (element) =>
-                                                          element.custName
-                                                              .toLowerCase()
-                                                              .contains(
-                                                                searchController
-                                                                    .toString()
-                                                                    .toLowerCase(),
-                                                              ) ||
-                                                          element.vtype
-                                                              .toLowerCase()
-                                                              .contains(
-                                                                searchController
-                                                                    .toString()
-                                                                    .toLowerCase(),
-                                                              ),
-                                                    )
-                                                    .toList();
-                                              },
-                                              keyboardAction:
-                                                  TextInputAction.search,
-                                              emptyWidget: const EmptyView(),
-                                              inputDecoration: InputDecoration(
-                                                contentPadding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 8.0),
-                                                labelText: "Search..",
-                                                labelStyle: const TextStyle(
-                                                  color: Color.fromARGB(
-                                                    255,
-                                                    3,
-                                                    116,
-                                                    18,
-                                                  ),
-                                                ),
-                                                fillColor: Colors.white,
-                                                focusedBorder:
-                                                    OutlineInputBorder(
-                                                  gapPadding: 15.0,
-                                                  borderSide: const BorderSide(
-                                                    color: Color.fromARGB(
-                                                      255,
-                                                      3,
-                                                      116,
-                                                      18,
+                                                    fillColor: Colors.white,
+                                                    focusedBorder:
+                                                        OutlineInputBorder(
+                                                      gapPadding: 15.0,
+                                                      borderSide:
+                                                          const BorderSide(
+                                                        color: Color.fromARGB(
+                                                          255,
+                                                          3,
+                                                          116,
+                                                          18,
+                                                        ),
+                                                        width: 1.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              10.0),
                                                     ),
-                                                    width: 1.0,
                                                   ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          10.0),
                                                 ),
-                                              ),
-                                            ),
-                                          )
-                                        : const MyAlertDialog()
-                                    : const notActivetoken(),
+                                              )
+                                            : const MyAlertDialog()
+                                        : const notActivetoken(),
                                 error: (err, stack) => Text('Error $err'),
                                 loading: () => const Center(
                                   child: Column(
@@ -371,7 +490,6 @@ class _ProspectDariBengkelPageState extends State<ProspectDariBengkelPage> {
                   );
                 },
               ),
-              const Watermark(),
             ],
           ),
         ),

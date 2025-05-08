@@ -123,6 +123,7 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -979,7 +980,6 @@ class _StockByModelVtypePageState extends State<StockByModelVtypePage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

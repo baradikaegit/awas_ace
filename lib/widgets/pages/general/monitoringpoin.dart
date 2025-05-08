@@ -231,6 +231,7 @@ class _MonitoringPoinPageState extends State<MonitoringPoinPage>
                 ),
                 child: Stack(
                   children: [
+                    const Watermark(),
                     Consumer(
                       builder: (context, ref, child) {
                         final rptMonitoringPoin = ref.watch(reportMonitPoin);
@@ -685,7 +686,6 @@ class _MonitoringPoinPageState extends State<MonitoringPoinPage>
                         );
                       },
                     ),
-                    const Watermark(),
                   ],
                 ),
               ),
@@ -704,6 +704,7 @@ class _MonitoringPoinPageState extends State<MonitoringPoinPage>
                 ),
                 child: Stack(
                   children: [
+                    const Watermark(),
                     Consumer(
                       builder: (context, ref, child) {
                         final rptMonitoringPoin = ref.watch(reportMonitPoin);
@@ -1158,7 +1159,6 @@ class _MonitoringPoinPageState extends State<MonitoringPoinPage>
                         );
                       },
                     ),
-                    const Watermark(),
                   ],
                 ),
               ),

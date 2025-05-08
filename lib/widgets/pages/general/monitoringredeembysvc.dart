@@ -91,6 +91,7 @@ class _MonitoringRedeemBySvcPageState extends State<MonitoringRedeemBySvcPage>
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -614,7 +615,6 @@ class _MonitoringRedeemBySvcPageState extends State<MonitoringRedeemBySvcPage>
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

@@ -164,6 +164,7 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -650,10 +651,11 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                                                       0,
                                                       0,
                                                     ),
-                                                    child: 
-                                                    Text("BOC & CAI (${dataSelectOpt.listBocCaiBySales![0].tipeCode})", 
-                                                    style: textStyleColorWhiteB,
-                                                      ),
+                                                    child: Text(
+                                                      "BOC & CAI (${dataSelectOpt.listBocCaiBySales![0].tipeCode})",
+                                                      style:
+                                                          textStyleColorWhiteB,
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -1816,7 +1818,6 @@ class _BocCaiBySalesPageState extends State<BocCaiBySalesPage> {
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

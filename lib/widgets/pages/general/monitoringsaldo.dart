@@ -89,6 +89,7 @@ class _MonitoringSaldoPageState extends State<MonitoringSaldoPage>
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     final rptMonitoringSaldo = ref.watch(reportMonitSaldo);
@@ -476,7 +477,6 @@ class _MonitoringSaldoPageState extends State<MonitoringSaldoPage>
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),

@@ -173,6 +173,7 @@ class _MonitoringSaldoHistoryPageState
             ),
             child: Stack(
               children: [
+                const Watermark(),
                 Consumer(
                   builder: (context, ref, child) {
                     var linkPageObj = widget.linkPageObj.toString();
@@ -505,7 +506,6 @@ class _MonitoringSaldoHistoryPageState
                     );
                   },
                 ),
-                const Watermark(),
               ],
             ),
           ),
