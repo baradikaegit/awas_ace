@@ -92,12 +92,15 @@ class _ReminderLeasingBerakhirPageState
           centerTitle: true,
           title: titleBar,
           actions: <Widget>[
-            Builder(
-              builder: (context) => IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-                icon: const Icon(Icons.send),
+            Visibility(
+              visible: roles == 'SS',
+              child: Builder(
+                builder: (context) => IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                  icon: const Icon(Icons.send),
+                ),
               ),
             ),
           ],
