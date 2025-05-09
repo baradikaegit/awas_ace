@@ -1094,24 +1094,9 @@ class _ProspectDariBengkeDetailPageState
                                                                 ),
                                                               ),
                                                               child:
-                                                                  ExpansionTile(
-                                                                trailing:
-                                                                    const Icon(
-                                                                  Icons.add,
-                                                                  color: Color
-                                                                      .fromARGB(
-                                                                    255,
-                                                                    255,
-                                                                    255,
-                                                                    255,
-                                                                  ),
-                                                                  size: 15.0,
-                                                                ),
-                                                                title: Text(
-                                                                  "History ",
-                                                                  style:
-                                                                      textStyleColorWhiteB,
-                                                                ),
+                                                                  CustomExpansionTile(
+                                                                title:
+                                                                    "History ",
                                                                 children: [
                                                                   for (int x =
                                                                           0;
@@ -1777,6 +1762,77 @@ class _ProspectDariBengkeDetailPageState
             ? "Task berhasil di update dengan status ${taskStatusController.text} "
             : "Task gagal di update "),
       ),
+    );
+  }
+}
+
+class CustomExpansionTile extends StatefulWidget {
+  final String title;
+  final List<Widget> children;
+
+  const CustomExpansionTile({
+    super.key,
+    required this.title,
+    required this.children,
+  });
+
+  @override
+  State<CustomExpansionTile> createState() => _CustomExpansionTileState();
+}
+
+class _CustomExpansionTileState extends State<CustomExpansionTile> {
+  bool _isExpanded = false;
+
+  @override
+  Widget build(BuildContext context) {
+    var textStyleColorWhiteB = TextStyle(
+      color: const Color.fromARGB(
+        255,
+        255,
+        255,
+        255,
+      ),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 12.5, landscapeValue: 12.5),
+          const Condition.largerThan(
+              name: TABLET, value: 14.0, landscapeValue: 14.0, breakpoint: 800),
+        ],
+        defaultValue: 11.0,
+      ).value,
+      fontWeight: FontWeight.bold,
+    );
+
+    return ExpansionTile(
+      trailing: Icon(
+        _isExpanded ? Icons.minimize : Icons.add,
+        color: const Color.fromARGB(255, 255, 255, 255),
+        size: ResponsiveValue<double>(
+          context,
+          conditionalValues: [
+            const Condition.equals(
+                name: TABLET, value: 15.0, landscapeValue: 15.0),
+            const Condition.largerThan(
+                name: TABLET,
+                value: 18.0,
+                landscapeValue: 18.0,
+                breakpoint: 800),
+          ],
+          defaultValue: 13.0,
+        ).value,
+      ),
+      title: Text(
+        widget.title,
+        style: textStyleColorWhiteB,
+      ),
+      children: widget.children,
+      onExpansionChanged: (bool expanded) {
+        setState(() {
+          _isExpanded = expanded;
+        });
+      },
     );
   }
 }
