@@ -1115,14 +1115,13 @@ class _ProspekGRtoUeBPPageState extends State<ProspekGRtoUeBPPage> {
                                                                                   var month = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].month.toString();
                                                                                   var year = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].year.toString();
                                                                                   var periodTipe = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].periodTipe;
-                                                                                  var branchCode = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].headerName;
+                                                                                  var branchCode = dataProspekGRUeBP.listRptProspekGRtoUeBP![indexObj].headerCode;
 
                                                                                   Navigator.pushNamed(
                                                                                     context,
                                                                                     ProspekGRtoUeBPBySANamePage.routeName,
                                                                                     arguments: '$month/$year/$periodTipe/$branchCode',
                                                                                   );
-                                                                                  print('$month/$year/$periodTipe/$branchCode');
                                                                                 },
                                                                           child:
                                                                               Padding(

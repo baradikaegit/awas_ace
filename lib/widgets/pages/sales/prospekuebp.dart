@@ -546,7 +546,13 @@ class _ProspekUeBPPageState extends State<ProspekUeBPPage> {
                                                       ),
                                                     ),
                                                     Text(
-                                                      "(ALL)",
+                                                      roles == 'SALESMAN' ||
+                                                              roles == 'SS'
+                                                          ? dataSelectOpt
+                                                              .listRptProspekUeBp![
+                                                                  0]
+                                                              .title
+                                                          : "(ALL)",
                                                       maxLines: 2,
                                                       overflow:
                                                           TextOverflow.ellipsis,

@@ -992,7 +992,7 @@ class _BookingToShowPageState extends State<BookingToShowPage> {
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "TMS",
+                                                                        "BOOKING",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:
@@ -1016,7 +1016,7 @@ class _BookingToShowPageState extends State<BookingToShowPage> {
                                                                           Text(
                                                                         textAlign:
                                                                             TextAlign.center,
-                                                                        "PRODUCTIVITY",
+                                                                        "SHOW",
                                                                         style:
                                                                             textStyleColorWhiteB,
                                                                         maxLines:

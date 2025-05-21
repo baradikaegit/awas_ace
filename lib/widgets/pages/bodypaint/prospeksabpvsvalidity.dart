@@ -1139,7 +1139,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                                     ProspekSaBPBySANamePage.routeName,
                                                                                     arguments: '$month/$year/$periodTipe/$branchCode',
                                                                                   );
-                                                                                  // print('$month/$year/$periodTipe/$branchCode');
+                                                                                  print('$month/$year/$periodTipe/$branchCode');
                                                                                 },
                                                                           child:
                                                                               Padding(
@@ -1149,7 +1149,7 @@ class _ProspekSaBPPageState extends State<ProspekSaBPPage> {
                                                                             ),
                                                                             child:
                                                                                 Text(
-                                                                              dataRptProspekSaBP.headerName,
+                                                                              dataRptProspekSaBP.headerCode,
                                                                               style: textStyleDataTable,
                                                                             ),
                                                                           ),
