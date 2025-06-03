@@ -9,14 +9,17 @@ import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
+import 'package:awas_ace/widgets/model/branchbookingmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraandetailmodel.dart';
 import 'package:awas_ace/widgets/model/taskstatusmodel.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class SvcKendaraanPelangganDetailPage extends StatefulWidget {
@@ -50,6 +53,11 @@ class _SvcKendaraanPelangganDetailPageState
   TextEditingController taskStatusController = TextEditingController();
   TextEditingController taskStatusIDController = TextEditingController();
   TextEditingController ketController = TextEditingController();
+  TextEditingController tglBookingController = TextEditingController();
+  final TextEditingController tglBookingPICController = TextEditingController();
+  TextEditingController branchBookingNameController = TextEditingController();
+  TextEditingController branchBookingIDController = TextEditingController();
+  bool isDateInitialized = false;
 
   List<ModelSelect> bodyCapture = [
     ModelSelect('Pilih Data Yang Sesuai', 1),
@@ -57,7 +65,16 @@ class _SvcKendaraanPelangganDetailPageState
 
   String taskStatus = '';
   String taskStatusID = '';
+  String? valID;
   String bodyCaptureVal = 'Pilih Data Yang Sesuai';
+  String dateNow = DateFormat('MM/dd/yyyy').format(DateTime.now());
+  String branchBookingName = '';
+  String branchBookingID = '';
+
+  String? userName;
+  String? sid;
+  String? branchID;
+  String? roles;
 
   void _custHomePhoneCall(String custHomePhone) async {
     final Uri custHomePhoneUri = Uri(
@@ -81,6 +98,23 @@ class _SvcKendaraanPelangganDetailPageState
     } else {
       throw 'Could not launch $custPhone';
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadSharedPreference();
+    tglBookingController.text = dateNow;
+  }
+
+  loadSharedPreference() async {
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      userName = prefs.getString('Username');
+      sid = prefs.getString('SID');
+      branchID = prefs.getString('BranchID');
+      roles = prefs.getString('Roles');
+    });
   }
 
   @override
@@ -269,6 +303,58 @@ class _SvcKendaraanPelangganDetailPageState
                                                                       index]
                                                                   .statusName
                                                           : null;
+
+                                                      branchBookingName == ''
+                                                          ? branchBookingNameController
+                                                                  .text =
+                                                              datadetail
+                                                                  .listSvcKendaraanDetail![
+                                                                      index]
+                                                                  .branchBusinessUnitBooking
+                                                          : null;
+
+                                                      branchBookingID == ''
+                                                          ? branchBookingIDController
+                                                                  .text =
+                                                              datadetail
+                                                                  .listSvcKendaraanDetail![
+                                                                      index]
+                                                                  .branchBusinessUnitBookingID
+                                                          : null;
+
+                                                      final rawDate = datadetail
+                                                          .listSvcKendaraanDetail![
+                                                              index]
+                                                          .bookingDate;
+
+                                                      if (!isDateInitialized) {
+                                                        WidgetsBinding.instance
+                                                            .addPostFrameCallback(
+                                                                (_) {
+                                                          try {
+                                                            final bookingDate =
+                                                                DateFormat(
+                                                                        'dd/MM/yyyy HH:mm:ss')
+                                                                    .parse(
+                                                                        rawDate);
+
+                                                            final bookingDateFormatted =
+                                                                DateFormat(
+                                                                        'MM/dd/yyyy')
+                                                                    .format(
+                                                                        bookingDate);
+                                                            tglBookingPICController
+                                                                    .text =
+                                                                bookingDateFormatted;
+                                                          } catch (e) {
+                                                            tglBookingPICController
+                                                                .text = '';
+                                                          }
+                                                          isDateInitialized =
+                                                              true;
+                                                          setState(() {});
+                                                        });
+                                                      }
 
                                                       return Padding(
                                                         padding:
@@ -953,12 +1039,18 @@ class _SvcKendaraanPelangganDetailPageState
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
-                                                                        var response =
-                                                                            await http.get(
-                                                                          Uri.parse(
-                                                                            "${urlApi()}SvcKendaraan/GetTaskStatusSvcKendaraan/4",
-                                                                          ),
-                                                                        );
+                                                                        var response = roles ==
+                                                                                'PIC'
+                                                                            ? await http.get(
+                                                                                Uri.parse(
+                                                                                  "${urlApi()}SvcKendaraan/GetTaskStatusSvcKendaraan/6",
+                                                                                ),
+                                                                              )
+                                                                            : await http.get(
+                                                                                Uri.parse(
+                                                                                  "${urlApi()}SvcKendaraan/GetTaskStatusSvcKendaraan/4",
+                                                                                ),
+                                                                              );
                                                                         if (response.statusCode !=
                                                                             200) {
                                                                           return [];
@@ -1023,6 +1115,557 @@ class _SvcKendaraanPelangganDetailPageState
                                                                 ],
                                                               ),
                                                             ),
+                                                            taskStatusID ==
+                                                                    '4625F5B6-F2EA-4420-8CD3-FBF8D34A8EE1'
+                                                                ? Column(
+                                                                    children: [
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .fromLTRB(
+                                                                            0,
+                                                                            10,
+                                                                            0,
+                                                                            10),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                                                              child: Align(
+                                                                                alignment: Alignment.centerLeft,
+                                                                                child: Text(
+                                                                                  "Tanggal Booking :",
+                                                                                  style: textStyleColorYellow,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                                                              child: TextFormField(
+                                                                                style: const TextStyle(
+                                                                                  color: Color.fromARGB(
+                                                                                    167,
+                                                                                    36,
+                                                                                    80,
+                                                                                    128,
+                                                                                  ),
+                                                                                ),
+                                                                                controller: tglBookingController,
+                                                                                autocorrect: false,
+                                                                                textInputAction: TextInputAction.next,
+                                                                                decoration: InputDecoration(
+                                                                                  hintText: 'Tanggal Booking',
+                                                                                  hintStyle: textStyleColorWhite,
+                                                                                  labelText: 'Tanggal Booking',
+                                                                                  labelStyle: const TextStyle(
+                                                                                    color: Color.fromARGB(
+                                                                                      167,
+                                                                                      36,
+                                                                                      80,
+                                                                                      128,
+                                                                                    ),
+                                                                                  ),
+                                                                                  enabledBorder: const OutlineInputBorder(
+                                                                                    borderSide: BorderSide(
+                                                                                      color: Color.fromARGB(
+                                                                                        167,
+                                                                                        36,
+                                                                                        80,
+                                                                                        128,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  focusedBorder: OutlineInputBorder(
+                                                                                    borderSide: const BorderSide(
+                                                                                      color: Color.fromARGB(
+                                                                                        167,
+                                                                                        36,
+                                                                                        80,
+                                                                                        128,
+                                                                                      ),
+                                                                                      width: 2,
+                                                                                    ),
+                                                                                    borderRadius: BorderRadius.circular(10.0),
+                                                                                  ),
+                                                                                ),
+                                                                                onTap: () async {
+                                                                                  DateTime? pickedDate = await showDatePicker(
+                                                                                    context: context,
+                                                                                    initialDate: DateTime.now(),
+                                                                                    firstDate: DateTime(2000),
+                                                                                    lastDate: DateTime(2050),
+                                                                                  );
+                                                                                  if (pickedDate != null) {
+                                                                                    String formatDate = DateFormat('MM/dd/yyyy').format(pickedDate);
+
+                                                                                    setState(() {
+                                                                                      tglBookingController.text = formatDate;
+                                                                                    });
+                                                                                  } else {
+                                                                                    tglBookingController.text = dateNow;
+                                                                                  }
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                      Padding(
+                                                                        padding: const EdgeInsets
+                                                                            .fromLTRB(
+                                                                            0,
+                                                                            10,
+                                                                            0,
+                                                                            10),
+                                                                        child:
+                                                                            Column(
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.fromLTRB(
+                                                                                0,
+                                                                                0,
+                                                                                0,
+                                                                                10,
+                                                                              ),
+                                                                              child: Align(
+                                                                                alignment: Alignment.centerLeft,
+                                                                                child: Text(
+                                                                                  "Booking Service Di Cabang :",
+                                                                                  style: textStyleColorYellow,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                                              child: DropdownSearch<BranchBooking>(
+                                                                                popupProps: PopupProps.dialog(
+                                                                                  dialogProps: const DialogProps(
+                                                                                    shape: Border.symmetric(
+                                                                                      vertical: BorderSide.none,
+                                                                                    ),
+                                                                                  ),
+                                                                                  showSearchBox: true,
+                                                                                  searchFieldProps: TextFieldProps(
+                                                                                    decoration: InputDecoration(
+                                                                                      hintText: "Search..",
+                                                                                      enabledBorder: OutlineInputBorder(
+                                                                                        borderSide: const BorderSide(
+                                                                                          color: Color.fromARGB(
+                                                                                            255,
+                                                                                            134,
+                                                                                            134,
+                                                                                            134,
+                                                                                          ),
+                                                                                          width: 2,
+                                                                                        ),
+                                                                                        borderRadius: BorderRadius.circular(10.0),
+                                                                                      ),
+                                                                                      focusedBorder: OutlineInputBorder(
+                                                                                        borderSide: const BorderSide(
+                                                                                          color: Color.fromARGB(
+                                                                                            255,
+                                                                                            134,
+                                                                                            134,
+                                                                                            134,
+                                                                                          ),
+                                                                                          width: 2,
+                                                                                        ),
+                                                                                        borderRadius: BorderRadius.circular(10.0),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                  itemBuilder: (context, item, isSelected) => ListTile(
+                                                                                    title: Text(
+                                                                                      item.text,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                dropdownDecoratorProps: DropDownDecoratorProps(
+                                                                                  dropdownSearchDecoration: InputDecoration(
+                                                                                    errorStyle: const TextStyle(
+                                                                                      color: Color.fromARGB(
+                                                                                        255,
+                                                                                        255,
+                                                                                        17,
+                                                                                        0,
+                                                                                      ),
+                                                                                    ),
+                                                                                    errorBorder: const UnderlineInputBorder(
+                                                                                      borderSide: BorderSide(
+                                                                                        color: Color.fromARGB(
+                                                                                          255,
+                                                                                          255,
+                                                                                          17,
+                                                                                          0,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    hintStyle: textStyleColorYellow,
+                                                                                    enabledBorder: const OutlineInputBorder(
+                                                                                      borderSide: BorderSide(
+                                                                                        color: Color.fromARGB(
+                                                                                          167,
+                                                                                          36,
+                                                                                          80,
+                                                                                          128,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    focusedBorder: OutlineInputBorder(
+                                                                                      borderSide: const BorderSide(
+                                                                                        color: Color.fromARGB(
+                                                                                          167,
+                                                                                          36,
+                                                                                          80,
+                                                                                          128,
+                                                                                        ),
+                                                                                        width: 2,
+                                                                                      ),
+                                                                                      borderRadius: BorderRadius.circular(10.0),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                onChanged: (value) {
+                                                                                  setState(
+                                                                                    () {
+                                                                                      branchBookingName = value!.text;
+                                                                                      branchBookingID = value.iD.toUpperCase();
+                                                                                      branchBookingNameController.text = branchBookingName;
+                                                                                      branchBookingIDController.text = branchBookingID;
+                                                                                    },
+                                                                                  );
+                                                                                },
+                                                                                dropdownBuilder: (context, selectedItem) => Text(
+                                                                                  branchBookingName != '' ? branchBookingName : 'Belum memilih cabang',
+                                                                                  style: textStyleColorYellow,
+                                                                                ),
+                                                                                asyncItems: (String filter) async {
+                                                                                  var response = await http.get(
+                                                                                    Uri.parse(
+                                                                                      "${urlApi()}SvcKendaraan/GetSVCBranchBooking",
+                                                                                    ),
+                                                                                  );
+                                                                                  if (response.statusCode != 200) {
+                                                                                    return [];
+                                                                                  }
+                                                                                  List allBranchBooking = (jsonDecode(response.body) as Map<String, dynamic>)["listBranchBookingSvc"];
+                                                                                  List<BranchBooking> allModelBranchBooking = [];
+
+                                                                                  for (var element in allBranchBooking) {
+                                                                                    allModelBranchBooking.add(
+                                                                                      BranchBooking(
+                                                                                        iD: element["iD"],
+                                                                                        text: element["text"],
+                                                                                      ),
+                                                                                    );
+                                                                                  }
+                                                                                  return allModelBranchBooking;
+                                                                                },
+                                                                              ),
+                                                                            ),
+                                                                            Visibility(
+                                                                              visible: false,
+                                                                              child: TextFormField(
+                                                                                controller: branchBookingIDController,
+                                                                                autocorrect: false,
+                                                                                textInputAction: TextInputAction.next,
+                                                                                decoration: InputDecoration(
+                                                                                  hintText: 'Branch Booking ID',
+                                                                                  hintStyle: textStyleColorYellow,
+                                                                                  enabledBorder: const OutlineInputBorder(
+                                                                                    borderSide: BorderSide(
+                                                                                      color: Color.fromARGB(
+                                                                                        167,
+                                                                                        36,
+                                                                                        80,
+                                                                                        128,
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  )
+                                                                : taskStatusID ==
+                                                                            '' &&
+                                                                        datadetail.listSvcKendaraanDetail![index].taskStatusID ==
+                                                                            '4625f5b6-f2ea-4420-8cd3-fbf8d34a8ee1'
+                                                                    ? Column(
+                                                                        children: [
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                0,
+                                                                                10,
+                                                                                0,
+                                                                                10),
+                                                                            child:
+                                                                                Column(
+                                                                              children: [
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                                                                                  child: Align(
+                                                                                    alignment: Alignment.centerLeft,
+                                                                                    child: Text(
+                                                                                      "Tanggal Booking :",
+                                                                                      style: textStyleColorYellow,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                                                                  child: TextFormField(
+                                                                                    style: const TextStyle(
+                                                                                      color: Color.fromARGB(
+                                                                                        167,
+                                                                                        36,
+                                                                                        80,
+                                                                                        128,
+                                                                                      ),
+                                                                                    ),
+                                                                                    controller: tglBookingPICController,
+                                                                                    autocorrect: false,
+                                                                                    textInputAction: TextInputAction.next,
+                                                                                    decoration: InputDecoration(
+                                                                                      hintText: 'Tanggal Booking',
+                                                                                      hintStyle: textStyleColorWhite,
+                                                                                      labelText: 'Tanggal Booking',
+                                                                                      labelStyle: const TextStyle(
+                                                                                        color: Color.fromARGB(
+                                                                                          167,
+                                                                                          36,
+                                                                                          80,
+                                                                                          128,
+                                                                                        ),
+                                                                                      ),
+                                                                                      enabledBorder: const OutlineInputBorder(
+                                                                                        borderSide: BorderSide(
+                                                                                          color: Color.fromARGB(
+                                                                                            167,
+                                                                                            36,
+                                                                                            80,
+                                                                                            128,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                      focusedBorder: OutlineInputBorder(
+                                                                                        borderSide: const BorderSide(
+                                                                                          color: Color.fromARGB(
+                                                                                            167,
+                                                                                            36,
+                                                                                            80,
+                                                                                            128,
+                                                                                          ),
+                                                                                          width: 2,
+                                                                                        ),
+                                                                                        borderRadius: BorderRadius.circular(10.0),
+                                                                                      ),
+                                                                                    ),
+                                                                                    onTap: () async {
+                                                                                      DateTime? pickedDate = await showDatePicker(
+                                                                                        context: context,
+                                                                                        initialDate: DateTime.now(),
+                                                                                        firstDate: DateTime(2000),
+                                                                                        lastDate: DateTime(2050),
+                                                                                      );
+
+                                                                                      if (pickedDate != null) {
+                                                                                        String formattedDate = DateFormat('MM/dd/yyyy').format(pickedDate);
+                                                                                        setState(() {
+                                                                                          tglBookingPICController.text = formattedDate;
+                                                                                        });
+                                                                                      }
+                                                                                    },
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                          Padding(
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                0,
+                                                                                10,
+                                                                                0,
+                                                                                10),
+                                                                            child:
+                                                                                Column(
+                                                                              children: [
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.fromLTRB(
+                                                                                    0,
+                                                                                    0,
+                                                                                    0,
+                                                                                    10,
+                                                                                  ),
+                                                                                  child: Align(
+                                                                                    alignment: Alignment.centerLeft,
+                                                                                    child: Text(
+                                                                                      "Booking Service Di Cabang :",
+                                                                                      style: textStyleColorYellow,
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                                Padding(
+                                                                                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                                                                  child: DropdownSearch<BranchBooking>(
+                                                                                    popupProps: PopupProps.dialog(
+                                                                                      dialogProps: const DialogProps(
+                                                                                        shape: Border.symmetric(
+                                                                                          vertical: BorderSide.none,
+                                                                                        ),
+                                                                                      ),
+                                                                                      showSearchBox: true,
+                                                                                      searchFieldProps: TextFieldProps(
+                                                                                        decoration: InputDecoration(
+                                                                                          hintText: "Search..",
+                                                                                          enabledBorder: OutlineInputBorder(
+                                                                                            borderSide: const BorderSide(
+                                                                                              color: Color.fromARGB(
+                                                                                                255,
+                                                                                                134,
+                                                                                                134,
+                                                                                                134,
+                                                                                              ),
+                                                                                              width: 2,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(10.0),
+                                                                                          ),
+                                                                                          focusedBorder: OutlineInputBorder(
+                                                                                            borderSide: const BorderSide(
+                                                                                              color: Color.fromARGB(
+                                                                                                255,
+                                                                                                134,
+                                                                                                134,
+                                                                                                134,
+                                                                                              ),
+                                                                                              width: 2,
+                                                                                            ),
+                                                                                            borderRadius: BorderRadius.circular(10.0),
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                      itemBuilder: (context, item, isSelected) => ListTile(
+                                                                                        title: Text(
+                                                                                          item.text,
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    dropdownDecoratorProps: DropDownDecoratorProps(
+                                                                                      dropdownSearchDecoration: InputDecoration(
+                                                                                        errorStyle: const TextStyle(
+                                                                                          color: Color.fromARGB(
+                                                                                            255,
+                                                                                            255,
+                                                                                            17,
+                                                                                            0,
+                                                                                          ),
+                                                                                        ),
+                                                                                        errorBorder: const UnderlineInputBorder(
+                                                                                          borderSide: BorderSide(
+                                                                                            color: Color.fromARGB(
+                                                                                              255,
+                                                                                              255,
+                                                                                              17,
+                                                                                              0,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        hintStyle: textStyleColorYellow,
+                                                                                        enabledBorder: const OutlineInputBorder(
+                                                                                          borderSide: BorderSide(
+                                                                                            color: Color.fromARGB(
+                                                                                              167,
+                                                                                              36,
+                                                                                              80,
+                                                                                              128,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        focusedBorder: OutlineInputBorder(
+                                                                                          borderSide: const BorderSide(
+                                                                                            color: Color.fromARGB(
+                                                                                              167,
+                                                                                              36,
+                                                                                              80,
+                                                                                              128,
+                                                                                            ),
+                                                                                            width: 2,
+                                                                                          ),
+                                                                                          borderRadius: BorderRadius.circular(10.0),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                    onChanged: (value) {
+                                                                                      setState(
+                                                                                        () {
+                                                                                          branchBookingName = value!.text;
+                                                                                          branchBookingID = value.iD.toUpperCase();
+                                                                                          branchBookingNameController.text = branchBookingName;
+                                                                                          branchBookingIDController.text = branchBookingID;
+                                                                                        },
+                                                                                      );
+                                                                                    },
+                                                                                    dropdownBuilder: (context, selectedItem) => Text(
+                                                                                      branchBookingName != '' ? branchBookingName : datadetail.listSvcKendaraanDetail![index].branchBusinessUnitBooking,
+                                                                                      style: textStyleColorYellow,
+                                                                                    ),
+                                                                                    asyncItems: (String filter) async {
+                                                                                      var response = await http.get(
+                                                                                        Uri.parse(
+                                                                                          "${urlApi()}SvcKendaraan/GetSVCBranchBooking",
+                                                                                        ),
+                                                                                      );
+                                                                                      if (response.statusCode != 200) {
+                                                                                        return [];
+                                                                                      }
+                                                                                      List allBranchBooking = (jsonDecode(response.body) as Map<String, dynamic>)["listBranchBookingSvc"];
+                                                                                      List<BranchBooking> allModelBranchBooking = [];
+
+                                                                                      for (var element in allBranchBooking) {
+                                                                                        allModelBranchBooking.add(
+                                                                                          BranchBooking(
+                                                                                            iD: element["iD"],
+                                                                                            text: element["text"],
+                                                                                          ),
+                                                                                        );
+                                                                                      }
+                                                                                      return allModelBranchBooking;
+                                                                                    },
+                                                                                  ),
+                                                                                ),
+                                                                                Visibility(
+                                                                                  visible: false,
+                                                                                  child: TextFormField(
+                                                                                    controller: branchBookingIDController,
+                                                                                    autocorrect: false,
+                                                                                    textInputAction: TextInputAction.next,
+                                                                                    decoration: InputDecoration(
+                                                                                      hintText: 'Branch Booking ID',
+                                                                                      hintStyle: textStyleColorYellow,
+                                                                                      enabledBorder: const OutlineInputBorder(
+                                                                                        borderSide: BorderSide(
+                                                                                          color: Color.fromARGB(
+                                                                                            167,
+                                                                                            36,
+                                                                                            80,
+                                                                                            128,
+                                                                                          ),
+                                                                                        ),
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              ],
+                                                                            ),
+                                                                          ),
+                                                                        ],
+                                                                      )
+                                                                    : const Padding(
+                                                                        padding:
+                                                                            EdgeInsets.zero),
                                                             Padding(
                                                               padding:
                                                                   const EdgeInsets
@@ -1248,7 +1891,16 @@ class _SvcKendaraanPelangganDetailPageState
                                                                             taskStatusIDController.text,
                                                                         taskNote:
                                                                             ketController.text,
+                                                                        branchBussinessUnitBookingID:
+                                                                            branchBookingIDController.text,
+                                                                        bookingDate: roles ==
+                                                                                'PIC'
+                                                                            ? tglBookingPICController.text
+                                                                            : tglBookingController.text,
                                                                       );
+
+                                                                      // print(
+                                                                      //     updateSvcKendaraan);
 
                                                                       try {
                                                                         var resp = await ref

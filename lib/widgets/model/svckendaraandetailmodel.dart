@@ -56,6 +56,9 @@ class ListSvcKendaraanDetail {
     required this.statusName,
     required this.vColor,
     required this.year,
+    required this.bookingDate,
+    required this.branchBusinessUnitBookingID,
+    required this.branchBusinessUnitBooking,
     required this.lastService,
     required this.lastServiceDate,
     required this.countTaskDetail,
@@ -83,6 +86,9 @@ class ListSvcKendaraanDetail {
   late final String statusName;
   late final String vColor;
   late final String year;
+  late final String bookingDate;
+  late final String branchBusinessUnitBookingID;
+  late final String branchBusinessUnitBooking;
   late final String lastService;
   late final String lastServiceDate;
   late final List<CountTaskDetail>? countTaskDetail;
@@ -111,6 +117,9 @@ class ListSvcKendaraanDetail {
     statusName = djson['statusName'];
     vColor = djson['vColor'];
     year = djson['year'];
+    bookingDate = djson['bookingDate'];
+    branchBusinessUnitBookingID = djson['branchBusinessUnitBookingID'];
+    branchBusinessUnitBooking = djson['branchBusinessUnitBooking'];
     lastService = djson['lastService'];
     lastServiceDate = djson['lastServiceDate'];
     countTaskDetail = (djson['countTaskDetail'] != "")
@@ -183,20 +192,31 @@ class CountTaskDetail {
 
 //update svc kendaraan
 class ListSvcKendaraanUpdate {
-  ListSvcKendaraanUpdate({
-    this.iD,
-    this.taskStatusID,
-    this.taskNote,
-  });
+  ListSvcKendaraanUpdate(
+      {this.iD,
+      this.taskStatusID,
+      this.taskNote,
+      this.branchBussinessUnitBookingID,
+      this.bookingDate});
 
   late String? iD;
   late String? taskStatusID;
   late String? taskNote;
+  late String? branchBussinessUnitBookingID;
+  late String? bookingDate;
+
+//print objek data
+  // @override
+  // String toString() {
+  //   return 'ListSvcKendaraanUpdate(iD: $iD, taskStatusID: $taskStatusID, taskNote: $taskNote, branchBussinessUnitBookingID: $branchBussinessUnitBookingID, bookingDate: $bookingDate)';
+  // }
 
   ListSvcKendaraanUpdate.fromJson(Map<String, dynamic> djson) {
     iD = djson['iD'];
     taskStatusID = djson['taskStatusID'];
     taskNote = djson['taskNote'];
+    branchBussinessUnitBookingID = djson['branchBussinessUnitBookingID'];
+    bookingDate = djson['bookingDate'];
   }
 
   Map<String, dynamic> toJson() {
@@ -204,6 +224,8 @@ class ListSvcKendaraanUpdate {
     _data['iD'] = iD;
     _data['taskStatusID'] = taskStatusID;
     _data['taskNote'] = taskNote;
+    _data['branchBussinessUnitBookingID'] = branchBussinessUnitBookingID;
+    _data['bookingDate'] = bookingDate;
 
     return _data;
   }

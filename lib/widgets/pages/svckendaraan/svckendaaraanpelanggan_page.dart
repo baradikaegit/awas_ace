@@ -92,12 +92,15 @@ class _SvcKendaraanPelangganPageState extends State<SvcKendaraanPelangganPage> {
           centerTitle: true,
           title: titleBar,
           actions: <Widget>[
-            Builder(
-              builder: (context) => IconButton(
-                onPressed: () {
-                  Scaffold.of(context).openEndDrawer();
-                },
-                icon: const Icon(Icons.send),
+            Visibility(
+              visible: roles == 'SS',
+              child: Builder(
+                builder: (context) => IconButton(
+                  onPressed: () {
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                  icon: const Icon(Icons.send),
+                ),
               ),
             ),
           ],
@@ -618,9 +621,9 @@ class _SvcKendaraanPelangganPageState extends State<SvcKendaraanPelangganPage> {
                                                                             } catch (_) {}
                                                                           }
 
-                                                                          print(
-                                                                            '${controller.text} - $taskStatusACEID - $taskBranch - ${item.salesCode} - Send By $taskView to ${item.salesCode}',
-                                                                          );
+                                                                          // print(
+                                                                          //   '${controller.text} - $taskStatusACEID - $taskBranch - ${item.salesCode} - Send By $taskView to ${item.salesCode}',
+                                                                          // );
 
                                                                           String
                                                                               taskNote =
@@ -804,7 +807,7 @@ class _SvcKendaraanPelangganPageState extends State<SvcKendaraanPelangganPage> {
                       children: [
                         Column(
                           children: [
-                            roles == 'SALESMAN'
+                            roles == 'SALESMAN' || roles == 'PIC'
                                 ? Expanded(
                                     child: dataSvcKendaraan.when(
                                       data: (data) => (data.listSvcKendaraan !=
