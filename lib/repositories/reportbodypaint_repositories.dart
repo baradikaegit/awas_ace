@@ -1,11 +1,24 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/reportbpprospekbpuegrmodel.dart';
 import 'package:awas_ace/widgets/model/reportbpprospeksabpmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class ReportBodyPaintURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}ReportBodyPaint/";
+  }
+}
 
 abstract class IReportBodyPaintRepository {
   Future<ListRptBodyPaintProspekSaBPResponse> fecthListDataProspekSaBP(
@@ -19,7 +32,7 @@ abstract class IReportBodyPaintRepository {
 }
 
 class ReportBodyPaintRepositories implements IReportBodyPaintRepository {
-  final _host = "${urlApi()}ReportBodyPaint/";
+  // final _host = "${urlApi()}ReportBodyPaint/";
 
   //Prospek SA BP
   @override
@@ -27,6 +40,7 @@ class ReportBodyPaintRepositories implements IReportBodyPaintRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportBodyPaintURL.host;
 
     var urlGetRptProspekSaBP = "${_host}GetReportProspekSaBP/$linkPageObj";
 
@@ -50,6 +64,7 @@ class ReportBodyPaintRepositories implements IReportBodyPaintRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportBodyPaintURL.host;
 
     var urlGetRptProspekSaBPBySAName =
         "${_host}GetReportProspekSaBPBySAName/$linkPageObj";
@@ -76,6 +91,7 @@ class ReportBodyPaintRepositories implements IReportBodyPaintRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportBodyPaintURL.host;
 
     var urlGetRptProspekBPtoUeGR =
         "${_host}GetReportProspekBPtoUeGR/$linkPageObj";
@@ -102,6 +118,7 @@ class ReportBodyPaintRepositories implements IReportBodyPaintRepository {
       fecthListDataProspekBPtoUeGRBySAName(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportBodyPaintURL.host;
 
     var urlGetRptProspekBPtoUeGRBySAName =
         "${_host}GetReportProspekBPtoUeGRBySAName/$linkPageObj";

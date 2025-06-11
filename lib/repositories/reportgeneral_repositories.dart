@@ -1,7 +1,10 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinhistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntpoinmodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntredeemhistorymodel.dart';
@@ -11,6 +14,16 @@ import 'package:awas_ace/widgets/model/reportgeneralmntsaldohistorymodel.dart';
 import 'package:awas_ace/widgets/model/reportgeneralmntsaldomodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class ReportGeneralURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}ReportGeneral/";
+  }
+}
 
 abstract class IReportGeneralRepository {
   Future<ListRptGeneralMntPoinResponse> fecthListDataMonitoringPoin();
@@ -45,13 +58,14 @@ abstract class IReportGeneralRepository {
 }
 
 class ReportGeneralRepositories implements IReportGeneralRepository {
-  final _host = "${urlApi()}ReportGeneral/";
+  // final _host = "${urlApi()}ReportGeneral/";
 
   //Monitoring Poin
   @override
   Future<ListRptGeneralMntPoinResponse> fecthListDataMonitoringPoin() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitPoin = "${_host}GetReportMonitoringPoin";
 
@@ -75,6 +89,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitPoinBySS =
         "${_host}GetReportMonitoringPoinBySS/$linkPageObj";
@@ -99,6 +114,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitPoinBySvc =
         "${_host}GetReportMonitoringPoinBySvc/$linkPageObj";
@@ -124,6 +140,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitPoinBySales =
         "${_host}GetReportMonitoringPoinBySales/$linkPageObj";
@@ -149,6 +166,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       fecthListDataMonitoringPoinHistory(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitPoinHistory =
         "${_host}GetReportMonitoringPoinByHistory/$linkPageObj";
@@ -175,6 +193,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       fecthListDataMonitoringRedeem() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitRedeem = "${_host}GetReportMonitoringRedeem";
 
@@ -198,6 +217,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitRedeemBySS =
         "${_host}GetReportMonitoringRedeemBySS/$linkPageObj";
@@ -223,6 +243,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitRedeemBySvc =
         "${_host}GetReportMonitoringRedeemBySvc/$linkPageObj";
@@ -248,6 +269,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitRedeemBySales =
         "${_host}GetReportMonitoringRedeemBySales/$linkPageObj";
@@ -273,6 +295,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitRedeemByHistory =
         "${_host}GetReportMonitoringRedeemByHistroy/$linkPageObj";
@@ -298,6 +321,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       fecthListDataMonitoringRedeemItem() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitRedeemItem = "${_host}GetReportMonitoringRedeemItem";
 
@@ -322,6 +346,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       fecthListDataMonitoringRedeemItemByDetail(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitRedeemItemByDetail =
         "${_host}GetReportMonitoringRedeemItemByDetail/$linkPageObj";
@@ -348,6 +373,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       ListEntryRedeemPoin redeempoin) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -375,6 +401,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
   Future<ListRptGeneralMntSaldoResponse> fecthListDataMonitoringSaldo() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitSaldo = "${_host}GetReportMonitoringSaldo";
 
@@ -398,6 +425,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitSaldoByUser =
         "${_host}GetReportMonitoringSaldoByUser/$linkPageObj";
@@ -423,6 +451,7 @@ class ReportGeneralRepositories implements IReportGeneralRepository {
       fecthListDataMonitoringSaldoHistory(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportGeneralURL.host;
 
     var urlGetRptMonitSaldoHistory =
         "${_host}GetReportMonitoringSaldoByHistory/$linkPageObj";

@@ -1,7 +1,10 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/reportslsboccaibysalesmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsdotogatepassmodel.dart';
 import 'package:awas_ace/widgets/model/reportslsfunnelingmodel.dart';
@@ -15,6 +18,16 @@ import 'package:awas_ace/widgets/model/reportslsstockmodel.dart';
 import 'package:awas_ace/widgets/model/reportslstargetslsactmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class ReportSalesURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}ReportSales/";
+  }
+}
 
 abstract class IReportSalesRepository {
   Future<ListRptFunnelingResponse> fecthListData(String linkPageObj);
@@ -78,12 +91,13 @@ abstract class IReportSalesRepository {
 }
 
 class ReportSalesRepositories implements IReportSalesRepository {
-  final _host = "${urlApi()}ReportSales/";
+  // final _host = "${urlApi()}ReportSales/";
 
   @override
   Future<ListRptFunnelingResponse> fecthListData(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptFunneling = "${_host}GetReportFunneling/$linkPageObj";
 
@@ -107,6 +121,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptFunnelingSS = "${_host}GetReportFunnelingBySS/$linkPageObj";
 
@@ -130,6 +145,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptFunnelingSales =
         "${_host}GetReportFunnelingBySales/$linkPageObj";
@@ -155,6 +171,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptFunnelingSalesDetail =
         "${_host}GetReportFunnelingBySalesDetail/$linkPageObj";
@@ -180,6 +197,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptProspekVspk = "${_host}GetReportProspekValidSpk/$linkPageObj";
 
@@ -203,6 +221,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptProspekVspkBySS =
         "${_host}GetReportProspekValidSpkBySS/$linkPageObj";
@@ -228,6 +247,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptProspekVspkBySales =
         "${_host}GetReportProspekValidSpkBySales/$linkPageObj";
@@ -253,6 +273,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptProspekUeBP = "${_host}GetReportProspekUeBp/$linkPageObj";
 
@@ -276,6 +297,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptProspekUeBPBySS =
         "${_host}GetReportProspekUeBpBySS/$linkPageObj";
@@ -301,6 +323,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptProspekUeBPBySales =
         "${_host}GetReportProspekUeBpBySales/$linkPageObj";
@@ -326,6 +349,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptTSalesActual = "${_host}GetReportTSalesActual/$linkPageObj";
 
@@ -349,6 +373,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptTSalesActualBySS =
         "${_host}GetReportTSalesActualBySS/$linkPageObj";
@@ -374,6 +399,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptTSalesActualBySales =
         "${_host}GetReportTSalesActualBySales/$linkPageObj";
@@ -398,6 +424,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
   Future<ListRptStockByModelResponse> fecthListDataStockByModel() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptStockByModel = "${_host}GetReportStockByModel";
 
@@ -421,6 +448,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptStockByModelVtype =
         "${_host}GetReportStockByModelVtype/$linkPageObj";
@@ -446,6 +474,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptStockByModelVcolor =
         "${_host}GetReportStockByModelVcolor/$linkPageObj";
@@ -471,6 +500,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptStockByModelVbranch =
         "${_host}GetReportStockByModelBranch/$linkPageObj";
@@ -496,6 +526,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptDoToGatepass = "${_host}GetReportDoToGatepass/$linkPageObj";
 
@@ -519,6 +550,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptDoToGatepassBySS =
         "${_host}GetReportDoToGatepassBySS/$linkPageObj";
@@ -544,6 +576,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptDoToGatepassBySales =
         "${_host}GetReportDoToGatepassBySales/$linkPageObj";
@@ -569,6 +602,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptGatepasstoSBI = "${_host}GetReportGatepassToSBI/$linkPageObj";
 
@@ -592,6 +626,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptGatepasstoSBIBySS =
         "${_host}GetReportGatepassToSBIBySS/$linkPageObj";
@@ -617,6 +652,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptGatepasstoSBIBySales =
         "${_host}GetReportGatepassToSBIBySales/$linkPageObj";
@@ -642,6 +678,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       fecthListDataMonitoringVolProfitMaker(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptMonitoringVolProfitMaker =
         "${_host}GetReportMonitoringVolProfitMaker/$linkPageObj";
@@ -668,6 +705,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       fecthListDataMonitoringVolProfitMakerDetail(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptVolProfitMakerDetail =
         "${_host}GetReportMonitoringVolProfitMakerDetail/$linkPageObj";
@@ -694,6 +732,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptFoaPMA = "${_host}GetMonitoringFoaPMA/$linkPageObj";
 
@@ -717,6 +756,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptFoaPMABySS = "${_host}GetMonitoringFoaPMABySS/$linkPageObj";
 
@@ -740,6 +780,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptFoaPMABySls =
         "${_host}GetMonitoringFoaPMABySales/$linkPageObj";
@@ -764,6 +805,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptBocCaiBySales = "${_host}GetBocCaiBySalesBranch/$linkPageObj";
 
@@ -787,6 +829,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptBocCaiBySalesSS = "${_host}GetBocCaiBySalesSS/$linkPageObj";
 
@@ -811,6 +854,7 @@ class ReportSalesRepositories implements IReportSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportSalesURL.host;
 
     var urlGetRptBocCaiBySalesSSDtl =
         "${_host}GetBocCaiBySalesSSDetail/$linkPageObj";

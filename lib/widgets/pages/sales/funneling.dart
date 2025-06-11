@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:awas_ace/provider/reportsales_provider.dart';
-import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/alert_notempty.dart';
+import 'package:awas_ace/support/api_config.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
 import 'package:awas_ace/support/watermark.dart';
@@ -725,10 +725,14 @@ class _FunnelingPageState extends State<FunnelingPage> {
                                                       ),
                                                       asyncItems: (String
                                                           filter) async {
+                                                        final url =
+                                                            await ApiConfigURL
+                                                                .host;
+
                                                         var response =
                                                             await http.get(
                                                           Uri.parse(
-                                                            "${urlApi()}ReportSales/GetReferensi",
+                                                            "${url}ReportSales/GetReferensi",
                                                           ),
                                                         );
                                                         if (response

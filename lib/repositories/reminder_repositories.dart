@@ -1,13 +1,26 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/reminderdetailmodel.dart';
 import 'package:awas_ace/widgets/model/remindergetsalesmodel.dart';
 import 'package:awas_ace/widgets/model/remindermodel.dart';
 import 'package:awas_ace/widgets/model/sendtaskmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class ReminderURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}Reminder/";
+  }
+}
 
 abstract class IReminderRepository {
   Future<ListReminderResponse> fecthListDataStnk();
@@ -24,13 +37,14 @@ abstract class IReminderRepository {
 }
 
 class ReminderRepositories implements IReminderRepository {
-  final _host = "${urlApi()}Reminder/";
+  // final _host = "${urlApi()}Reminder/";
 
   //STNK
   @override
   Future<ListReminderResponse> fecthListDataStnk() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReminderURL.host;
 
     var urlGetSTNK = "${_host}GetSTNK";
 
@@ -51,6 +65,7 @@ class ReminderRepositories implements IReminderRepository {
   Future<ListReminderResponse> fecthListDataBirthday() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReminderURL.host;
 
     var urlGetBirthday = "${_host}GetBirthday";
 
@@ -71,6 +86,7 @@ class ReminderRepositories implements IReminderRepository {
   Future<ListReminderResponse> fecthListDataLeasingBerakhir() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReminderURL.host;
 
     var urlGetLeasingBerakhir = "${_host}GetLeasingBerakhir";
 
@@ -95,6 +111,7 @@ class ReminderRepositories implements IReminderRepository {
   ) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReminderURL.host;
 
     var urlGetReminderDetail = "${_host}GetReminderDetail/$linkObj";
     var resultReminderDetail =
@@ -117,6 +134,7 @@ class ReminderRepositories implements IReminderRepository {
       ListReminderUpdate updateReminder) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReminderURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -145,6 +163,7 @@ class ReminderRepositories implements IReminderRepository {
   Future<ListReminderGetSalesResponse> fecthListDataGetSales() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReminderURL.host;
 
     var urlGetSales = "${_host}GetSalesReminder";
 
@@ -166,6 +185,7 @@ class ReminderRepositories implements IReminderRepository {
       ListSendTask upSendTask) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReminderURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",

@@ -1,7 +1,10 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/grafikprospectsalesmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkeldetailmodel.dart';
 import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
@@ -14,6 +17,16 @@ import 'package:awas_ace/widgets/model/prospectupdatemodel.dart';
 import 'package:awas_ace/widgets/model/sendtaskprospectsvcmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class ProspectURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}Prospect/";
+  }
+}
 
 abstract class IProspectRepository {
   Future<ProspectResponse> createNewProspect(ListProspectData prospect);
@@ -41,12 +54,13 @@ abstract class IProspectRepository {
 }
 
 class ProspectRepositories implements IProspectRepository {
-  final _host = "${urlApi()}Prospect/";
+  // final _host = "${urlApi()}Prospect/";
 
   @override
   Future<ProspectResponse> createNewProspect(ListProspectData prospect) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -74,6 +88,7 @@ class ProspectRepositories implements IProspectRepository {
       ListEntryProspectUEBP uebp) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -100,6 +115,7 @@ class ProspectRepositories implements IProspectRepository {
   Future<ListProspectUEBP> fecthListDataUEBP(String objID) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     var urlUEBP = "${_host}GetProspectUEBP/$objID";
     var resultUEBP = await http.get(Uri.parse(urlUEBP), headers: {
@@ -120,6 +136,7 @@ class ProspectRepositories implements IProspectRepository {
       fecthListDataGrafikProspectSales() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     var urlGetGrafikProspectSales = "${_host}GetGrafikProspectSales";
 
@@ -143,6 +160,7 @@ class ProspectRepositories implements IProspectRepository {
   Future<ListProspectDariBengkelResponse> fecthListDataProspectBengkel() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     var urlGetProspectBengkel = "${_host}GetProspectDariBengkel";
 
@@ -166,6 +184,7 @@ class ProspectRepositories implements IProspectRepository {
       fecthListDataProspectBengkelDetail(String linkObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     var urlGetPbDetail = "${_host}GetProspectDariBengkelDetail/$linkObj";
     var resultPbDetail = await http.get(Uri.parse(urlGetPbDetail), headers: {
@@ -187,6 +206,7 @@ class ProspectRepositories implements IProspectRepository {
       ListProspectbengkelUpdate updateProspectDariBengkel) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -218,6 +238,7 @@ class ProspectRepositories implements IProspectRepository {
   Future<ProspectSalesListResponse> fecthListDataProspectSales() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     var urlGetProspectSales = "${_host}GetProspectSales";
 
@@ -241,6 +262,7 @@ class ProspectRepositories implements IProspectRepository {
       String linkObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     var urlGetProspectSalesBySls = "${_host}GetProspectSalesBySales/$linkObj";
 
@@ -265,6 +287,7 @@ class ProspectRepositories implements IProspectRepository {
       String linkObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     var urlGetProspectSalesDetail = "${_host}GetProspectSalesDetail/$linkObj";
 
@@ -288,6 +311,7 @@ class ProspectRepositories implements IProspectRepository {
       ListProspectUpdateResponse updateProspect) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -318,6 +342,7 @@ class ProspectRepositories implements IProspectRepository {
       ListSendProspect upSendProspect) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -348,6 +373,7 @@ class ProspectRepositories implements IProspectRepository {
       fecthListDataGetProspectSalesSvc() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     var urlGetProspectBengkel = "${_host}GetSalesProspectSvc";
 
@@ -371,6 +397,7 @@ class ProspectRepositories implements IProspectRepository {
       ListSendTaskProspect upSendTask) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProspectURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",

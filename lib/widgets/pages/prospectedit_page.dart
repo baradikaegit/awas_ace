@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/provider/prospect_provider.dart';
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/support/api_config.dart';
 import 'package:awas_ace/support/api_error.dart';
 import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
@@ -283,8 +283,10 @@ class _ProspectEditPageState extends State<ProspectEditPage>
 
   void fetchDataKodePos(
       String nameProv, String nameKab, String nameKec, String nameKel) async {
+    final urlProspect = await ApiConfigURL.host;
+
     var url = Uri.parse(
-      "${urlApi()}Wilayah/GetWilayahKodePos/$nameProv/$nameKab/$nameKec/$nameKel",
+      "${urlProspect}Wilayah/GetWilayahKodePos/$nameProv/$nameKab/$nameKec/$nameKel",
     );
 
     //print(url);
@@ -333,8 +335,10 @@ class _ProspectEditPageState extends State<ProspectEditPage>
   }
 
   void fetchDataFromApi(String idKodePos) async {
+    final urlProspect = await ApiConfigURL.host;
+
     var url = Uri.parse(
-      "${urlApi()}Wilayah/GetWilayahArea/$idKodePos",
+      "${urlProspect}Wilayah/GetWilayahArea/$idKodePos",
     );
 
     try {
@@ -381,8 +385,10 @@ class _ProspectEditPageState extends State<ProspectEditPage>
 
   void fetchDataKodePosS2(String nameProvS2, String nameKabS2, String nameKecS2,
       String nameKelS2) async {
+    final urlProspect = await ApiConfigURL.host;
+
     var url = Uri.parse(
-      "${urlApi()}Wilayah/GetWilayahKodePos/$nameProvS2/$nameKabS2/$nameKecS2/$nameKelS2",
+      "${urlProspect}Wilayah/GetWilayahKodePos/$nameProvS2/$nameKabS2/$nameKecS2/$nameKelS2",
     );
 
     //print(url);
@@ -430,8 +436,10 @@ class _ProspectEditPageState extends State<ProspectEditPage>
   }
 
   void fetchDataFromApiS2(String idKodePosS2) async {
+    final urlProspect = await ApiConfigURL.host;
+
     var url = Uri.parse(
-      "${urlApi()}Wilayah/GetWilayahArea/$idKodePosS2",
+      "${urlProspect}Wilayah/GetWilayahArea/$idKodePosS2",
     );
 
     try {
@@ -2417,10 +2425,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetWilayahProvinsi",
+                                                                            "${urlProspect}Wilayah/GetWilayahProvinsi",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -2644,10 +2655,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetWilayahKota/$nameProv",
+                                                                            "${urlProspect}Wilayah/GetWilayahKota/$nameProv",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -2875,10 +2889,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetWilayahKecamatan/$nameProv/$nameKab",
+                                                                            "${urlProspect}Wilayah/GetWilayahKecamatan/$nameProv/$nameKab",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -3107,10 +3124,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetWilayahKelurahan/$nameProv/$nameKab/$nameKec",
+                                                                            "${urlProspect}Wilayah/GetWilayahKelurahan/$nameProv/$nameKab/$nameKec",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -3689,10 +3709,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetSumberData",
+                                                                            "${urlProspect}Wilayah/GetSumberData",
                                                                           ),
                                                                         );
 
@@ -5098,10 +5121,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetWilayahProvinsi",
+                                                                            "${urlProspect}Wilayah/GetWilayahProvinsi",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -5328,10 +5354,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetWilayahKota/$nameProvS2",
+                                                                            "${urlProspect}Wilayah/GetWilayahKota/$nameProvS2",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -5554,10 +5583,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetWilayahKecamatan/$nameProvS2/$nameKabS2",
+                                                                            "${urlProspect}Wilayah/GetWilayahKecamatan/$nameProvS2/$nameKabS2",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -5790,10 +5822,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetWilayahKelurahan/$nameProvS2/$nameKabS2/$nameKecS2",
+                                                                            "${urlProspect}Wilayah/GetWilayahKelurahan/$nameProvS2/$nameKabS2/$nameKecS2",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -6552,10 +6587,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetCustType",
+                                                                            "${urlProspect}Wilayah/GetCustType",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -7048,10 +7086,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetKisaranHarga",
+                                                                            "${urlProspect}Wilayah/GetKisaranHarga",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -7313,10 +7354,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetTipePelanggan",
+                                                                            "${urlProspect}Wilayah/GetTipePelanggan",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -7721,10 +7765,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetVgroup",
+                                                                            "${urlProspect}Wilayah/GetVgroup",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -8235,10 +8282,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetVfuel",
+                                                                            "${urlProspect}Wilayah/GetVfuel",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -8519,10 +8569,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetVtransmisi",
+                                                                            "${urlProspect}Wilayah/GetVtransmisi",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -8825,10 +8878,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetVgroup",
+                                                                            "${urlProspect}Wilayah/GetVgroup",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -9267,10 +9323,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetVfuel",
+                                                                            "${urlProspect}Wilayah/GetVfuel",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=
@@ -9504,10 +9563,13 @@ class _ProspectEditPageState extends State<ProspectEditPage>
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final urlProspect =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}Wilayah/GetVtransmisi",
+                                                                            "${urlProspect}Wilayah/GetVtransmisi",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=

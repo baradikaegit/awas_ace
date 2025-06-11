@@ -3,7 +3,8 @@
 import 'dart:convert';
 
 import 'package:awas_ace/provider/prospect_provider.dart';
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
@@ -30,6 +31,16 @@ class EntryProspectUEbpPage extends ConsumerStatefulWidget {
 
   @override
   _EntryProspectUEbpPageState createState() => _EntryProspectUEbpPageState();
+}
+
+class EntryProspectUeBPURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return baseUrl;
+  }
 }
 
 class _EntryProspectUEbpPageState extends ConsumerState<EntryProspectUEbpPage>
@@ -776,9 +787,13 @@ class _EntryProspectUEbpPageState extends ConsumerState<EntryProspectUEbpPage>
                                               ),
                                               asyncItems:
                                                   (String filter) async {
+                                                final url =
+                                                    await EntryProspectUeBPURL
+                                                        .host;
+
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    "${urlApi()}Prospect/GetVtype",
+                                                    "${url}Prospect/GetVtype",
                                                   ),
                                                 );
                                                 if (response.statusCode !=
@@ -1112,9 +1127,13 @@ class _EntryProspectUEbpPageState extends ConsumerState<EntryProspectUEbpPage>
                                               ),
                                               asyncItems:
                                                   (String filter) async {
+                                                final url =
+                                                    await EntryProspectUeBPURL
+                                                        .host;
+
                                                 var response = await http.get(
                                                   Uri.parse(
-                                                    "${urlApi()}Prospect/GetServiceBP",
+                                                    "${url}Prospect/GetServiceBP",
                                                   ),
                                                 );
                                                 if (response.statusCode !=

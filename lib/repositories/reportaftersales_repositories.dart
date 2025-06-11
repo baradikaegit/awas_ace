@@ -1,7 +1,10 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/reportafterslsboccaibypicbookingmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsbookingtoshowmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslsfunnelingmodel.dart';
@@ -10,6 +13,16 @@ import 'package:awas_ace/widgets/model/reportafterslsprospeksagrmodel.dart';
 import 'package:awas_ace/widgets/model/reportafterslstmsproductivitymodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class ReportAfterSalesURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}ReportAfterSales/";
+  }
+}
 
 abstract class IReportAfterSalesRepository {
   Future<ListRptAfterSlsProspekSaGRResponse> fecthListDataProspekSaGR(
@@ -35,7 +48,7 @@ abstract class IReportAfterSalesRepository {
 }
 
 class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
-  final _host = "${urlApi()}ReportAfterSales/";
+  // final _host = "${urlApi()}ReportAfterSales/";
 
   //Prospek SA GR
   @override
@@ -43,6 +56,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptProspekSaGR = "${_host}GetReportProspekSaGR/$linkPageObj";
 
@@ -66,6 +80,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptProspekSaGRBySAName =
         "${_host}GetReportProspekSaGRBySAName/$linkPageObj";
@@ -92,6 +107,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptProspekGRtoUeBP =
         "${_host}GetReportProspekGRtoUeBP/$linkPageObj";
@@ -118,6 +134,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       fecthListDataProspekGRtoUeBPBySAName(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptProspekGRtoUeBPBySAName =
         "${_host}GetReportProspekGRtoUeBPBySAName/$linkPageObj";
@@ -144,6 +161,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptTMSProductivity =
         "${_host}GetReportTMSProductivity/$linkPageObj";
@@ -170,6 +188,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptBookingToShow = "${_host}GetReportBookingToShow/$linkPageObj";
 
@@ -193,6 +212,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptFunneling = "${_host}GetReportFunneling/$linkPageObj";
 
@@ -216,6 +236,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptFunnelingByBranch =
         "${_host}GetReportFunnelingByBranch/$linkPageObj";
@@ -241,6 +262,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptFunnelingByActual =
         "${_host}GetReportFunnelingByActual/$linkPageObj";
@@ -266,6 +288,7 @@ class ReportAfterSalesRepositories implements IReportAfterSalesRepository {
       fecthListDataBocCaiByPicBooking(String linkPageObj) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ReportAfterSalesURL.host;
 
     var urlGetRptBocCaiByPicBooking =
         "${_host}GetReportBocCaiByPICBookingBranch/$linkPageObj";

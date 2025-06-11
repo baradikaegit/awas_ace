@@ -3,10 +3,12 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/resetpass_page.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_bootstrap/flutter_bootstrap.dart';
@@ -21,12 +23,26 @@ class MainPage extends StatefulWidget {
   State<MainPage> createState() => _MainPageState();
 }
 
+class ModelSelect {
+  String value;
+  int id;
+  ModelSelect(this.value, this.id);
+}
+
 class _MainPageState extends State<MainPage> {
   final ValueNotifier<bool> _obsecurePassword = ValueNotifier<bool>(true);
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   var userNameCtr = TextEditingController();
   var passCtr = TextEditingController();
+
+  int iDCheckServer = 1;
+  String checkServer = 'AMS PILOTING';
+
+  List<ModelSelect> checkServerOptions = [
+    ModelSelect('AMS PILOTING', 1),
+    ModelSelect('AMS TESTING', 0),
+  ];
 
   @override
   void initState() {
@@ -54,6 +70,20 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+
+    var textStyleColorWhite = TextStyle(
+      color: const Color.fromARGB(255, 0, 0, 0),
+      fontSize: ResponsiveValue<double>(
+        context,
+        conditionalValues: [
+          const Condition.equals(
+              name: TABLET, value: 17.0, landscapeValue: 17.0),
+          const Condition.largerThan(
+              name: TABLET, value: 17.0, landscapeValue: 17.0, breakpoint: 800),
+        ],
+        defaultValue: 12.5,
+      ).value,
+    );
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -199,6 +229,132 @@ class _MainPageState extends State<MainPage> {
                                           ),
                                         );
                                       },
+                                    ),
+                                  ),
+                                ),
+                                BootstrapCol(
+                                  sizes: 'col-md-6 col-12',
+                                  child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                                    child: DropdownSearch<ModelSelect>(
+                                      selectedItem: checkServerOptions.first,
+                                      validator: (val) {
+                                        if (val == null || val.value == '') {
+                                          return "Belum memilih server";
+                                        }
+                                        return null;
+                                      },
+                                      popupProps: PopupProps.dialog(
+                                        dialogProps: const DialogProps(
+                                          shape: Border.symmetric(
+                                              vertical: BorderSide.none),
+                                        ),
+                                        showSearchBox: true,
+                                        searchFieldProps: TextFieldProps(
+                                          decoration: InputDecoration(
+                                            hintText: "Search..",
+                                            enabledBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                color: Color.fromARGB(
+                                                  255,
+                                                  134,
+                                                  134,
+                                                  134,
+                                                ),
+                                                width: 2,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                            focusedBorder: OutlineInputBorder(
+                                              borderSide: const BorderSide(
+                                                color: Color.fromARGB(
+                                                  255,
+                                                  134,
+                                                  134,
+                                                  134,
+                                                ),
+                                                width: 2,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      items: checkServerOptions,
+                                      itemAsString:
+                                          (ModelSelect checkServerOptions) =>
+                                              checkServerOptions.value
+                                                  .toUpperCase(),
+                                      dropdownDecoratorProps:
+                                          DropDownDecoratorProps(
+                                        dropdownSearchDecoration:
+                                            InputDecoration(
+                                          errorStyle: const TextStyle(
+                                            color: Color.fromARGB(
+                                              255,
+                                              255,
+                                              17,
+                                              0,
+                                            ),
+                                          ),
+                                          errorBorder:
+                                              const UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Color.fromARGB(
+                                                255,
+                                                255,
+                                                17,
+                                                0,
+                                              ),
+                                            ),
+                                          ),
+                                          hintStyle: textStyleColorWhite,
+                                          // labelText: 'Rencana Pembelian',
+                                          labelStyle: const TextStyle(
+                                            color: Color.fromARGB(
+                                              255,
+                                              134,
+                                              134,
+                                              134,
+                                            ),
+                                          ),
+                                          enabledBorder:
+                                              const OutlineInputBorder(
+                                            borderSide: BorderSide(
+                                              color: Colors.grey,
+                                            ),
+                                          ),
+                                          focusedBorder: OutlineInputBorder(
+                                            borderSide: const BorderSide(
+                                              color: Color.fromARGB(
+                                                255,
+                                                134,
+                                                134,
+                                                134,
+                                              ),
+                                              width: 2,
+                                            ),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
+                                          ),
+                                        ),
+                                      ),
+                                      onChanged: (ModelSelect? value) {
+                                        setState(() {
+                                          iDCheckServer = value!.id;
+                                          checkServer = value.value;
+                                          print(
+                                              'id : $iDCheckServer - Server : $checkServer');
+                                        });
+                                      },
+                                      dropdownBuilder:
+                                          (context, selectedItem) => Text(
+                                        checkServer.toUpperCase(),
+                                        style: textStyleColorWhite,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -389,7 +545,8 @@ class _MainPageState extends State<MainPage> {
 
   void login(context) async {
     if (passCtr.text.isNotEmpty && userNameCtr.text.isNotEmpty) {
-      var url = urlApi();
+      // var url = urlApi();
+      var url = iDCheckServer == 1 ? urlApiPublish() : urlApiLocal();
       var urlLogin = "${url}Auth/Login";
 
       final Map<String, String> headers = {
@@ -468,6 +625,16 @@ class _MainPageState extends State<MainPage> {
             },
           );
         }
+      } on SocketException {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            behavior: SnackBarBehavior.floating,
+            backgroundColor: Colors.red,
+            content: Text(
+              "Koneksi Gagal : Tidak dapat terhubung ke server. Cek koneksi internet atau alamat API.",
+            ),
+          ),
+        );
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -484,6 +651,7 @@ class _MainPageState extends State<MainPage> {
     SharedPreferences pref = await SharedPreferences.getInstance();
     await pref.setString("login", token);
     await pref.setString("message", message);
+    await pref.setInt("idServer", iDCheckServer);
 
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => const HomePage()),

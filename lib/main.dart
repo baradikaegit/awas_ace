@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:awas_ace/firebase_options.dart';
 import 'package:awas_ace/widgets/main_page.dart';
 import 'package:awas_ace/widgets/pages/aftersales/boccaibypicbooking.dart';
 import 'package:awas_ace/widgets/pages/aftersales/bookingtoshow.dart';
@@ -93,9 +94,14 @@ import 'package:awas_ace/widgets/pages/svckendaraan/svckendaaraanpelanggan_page.
 import 'package:awas_ace/widgets/pages/svckendaraan/svckendaraanpelanggandetail_page.dart';
 import 'package:awas_ace/widgets/pages/targetsales_page.dart';
 import 'package:awas_ace/widgets/pages/targetsalesentry_page.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -106,8 +112,59 @@ class MyHttpOverrides extends HttpOverrides {
   }
 }
 
-void main() {
+Future<void> saveDeviceInfoToSharedPreferences(
+    String deviceId, String deviceName, String token) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  await prefs.setString('deviceId', deviceId);
+  await prefs.setString('deviceName', deviceName);
+  await prefs.setString('deviceToken', token);
+}
+
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+//   print('Handling a background message ${message.messageId}');
+}
+
+AndroidNotificationChannel? channel;
+FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   HttpOverrides.global = MyHttpOverrides();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // await registerDeviceWithBackend();
+
+  FirebaseMessaging messaging = FirebaseMessaging.instance;
+  String? token = await messaging.getToken();
+
+  print("Token : $token");
+
+  if (!kIsWeb) {
+    channel = const AndroidNotificationChannel(
+      'high_importance_channel', // id
+      'High Importance Notifications', // title
+      description:
+          'This channel is used for important notifications.', // description
+      importance: Importance.high,
+    );
+
+    flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+    await flutterLocalNotificationsPlugin!
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel!);
+
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true,
+      badge: true,
+      sound: true,
+    );
+  }
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

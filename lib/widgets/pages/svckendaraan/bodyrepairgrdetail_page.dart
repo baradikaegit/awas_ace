@@ -3,8 +3,8 @@
 import 'dart:convert';
 
 import 'package:awas_ace/provider/svckendaraan_provider.dart';
-import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
+import 'package:awas_ace/support/api_config.dart';
 import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
@@ -1246,10 +1246,13 @@ class _BodyRepariGRDetailPageState extends State<BodyRepariGRDetailPage> {
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final url =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response =
                                                                             await http.get(
                                                                           Uri.parse(
-                                                                            "${urlApi()}SvcKendaraan/GetTaskStatusSvcKendaraan/5",
+                                                                            "${url}SvcKendaraan/GetTaskStatusSvcKendaraan/5",
                                                                           ),
                                                                         );
                                                                         if (response.statusCode !=

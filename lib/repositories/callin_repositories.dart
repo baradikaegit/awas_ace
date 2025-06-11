@@ -1,10 +1,23 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/callinmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class CallInURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}Callin/";
+  }
+}
 
 abstract class ICallinRepository {
   Future<ListReferensiResponse> fetchListData(String callDate);
@@ -15,12 +28,13 @@ abstract class ICallinRepository {
 }
 
 class CallinRepositories implements ICallinRepository {
-  final _host = "${urlApi()}Callin/";
+  // final _host = "${urlApi()}Callin/";
 
   @override
   Future<ListReferensiResponse> fetchListData(String callDate) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await CallInURL.host;
 
     var getAllAppUrl = "${_host}GetReferensi/$callDate";
 
@@ -40,6 +54,7 @@ class CallinRepositories implements ICallinRepository {
   Future<CallResponse> createNewCall(ListEntryCallin call) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await CallInURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -67,6 +82,7 @@ class CallinRepositories implements ICallinRepository {
       ListEntryCallinDetail callDetail) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await CallInURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -94,6 +110,7 @@ class CallinRepositories implements ICallinRepository {
       ListUpdateCallin updateCallDetail) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await CallInURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",

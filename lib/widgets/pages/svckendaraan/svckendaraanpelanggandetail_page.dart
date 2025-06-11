@@ -3,8 +3,8 @@
 import 'dart:convert';
 
 import 'package:awas_ace/provider/svckendaraan_provider.dart';
-import 'package:awas_ace/repositories/url_api.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
+import 'package:awas_ace/support/api_config.dart';
 import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
@@ -1039,16 +1039,19 @@ class _SvcKendaraanPelangganDetailPageState
                                                                       asyncItems:
                                                                           (String
                                                                               filter) async {
+                                                                        final url =
+                                                                            await ApiConfigURL.host;
+
                                                                         var response = roles ==
                                                                                 'PIC'
                                                                             ? await http.get(
                                                                                 Uri.parse(
-                                                                                  "${urlApi()}SvcKendaraan/GetTaskStatusSvcKendaraan/6",
+                                                                                  "${url}SvcKendaraan/GetTaskStatusSvcKendaraan/6",
                                                                                 ),
                                                                               )
                                                                             : await http.get(
                                                                                 Uri.parse(
-                                                                                  "${urlApi()}SvcKendaraan/GetTaskStatusSvcKendaraan/4",
+                                                                                  "${url}SvcKendaraan/GetTaskStatusSvcKendaraan/4",
                                                                                 ),
                                                                               );
                                                                         if (response.statusCode !=
@@ -1340,9 +1343,11 @@ class _SvcKendaraanPelangganDetailPageState
                                                                                   style: textStyleColorYellow,
                                                                                 ),
                                                                                 asyncItems: (String filter) async {
+                                                                                  final url = await ApiConfigURL.host;
+
                                                                                   var response = await http.get(
                                                                                     Uri.parse(
-                                                                                      "${urlApi()}SvcKendaraan/GetSVCBranchBooking",
+                                                                                      "${url}SvcKendaraan/GetSVCBranchBooking",
                                                                                     ),
                                                                                   );
                                                                                   if (response.statusCode != 200) {
@@ -1613,9 +1618,11 @@ class _SvcKendaraanPelangganDetailPageState
                                                                                       style: textStyleColorYellow,
                                                                                     ),
                                                                                     asyncItems: (String filter) async {
+                                                                                      final url = await ApiConfigURL.host;
+
                                                                                       var response = await http.get(
                                                                                         Uri.parse(
-                                                                                          "${urlApi()}SvcKendaraan/GetSVCBranchBooking",
+                                                                                          "${url}SvcKendaraan/GetSVCBranchBooking",
                                                                                         ),
                                                                                       );
                                                                                       if (response.statusCode != 200) {

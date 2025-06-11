@@ -1,11 +1,24 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/profilemodel.dart';
 import 'package:awas_ace/widgets/model/profileteammodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class ProfileURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}Profile/";
+  }
+}
 
 abstract class IProfileRepository {
   Future<ListProfileResponse> fecthListDataGetProfile();
@@ -14,13 +27,14 @@ abstract class IProfileRepository {
 }
 
 class ProfileRepositories implements IProfileRepository {
-  final _host = "${urlApi()}Profile/";
+  // final _host = "${urlApi()}Profile/";
 
   //Get Sales
   @override
   Future<ListProfileResponse> fecthListDataGetProfile() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProfileURL.host;
 
     var urlGetProfile = "${_host}GetProfile";
 
@@ -41,6 +55,7 @@ class ProfileRepositories implements IProfileRepository {
   Future<ListProfileTeamResponse> fecthListDataGetProfileTeam() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProfileURL.host;
 
     var urlGetProfileTeam = "${_host}GetProfileTeam";
 
@@ -63,6 +78,7 @@ class ProfileRepositories implements IProfileRepository {
   Future<UpdateProfileResponse> updateProfile(ListUpdateProfile up) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await ProfileURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",

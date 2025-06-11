@@ -1,13 +1,26 @@
+// ignore_for_file: no_leading_underscores_for_local_identifiers
+
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/widgets/model/sendtaskmodel.dart';
 import 'package:awas_ace/widgets/model/svccountmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraandetailmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraanmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
+
+class SvcKendaraanURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return "${baseUrl}SvcKendaraan/";
+  }
+}
 
 abstract class ISvcKendaraanRepository {
   Future<ListSvcKendaraanResponse> fecthListDataSvcKendaraanPelanggan();
@@ -24,13 +37,14 @@ abstract class ISvcKendaraanRepository {
 }
 
 class SvckendaraanRepositories implements ISvcKendaraanRepository {
-  final _host = "${urlApi()}SvcKendaraan/";
+  // final _host = "${urlApi()}SvcKendaraan/";
 
   //SVC Kendaraan pelanggan
   @override
   Future<ListSvcKendaraanResponse> fecthListDataSvcKendaraanPelanggan() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await SvcKendaraanURL.host;
 
     var urlGetSvckendaraanPelanggan = "${_host}GetSvcKendaraanPelanggan";
 
@@ -54,6 +68,7 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
   Future<ListSvcKendaraanResponse> fecthListDataBodyRepairGR() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await SvcKendaraanURL.host;
 
     var urlGetBodyRepairGR = "${_host}GetBodyRepairGR";
 
@@ -76,6 +91,7 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
   Future<ListSvcKendaraanResponse> fecthListDataBodyRepairSls() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await SvcKendaraanURL.host;
 
     var urlGetBodyRepairSls = "${_host}GetBodyRepairGR";
 
@@ -100,6 +116,7 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
   ) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await SvcKendaraanURL.host;
 
     var urlGetSvcKendaraanDetail = "${_host}GetSvcKendaraanDetail/$linkObj";
     var resultSvcKendaraanDetail =
@@ -123,6 +140,7 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
       ListSvcKendaraanUpdate updateSvcKendaraan) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await SvcKendaraanURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",
@@ -153,6 +171,7 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
   Future<ListSVCCountResponse> fecthListDataCount() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await SvcKendaraanURL.host;
 
     var urlGetSvcCount = "${_host}GetSvcCount";
 
@@ -173,6 +192,7 @@ class SvckendaraanRepositories implements ISvcKendaraanRepository {
   Future<SendTaskResponse> updateSvcSendTask(ListSendTask upSendTask) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
     String? token = pref.getString("login");
+    final _host = await SvcKendaraanURL.host;
 
     final Map<String, String> headers = {
       HttpHeaders.acceptHeader: "application/json",

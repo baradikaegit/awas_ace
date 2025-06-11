@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "293471316653",
+    "project_id": "ace-firebase-9129a",
+    "storage_bucket": "ace-firebase-9129a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:293471316653:android:aa34c913b289ddc8bef424",
+        "android_client_info": {
+          "package_name": "com.example.awas_ace"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCvaZROsSgVzkZcolzw3I7RiMBxAUpcsE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

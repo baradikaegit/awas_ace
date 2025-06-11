@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:awas_ace/provider/prospect_provider.dart';
-import 'package:awas_ace/repositories/url_api.dart';
+import 'package:awas_ace/repositories/url_apilocal.dart';
+import 'package:awas_ace/repositories/url_apipublish.dart';
 import 'package:awas_ace/support/api_error.dart';
 import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/succes_submit.dart';
@@ -41,6 +42,16 @@ class ModelSelect {
   String value;
   int id;
   ModelSelect(this.value, this.id);
+}
+
+class ProspectSalesURL {
+  static Future<String> get host async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    int id = prefs.getInt("idServer") ?? 1;
+
+    final baseUrl = id == 1 ? urlApiPublish() : urlApiLocal();
+    return baseUrl;
+  }
 }
 
 class _ProspectPageState extends ConsumerState<ProspectPage>
@@ -242,11 +253,11 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
 
   void fetchDataKodePos(
       String nameProv, String nameKab, String nameKec, String nameKel) async {
-    var url = Uri.parse(
-      "${urlApi()}Wilayah/GetWilayahKodePos/$nameProv/$nameKab/$nameKec/$nameKel",
-    );
+    final urlProspect = await ProspectSalesURL.host;
 
-    //print(url);
+    var url = Uri.parse(
+      "${urlProspect}Wilayah/GetWilayahKodePos/$nameProv/$nameKab/$nameKec/$nameKel",
+    );
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? token = pref.getString("login");
@@ -292,8 +303,10 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
   }
 
   void fetchDataFromApi(String idKodePos) async {
+    final urlProspect = await ProspectSalesURL.host;
+
     var url = Uri.parse(
-      "${urlApi()}Wilayah/GetWilayahArea/$idKodePos",
+      "${urlProspect}Wilayah/GetWilayahArea/$idKodePos",
     );
 
     try {
@@ -340,11 +353,11 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
 
   void fetchDataKodePosS2(String nameProvS2, String nameKabS2, String nameKecS2,
       String nameKelS2) async {
-    var url = Uri.parse(
-      "${urlApi()}Wilayah/GetWilayahKodePos/$nameProvS2/$nameKabS2/$nameKecS2/$nameKelS2",
-    );
+    final urlProspect = await ProspectSalesURL.host;
 
-    //print(url);
+    var url = Uri.parse(
+      "${urlProspect}Wilayah/GetWilayahKodePos/$nameProvS2/$nameKabS2/$nameKecS2/$nameKelS2",
+    );
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       String? token = pref.getString("login");
@@ -389,8 +402,10 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
   }
 
   void fetchDataFromApiS2(String idKodePosS2) async {
+    final urlProspect = await ProspectSalesURL.host;
+
     var url = Uri.parse(
-      "${urlApi()}Wilayah/GetWilayahArea/$idKodePosS2",
+      "${urlProspect}Wilayah/GetWilayahArea/$idKodePosS2",
     );
 
     try {
@@ -1331,12 +1346,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetWilayahProvinsi",
+                                                        "${urlProspect}Wilayah/GetWilayahProvinsi",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -1534,12 +1554,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetWilayahKota/$nameProv",
+                                                        "${urlProspect}Wilayah/GetWilayahKota/$nameProv",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -1741,12 +1766,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetWilayahKecamatan/$nameProv/$nameKab",
+                                                        "${urlProspect}Wilayah/GetWilayahKecamatan/$nameProv/$nameKab",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -1949,12 +1979,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetWilayahKelurahan/$nameProv/$nameKab/$nameKec",
+                                                        "${urlProspect}Wilayah/GetWilayahKelurahan/$nameProv/$nameKab/$nameKec",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -2421,10 +2456,14 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetSumberData",
+                                                        "${urlProspect}Wilayah/GetSumberData",
                                                       ),
                                                     );
 
@@ -3588,12 +3627,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetWilayahProvinsi",
+                                                        "${urlProspect}Wilayah/GetWilayahProvinsi",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -3796,12 +3840,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetWilayahKota/$nameProvS2",
+                                                        "${urlProspect}Wilayah/GetWilayahKota/$nameProvS2",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -4000,12 +4049,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetWilayahKecamatan/$nameProvS2/$nameKabS2",
+                                                        "${urlProspect}Wilayah/GetWilayahKecamatan/$nameProvS2/$nameKabS2",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -4214,12 +4268,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetWilayahKelurahan/$nameProvS2/$nameKabS2/$nameKecS2",
+                                                        "${urlProspect}Wilayah/GetWilayahKelurahan/$nameProvS2/$nameKabS2/$nameKecS2",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -4821,12 +4880,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetCustType",
+                                                        "${urlProspect}Wilayah/GetCustType",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -5255,12 +5319,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetKisaranHarga",
+                                                        "${urlProspect}Wilayah/GetKisaranHarga",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -5495,12 +5564,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetTipePelanggan",
+                                                        "${urlProspect}Wilayah/GetTipePelanggan",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -5841,12 +5915,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetVgroup",
+                                                        "${urlProspect}Wilayah/GetVgroup",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -6297,12 +6376,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetVfuel",
+                                                        "${urlProspect}Wilayah/GetVfuel",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -6550,12 +6634,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetVtransmisi",
+                                                        "${urlProspect}Wilayah/GetVtransmisi",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -6807,12 +6896,16 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetVgroup",
+                                                        "${urlProspect}Wilayah/GetVgroup",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -7201,12 +7294,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetVfuel",
+                                                        "${urlProspect}Wilayah/GetVfuel",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
@@ -7411,12 +7509,17 @@ class _ProspectPageState extends ConsumerState<ProspectPage>
                                                   ),
                                                   asyncItems:
                                                       (String filter) async {
+                                                    final urlProspect =
+                                                        await ProspectSalesURL
+                                                            .host;
+
                                                     var response =
                                                         await http.get(
                                                       Uri.parse(
-                                                        "${urlApi()}Wilayah/GetVtransmisi",
+                                                        "${urlProspect}Wilayah/GetVtransmisi",
                                                       ),
                                                     );
+
                                                     if (response.statusCode !=
                                                         200) {
                                                       return [];
