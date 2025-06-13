@@ -34,7 +34,25 @@ class notActivetoken extends StatelessWidget {
 
   void sessionAlert(context) async {
     SharedPreferences pref = await SharedPreferences.getInstance();
+
+    String? deviceId = pref.getString('deviceId');
+    String? deviceName = pref.getString('deviceName');
+    String? deviceToken = pref.getString('deviceToken');
+
     await pref.clear();
+
+    if (deviceId != null) {
+      await pref.setString('deviceId', deviceId);
+    }
+
+    if (deviceName != null) {
+      await pref.setString('deviceName', deviceName);
+    }
+
+    if (deviceToken != null) {
+      await pref.setString('deviceToken', deviceToken);
+    }
+
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
         behavior: SnackBarBehavior.floating,

@@ -1,9 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
+import 'dart:io';
+
 import 'package:awas_ace/provider/reminder_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
+import 'package:awas_ace/support/taskfcm_api.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/remindergetsalesmodel.dart';
 import 'package:awas_ace/widgets/model/remindermodel.dart';
@@ -11,6 +14,7 @@ import 'package:awas_ace/widgets/model/sendtaskmodel.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/reminder/leasingberakhirdetail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:searchable_listview/searchable_listview.dart';
@@ -644,9 +648,37 @@ class _ReminderLeasingBerakhirPageState
                                                                                 taskNote,
                                                                           );
 
+                                                                          /* Send Msg */
+                                                                          final host =
+                                                                              await TaskSendMsgURL.host;
+                                                                          var urlSendMsgTask =
+                                                                              "$host/${item.salesCode}";
+                                                                          /* Send Msg */
+
                                                                           try {
                                                                             await ref.read(updateReminderSendTaskFormProvider).onUpdateReminderSendTask(upSendTask);
                                                                             successCount++;
+
+                                                                            SharedPreferences
+                                                                                pref =
+                                                                                await SharedPreferences.getInstance();
+                                                                            String?
+                                                                                token =
+                                                                                pref.getString("login");
+
+                                                                            final Map<String, String>
+                                                                                headers =
+                                                                                {
+                                                                              HttpHeaders.acceptHeader: "application/json",
+                                                                              HttpHeaders.contentTypeHeader: "application/json",
+                                                                              HttpHeaders.authorizationHeader: "Bearer $token",
+                                                                            };
+
+                                                                            await http.post(
+                                                                              Uri.parse(urlSendMsgTask),
+                                                                              headers: headers,
+                                                                              body: "",
+                                                                            );
                                                                           } catch (e) {
                                                                             failCount++;
                                                                           }

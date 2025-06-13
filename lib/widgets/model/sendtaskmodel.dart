@@ -15,6 +15,12 @@ class ListSendTask {
   late String? taskBranchID;
   late String? taskNote;
 
+  //print objek data
+  /* @override
+  String toString() {
+    return 'ListSendTask(iD: $iD, taskStatusID: $taskStatusACEID, taskView : $taskView, taskNote: $taskNote, branch: $taskBranchID)';
+  } */
+
   ListSendTask.fromJson(Map<String, dynamic> djson) {
     iD = djson['iD'];
     taskStatusACEID = djson['taskStatusACEID'];

@@ -5,6 +5,13 @@
         android:label="ACE"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+
+        <!-- Konfigurasi untuk FCM (WAJIB untuk Android 8 ke atas) -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="high_importance_channel" />
+        <!-- Konfigurasi untuk FCM (WAJIB untuk Android 8 ke atas) -->
+
         <activity
             android:name=".MainActivity"
             android:exported="true"

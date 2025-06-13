@@ -1,9 +1,12 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
+import 'dart:io';
+
 import 'package:awas_ace/provider/prospect_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
+import 'package:awas_ace/support/taskfcm_api.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/prospectbengkelmodel.dart';
 import 'package:awas_ace/widgets/model/prospectgetsalessvcmodel.dart';
@@ -11,6 +14,7 @@ import 'package:awas_ace/widgets/model/sendtaskprospectsvcmodel.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:awas_ace/widgets/pages/prospectbengkeldetail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:searchable_listview/searchable_listview.dart';
@@ -643,9 +647,37 @@ class _ProspectDariBengkelPageState extends State<ProspectDariBengkelPage> {
                                                                                 taskNote,
                                                                           );
 
+                                                                          /* Send Msg */
+                                                                          final host =
+                                                                              await TaskSendMsgURL.host;
+                                                                          var urlSendMsgTask =
+                                                                              "$host/${item.salesCode}";
+                                                                          /* Send Msg */
+
                                                                           try {
                                                                             await ref.read(updateProspectSendTaskFormProvider).onUpdateProspectSendTask(upSendTask);
                                                                             successCount++;
+
+                                                                            SharedPreferences
+                                                                                pref =
+                                                                                await SharedPreferences.getInstance();
+                                                                            String?
+                                                                                token =
+                                                                                pref.getString("login");
+
+                                                                            final Map<String, String>
+                                                                                headers =
+                                                                                {
+                                                                              HttpHeaders.acceptHeader: "application/json",
+                                                                              HttpHeaders.contentTypeHeader: "application/json",
+                                                                              HttpHeaders.authorizationHeader: "Bearer $token",
+                                                                            };
+
+                                                                            await http.post(
+                                                                              Uri.parse(urlSendMsgTask),
+                                                                              headers: headers,
+                                                                              body: "",
+                                                                            );
                                                                           } catch (e) {
                                                                             failCount++;
                                                                           }
@@ -1273,8 +1305,8 @@ class _ProspectDariBengkelPageState extends State<ProspectDariBengkelPage> {
                                                                                   checkControllers[index].text = value ? "1" : "0";
                                                                                   currentIndex = index; // Pastikan currentIndex diperbarui dan tidak hilang setelah rebuild
 
-                                                                                  print("Checkbox diubah: ${datapb.listProspectBengkel![index].iD} -> ${checkControllers[index].text}");
-                                                                                  print("currentIndex setelah checkbox diklik: $currentIndex");
+                                                                                  // print("Checkbox diubah: ${datapb.listProspectBengkel![index].iD} -> ${checkControllers[index].text}");
+                                                                                  // print("currentIndex setelah checkbox diklik: $currentIndex");
                                                                                 } else {
                                                                                   print("Index tidak valid: $index (checkControllers.length: ${checkControllers.length})");
                                                                                 }

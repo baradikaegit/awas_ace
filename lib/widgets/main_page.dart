@@ -37,11 +37,11 @@ class _MainPageState extends State<MainPage> {
   var passCtr = TextEditingController();
 
   int iDCheckServer = 1;
-  String checkServer = 'AMS PILOTING';
+  String checkServer = 'ACE PILOTING';
 
   List<ModelSelect> checkServerOptions = [
-    ModelSelect('AMS PILOTING', 1),
-    ModelSelect('AMS TESTING', 0),
+    ModelSelect('ACE PILOTING', 1),
+    ModelSelect('ACE TESTING', 0),
   ];
 
   @override
@@ -548,6 +548,7 @@ class _MainPageState extends State<MainPage> {
       // var url = urlApi();
       var url = iDCheckServer == 1 ? urlApiPublish() : urlApiLocal();
       var urlLogin = "${url}Auth/Login";
+      var urlUpdate = "${url}Auth/UpdateMobileTokenACE";
 
       final Map<String, String> headers = {
         HttpHeaders.acceptHeader: "application/json",
@@ -569,7 +570,31 @@ class _MainPageState extends State<MainPage> {
 
         final prefs = await SharedPreferences.getInstance();
 
+        // Ambil data dari SharedPreferences
+        String? deviceId = prefs.getString('deviceId');
+        String? deviceName = prefs.getString('deviceName');
+        String? token = prefs.getString('deviceToken');
+
         if (response.statusCode == 200) {
+          final payload = json.encode({
+            'userCode': userNameCtr.text,
+            'deviceId': deviceId,
+            'deviceName': deviceName,
+            'deviceToken': token,
+          });
+
+          final urlDeviceUpdateLog =
+              Uri.parse('$urlUpdate/$deviceId/$deviceName');
+
+          await http.put(
+            urlDeviceUpdateLog,
+            headers: {
+              HttpHeaders.acceptHeader: "application/json",
+              HttpHeaders.contentTypeHeader: "application/json",
+            },
+            body: payload,
+          );
+
           showDialog(
             context: context,
             builder: (BuildContext context) {

@@ -321,7 +321,23 @@ class _ProspectEditPageState extends State<ProspectEditPage>
         });
       } else {
         SharedPreferences pref = await SharedPreferences.getInstance();
+        String? deviceId = pref.getString('deviceId');
+        String? deviceName = pref.getString('deviceName');
+        String? deviceToken = pref.getString('deviceToken');
+
         await pref.clear();
+
+        if (deviceId != null) {
+          await pref.setString('deviceId', deviceId);
+        }
+
+        if (deviceName != null) {
+          await pref.setString('deviceName', deviceName);
+        }
+
+        if (deviceToken != null) {
+          await pref.setString('deviceToken', deviceToken);
+        }
 
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const MainPage()),
@@ -370,7 +386,24 @@ class _ProspectEditPageState extends State<ProspectEditPage>
         });
       } else {
         SharedPreferences pref = await SharedPreferences.getInstance();
+
+        String? deviceId = pref.getString('deviceId');
+        String? deviceName = pref.getString('deviceName');
+        String? deviceToken = pref.getString('deviceToken');
+
         await pref.clear();
+
+        if (deviceId != null) {
+          await pref.setString('deviceId', deviceId);
+        }
+
+        if (deviceName != null) {
+          await pref.setString('deviceName', deviceName);
+        }
+
+        if (deviceToken != null) {
+          await pref.setString('deviceToken', deviceToken);
+        }
 
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const MainPage()),
@@ -422,7 +455,24 @@ class _ProspectEditPageState extends State<ProspectEditPage>
         });
       } else {
         SharedPreferences pref = await SharedPreferences.getInstance();
+
+        String? deviceId = pref.getString('deviceId');
+        String? deviceName = pref.getString('deviceName');
+        String? deviceToken = pref.getString('deviceToken');
+
         await pref.clear();
+
+        if (deviceId != null) {
+          await pref.setString('deviceId', deviceId);
+        }
+
+        if (deviceName != null) {
+          await pref.setString('deviceName', deviceName);
+        }
+
+        if (deviceToken != null) {
+          await pref.setString('deviceToken', deviceToken);
+        }
 
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const MainPage()),
@@ -471,7 +521,24 @@ class _ProspectEditPageState extends State<ProspectEditPage>
         });
       } else {
         SharedPreferences pref = await SharedPreferences.getInstance();
+
+        String? deviceId = pref.getString('deviceId');
+        String? deviceName = pref.getString('deviceName');
+        String? deviceToken = pref.getString('deviceToken');
+
         await pref.clear();
+
+        if (deviceId != null) {
+          await pref.setString('deviceId', deviceId);
+        }
+
+        if (deviceName != null) {
+          await pref.setString('deviceName', deviceName);
+        }
+
+        if (deviceToken != null) {
+          await pref.setString('deviceToken', deviceToken);
+        }
 
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => const MainPage()),

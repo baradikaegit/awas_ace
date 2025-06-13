@@ -205,11 +205,11 @@ class ListSvcKendaraanUpdate {
   late String? branchBussinessUnitBookingID;
   late String? bookingDate;
 
-//print objek data
-  // @override
-  // String toString() {
-  //   return 'ListSvcKendaraanUpdate(iD: $iD, taskStatusID: $taskStatusID, taskNote: $taskNote, branchBussinessUnitBookingID: $branchBussinessUnitBookingID, bookingDate: $bookingDate)';
-  // }
+  //print objek data
+/*   @override
+  String toString() {
+    return 'ListSvcKendaraanUpdate(iD: $iD, taskStatusID: $taskStatusID, taskNote: $taskNote, branchBussinessUnitBookingID: $branchBussinessUnitBookingID, bookingDate: $bookingDate)';
+  } */
 
   ListSvcKendaraanUpdate.fromJson(Map<String, dynamic> djson) {
     iD = djson['iD'];

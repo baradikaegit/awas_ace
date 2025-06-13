@@ -1,6 +1,7 @@
 // ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:awas_ace/provider/svckendaraan_provider.dart';
 import 'package:awas_ace/support/alert_dialog.dart';
@@ -8,6 +9,7 @@ import 'package:awas_ace/support/api_config.dart';
 import 'package:awas_ace/support/catch_error_submit.dart';
 import 'package:awas_ace/support/loading_animations.dart';
 import 'package:awas_ace/support/not_active_token.dart';
+import 'package:awas_ace/support/taskUpdatefcm_api.dart';
 import 'package:awas_ace/support/watermark.dart';
 import 'package:awas_ace/widgets/model/branchbookingmodel.dart';
 import 'package:awas_ace/widgets/model/svckendaraandetailmodel.dart';
@@ -15,6 +17,7 @@ import 'package:awas_ace/widgets/model/taskstatusmodel.dart';
 import 'package:awas_ace/widgets/pages/home_page.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:responsive_framework/responsive_framework.dart';
@@ -837,13 +840,26 @@ class _SvcKendaraanPelangganDetailPageState
                                                                                     style: textStyleColorWhiteBI,
                                                                                   ),
                                                                                 ),
-                                                                                Align(
-                                                                                  alignment: Alignment.centerLeft,
-                                                                                  child: Text(
-                                                                                    datadetail.listSvcKendaraanDetail![index].countTaskDetail![x].TaskNote,
-                                                                                    style: textStyleColorWhiteB,
-                                                                                  ),
-                                                                                ),
+                                                                                roles == 'PIC'
+                                                                                    ? Align(
+                                                                                        alignment: Alignment.centerLeft,
+                                                                                        child: Html(
+                                                                                          data: datadetail.listSvcKendaraanDetail![index].countTaskDetail![x].TaskNote,
+                                                                                          style: {
+                                                                                            "*": Style(
+                                                                                              fontSize: FontSize.medium,
+                                                                                              color: Colors.white,
+                                                                                            ),
+                                                                                          },
+                                                                                        ),
+                                                                                      )
+                                                                                    : Align(
+                                                                                        alignment: Alignment.centerLeft,
+                                                                                        child: Text(
+                                                                                          datadetail.listSvcKendaraanDetail![index].countTaskDetail![x].TaskNote,
+                                                                                          style: textStyleColorWhiteB,
+                                                                                        ),
+                                                                                      ),
                                                                               ],
                                                                             ),
                                                                           ),
@@ -1907,7 +1923,15 @@ class _SvcKendaraanPelangganDetailPageState
                                                                       );
 
                                                                       // print(
-                                                                      //     updateSvcKendaraan);
+                                                                      //     "$updateSvcKendaraan - $userName");
+
+                                                                      /* Send Msg */
+                                                                      final host =
+                                                                          await TaskUpdateSendMsgURL
+                                                                              .host;
+                                                                      var urlSendMsgTask =
+                                                                          "$host/${iDController.text}";
+                                                                      /* Send Msg */
 
                                                                       try {
                                                                         var resp = await ref
@@ -1916,6 +1940,33 @@ class _SvcKendaraanPelangganDetailPageState
 
                                                                         if (resp.statusMessage ==
                                                                             "Success Updated") {
+                                                                          SharedPreferences
+                                                                              pref =
+                                                                              await SharedPreferences.getInstance();
+                                                                          String?
+                                                                              token =
+                                                                              pref.getString("login");
+
+                                                                          final Map<String, String>
+                                                                              headers =
+                                                                              {
+                                                                            HttpHeaders.acceptHeader:
+                                                                                "application/json",
+                                                                            HttpHeaders.contentTypeHeader:
+                                                                                "application/json",
+                                                                            HttpHeaders.authorizationHeader:
+                                                                                "Bearer $token",
+                                                                          };
+
+                                                                          await http
+                                                                              .post(
+                                                                            Uri.parse(urlSendMsgTask),
+                                                                            headers:
+                                                                                headers,
+                                                                            body:
+                                                                                "",
+                                                                          );
+
                                                                           ketController
                                                                               .clear();
                                                                         }

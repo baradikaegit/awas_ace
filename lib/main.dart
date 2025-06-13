@@ -1,3 +1,6 @@
+// ignore_for_file: unnecessary_null_comparison
+
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
@@ -94,12 +97,15 @@ import 'package:awas_ace/widgets/pages/svckendaraan/svckendaaraanpelanggan_page.
 import 'package:awas_ace/widgets/pages/svckendaraan/svckendaraanpelanggandetail_page.dart';
 import 'package:awas_ace/widgets/pages/targetsales_page.dart';
 import 'package:awas_ace/widgets/pages/targetsalesentry_page.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -121,9 +127,145 @@ Future<void> saveDeviceInfoToSharedPreferences(
   await prefs.setString('deviceToken', token);
 }
 
+Future<void> registerDeviceWithBackend() async {
+  final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  String? deviceId;
+  String? deviceName;
+
+  try {
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      final androidInfo = await deviceInfo.androidInfo;
+      deviceId = androidInfo.id;
+      deviceName = androidInfo.model;
+    } else if (defaultTargetPlatform == TargetPlatform.iOS) {
+      final iosInfo = await deviceInfo.iosInfo;
+      deviceId = iosInfo.identifierForVendor;
+      deviceName = iosInfo.name;
+    } else {
+      deviceId = "unknown";
+      deviceName = "unknown";
+    }
+
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    String? token = await messaging.getToken();
+
+    if (token == null || deviceId == null || deviceName == null) {
+      print("Gagal ambil informasi perangkat atau token");
+      return;
+    }
+
+    await saveDeviceInfoToSharedPreferences(deviceId, deviceName, token);
+
+    final payload = json.encode({
+      'deviceId': deviceId,
+      'deviceName': deviceName,
+      'deviceToken': token,
+    });
+
+    final ioClient = IOClient(
+      HttpOverrides.current!.createHttpClient(SecurityContext.defaultContext),
+    );
+
+    bool lokalSukses = false;
+    bool publikSukses = false;
+    bool testSukses = false;
+
+    //API Lokal
+    try {
+      final response = await ioClient.post(
+        Uri.parse(
+            'https://192.168.50.75:5001/api/Auth/AddMobileIdNameTokenACE'),
+        headers: {
+          HttpHeaders.acceptHeader: "application/json",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: payload,
+        encoding: Encoding.getByName("utf-8"),
+      );
+
+      if (response.statusCode == 200) {
+        print('Data Lokal berhasil dikirim');
+        lokalSukses = true;
+      } else {
+        print(
+            'Data Lokal gagal di kirim: ${response.statusCode} - ${response.body}');
+      }
+    } catch (e) {
+      print('Error API Lokal: $e');
+    }
+
+    //API Publish
+    try {
+      final response2 = await http.post(
+        Uri.parse('https://apiace.astrido.com/api/Auth/AddMobileIdNameToken'),
+        headers: {
+          HttpHeaders.acceptHeader: "application/json",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: payload,
+        encoding: Encoding.getByName("utf-8"),
+      );
+
+      if (response2.statusCode == 200) {
+        print('Data Publish berhasil dikirim');
+        publikSukses = true;
+      } else {
+        print(
+            'Data Publish gagal dikirim: ${response2.statusCode} - ${response2.body}');
+      }
+    } catch (e) {
+      print('Error API Publik: $e');
+    }
+
+    //API Test
+    try {
+      final response3 = await http.post(
+        Uri.parse(
+            'https://apiacetest.astrido.com/api/Auth/AddMobileIdNameToken'),
+        headers: {
+          HttpHeaders.acceptHeader: "application/json",
+          HttpHeaders.contentTypeHeader: "application/json",
+        },
+        body: payload,
+        encoding: Encoding.getByName("utf-8"),
+      );
+
+      if (response3.statusCode == 200) {
+        print('Data Test berhasil dikirim');
+        testSukses = true;
+      } else {
+        print(
+            'Data Test gagal dikirim: ${response3.statusCode} - ${response3.body}');
+      }
+    } catch (e) {
+      print('Error API Test: $e');
+    }
+
+    if (lokalSukses && publikSukses && testSukses) {
+      print("Semua berhasil");
+    } else if (lokalSukses && !publikSukses && testSukses) {
+      print("Lokal & Test sukses, Publik gagal");
+    } else if (lokalSukses && publikSukses && !testSukses) {
+      print("Lokal & Publik sukses, Test gagal");
+    } else if (!lokalSukses && publikSukses && testSukses) {
+      print("Publik & Test sukses, Lokal gagal");
+    } else if (lokalSukses && !publikSukses && !testSukses) {
+      print("Hanya Lokal yang sukses");
+    } else if (!lokalSukses && publikSukses && !testSukses) {
+      print("Hanya Publik yang sukses");
+    } else if (!lokalSukses && !publikSukses && testSukses) {
+      print("Hanya Test yang sukses");
+    } else {
+      print("Semua gagal");
+    }
+  } catch (e) {
+    print('Error umum saat registrasi: $e');
+  }
+}
+
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-//   print('Handling a background message ${message.messageId}');
+  // print('Handling a background message ${message.messageId}');
 }
 
 AndroidNotificationChannel? channel;
@@ -134,12 +276,7 @@ void main() async {
   HttpOverrides.global = MyHttpOverrides();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  // await registerDeviceWithBackend();
-
-  FirebaseMessaging messaging = FirebaseMessaging.instance;
-  String? token = await messaging.getToken();
-
-  print("Token : $token");
+  await registerDeviceWithBackend();
 
   if (!kIsWeb) {
     channel = const AndroidNotificationChannel(
@@ -168,8 +305,40 @@ void main() async {
   runApp(const ProviderScope(child: MyApp()));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+      if (notification != null && android != null && !kIsWeb) {
+        flutterLocalNotificationsPlugin!.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel!.id,
+                channel!.name,
+                channelDescription: channel!.description,
+                icon: 'launch_background',
+              ),
+            ));
+      }
+    });
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
+      print('A new onMessageOpenedApp event was published!');
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
